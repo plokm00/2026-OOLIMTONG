@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>울림통 변주 2026 — 시민작가 OT</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+  :root {
+    --bg:        #f8f5f0;
+    --bg2:       #eeeae3;
+    --bg3:       #e4dfd7;
+    --line:      #ccc5bb;
+    --accent:    #7a5c1e;
+    --accent2:   #3d6b3a;
+    --text:      #1e1a16;
+    --text-dim:  #6e645a;
+    --white:     #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  /* ────────── 공통 섹션 ────────── */
+  section {
+    min-height: 100vh;
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 500;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Noto Serif KR', serif;
+  }
+
+  h2.section-title {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 40px;
+    border-left: 3px solid var(--accent);
+    padding-left: 20px;
+  }
+
+  /* 점선 이미지 플레이스홀더 */
+  .img-placeholder {
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .img-placeholder img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: none;
+  }
+
+  /* ────────── 1. 커버 ────────── */
+  #cover {
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+    align-items: flex-start;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  .cover-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .cover-left {
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--bg);
+  }
+
+  .cover-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .cover-title {
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .cover-subtitle {
+    font-size: clamp(20px, 2.5vw, 30px);
+    font-weight: 300;
+    color: var(--accent2);
+    letter-spacing: 0.15em;
+    margin-bottom: 40px;
+  }
+
+  .cover-meta {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 2;
+    letter-spacing: 0.05em;
+  }
+
+  .cover-meta strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .cover-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    margin: 32px 0;
+  }
+
+  .cover-right {
+    position: relative;
+    background: var(--bg2);
+  }
+
+  .cover-img {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    font-size: 14px;
+  }
+
+  /* ────────── 2. 목차 ────────── */
+  #toc {
+    background: var(--bg2);
+  }
+
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin-top: 16px;
+  }
+
+  .toc-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 28px 32px;
+    background: var(--bg3);
+    text-decoration: none;
+    color: var(--text);
+    transition: background 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+
+  .toc-item:hover {
+    background: #2a2a2a;
+    transform: translateX(4px);
+  }
+
+  .toc-num {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--accent);
+    opacity: 0.35;
+    font-family: 'Noto Serif KR', serif;
+    min-width: 56px;
+    line-height: 1;
+  }
+
+  .toc-text h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .toc-text p {
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 0.03em;
+  }
+
+  /* ────────── 3. 작가 소개 ────────── */
+  #artist {
+    background: var(--bg);
+  }
+
+  .artist-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .artist-photo {
+    width: 300px;
+    height: 380px;
+  }
+
+  .artist-name {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .artist-name-en {
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .artist-bio {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.9;
+    margin-bottom: 32px;
+  }
+
+  .career-list {
+    list-style: none;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+
+  .career-list li {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 16px;
+    padding: 10px 0;
+    font-size: 14px;
+    border-bottom: 1px solid var(--line);
+    color: var(--text);
+  }
+
+  .career-list li span:first-child {
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  /* ────────── 4. 니닉 세계관 ────────── */
+  #universe {
+    background: var(--bg2);
+  }
+
+  .universe-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .universe-venn {
+    width: 100%;
+    height: 420px;
+  }
+
+  .universe-desc h3 {
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  .universe-desc p {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.9;
+    margin-bottom: 20px;
+  }
+
+  .keyword-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .chip {
+    padding: 7px 16px;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+
+  /* ────────── 5. 울림통 연보 ────────── */
+  #history {
+    background: var(--bg);
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 40px;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+  }
+
+  .timeline-year {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--accent);
+    opacity: 0.5;
+    font-family: 'Noto Serif KR', serif;
+    line-height: 1;
+    padding-top: 8px;
+  }
+
+  .timeline-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .timeline-photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+
+  .timeline-photo {
+    width: 100%;
+    height: 180px;
+  }
+
+  .timeline-text h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .timeline-text p {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.85;
+  }
+
+  /* ────────── 6. 프로젝트 개요 ────────── */
+  #overview {
+    background: var(--bg2);
+  }
+
+  .overview-hero {
+    margin-bottom: 56px;
+  }
+
+  .overview-hero h3 {
+    font-size: 32px;
+    color: var(--text);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .overview-hero p {
+    font-size: 16px;
+    color: var(--text);
+    line-height: 2;
+    max-width: 720px;
+  }
+
+  .overview-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .overview-card {
+    background: var(--bg3);
+    padding: 32px 28px;
+  }
+
+  .overview-card .card-icon {
+    font-size: 24px;
+    margin-bottom: 14px;
+  }
+
+  .overview-card h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  .overview-card p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+
+  .overview-detail {
+    margin-top: 40px;
+    padding: 28px 32px;
+    border-left: 3px solid var(--accent2);
+    background: #e8f0e7;
+  }
+
+  .overview-detail p {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.9;
+  }
+
+  /* ────────── 7. 커리큘럼 ────────── */
+  #curriculum {
+    background: var(--bg);
+  }
+
+  .curriculum-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .curriculum-table thead th {
+    background: var(--bg3);
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 500;
+    border-bottom: 1px solid var(--accent);
+  }
+
+  .curriculum-table tbody tr {
+    border-bottom: 1px solid var(--line);
+    transition: background 0.15s;
+  }
+
+  .curriculum-table tbody tr:hover {
+    background: var(--bg3);
+  }
+
+  .curriculum-table tbody td {
+    padding: 18px 20px;
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  .curriculum-table tbody td:first-child {
+    color: var(--text-dim);
+    font-size: 13px;
+    white-space: nowrap;
+    width: 160px;
+  }
+
+  .curriculum-table tbody td:nth-child(2) {
+    color: var(--accent);
+    font-weight: 600;
+    width: 120px;
+  }
+
+  .session-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+
+  .badge-ot    { background: #2a2a3e; color: #9999cc; }
+  .badge-work  { background: #1e2520; color: var(--accent2); }
+  .badge-final { background: #2e2010; color: var(--accent); }
+
+  /* ────────── 8. 참여 규칙 ────────── */
+  #rules {
+    background: var(--bg2);
+  }
+
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .rule-card {
+    background: var(--bg3);
+    padding: 36px 28px;
+  }
+
+  .rule-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .rule-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    font-family: 'Noto Serif KR', serif;
+  }
+
+  .rule-body {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.9;
+  }
+
+  .rule-body strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ────────── 9. 마무리 ────────── */
+  #closing {
+    background: var(--bg);
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .closing-deco {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    pointer-events: none;
+  }
+
+  .closing-deco2 {
+    width: 400px;
+    height: 400px;
+    border-color: #d8d0c5;
+  }
+
+  .closing-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 640px;
+  }
+
+  .closing-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .closing-quote {
+    font-size: clamp(24px, 3.5vw, 38px);
+    font-weight: 700;
+    font-family: 'Noto Serif KR', serif;
+    color: var(--text);
+    line-height: 1.55;
+    margin-bottom: 32px;
+  }
+
+  .closing-sub {
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.9;
+    margin-bottom: 48px;
+  }
+
+  .closing-signature {
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .closing-signature span {
+    color: var(--accent);
+  }
+
+  /* ────────── 고정 네비 ────────── */
+  #nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(248, 245, 240, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 56px;
+  }
+
+  .nav-logo {
+    font-size: 13px;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: var(--accent);
+  }
+
+  /* section padding 보정 (고정 nav 높이) */
+  section {
+    scroll-margin-top: 56px;
+  }
+
+  #cover {
+    scroll-margin-top: 0;
+  }
+
+  @media (max-width: 900px) {
+    section { padding: 64px 24px; }
+    .cover-inner, .artist-layout, .universe-layout,
+    .timeline-content, .overview-cards, .rules-grid, .toc-grid {
+      grid-template-columns: 1fr;
+    }
+    .cover-img { min-height: 300px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── 고정 네비게이션 ── -->
+<nav id="nav">
+  <span class="nav-logo">ninnik × 울림통 변주 2026</span>
+  <div class="nav-links">
+    <a href="#artist">작가 소개</a>
+    <a href="#universe">니닉 세계관</a>
+    <a href="#history">울림통 연보</a>
+    <a href="#overview">프로젝트 개요</a>
+    <a href="#curriculum">커리큘럼</a>
+    <a href="#rules">참여 규칙</a>
+    <a href="#minutes">OT 회의록</a>
+  </div>
+</nav>
+
+
+<!-- ── 1. 커버 ── -->
+<section id="cover">
+  <div class="cover-inner">
+    <div class="cover-left">
+      <p class="cover-eyebrow">Citizen Artist Orientation · 2026</p>
+      <h1 class="cover-title">울림통<br>변주</h1>
+      <p class="cover-subtitle">협력창작 프로젝트</p>
+      <div class="cover-divider"></div>
+      <div class="cover-meta">
+        <strong>주관</strong> 김아영 (니닉크라프트)<br>
+        <strong>후원</strong> 원주문화재단 보조금 지원사업<br>
+        <strong>형식</strong> 시민작가 협력창작 · 오리엔테이션<br>
+        <strong>일시</strong> 2026. 4. 25. 토 &nbsp;오후 2시<br>
+        <strong>장소</strong> 니닉크라프트<br>
+        <span style="font-size:12px;color:var(--text-dim);padding-left:4.5em;">강원특별자치도 원주시 문막읍 원문로 1734-15</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── 2. 목차 ── -->
+<section id="toc">
+  <p class="section-label">Index</p>
+  <h2 class="section-title">목차</h2>
+  <div class="toc-grid">
+    <a class="toc-item" href="#artist">
+      <span class="toc-num">01</span>
+      <div class="toc-text">
+        <h3>작가 소개</h3>
+        <p>ninnik_kraft 프로필 &amp; 주요 이력</p>
+      </div>
+    </a>
+    <a class="toc-item" href="#universe">
+      <span class="toc-num">02</span>
+      <div class="toc-text">
+        <h3>니닉 세계관</h3>
+        <p>창작 철학 &amp; 키워드 구조</p>
+      </div>
+    </a>
+    <a class="toc-item" href="#history">
+      <span class="toc-num">03</span>
+      <div class="toc-text">
+        <h3>울림통 연보</h3>
+        <p>2019 · 2024 · 2025 주요 활동</p>
+      </div>
+    </a>
+    <a class="toc-item" href="#overview">
+      <span class="toc-num">04</span>
+      <div class="toc-text">
+        <h3>프로젝트 개요</h3>
+        <p>울림통 · 변주 2026 소개</p>
+      </div>
+    </a>
+    <a class="toc-item" href="#curriculum">
+      <span class="toc-num">05</span>
+      <div class="toc-text">
+        <h3>커리큘럼</h3>
+        <p>OT → 창작 → 전시 전체 일정</p>
+      </div>
+    </a>
+    <a class="toc-item" href="#rules">
+      <span class="toc-num">06</span>
+      <div class="toc-text">
+        <h3>참여 규칙</h3>
+        <p>출석 · 재료 · 윤리 · 저작권 등 6항목</p>
+      </div>
+    </a>
+    <a class="toc-item" href="#minutes">
+      <span class="toc-num">07</span>
+      <div class="toc-text">
+        <h3>OT 회의록</h3>
+        <p>팀 편성 · 주요 결정사항 · 현장 사진</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+
+<!-- ── 3. 작가 소개 ── -->
+<section id="artist">
+  <p class="section-label">01 · Artist</p>
+  <h2 class="section-title">작가 소개</h2>
+  <div class="artist-layout">
+
+    <div>
+      <h3 class="artist-name">김아영 니닉 작가</h3>
+      <p class="artist-name-en">ninnik_kraft</p>
+      <p class="artist-bio">
+        이화여자대학교에서 도예를 전공하고 호주 애들레이드 대학에서 디지털미디어 석사를 마쳤다.
+        도예·회화·설치·영상·퍼포먼스를 아우르며 자신만의 판타지 세계 '니닉(Ninnik)'을 구축해 왔다.
+        스스로의 작업을 <em>'개념공상예술(Conceptual Imaginary Art)'</em>로 정의하며,
+        하나의 개념에서 시작된 상상이 형상과 이야기로 이어져 세계를 이루는 예술을 지향한다.
+        2019년부터 시민과 함께하는 협력창작 시리즈 '울림통'을 이어 오고 있다.
+      </p>
+      <ul class="career-list">
+        <li><span>학력</span> 이화여대 도예 학사 (2004) · 애들레이드대 디지털미디어 석사 (2007)</li>
+        <li><span>2026</span> 개인전 《울림통-변주》 기획 (예정) · 기획전 《흙과 우리 사이에 놓인 것들》 경기도자미술관 (진행중) · 원주문화재단 전문예술 지원사업 선정</li>
+        <li><span>2025</span> 개인전 《소녀들의 언덕(울림통Ⅲ)》 · 장편영화 "AI가 말해주는 사랑 제조법" 미술감독 · 원주문화재단 지원사업 선정</li>
+        <li><span>2024</span> 개인전 《공간 니닉(울림통Ⅱ)》 · 경기도자비엔날레 국제공모전 우수상 · 원주문화재단 지원사업 선정</li>
+        <li><span>2023</span> 개인전 《구전, 빛처럼 퍼지는 이야기》 한향림도자미술관 · 장편영화 "마밀라리아" 미술감독</li>
+        <li><span>2022</span> 개인전 《궁리된 흠과 틈》 자미갤러리 · 강원작가트리엔날레 참여</li>
+        <li><span>2015–21</span> 이화여자대학교 도자예술 강사 역임 · 서울문화재단 금천예술공장 다빈치 크리에이티브 선정</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── 4. 니닉 세계관 ── -->
+<section id="universe">
+  <p class="section-label">02 · Universe</p>
+  <h2 class="section-title">니닉 세계관</h2>
+  <div class="universe-layout">
+
+    <div class="universe-desc">
+      <h3>오타 한 단어에서 시작된 세계</h3>
+      <p>
+        2002년, 채팅창에 실수로 입력한 오타 하나가 모든 것의 시작이었다.
+        그 단어가 바로 <strong style="color:var(--text)">'니닉(Ninnik)'</strong>.
+        마치 벼락 같았던 이 단어로부터, 20여 년에 걸쳐 오직 하나뿐인 판타지 세계가 구축되어 왔다.
+      </p>
+      <h3 style="margin-top:28px;">니닉 세계의 구조</h3>
+      <p>
+        니닉에는 고유한 <strong style="color:var(--text)">우주 탄생 신화</strong>가 있고,
+        살아있는 생명체와 물리법칙, 사건과 에피소드가 존재한다.
+        나아가 <strong style="color:var(--text)">니닉어(Ninnik語)</strong>라는 독자적인 언어 체계를 갖추고
+        있으며, 이미 문장과 노랫말로까지 발전했다.
+        김아영 작가는 이 세계를 도예·설치·회화·소설·음악 등 다양한 매체로 현실에 끌어내고 있다.
+      </p>
+      <h3 style="margin-top:28px;">울림통 — 상상을 울려주는 조형물</h3>
+      <p>
+        울림통은 니닉 세계관 속 한 언덕에 자리한 대형 흙 조형물이다.
+        단순히 소리를 울리는 것이 아닌, <strong style="color:var(--text)">상상을 울려주는 존재</strong>다.
+        흙과 정성으로 만들어지되 불에 굽지 않아, 왜곡 없이 그 자체로 작품이 된다.
+        변주(Variation)는 하나의 주제를 여러 참여자가 각자의 언어로 다시 써 내려가는 방식이다.
+        정답은 없고, 각자의 고유한 울림이 있을 뿐이다.
+      </p>
+      <div class="keyword-chips">
+        <span class="chip">니닉 세계관</span>
+        <span class="chip">판타지</span>
+        <span class="chip">이야기</span>
+        <span class="chip">니닉어</span>
+        <span class="chip">개념공상예술</span>
+        <span class="chip">흙·도예</span>
+        <span class="chip">상상</span>
+        <span class="chip">변주</span>
+        <span class="chip">공명</span>
+        <span class="chip">협력창작</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── 5. 울림통 연보 ── -->
+<section id="history">
+  <p class="section-label">03 · History</p>
+  <h2 class="section-title">울림통 연보</h2>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <span class="timeline-year">2019</span>
+      <div class="timeline-content">
+        <div class="timeline-text">
+          <h3>첫 번째 울림통 — 흙과 미디어의 융합</h3>
+          <p>
+            흙과 디지털 미디어가 결합한 첫 번째 울림통. 조형물 내부를 360도 카메라로 촬영해 실시간으로 공개하는 등
+            가상과 현실이 교차하는 융합의 장을 실험했습니다. 경기콘텐츠진흥원 기획전 《ART &amp; VR》에 참여하였으며,
+            YTN 사이언스 <em>과학과 만난 예술</em>에 소개되었습니다.
+            전시 종료 후 사람들은 화면보다 흙의 따뜻한 온기를 더 오래 기억했습니다.
+            본 울림통은 전시 후 철거하였습니다.
+          </p>
+        </div>
+        <div class="timeline-photo-grid">
+          <div class="img-placeholder timeline-photo">
+            <img src="c.jpg" alt="울림통 내부 어안렌즈 쌍원형" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="DSC01876.jpg" alt="울림통 내부 작업 측면" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="DSC01890.jpg" alt="울림통 내부 작업 위에서" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="DSC01917.jpg" alt="울림통 외관 전경" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="DSC01995.jpg" alt="울림통 내부 360카메라 및 니닉 문양" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="a.jpg" alt="YTN 과학과 만난 예술 태블릿" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="b.jpg" alt="YTN 조형물 내부 360도 촬영" style="display:block;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <span class="timeline-year">2024</span>
+      <div class="timeline-content">
+        <div class="timeline-text">
+          <h3>절대적 아날로그 — 접촉의 미학</h3>
+          <p>
+            두 번째 울림통은 디지털 기술을 완전히 배제하고 오직 흙과 손, 신체 접촉에 집중했습니다.
+            재현이나 기록보다 <em>실체</em>에 집중한 이 작업에는 유아·학생·성인 등 150여 명의
+            지역 시민이 참여해 거대한 흙 구조를 함께 쌓아 올렸습니다.
+            안과 밖, 몸과 마음처럼 서로 다르지만 결속된 존재들을 은유하며,
+            개인전 《공간 니닉(울림통Ⅱ)》으로 발표되었습니다.
+          </p>
+        </div>
+        <div class="timeline-photo-grid">
+          <div class="img-placeholder timeline-photo">
+            <img src="12.jpg" alt="점토 재료 준비" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="13.jpg" alt="점토 반죽 작업" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="14.jpg" alt="타래 준비" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="15.jpg" alt="구조 쌓기 시작" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="16.jpg" alt="완성된 울림통 전경" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="17.jpg" alt="울림통 표면 질감 클로즈업" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="18.jpg" alt="어린이들과 함께한 울림통 현장" style="display:block;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <span class="timeline-year">2025</span>
+      <div class="timeline-content">
+        <div class="timeline-text">
+          <h3>함께의 확대 — 400여 명의 시민과 함께</h3>
+          <p>
+            일곱 개의 울림통은 사람이 내부에 직접 들어가 명상·놀이·휴식을 경험할 수 있는
+            체험적 예술 공간으로 진화했습니다. 원주 내 어린이집 3곳의 야외 공간을 순회하며
+            400여 명의 지역 시민과 함께 제작·체험하였습니다.
+            단발성 전시를 넘어 지속 가능한 공공예술 모델로서의 가능성을 열었으며,
+            개인전 《소녀들의 언덕(울림통Ⅲ)》으로 발표되었습니다.
+          </p>
+        </div>
+        <div class="timeline-photo-grid">
+          <div class="img-placeholder timeline-photo">
+            <img src="21.jpg" alt="어린이들과 울림통 제작 현장 부감" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="22.jpg" alt="작가와 참여자 타래 작업" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="23.jpg" alt="참여자들 손으로 울림통 함께 쌓기" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="24.jpg" alt="야외 어린이집 점토 작업" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="25_crop.jpg" alt="어린이들 울림통 체험" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="26_crop.jpg" alt="전시 공간에서 아이들과 울림통" style="display:block;">
+          </div>
+          <div class="img-placeholder timeline-photo">
+            <img src="28_crop.jpg" alt="울림통 7기 전시 보드" style="display:block;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <span class="timeline-year">2026</span>
+      <div class="timeline-content">
+        <div class="timeline-text">
+          <h3>울림통-변주 — 더 깊이 이해하고 더 멀리 울리기</h3>
+          <p>
+            울림통의 형태와 활용 방식을 다변화하여 울림통과 사람 사이의 지속적 연결 구조를 실험합니다.
+            올해의 협력창작자는 단순한 참여자가 아닙니다. 기획부터 완성, 전시까지 전 과정에 함께하며
+            <em>참여자에서 작가로</em> 전환하는 경험을 합니다.
+            흙에 이름을 새기듯, 내 이름이 걸린 작품을 완성하는 사람들.
+            개인전 《울림통-변주》(2026.11.21.–12.13.)로 발표될 예정입니다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── 6. 프로젝트 개요 ── -->
+<section id="overview">
+  <p class="section-label">04 · Overview</p>
+  <h2 class="section-title">프로젝트 개요</h2>
+
+  <div class="overview-hero">
+    <h3>김아영 개인전 〈울림통-변주〉</h3>
+    <p>
+      단순한 예술 체험이 아닌, <strong style="color:var(--text)">참여자가 작가가 되어 작품을 공동 제작하는 프로그램</strong>입니다.
+      흙(점토)을 빚고, 말리고, 다지는 과정 속에서 참여자들의 손길과 시간이 축적되어
+      사람이 들어갈 수 있을 정도의 커다란 조형물 '울림통'으로 완성됩니다.
+      완성된 작품은 11월 개인전과 아카이브에 함께합니다.
+    </p>
+  </div>
+
+  <div class="overview-cards">
+    <div class="overview-card">
+      <span class="card-icon">🗓</span>
+      <h4>제작 기간</h4>
+      <p>2026년 5 ~ 7월<br>주 1회 · 총 10회차</p>
+    </div>
+    <div class="overview-card">
+      <span class="card-icon">🏛</span>
+      <h4>전시 일정</h4>
+      <p>2026. 11. 21.(토) ~ 12. 13.(일)<br>매일 11:00 ~ 17:00 · 입장 무료</p>
+    </div>
+    <div class="overview-card">
+      <span class="card-icon">📍</span>
+      <h4>장소</h4>
+      <p>니닉크라프트<br>강원 원주시 문막읍 원문로 1734-15</p>
+    </div>
+    <div class="overview-card">
+      <span class="card-icon">👥</span>
+      <h4>참여 인원</h4>
+      <p>협력창작자 20명<br>청소년 · 성인 누구나</p>
+    </div>
+    <div class="overview-card">
+      <span class="card-icon">🏺</span>
+      <h4>재료</h4>
+      <p>흙(점토) · 타래성형 기법<br>굽지 않은 구조물 · 모든 재료 제공</p>
+    </div>
+    <div class="overview-card">
+      <span class="card-icon">✦</span>
+      <h4>결과물</h4>
+      <p>대형 울림통 2기 (공동 제작)<br>모뉴먼트 20기 (개인 제작 · 소장)</p>
+    </div>
+  </div>
+
+  <div class="overview-detail">
+    <p>
+      💡 <strong style="color:var(--accent2)">참여자는 두 가지를 만듭니다</strong> &nbsp;—&nbsp;
+      ① 작가와 함께 만드는 <strong style="color:var(--text)">대형 울림통 2기</strong>(전시 출품) &nbsp;+&nbsp;
+      ② 각자가 개별 제작하는 <strong style="color:var(--text)">모뉴먼트</strong>(원하는 공간에 직접 설치·소장).
+      모뉴먼트에는 NFC 칩이 심겨, 니닉 세계관의 사운드와 온라인 울림통 네트워크에 연결됩니다.
+    </p>
+  </div>
+</section>
+
+
+<!-- ── 7. 커리큘럼 ── -->
+<section id="curriculum">
+  <p class="section-label">05 · Curriculum</p>
+  <h2 class="section-title">커리큘럼</h2>
+  <table class="curriculum-table">
+    <thead>
+      <tr>
+        <th>날짜</th>
+        <th>회차</th>
+        <th>제목</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2026. 4. 25. 토</td>
+        <td><span class="session-badge badge-ot">OT</span></td>
+        <td>오리엔테이션 <small style="color:var(--text-dim)">(1시간)</small></td>
+        <td>작가 소개 / 프로젝트 개요 / 참여 규칙 안내 / 참여자 자기소개</td>
+      </tr>
+      <tr>
+        <td>5월 중 (날짜 조율)</td>
+        <td><span class="session-badge badge-work">1회</span></td>
+        <td>재료 이해 및 모뉴먼트 드로잉 <small style="color:var(--text-dim)">(3시간)</small></td>
+        <td>흙(점토) 재료 특성 이해 / 자신의 모뉴먼트 드로잉 구상</td>
+      </tr>
+      <tr>
+        <td>5월</td>
+        <td><span class="session-badge badge-work">2회</span></td>
+        <td>점토 반죽 및 타래 만들기 <small style="color:var(--text-dim)">(3시간)</small></td>
+        <td>점토 반죽 실습 / 타래성형 기초 / 손과 흙의 감각 익히기</td>
+      </tr>
+      <tr>
+        <td>5~6월</td>
+        <td><span class="session-badge badge-work">3회</span></td>
+        <td>점토 반죽 및 타래 만들기 <small style="color:var(--text-dim)">(3시간)</small></td>
+        <td>타래 쌓기 심화 / 구조 안정화 기법</td>
+      </tr>
+      <tr>
+        <td>6월</td>
+        <td><span class="session-badge badge-work">4회</span></td>
+        <td>구조 제작 및 다지기 <small style="color:var(--text-dim)">(3시간+α)</small></td>
+        <td>대형 울림통 구조 제작 시작 / 형태 잡기</td>
+      </tr>
+      <tr>
+        <td>6월</td>
+        <td><span class="session-badge badge-work">5회</span></td>
+        <td>구조 제작 및 다지기 <small style="color:var(--text-dim)">(3시간+α)</small></td>
+        <td>구조 확장 / 내부 공간 확보 / 진행 상황 공유</td>
+      </tr>
+      <tr>
+        <td>6월</td>
+        <td><span class="session-badge badge-work">6회</span></td>
+        <td>구조 제작 및 다지기 <small style="color:var(--text-dim)">(3시간+α)</small></td>
+        <td>구조 마무리 / 전체 형태 점검 / 사운드 녹음 진행</td>
+      </tr>
+      <tr>
+        <td>6~7월</td>
+        <td><span class="session-badge badge-work">7회</span></td>
+        <td>구조 제작 및 다지기 <small style="color:var(--text-dim)">(3시간+α)</small></td>
+        <td>보완 작업 / 건조 과정 관찰 / 사운드 녹음 진행</td>
+      </tr>
+      <tr>
+        <td>7월</td>
+        <td><span class="session-badge badge-work">8회</span></td>
+        <td>모뉴먼트 제작 <small style="color:var(--text-dim)">(3시간)</small></td>
+        <td>개인 모뉴먼트 제작 / 작가와 개별 피드백 / NFC 칩 매립</td>
+      </tr>
+      <tr>
+        <td>7월</td>
+        <td><span class="session-badge badge-work">9회</span></td>
+        <td>표면 마감 및 이름짓기 <small style="color:var(--text-dim)">(3시간)</small></td>
+        <td>표면 정리 · 기름 마감 / 작품 이름짓기 / 작가 노트 작성</td>
+      </tr>
+      <tr>
+        <td>7월</td>
+        <td><span class="session-badge badge-work">10회</span></td>
+        <td>설치 계획 공유 및 리뷰 <small style="color:var(--text-dim)">(2시간 · ZOOM 가능)</small></td>
+        <td>모뉴먼트 설치 공간 발표 / 전체 프로그램 리뷰 / 전시 준비 안내</td>
+      </tr>
+      <tr>
+        <td>2026. 11. 21. 토</td>
+        <td><span class="session-badge badge-final">오픈</span></td>
+        <td>전시 오프닝</td>
+        <td>〈울림통-변주〉 전시 오프닝 / 관람객 맞이 / 아티스트 토크</td>
+      </tr>
+      <tr>
+        <td>11. 21. ~ 12. 13.<br><small style="color:var(--text-dim)">매일 11:00~17:00</small></td>
+        <td><span class="session-badge badge-final">전시</span></td>
+        <td>전시 운영 (23일간)</td>
+        <td>김아영 개인전 〈울림통-변주〉 니닉크라프트 전시 · 입장 무료 · NFC 사운드 체험 운영<br>
+        <span style="color:var(--accent2);font-size:13px;">+ 각 참여작가는 개인 제작 모뉴먼트를 자신의 공간(집·직장·지역 등)에 직접 설치·전시합니다. NFC 칩 링크를 통해 방문자가 니닉의 사운드와 온라인 울림통 네트워크에 연결되며, 전시장 밖으로 확산되는 분산형 네트워크 전시가 동시에 펼쳐집니다.</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="margin-top:20px;font-size:13px;color:var(--text-dim);">
+    ※ 일정은 참여자 협의에 따라 조정될 수 있습니다. 날짜 칸의 0000.00.00을 실제 일정으로 교체해 주세요.
+  </p>
+</section>
+
+
+<!-- ── 8. 참여 규칙 ── -->
+<section id="rules">
+  <p class="section-label">06 · Rules</p>
+  <h2 class="section-title">참여 규칙</h2>
+  <div class="rules-grid">
+
+    <div class="rule-card">
+      <span class="rule-icon">📅</span>
+      <p class="rule-title">① 출석</p>
+      <p class="rule-body">
+        <strong>전체 세션의 2/3 이상 출석</strong>을 원칙으로 합니다.
+        부득이한 사정이 있을 경우 최소 <strong>24시간 전</strong>에 미리 알려 주세요.
+        연속 무단 결석 시 참여가 제한될 수 있습니다.
+      </p>
+    </div>
+
+    <div class="rule-card">
+      <span class="rule-icon">🧰</span>
+      <p class="rule-title">② 재료</p>
+      <p class="rule-body">
+        기본 재료와 도구는 모두 제공됩니다. 개인 특수 재료가 필요한 경우
+        <strong>사전에 작가와 협의</strong>해 주세요.
+        재료 낭비를 줄이기 위해 필요한 만큼만 사용합니다.
+      </p>
+    </div>
+
+    <div class="rule-card">
+      <span class="rule-icon">✍️</span>
+      <p class="rule-title">③ 창작 윤리</p>
+      <p class="rule-body">
+        타인의 작업과 아이디어를 <strong>존중</strong>합니다.
+        피드백은 구체적이고 건설적으로 전달하며,
+        개인을 향한 비교나 비하 발언은 삼갑니다.
+        서로의 창작 속도와 방식을 인정합니다.
+      </p>
+    </div>
+
+    <div class="rule-card">
+      <span class="rule-icon">©️</span>
+      <p class="rule-title">④ 저작권</p>
+      <p class="rule-body">
+        개인 제작 <strong>모뉴먼트의 저작권은 참여자 본인</strong>에게 귀속됩니다.
+        단, <strong>상업적 활용 시에는 작가의 동의</strong>가 필요합니다.
+        <strong>'니닉' 세계관의 저작권은 김아영 작가</strong>에게 있습니다.
+        아카이브 기록(사진·영상) 활용에 동의하며,
+        얼굴 식별 자료는 추후 별도 동의를 진행합니다.
+      </p>
+    </div>
+
+    <div class="rule-card">
+      <span class="rule-icon">🔒</span>
+      <p class="rule-title">⑤ 개인정보</p>
+      <p class="rule-body">
+        참여자 개인정보(연락처, 주소 등)는 프로젝트 운영 목적으로만 사용하며
+        외부에 공유하지 않습니다.
+        참여 종료 후 일정 기간 내 폐기합니다.
+      </p>
+    </div>
+
+    <div class="rule-card">
+      <span class="rule-icon">📷</span>
+      <p class="rule-title">⑥ 촬영</p>
+      <p class="rule-body">
+        세션 내 사진·영상 촬영은 <strong>사전 동의</strong>가 필요합니다.
+        본인 작업 외 타인의 작업물 촬영 시 반드시 허락을 구하세요.
+        SNS 게시 시 프로젝트 태그(<strong>@ninnik_kraft</strong>)를 달아 주시면 감사합니다.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── 8-2. OT 회의록 ── -->
+<section id="minutes">
+  <p class="section-label">OT · 2026. 4. 25. 토 오후 2시</p>
+  <h2 class="section-title">OT 회의록</h2>
+
+  <!-- 팀 편성 -->
+  <div style="margin-bottom:48px;">
+    <h3 style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--line);">팀 편성</h3>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
+
+      <div style="background:var(--bg2);padding:24px 20px;">
+        <p style="font-size:11px;letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;margin-bottom:10px;font-weight:600;">토요일 팀</p>
+        <p style="font-size:14px;color:var(--text-dim);margin-bottom:10px;">14:00 ~ 17:00</p>
+        <p style="font-size:15px;color:var(--text);line-height:2;">허양 · 이재홍 · 이성순<br>유광욱 · 조영범 · 이정선 · 임계화</p>
+      </div>
+
+      <div style="background:var(--bg2);padding:24px 20px;">
+        <p style="font-size:11px;letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;margin-bottom:10px;font-weight:600;">일요일 오후 팀</p>
+        <p style="font-size:14px;color:var(--text-dim);margin-bottom:10px;">14:00 ~ 17:00</p>
+        <p style="font-size:15px;color:var(--text);line-height:2;">인동욱 · 민지현 · 조영범<br>신정숙 · 김주원 · 이새롬</p>
+      </div>
+
+      <div style="background:var(--bg2);padding:24px 20px;">
+        <p style="font-size:11px;letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;margin-bottom:10px;font-weight:600;">일요일 오전 팀</p>
+        <p style="font-size:14px;color:var(--text-dim);margin-bottom:10px;">10:00 ~ 13:00</p>
+        <p style="font-size:15px;color:var(--text);line-height:2;">이채명 · 박수연 · 박소연<br>이안 · 박진희</p>
+      </div>
+
+    </div>
+    <p style="margin-top:12px;font-size:13px;color:var(--text-dim);">※ 구효정님 시간 조정 중 &nbsp;|&nbsp; 조영범님 토·일 오후 두 팀 동시 활동 &nbsp;|&nbsp; 작가는 모든 팀에 함께합니다</p>
+  </div>
+
+  <!-- 결정 사항 -->
+  <div>
+    <h3 style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--line);">주요 결정 사항</h3>
+
+    <div style="display:flex;flex-direction:column;gap:2px;">
+
+      <div style="background:var(--bg2);padding:22px 24px;display:grid;grid-template-columns:32px 1fr;gap:16px;align-items:start;">
+        <span style="font-size:18px;font-weight:900;color:var(--accent);font-family:'Noto Serif KR',serif;">1</span>
+        <div>
+          <p style="font-weight:600;color:var(--text);margin-bottom:6px;">울림통 3기 제작 · 장소 뽑기 진행 예정</p>
+          <p style="font-size:14px;color:var(--text-dim);line-height:1.85;">3팀이 구성된 관계로 울림통 3기를 제작하는 방향으로 진행합니다. 장소는 단체 카톡방 뽑기로 결정합니다.<br>
+          ① 니닉크라프트 실내 &nbsp; ② 하나어린이집 야외부지 &nbsp; ③ 미정(실내 또는 실외)<br>
+          <span style="color:var(--text-dim);font-size:13px;">※ 추후 단체체험이 잡힐 경우, 시간이 되시는 분에 한해 현장 참여 요청드릴 수 있습니다. 첫 작업 날 다시 안내드리겠습니다.</span></p>
+        </div>
+      </div>
+
+      <div style="background:var(--bg2);padding:22px 24px;display:grid;grid-template-columns:32px 1fr;gap:16px;align-items:start;">
+        <span style="font-size:18px;font-weight:900;color:var(--accent);font-family:'Noto Serif KR',serif;">2</span>
+        <div>
+          <p style="font-weight:600;color:var(--text);margin-bottom:6px;">첫 작업 시작일 변경 — 5월 2·3일 → <span style="color:var(--accent);">5월 9일(토) · 10일(일)</span></p>
+          <p style="font-size:14px;color:var(--text-dim);line-height:1.85;">작가 4월 30일 편도수술 일정(일정이 앞당겨졌습니다 ㅠ) 및 현장 참여자 전원 동의에 따라 첫 시작일을 일주일 미룹니다.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--bg2);padding:22px 24px;display:grid;grid-template-columns:32px 1fr;gap:16px;align-items:start;">
+        <span style="font-size:18px;font-weight:900;color:var(--accent);font-family:'Noto Serif KR',serif;">3</span>
+        <div>
+          <p style="font-weight:600;color:var(--text);margin-bottom:6px;">팀 시간대 준수 (원칙)</p>
+          <p style="font-size:14px;color:var(--text-dim);line-height:1.85;">기본적으로 자신의 팀 시간대에만 참여합니다. 불가피한 경우 소수에 한해 최대한 문을 열어두되, 팀별 논의에 따라 결정합니다.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--bg2);padding:22px 24px;display:grid;grid-template-columns:32px 1fr;gap:16px;align-items:start;">
+        <span style="font-size:18px;font-weight:900;color:var(--accent);font-family:'Noto Serif KR',serif;">4</span>
+        <div>
+          <p style="font-weight:600;color:var(--text);margin-bottom:6px;">공동 울림통 작업 방식</p>
+          <p style="font-size:14px;color:var(--text-dim);line-height:1.85;">기본적으로 즉흥 작업이지만, 팀 의견에 따라 청사진을 미리 그려보는 방식도 가능합니다. 팀 내에서 역할을 나누는 것도 가능합니다 (쌓기, 장식 붙이기 등). 원하시는 바를 자유롭게 공유해 주세요.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--bg2);padding:22px 24px;display:grid;grid-template-columns:32px 1fr;gap:16px;align-items:start;">
+        <span style="font-size:18px;font-weight:900;color:var(--accent);font-family:'Noto Serif KR',serif;">5</span>
+        <div>
+          <p style="font-weight:600;color:var(--text);margin-bottom:6px;">개별 모뉴먼트 작업</p>
+          <p style="font-size:14px;color:var(--text-dim);line-height:1.85;">원하시는 방식대로, 작가가 함께 컨설팅하며 진행합니다.<br>
+          <strong style="color:var(--text);">토·일 아무 때나 오셔서 추가 작업하셔도 무관합니다.</strong></p>
+        </div>
+      </div>
+
+      <div style="background:var(--bg3);padding:18px 24px;display:grid;grid-template-columns:32px 1fr;gap:16px;align-items:start;">
+        <span style="font-size:15px;color:var(--text-dim);">줌</span>
+        <p style="font-size:14px;color:var(--text-dim);line-height:1.85;">줌 연결은 14:15경 시작, 40분 무료회의로 진행하였습니다. 현장에 집중하느라 온라인 참여자분께 전달이 다소 부족했던 점 죄송합니다.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- OT 현장 사진 -->
+  <div style="margin-top:48px;">
+    <h3 style="font-size:16px;letter-spacing:0.2em;color:var(--text-dim);margin-bottom:16px;font-weight:500;">OT 현장 · 2026. 4. 25.</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start;">
+      <img src="1.jpg" alt="OT 현장 - 참여자들" style="width:100%;display:block;border-radius:2px;">
+      <img src="2_crop.jpg" alt="OT 현장 - 공간" style="width:100%;display:block;border-radius:2px;">
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ── 9. 마무리 ── -->
+<section id="closing">
+  <div class="closing-deco"></div>
+  <div class="closing-deco closing-deco2"></div>
+
+  <div class="closing-inner">
+    <p class="closing-eyebrow">Closing · 울림통 변주 2026</p>
+    <h2 class="closing-quote">
+      각자의 삶과 이야기가<br>하나의 울림통 안에서<br>공명하기를
+    </h2>
+    <p class="closing-sub">
+      여러분의 이야기는 이미 그 자체로 작품입니다.<br>
+      잘 모르겠어도, 서툴러도 괜찮습니다.<br>
+      함께 만들어 가는 과정 자체가 울림통입니다.
+    </p>
+    <p class="closing-signature">
+      <span>ninnik_kraft</span> &nbsp;·&nbsp; @ninnik_kraft
+    </p>
+  </div>
+</section>
+
+</body>
+</html>
