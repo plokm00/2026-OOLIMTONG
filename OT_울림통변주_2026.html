@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>울림통 변주 2026 — 시민작가 OT</title>
+<title>울림통-변주 2026 — 시민작가 OT</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 
   :root {
-    --bg:        #f8f5f0;
-    --bg2:       #eeeae3;
-    --bg3:       #e4dfd7;
-    --line:      #ccc5bb;
-    --accent:    #7a5c1e;
-    --accent2:   #3d6b3a;
-    --text:      #1e1a16;
-    --text-dim:  #6e645a;
-    --white:     #ffffff;
+    --bg:        #f6ede6;
+    --bg2:       #eee0d6;
+    --bg3:       #e4d0c4;
+    --line:      #ceb0a0;
+    --accent:    #c03828;
+    --accent2:   #8c2418;
+    --text:      #261410;
+    --text-dim:  #7a4c3c;
+    --white:     #f6ede6;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -52,7 +52,7 @@
   }
 
   h1, h2, h3 {
-    font-family: 'Noto Serif KR', serif;
+    font-family: 'IBM Plex Sans KR', sans-serif;
   }
 
   h2.section-title {
@@ -191,7 +191,7 @@
   }
 
   .toc-item:hover {
-    background: #2a2a2a;
+    background: #d4b0a0;
     transform: translateX(4px);
   }
 
@@ -200,7 +200,7 @@
     font-weight: 900;
     color: var(--accent);
     opacity: 0.35;
-    font-family: 'Noto Serif KR', serif;
+    font-family: 'IBM Plex Sans KR', sans-serif;
     min-width: 56px;
     line-height: 1;
   }
@@ -351,7 +351,7 @@
     font-weight: 900;
     color: var(--accent);
     opacity: 0.5;
-    font-family: 'Noto Serif KR', serif;
+    font-family: 'IBM Plex Sans KR', sans-serif;
     line-height: 1;
     padding-top: 8px;
   }
@@ -442,8 +442,8 @@
   .overview-detail {
     margin-top: 40px;
     padding: 28px 32px;
-    border-left: 3px solid var(--accent2);
-    background: #e8f0e7;
+    border-left: 3px solid var(--accent);
+    background: #ffb8b0;
   }
 
   .overview-detail p {
@@ -512,9 +512,128 @@
     font-weight: 600;
   }
 
-  .badge-ot    { background: #2a2a3e; color: #9999cc; }
-  .badge-work  { background: #1e2520; color: var(--accent2); }
-  .badge-final { background: #2e2010; color: var(--accent); }
+  .badge-ot    { background: #d4b8b0; color: #5a1c10; }
+  .badge-work  { background: #c8a898; color: var(--accent2); }
+  .badge-final { background: #b89080; color: var(--accent2); }
+
+  /* ────────── 자료 버튼 & 모달 ────────── */
+  .material-btn {
+    display: inline-block;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border-radius: 2px;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .material-btn:hover {
+    background: var(--accent);
+    color: var(--white);
+  }
+  .material-btn:disabled,
+  .material-btn.unavailable {
+    border-color: var(--line);
+    color: var(--line);
+    cursor: default;
+    background: transparent;
+  }
+  .material-btn:disabled:hover,
+  .material-btn.unavailable:hover {
+    background: transparent;
+    color: var(--line);
+  }
+
+  /* 모달 */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(38, 20, 16, 0.6);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open {
+    display: flex;
+  }
+  .modal-box {
+    background: var(--bg);
+    width: min(860px, 92vw);
+    max-height: 90vh;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(38,20,16,0.35);
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg2);
+  }
+  .modal-header h3 {
+    font-size: 16px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--text-dim);
+    line-height: 1;
+    padding: 4px 8px;
+    transition: color 0.15s;
+  }
+  .modal-close:hover { color: var(--accent); }
+  .modal-body {
+    flex: 1;
+    overflow: auto;
+    padding: 0;
+    background: #f0e8e0;
+  }
+  .modal-body iframe {
+    width: 100%;
+    height: 520px;
+    border: none;
+    display: block;
+  }
+  .modal-footer {
+    padding: 16px 28px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg2);
+  }
+  .modal-footer-note {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .download-btn {
+    display: inline-block;
+    padding: 8px 22px;
+    background: var(--accent);
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.15s;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .download-btn:hover { background: var(--accent2); }
 
   /* ────────── 8. 참여 규칙 ────────── */
   #rules {
@@ -543,7 +662,7 @@
     font-weight: 700;
     color: var(--text);
     margin-bottom: 12px;
-    font-family: 'Noto Serif KR', serif;
+    font-family: 'IBM Plex Sans KR', sans-serif;
   }
 
   .rule-body {
@@ -601,7 +720,7 @@
   .closing-quote {
     font-size: clamp(24px, 3.5vw, 38px);
     font-weight: 700;
-    font-family: 'Noto Serif KR', serif;
+    font-family: 'IBM Plex Sans KR', sans-serif;
     color: var(--text);
     line-height: 1.55;
     margin-bottom: 32px;
@@ -630,7 +749,7 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    background: rgba(248, 245, 240, 0.95);
+    background: rgba(246, 237, 230, 0.95);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--line);
     display: flex;
@@ -650,6 +769,7 @@
 
   .nav-links {
     display: flex;
+    align-items: center;
     gap: 28px;
   }
 
@@ -663,6 +783,27 @@
 
   .nav-links a:hover {
     color: var(--accent);
+  }
+
+  .nav-manual-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--accent) !important;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+  .nav-manual-btn:hover {
+    background: var(--accent) !important;
+    color: #f6ede6 !important;
   }
 
   /* section padding 보정 (고정 nav 높이) */
@@ -689,7 +830,7 @@
 
 <!-- ── 고정 네비게이션 ── -->
 <nav id="nav">
-  <span class="nav-logo">ninnik × 울림통 변주 2026</span>
+  <span class="nav-logo">ninnik × 울림통-변주 2026</span>
   <div class="nav-links">
     <a href="#artist">작가 소개</a>
     <a href="#universe">니닉 세계관</a>
@@ -698,6 +839,7 @@
     <a href="#curriculum">커리큘럼</a>
     <a href="#rules">참여 규칙</a>
     <a href="#minutes">OT 회의록</a>
+    <a href="매뉴얼.html" target="_blank" class="nav-manual-btn">울림통 매뉴얼 ↗</a>
   </div>
 </nav>
 
@@ -707,7 +849,7 @@
   <div class="cover-inner">
     <div class="cover-left">
       <p class="cover-eyebrow">Citizen Artist Orientation · 2026</p>
-      <h1 class="cover-title">울림통<br>변주</h1>
+      <h1 class="cover-title">울림통-변주</h1>
       <p class="cover-subtitle">협력창작 프로젝트</p>
       <div class="cover-divider"></div>
       <div class="cover-meta">
@@ -716,7 +858,7 @@
         <strong>형식</strong> 시민작가 협력창작 · 오리엔테이션<br>
         <strong>일시</strong> 2026. 4. 25. 토 &nbsp;오후 2시<br>
         <strong>장소</strong> 니닉크라프트<br>
-        <span style="font-size:12px;color:var(--text-dim);padding-left:4.5em;">강원특별자치도 원주시 문막읍 원문로 1734-15</span>
+        <span style="display:block;font-size:12px;color:var(--text-dim);margin-left:4.5em;">(26370) 강원특별자치도 원주시 문막읍 원문로 1734-15</span>
       </div>
     </div>
   </div>
@@ -753,7 +895,7 @@
       <span class="toc-num">04</span>
       <div class="toc-text">
         <h3>프로젝트 개요</h3>
-        <p>울림통 · 변주 2026 소개</p>
+        <p>울림통-변주 2026 소개</p>
       </div>
     </a>
     <a class="toc-item" href="#curriculum">
@@ -1031,7 +1173,7 @@
     <div class="overview-card">
       <span class="card-icon">📍</span>
       <h4>장소</h4>
-      <p>니닉크라프트<br>강원 원주시 문막읍 원문로 1734-15</p>
+      <p>니닉크라프트<br>(26370) 강원특별자치도 원주시 문막읍 원문로 1734-15</p>
     </div>
     <div class="overview-card">
       <span class="card-icon">👥</span>
@@ -1072,80 +1214,96 @@
         <th>회차</th>
         <th>제목</th>
         <th>내용</th>
+        <th style="width:90px;text-align:center;">자료</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>2026. 4. 25. 토</td>
+        <td>4. 25. 토</td>
         <td><span class="session-badge badge-ot">OT</span></td>
-        <td>오리엔테이션 <small style="color:var(--text-dim)">(1시간)</small></td>
+        <td>울림통-변주 오리엔테이션 <small style="color:var(--text-dim)">(2시간)</small></td>
         <td>작가 소개 / 프로젝트 개요 / 참여 규칙 안내 / 참여자 자기소개</td>
+        <td style="text-align:center;">—</td>
       </tr>
       <tr>
-        <td>5월 중 (날짜 조율)</td>
+        <td>5. 9. 토<br>5. 10. 일</td>
         <td><span class="session-badge badge-work">1회</span></td>
-        <td>재료 이해 및 모뉴먼트 드로잉 <small style="color:var(--text-dim)">(3시간)</small></td>
-        <td>흙(점토) 재료 특성 이해 / 자신의 모뉴먼트 드로잉 구상</td>
+        <td>재료 이해 · 모뉴먼트 드로잉 <small style="color:var(--text-dim)">(3시간)</small></td>
+        <td>흙(점토) 재료 특성 이해 / 자신의 모뉴먼트 드로잉 구상 / 타래성형 기초(모뉴먼트 모델링) / 손과 흙의 감각 익히기</td>
+        <td style="text-align:right;display:flex;gap:6px;justify-content:flex-end;align-items:center;">
+          <a href="매뉴얼.html" target="_blank" class="material-btn">울림통 매뉴얼</a>
+          <a href="자료_01회.html" target="_blank" class="material-btn">자료 보기</a>
+        </td>
       </tr>
       <tr>
-        <td>5월</td>
+        <td>5. 16. 토<br>5. 17. 일</td>
         <td><span class="session-badge badge-work">2회</span></td>
-        <td>점토 반죽 및 타래 만들기 <small style="color:var(--text-dim)">(3시간)</small></td>
-        <td>점토 반죽 실습 / 타래성형 기초 / 손과 흙의 감각 익히기</td>
+        <td>재료 준비 · 개별작업 개시 <small style="color:var(--text-dim)">(3시간)</small></td>
+        <td>점토 반죽 실습 / 개인 모뉴먼트 제작 시작 / 작가와 개별 피드백</td>
+        <td style="text-align:right;"><button class="material-btn unavailable" data-file="" data-title="2회 자료" disabled>준비 중</button></td>
       </tr>
       <tr>
-        <td>5~6월</td>
+        <td>5. 23. 토<br>5. 24. 일</td>
         <td><span class="session-badge badge-work">3회</span></td>
-        <td>점토 반죽 및 타래 만들기 <small style="color:var(--text-dim)">(3시간)</small></td>
-        <td>타래 쌓기 심화 / 구조 안정화 기법</td>
+        <td>재료 준비 · 타래 만들기 <small style="color:var(--text-dim)">(3시간)</small></td>
+        <td>점토 혼합 반죽 / 타래 만들기</td>
+        <td style="text-align:right;"><button class="material-btn unavailable" data-file="" data-title="3회 자료" disabled>준비 중</button></td>
       </tr>
       <tr>
-        <td>6월</td>
+        <td>5. 30. 토<br>5. 31. 일</td>
         <td><span class="session-badge badge-work">4회</span></td>
-        <td>구조 제작 및 다지기 <small style="color:var(--text-dim)">(3시간+α)</small></td>
-        <td>대형 울림통 구조 제작 시작 / 형태 잡기</td>
+        <td>대형 울림통 제작 시작 <small style="color:var(--text-dim)">(3시간+α)</small></td>
+        <td>울림통 기초 제작 / 반죽 · 타래 쌓기 병행</td>
+        <td style="text-align:right;"><button class="material-btn unavailable" data-file="" data-title="4회 자료" disabled>준비 중</button></td>
       </tr>
       <tr>
-        <td>6월</td>
+        <td>6. 6. 토<br>6. 7. 일</td>
         <td><span class="session-badge badge-work">5회</span></td>
-        <td>구조 제작 및 다지기 <small style="color:var(--text-dim)">(3시간+α)</small></td>
-        <td>구조 확장 / 내부 공간 확보 / 진행 상황 공유</td>
+        <td>대형 울림통 제작 <small style="color:var(--text-dim)">(3시간+α)</small></td>
+        <td>반죽 · 타래 쌓기 병행 / 사운드 녹음 진행</td>
+        <td style="text-align:right;"><button class="material-btn unavailable" data-file="" data-title="5회 자료" disabled>준비 중</button></td>
       </tr>
       <tr>
-        <td>6월</td>
+        <td>6. 13. 토<br>6. 14. 일</td>
         <td><span class="session-badge badge-work">6회</span></td>
-        <td>구조 제작 및 다지기 <small style="color:var(--text-dim)">(3시간+α)</small></td>
-        <td>구조 마무리 / 전체 형태 점검 / 사운드 녹음 진행</td>
+        <td>대형 울림통 제작 <small style="color:var(--text-dim)">(3시간+α)</small></td>
+        <td>성형 · 다지기 병행 / 사운드 녹음 진행</td>
+        <td style="text-align:right;"><button class="material-btn unavailable" data-file="" data-title="6회 자료" disabled>준비 중</button></td>
       </tr>
       <tr>
-        <td>6~7월</td>
+        <td>6. 20. 토<br>6. 21. 일</td>
         <td><span class="session-badge badge-work">7회</span></td>
-        <td>구조 제작 및 다지기 <small style="color:var(--text-dim)">(3시간+α)</small></td>
-        <td>보완 작업 / 건조 과정 관찰 / 사운드 녹음 진행</td>
+        <td>대형 울림통 제작 마무리 <small style="color:var(--text-dim)">(3시간+α)</small></td>
+        <td>성형 · 다지기 병행 / NFC 칩 매립</td>
+        <td style="text-align:right;"><button class="material-btn unavailable" data-file="" data-title="7회 자료" disabled>준비 중</button></td>
       </tr>
       <tr>
-        <td>7월</td>
+        <td>6. 27. 토<br>6. 28. 일</td>
         <td><span class="session-badge badge-work">8회</span></td>
-        <td>모뉴먼트 제작 <small style="color:var(--text-dim)">(3시간)</small></td>
-        <td>개인 모뉴먼트 제작 / 작가와 개별 피드백 / NFC 칩 매립</td>
+        <td>개인 모뉴먼트 점검 · 완료 <small style="color:var(--text-dim)">(3시간)</small></td>
+        <td>개인 모뉴먼트 점검 · 완료 / NFC 칩 매립 / 보완 작업 / 건조 과정 관찰</td>
+        <td style="text-align:right;"><button class="material-btn unavailable" data-file="" data-title="8회 자료" disabled>준비 중</button></td>
       </tr>
       <tr>
-        <td>7월</td>
+        <td>7. 4. 토<br>7. 5. 일</td>
         <td><span class="session-badge badge-work">9회</span></td>
-        <td>표면 마감 및 이름짓기 <small style="color:var(--text-dim)">(3시간)</small></td>
+        <td>표면 마감 · 이름짓기 <small style="color:var(--text-dim)">(3시간)</small></td>
         <td>표면 정리 · 기름 마감 / 작품 이름짓기 / 작가 노트 작성</td>
+        <td style="text-align:right;"><button class="material-btn unavailable" data-file="" data-title="9회 자료" disabled>준비 중</button></td>
       </tr>
       <tr>
-        <td>7월</td>
+        <td>7. 11. 토<br>7. 12. 일</td>
         <td><span class="session-badge badge-work">10회</span></td>
-        <td>설치 계획 공유 및 리뷰 <small style="color:var(--text-dim)">(2시간 · ZOOM 가능)</small></td>
+        <td>설치 계획 공유 · 리뷰 <small style="color:var(--text-dim)">(2시간 · ZOOM 가능)</small></td>
         <td>모뉴먼트 설치 공간 발표 / 전체 프로그램 리뷰 / 전시 준비 안내</td>
+        <td style="text-align:right;"><button class="material-btn unavailable" data-file="" data-title="10회 자료" disabled>준비 중</button></td>
       </tr>
       <tr>
-        <td>2026. 11. 21. 토</td>
+        <td>11. 21. 토</td>
         <td><span class="session-badge badge-final">오픈</span></td>
-        <td>전시 오프닝</td>
-        <td>〈울림통-변주〉 전시 오프닝 / 관람객 맞이 / 아티스트 토크</td>
+        <td>전시 오픈</td>
+        <td>〈울림통-변주〉 전시 개최 / 관람객 맞이 / 아티스트 토크</td>
+        <td style="text-align:center;">—</td>
       </tr>
       <tr>
         <td>11. 21. ~ 12. 13.<br><small style="color:var(--text-dim)">매일 11:00~17:00</small></td>
@@ -1153,11 +1311,12 @@
         <td>전시 운영 (23일간)</td>
         <td>김아영 개인전 〈울림통-변주〉 니닉크라프트 전시 · 입장 무료 · NFC 사운드 체험 운영<br>
         <span style="color:var(--accent2);font-size:13px;">+ 각 참여작가는 개인 제작 모뉴먼트를 자신의 공간(집·직장·지역 등)에 직접 설치·전시합니다. NFC 칩 링크를 통해 방문자가 니닉의 사운드와 온라인 울림통 네트워크에 연결되며, 전시장 밖으로 확산되는 분산형 네트워크 전시가 동시에 펼쳐집니다.</span></td>
+        <td style="text-align:center;">—</td>
       </tr>
     </tbody>
   </table>
   <p style="margin-top:20px;font-size:13px;color:var(--text-dim);">
-    ※ 일정은 참여자 협의에 따라 조정될 수 있습니다. 날짜 칸의 0000.00.00을 실제 일정으로 교체해 주세요.
+    ※ 일정은 참여자 협의에 따라 조정될 수 있습니다.
   </p>
 </section>
 
@@ -1246,21 +1405,21 @@
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
 
       <div style="background:var(--bg2);padding:24px 20px;">
-        <p style="font-size:11px;letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;margin-bottom:10px;font-weight:600;">토요일 팀</p>
+        <p style="font-size:11px;letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;margin-bottom:10px;font-weight:600;">토요일 오후 팀</p>
         <p style="font-size:14px;color:var(--text-dim);margin-bottom:10px;">14:00 ~ 17:00</p>
         <p style="font-size:15px;color:var(--text);line-height:2;">허양 · 이재홍 · 이성순<br>유광욱 · 조영범 · 이정선 · 임계화<br>신정숙 · 구효정</p>
-      </div>
-
-      <div style="background:var(--bg2);padding:24px 20px;">
-        <p style="font-size:11px;letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;margin-bottom:10px;font-weight:600;">일요일 오후 팀</p>
-        <p style="font-size:14px;color:var(--text-dim);margin-bottom:10px;">14:00 ~ 17:00</p>
-        <p style="font-size:15px;color:var(--text);line-height:2;">인동욱 · 민지현 · 조영범<br>김주원 · 이새롬</p>
       </div>
 
       <div style="background:var(--bg2);padding:24px 20px;">
         <p style="font-size:11px;letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;margin-bottom:10px;font-weight:600;">일요일 오전 팀</p>
         <p style="font-size:14px;color:var(--text-dim);margin-bottom:10px;">10:00 ~ 13:00</p>
         <p style="font-size:15px;color:var(--text);line-height:2;">이채명 · 박수연 · 박소연<br>이안 · 박진희</p>
+      </div>
+
+      <div style="background:var(--bg2);padding:24px 20px;">
+        <p style="font-size:11px;letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;margin-bottom:10px;font-weight:600;">일요일 오후 팀</p>
+        <p style="font-size:14px;color:var(--text-dim);margin-bottom:10px;">14:00 ~ 17:00</p>
+        <p style="font-size:15px;color:var(--text);line-height:2;">인동욱 · 민지현 · 조영범<br>김주원 · 이새롬</p>
       </div>
 
     </div>
@@ -1274,7 +1433,7 @@
     <div style="display:flex;flex-direction:column;gap:2px;">
 
       <div style="background:var(--bg2);padding:22px 24px;display:grid;grid-template-columns:32px 1fr;gap:16px;align-items:start;">
-        <span style="font-size:18px;font-weight:900;color:var(--accent);font-family:'Noto Serif KR',serif;">1</span>
+        <span style="font-size:18px;font-weight:900;color:var(--accent);font-family:'IBM Plex Sans KR',sans-serif;">1</span>
         <div>
           <p style="font-weight:600;color:var(--text);margin-bottom:6px;">울림통 3기 제작 · 장소 뽑기 진행 예정</p>
           <p style="font-size:14px;color:var(--text-dim);line-height:1.85;">3팀이 구성된 관계로 울림통 3기를 제작하는 방향으로 진행합니다. 장소는 단체 카톡방 뽑기로 결정합니다.<br>
@@ -1284,7 +1443,7 @@
       </div>
 
       <div style="background:var(--bg2);padding:22px 24px;display:grid;grid-template-columns:32px 1fr;gap:16px;align-items:start;">
-        <span style="font-size:18px;font-weight:900;color:var(--accent);font-family:'Noto Serif KR',serif;">2</span>
+        <span style="font-size:18px;font-weight:900;color:var(--accent);font-family:'IBM Plex Sans KR',sans-serif;">2</span>
         <div>
           <p style="font-weight:600;color:var(--text);margin-bottom:6px;">첫 작업 시작일 변경 — 5월 2·3일 → <span style="color:var(--accent);">5월 9일(토) · 10일(일)</span></p>
           <p style="font-size:14px;color:var(--text-dim);line-height:1.85;">작가 4월 30일 편도수술 일정(일정이 앞당겨졌습니다 ㅠ) 및 현장 참여자 전원 동의에 따라 첫 시작일을 일주일 미룹니다.</p>
@@ -1292,7 +1451,7 @@
       </div>
 
       <div style="background:var(--bg2);padding:22px 24px;display:grid;grid-template-columns:32px 1fr;gap:16px;align-items:start;">
-        <span style="font-size:18px;font-weight:900;color:var(--accent);font-family:'Noto Serif KR',serif;">3</span>
+        <span style="font-size:18px;font-weight:900;color:var(--accent);font-family:'IBM Plex Sans KR',sans-serif;">3</span>
         <div>
           <p style="font-weight:600;color:var(--text);margin-bottom:6px;">팀 시간대 준수 (원칙)</p>
           <p style="font-size:14px;color:var(--text-dim);line-height:1.85;">기본적으로 자신의 팀 시간대에만 참여합니다. 불가피한 경우 소수에 한해 최대한 문을 열어두되, 팀별 논의에 따라 결정합니다.</p>
@@ -1300,7 +1459,7 @@
       </div>
 
       <div style="background:var(--bg2);padding:22px 24px;display:grid;grid-template-columns:32px 1fr;gap:16px;align-items:start;">
-        <span style="font-size:18px;font-weight:900;color:var(--accent);font-family:'Noto Serif KR',serif;">4</span>
+        <span style="font-size:18px;font-weight:900;color:var(--accent);font-family:'IBM Plex Sans KR',sans-serif;">4</span>
         <div>
           <p style="font-weight:600;color:var(--text);margin-bottom:6px;">공동 울림통 작업 방식</p>
           <p style="font-size:14px;color:var(--text-dim);line-height:1.85;">기본적으로 즉흥 작업이지만, 팀 의견에 따라 청사진을 미리 그려보는 방식도 가능합니다. 팀 내에서 역할을 나누는 것도 가능합니다 (쌓기, 장식 붙이기 등). 원하시는 바를 자유롭게 공유해 주세요.</p>
@@ -1308,7 +1467,7 @@
       </div>
 
       <div style="background:var(--bg2);padding:22px 24px;display:grid;grid-template-columns:32px 1fr;gap:16px;align-items:start;">
-        <span style="font-size:18px;font-weight:900;color:var(--accent);font-family:'Noto Serif KR',serif;">5</span>
+        <span style="font-size:18px;font-weight:900;color:var(--accent);font-family:'IBM Plex Sans KR',sans-serif;">5</span>
         <div>
           <p style="font-weight:600;color:var(--text);margin-bottom:6px;">개별 모뉴먼트 작업</p>
           <p style="font-size:14px;color:var(--text-dim);line-height:1.85;">원하시는 방식대로, 작가가 함께 컨설팅하며 진행합니다.<br>
@@ -1331,6 +1490,12 @@
       <img src="1.jpg" alt="OT 현장 - 참여자들" style="width:100%;display:block;border-radius:2px;">
       <img src="2_crop.jpg" alt="OT 현장 - 공간" style="width:100%;display:block;border-radius:2px;">
     </div>
+  </div>
+
+  <!-- 매뉴얼 연결 버튼 -->
+  <div style="margin-top:48px;padding-top:32px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;">
+    <p style="font-size:13px;color:var(--text-dim);">제작·운영 전 과정의 상세 지침은 매뉴얼에서 확인하십시오.</p>
+    <a href="매뉴얼.html" target="_blank" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;">울림통 제작 및 운영 매뉴얼 ↗</a>
   </div>
 
 </section>
@@ -1357,5 +1522,26 @@
   </div>
 </section>
 
-</body>
-</html>
+
+<!-- ── 자료 모달 ── -->
+<div id="material-modal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="modal-title">자료</h3>
+      <button class="modal-close" id="modal-close-btn" aria-label="닫기">✕</button>
+    </div>
+    <div class="modal-body">
+      <iframe id="modal-iframe" src="" title="자료 미리보기"></iframe>
+    </div>
+    <div class="modal-footer">
+      <span class="modal-footer-note">PDF가 보이지 않으면 아래 버튼으로 다운로드하세요.</span>
+      <a id="modal-download-btn" href="#" download class="download-btn">⬇ 다운로드</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── 자료 모달 동작 ──
+  const modal      = document.getElementById('material-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalIframe= document.getElementByI
