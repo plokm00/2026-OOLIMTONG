@@ -166,9 +166,9 @@
   .step-list li {
     counter-increment: steps;
     display: flex;
-    gap: 18px;
+    gap: 14px;
     align-items: flex-start;
-    padding: 16px 0;
+    padding: 7px 0;
     border-bottom: 1px solid var(--line);
     font-size: 15px;
   }
@@ -178,15 +178,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 28px;
-    height: 28px;
+    min-width: 22px;
+    height: 22px;
     background: var(--accent);
     color: var(--white);
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     border-radius: 50%;
     flex-shrink: 0;
-    margin-top: 2px;
+    margin-top: 3px;
   }
 
   /* ── 팁 박스 ── */
@@ -372,8 +372,11 @@
       display: block;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
     }
-    .material-table tbody td:first-child { white-space: nowrap; }
+    .material-table thead th { white-space: nowrap; }
+    .material-table tbody td { white-space: normal; min-width: 80px; }
+    .material-table tbody td:first-child { white-space: nowrap; min-width: unset; }
 
     /* 단계 리스트 */
     .step-list li { gap: 14px; font-size: 14px; padding: 14px 0; }
@@ -397,8 +400,8 @@
 <header class="page-header">
   <p class="header-meta">울림통-변주 2026 · 1회 자료</p>
   <h1 class="header-title">재료 이해 · 모뉴먼트 드로잉·모델링</h1>
-  <p class="header-sub">흙을 처음 만나는 날 — 손으로 느끼고, 눈으로 구상합니다</p>
-  <span class="header-date">5. 9. 토 &nbsp;/&nbsp; 5. 10. 일 &nbsp;·&nbsp; 3시간</span>
+  <p class="header-sub">흙을 처음 만나는 날 — 상상한 울림을 구체화하기 위하여 예술감각을 이끌어냅니다</p>
+  <span class="header-date">5. 9. 토 &nbsp;/&nbsp; 5. 10. 일 &nbsp;·&nbsp; 2시간</span>
 </header>
 
 <!-- ── 본문 ── -->
@@ -410,19 +413,19 @@
     <h2 class="section-title">오늘의 흐름</h2>
     <div class="schedule-grid">
       <div class="schedule-card">
-        <p class="schedule-time">도입 · 30분</p>
-        <p class="schedule-item">흙(점토) 재료 이해</p>
+        <p class="schedule-time">도입 · 20분</p>
+        <p class="schedule-item">활동 소개, 울림통 의미 생각해보기</p>
       </div>
       <div class="schedule-card">
-        <p class="schedule-time">실습 1 · 60분</p>
-        <p class="schedule-item">반죽 · 타래 만들기</p>
+        <p class="schedule-time">실습 1 · 30분</p>
+        <p class="schedule-item">흙(점토) 탐색, 타래성형 기초</p>
       </div>
       <div class="schedule-card">
         <p class="schedule-time">실습 2 · 60분</p>
         <p class="schedule-item">모뉴먼트 드로잉·모델링</p>
       </div>
       <div class="schedule-card">
-        <p class="schedule-time">마무리 · 30분</p>
+        <p class="schedule-time">마무리 · 10분</p>
         <p class="schedule-item">공유 · 정리</p>
       </div>
     </div>
@@ -447,8 +450,8 @@
 
   <!-- 재료 이해 -->
   <div class="section">
-    <p class="section-label">01 · Materials</p>
-    <h2 class="section-title">흙(점토) 재료 이해</h2>
+    <p class="section-label">Clay Material</p>
+    <h2 class="section-title">흙(점토) 탐색</h2>
     <ul style="font-size:15px;line-height:1.85;color:var(--text);list-style:none;margin-bottom:20px;">
       <li style="padding:6px 0 6px 16px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>이번 프로젝트에서는 3~5가지 점토를 혼합하여 사용합니다. 서로 다른 성질의 흙을 섞으면 강도와 표현력이 높아집니다. 각 흙의 색과 촉감을 살펴보세요.</li>
       <li style="padding:6px 0 6px 16px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>갓 구입한 점토는 물 없이 반죽합니다. 반죽을 하다 보면 마블링이 생기는데, 은은한 마블링은 장식 요소가 될 수 있습니다.</li>
@@ -474,6 +477,10 @@
           <td>옹기토</td>
           <td>가소성 좋은 기본 도예점토.</td>
         </tr>
+        <tr>
+          <td>흑토</td>
+          <td>입자가 치밀하고 밀도가 높으며 찰기는 덜한 편. 갈라지기 쉬우나 다른 점토와 배합해 보완함.</td>
+        </tr>
       </tbody>
     </table>
 
@@ -489,8 +496,8 @@
 
   <!-- 반죽 & 타래 만들기 -->
   <div class="section">
-    <p class="section-label">02 · Coiling Basics</p>
-    <h2 class="section-title">반죽 · 타래 만들기</h2>
+    <p class="section-label">Clay Exploration · Coiling Basics</p>
+    <h2 class="section-title">흙(점토) 탐색, 타래성형 기초 시연</h2>
     <ul style="font-size:15px;line-height:1.85;color:var(--text);list-style:none;margin-top:8px;">
       <li style="padding:6px 0 6px 16px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>반죽 상태가 이후 모든 단계의 품질을 결정합니다. 처음이라도 천천히, 충분히 치대는 것이 중요합니다.</li>
       <li style="padding:6px 0 6px 16px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>대형 울림통에 사용할 타래는 매우 굵지만, 오늘 모뉴먼트에 사용할 타래는 손가락 굵기 전후로 제작합니다.</li>
@@ -509,7 +516,7 @@
 
   <!-- 모뉴먼트 드로잉·모델링 -->
   <div class="section">
-    <p class="section-label">03 · Monument Drawing &amp; Modeling</p>
+    <p class="section-label">Monument Drawing &amp; Modeling</p>
     <h2 class="section-title">나의 모뉴먼트 드로잉·모델링</h2>
 
     <ul style="font-size:15px;line-height:1.85;color:var(--text);list-style:none;margin-top:8px;">

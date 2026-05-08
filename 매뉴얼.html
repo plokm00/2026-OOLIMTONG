@@ -539,8 +539,9 @@
       -webkit-overflow-scrolling: touch;
       white-space: nowrap;
     }
-    .data-table tbody td { white-space: normal; }
-    .data-table tbody td:first-child { white-space: nowrap; }
+    .data-table thead th { white-space: nowrap; }
+    .data-table tbody td { white-space: normal; min-width: 80px; }
+    .data-table tbody td:first-child { white-space: nowrap; min-width: unset; }
 
     /* 단계 리스트 */
     .step-list li { gap: 12px; font-size: 14px; padding: 12px 0; }

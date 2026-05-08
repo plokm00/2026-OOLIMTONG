@@ -858,11 +858,17 @@
     .rule-card { padding: 28px 20px; }
 
     /* 커리큘럼 테이블 가로 스크롤 */
-    .curriculum-table-wrap {
+    .curriculum-table {
+      display: block;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
     }
-    .curriculum-table { min-width: 500px; }
+    .curriculum-table td {
+      white-space: normal;
+      min-width: 80px;
+    }
+    .curriculum-table th { white-space: nowrap; }
 
     /* 인라인 고정 grid (역할 배정 등) */
     div[style*="grid-template-columns:180px"] {
