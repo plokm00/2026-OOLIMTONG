@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>울림통 제작 및 운영 매뉴얼 | 울림통-변주 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+  :root {
+    --bg:       #f6ede6;
+    --bg2:      #eee0d6;
+    --bg3:      #e4d0c4;
+    --line:     #ceb0a0;
+    --accent:   #c03828;
+    --accent2:  #8c2418;
+    --text:     #261410;
+    --text-dim: #7a4c3c;
+    --white:    #f6ede6;
+    --sidebar:  260px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    line-height: 1.85;
+  }
+
+  /* ── 헤더 ── */
+  .page-header {
+    background: var(--bg2);
+    border-bottom: 2px solid var(--accent);
+    padding: 48px 64px 40px;
+  }
+  .header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .back-link {
+    font-size: 13px;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .header-title {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+  .header-subtitle {
+    font-size: 15px;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+  .header-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-right: 8px;
+  }
+  .wip-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #f5e0da;
+    border: 1px solid var(--accent2);
+    border-radius: 2px;
+    font-size: 11px;
+    color: var(--accent2);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── 레이아웃 ── */
+  .layout {
+    display: flex;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ── 사이드바 목차 ── */
+  .sidebar {
+    width: var(--sidebar);
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 36px 24px 36px 40px;
+    border-right: 1px solid var(--line);
+    background: var(--bg);
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+  }
+  .sidebar::-webkit-scrollbar {
+    width: 3px;
+  }
+  .sidebar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .sidebar::-webkit-scrollbar-thumb {
+    background: var(--line);
+    border-radius: 99px;
+  }
+  .sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--text-dim);
+  }
+  .toc-heading {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .toc-list {
+    list-style: none;
+  }
+  .toc-list li {
+    margin-bottom: 2px;
+  }
+  .toc-list a {
+    display: block;
+    font-size: 13px;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 5px 8px;
+    border-radius: 2px;
+    transition: background 0.12s, color 0.12s;
+    line-height: 1.5;
+  }
+  .toc-list a:hover,
+  .toc-list a.active {
+    background: var(--bg3);
+    color: var(--accent);
+  }
+  .toc-list .toc-chapter {
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--text);
+    margin-top: 10px;
+  }
+  .toc-list .toc-sub {
+    padding-left: 18px;
+    font-size: 12px;
+  }
+
+  /* ── 본문 ── */
+  .main-content {
+    flex: 1;
+    padding: 60px 64px 120px 56px;
+    min-width: 0;
+  }
+
+  /* ── 챕터 ── */
+  .chapter {
+    margin-bottom: 80px;
+    scroll-margin-top: 32px;
+  }
+  .chapter-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--accent);
+  }
+  .chapter-num {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    min-width: 56px;
+  }
+  .chapter-title {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: clamp(20px, 2.5vw, 28px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .section {
+    margin-bottom: 48px;
+    scroll-margin-top: 32px;
+  }
+  .section-title {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    border-left: 3px solid var(--accent);
+    padding-left: 14px;
+    margin-bottom: 18px;
+  }
+  .section-body {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.9;
+  }
+  .section-body p + p { margin-top: 12px; }
+
+  /* ── 박스 ── */
+  .tip-box {
+    background: #f5e0da;
+    border-left: none;
+    padding: 18px 22px;
+    margin: 20px 0;
+    font-size: 14px;
+    color: var(--text-dim);
+    border-radius: 0 2px 2px 0;
+    line-height: 1.85;
+  }
+  .tip-box strong {
+    display: block;
+    color: var(--accent2);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .warn-box {
+    background: #f5e0da;
+    border-left: none;
+    padding: 18px 22px;
+    margin: 20px 0;
+    font-size: 13px;
+    color: var(--accent2);
+    border-radius: 0 2px 2px 0;
+    line-height: 1.85;
+  }
+  .quote-box {
+    margin: 28px 0 28px 32px;
+    padding-left: 20px;
+    border-left: none;
+  }
+  .quote-box p {
+    font-style: italic;
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.9;
+  }
+
+  /* ── 테이블 ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 16px 0 24px;
+  }
+  .data-table thead th {
+    background: var(--bg3);
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 500;
+    border-bottom: 1px solid var(--accent);
+  }
+  .data-table tbody td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+    line-height: 1.7;
+  }
+  .data-table tbody tr:hover { background: var(--bg2); }
+  .data-table tbody td:first-child {
+    font-weight: 500;
+    color: var(--accent2);
+    white-space: nowrap;
+  }
+
+  /* ── 리스트 ── */
+  .bullet-list {
+    list-style: none;
+    margin: 12px 0;
+  }
+  .bullet-list li {
+    padding: 6px 0 6px 18px;
+    position: relative;
+    font-size: 14px;
+    line-height: 1.75;
+    border-bottom: 1px solid var(--line);
+  }
+  .bullet-list li:last-child { border-bottom: none; }
+  .bullet-list li::before {
+    content: '·';
+    position: absolute;
+    left: 4px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .step-list {
+    list-style: none;
+    counter-reset: steps;
+    margin: 12px 0;
+  }
+  .step-list li {
+    counter-increment: steps;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list li::before {
+    content: counter(steps);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 26px;
+    height: 26px;
+    background: var(--accent);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ── 상황별 카드 ── */
+  .situation-card {
+    background: transparent;
+    padding: 0;
+    margin-bottom: 32px;
+    scroll-margin-top: 32px;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+  .situation-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .situation-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .situation-meta span strong {
+    color: var(--text);
+    display: block;
+  }
+
+  /* ── 원칙 목록 ── */
+  .principle-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2px;
+    margin: 12px 0;
+  }
+  .principle-list li {
+    background: var(--bg2);
+    padding: 18px 20px;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .principle-list li strong {
+    display: block;
+    color: var(--accent);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+
+  /* ── 컬러칩 ── */
+  .color-chip-pair {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+  }
+  .color-chip {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 2px;
+    border: 1px dashed var(--line);
+    background: transparent;
+    flex-shrink: 0;
+  }
+
+  /* ── 기록부 ── */
+  .record-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
+    margin: 4px 0 14px;
+  }
+  .record-item {
+    background: transparent;
+    padding: 5px 0;
+    font-size: 13px;
+    border: none;
+  }
+  .record-item .label {
+    color: var(--text-dim);
+    font-size: 10.5px;
+    letter-spacing: 0.02em;
+    margin-bottom: 2px;
+  }
+  .record-item .value {
+    color: var(--text);
+    font-weight: 400;
+    min-height: 18px;
+    padding-bottom: 2px;
+  }
+  .record-chapter-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+    margin: 16px 0 4px;
+  }
+  .record-chapter-label:first-of-type {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+  }
+
+  /* ── 인쇄 ── */
+  @media print {
+    .sidebar, .page-header, .page-footer { display: none !important; }
+    .layout { display: block; }
+    .main-content { padding: 0; }
+    body { background: white; color: black; font-size: 12px; }
+    .chapter:not(#ch11) { display: none !important; }
+    #ch11 {
+      padding: 28px 32px;
+      page-break-inside: avoid;
+    }
+    .chapter-header { margin-bottom: 16px; }
+    .chapter-num { font-size: 18px; }
+    .chapter-title { font-size: 18px; }
+    .record-grid { gap: 0 16px; }
+    .record-item .value { border-bottom: none; }
+    .record-chapter-label { color: #333; border-top-color: #aaa; }
+    .tip-box { display: none; }
+  }
+
+  /* ── 미완성 안내 ── */
+  .wip-section {
+    background: #f5e0da;
+    border: 1px dashed var(--accent2);
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--accent2);
+    border-radius: 2px;
+    margin: 12px 0;
+  }
+
+  /* ── 푸터 ── */
+  .page-footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--line);
+    padding: 28px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .back-btn {
+    display: inline-block;
+    padding: 8px 20px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 2px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .back-btn:hover { background: var(--accent); color: var(--white); }
+
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main-content { padding: 40px 24px 80px; }
+    .page-header { padding: 32px 24px 28px; }
+    .record-grid { grid-template-columns: 1fr; }
+    .situation-meta { grid-template-columns: 1fr; }
+    .page-footer { padding: 24px; flex-direction: column; gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── 헤더 ── -->
+<header class="page-header">
+  <div class="header-nav">
+    <p class="header-eyebrow">울림통-변주 2026 · 제작 및 운영 매뉴얼</p>
+    <a href="OT_울림통변주_2026.html" class="back-link">← OT 자료로 돌아가기</a>
+  </div>
+  <h1 class="header-title">울림통<br>제작 및 운영 매뉴얼</h1>
+  <p class="header-subtitle">흙으로 짓는 공명의 기(器), 함께 만드는 명상의 공간</p>
+</header>
+
+<!-- ── 레이아웃 ── -->
+<div class="layout">
+
+  <!-- 사이드바 -->
+  <nav class="sidebar">
+    <p class="toc-heading">목차</p>
+    <ul class="toc-list">
+      <li><a href="#ch1" class="toc-chapter">1장. 프로젝트 개요</a></li>
+      <li><a href="#ch1-1" class="toc-sub">1.1 울림통이란?</a></li>
+      <li><a href="#ch1-2" class="toc-sub">1.2 프로젝트의 목적</a></li>
+      <li><a href="#ch1-3" class="toc-sub">1.3 프로젝트 철학</a></li>
+      <li><a href="#ch2" class="toc-chapter">2장. 구조 설계</a></li>
+      <li><a href="#ch2-1" class="toc-sub">2.1 권장 규격</a></li>
+      <li><a href="#ch2-2" class="toc-sub">2.2 형태</a></li>
+      <li><a href="#ch2-3" class="toc-sub">2.3 공명 구조</a></li>
+      <li><a href="#ch3" class="toc-chapter">3장. 재료 및 도구</a></li>
+      <li><a href="#ch3-1" class="toc-sub">3.1 점토 종류 및 혼합비</a></li>
+      <li><a href="#ch3-2" class="toc-sub">3.2 기초 및 보강 재료</a></li>
+      <li><a href="#ch3-3" class="toc-sub">3.3 마감 재료</a></li>
+      <li><a href="#ch3-4" class="toc-sub">3.4 도구 및 장비</a></li>
+      <li><a href="#ch4" class="toc-chapter">4장. 제작 단계별 가이드</a></li>
+      <li><a href="#ch4-1" class="toc-sub">4.1 점토 반죽 및 타래 제작</a></li>
+      <li><a href="#ch4-2" class="toc-sub">4.2 바닥 기초 제작</a></li>
+      <li><a href="#ch4-3" class="toc-sub">4.3 형태 제작 및 출입구</a></li>
+      <li><a href="#ch4-4" class="toc-sub">4.4 내·외벽 다지기</a></li>
+      <li><a href="#ch4-5" class="toc-sub">4.5 장식 및 개성 표현</a></li>
+      <li><a href="#ch4-6" class="toc-sub">4.6 건조</a></li>
+      <li><a href="#ch4-7" class="toc-sub">4.7 작업 인원 및 시간</a></li>
+      <li><a href="#ch5" class="toc-chapter">5장. 마감 작업</a></li>
+      <li><a href="#ch5-1" class="toc-sub">5.1 동유·옻칠동유 혼합 마감</a></li>
+      <li><a href="#ch5-2" class="toc-sub">5.2 동유 단독 마감</a></li>
+      <li><a href="#ch5-3" class="toc-sub">5.3 유화아스팔트 외벽 마감</a></li>
+      <li><a href="#ch6" class="toc-chapter">6장. 상황별 대응</a></li>
+      <li><a href="#ch6-1" class="toc-sub">6.1 구조 붕괴 위험</a></li>
+      <li><a href="#ch6-2" class="toc-sub">6.2 일부 무너짐</a></li>
+      <li><a href="#ch6-3" class="toc-sub">6.3 심한 균열 발생</a></li>
+      <li><a href="#ch6-4" class="toc-sub">6.4 물 유입</a></li>
+      <li><a href="#ch6-5" class="toc-sub">6.5 곰팡이 발생</a></li>
+      <li><a href="#ch6-6" class="toc-sub">6.6 외벽 이끼 발생</a></li>
+      <li><a href="#ch6-7" class="toc-sub">6.7 외부 세척</a></li>
+      <li><a href="#ch7" class="toc-chapter">7장. 안전 관리</a></li>
+      <li><a href="#ch7-1" class="toc-sub">7.1 구조 안전 기준</a></li>
+      <li><a href="#ch7-2" class="toc-sub">7.2 안전 지침</a></li>
+      <li><a href="#ch8" class="toc-chapter">8장. 프로그램 운영</a></li>
+      <li><a href="#ch8-1" class="toc-sub">8.1 기본 워크숍</a></li>
+      <li><a href="#ch8-2" class="toc-sub">8.2 확장 프로그램</a></li>
+      <li><a href="#ch8-3" class="toc-sub">8.3 퍼실리테이터 운영 지침</a></li>
+      <li><a href="#ch9" class="toc-chapter">9장. 유지 관리</a></li>
+      <li><a href="#ch9-1" class="toc-sub">9.1 정기 점검 체크리스트</a></li>
+      <li><a href="#ch9-2" class="toc-sub">9.2 균열 보수 방법</a></li>
+      <li><a href="#ch9-3" class="toc-sub">9.3 계절별 방수 코팅</a></li>
+      <li><a href="#ch10" class="toc-chapter">10장. 철거 및 재활용</a></li>
+      <li><a href="#ch10-1" class="toc-sub">10.1 철거 판단 기준</a></li>
+      <li><a href="#ch10-2" class="toc-sub">10.2 철거 방법</a></li>
+      <li><a href="#ch11" class="toc-chapter">11장. 제작 이력 기록부</a></li>
+    </ul>
+  </nav>
+
+  <!-- 본문 -->
+  <main class="main-content">
+
+    <!-- ── 1장 ── -->
+    <div class="chapter" id="ch1">
+      <div class="chapter-header">
+        <span class="chapter-num">01</span>
+        <h2 class="chapter-title">프로젝트 개요</h2>
+      </div>
+
+      <div class="section" id="ch1-1">
+        <h3 class="section-title">1.1 울림통(Oolimtong)이란?</h3>
+        <div class="section-body">
+          <p>울림통은 흙(도예점토)을 재료로 하여 시민이 함께 조형물을 만드는 협력창작 프로젝트입니다. 흙으로 빚고, 말리고, 다지는 과정 속에서 참여자들의 손길과 시간이 축적되어 하나의 작품으로 완성됩니다.</p>
+          <p>울림통을 창안한 김아영 작가는 한국에서 도예와 회화를 전공(학사)하고 호주에서 디지털미디어를 전공(석사)한 이력을 바탕으로 독특한 융합매체적 작업관을 펼치고 있습니다. '니닉(Ninnik)'은 단발적 설정이 아니라 끝없는 상상력의 원천이자 고유한 세계를 구축하는 창조의 구심점이며, 20년 가까운 작품의 축적과 전시 발표를 통하여 그 지속성을 증명하고 있습니다.</p>
+          <p>울림통 시리즈는 2019년에 시작되어 2024년, 2025년을 거치며 계속해서 진화해왔습니다. 2019년 첫 번째 울림통은 가상과 현실이 교차하는 융합의 장이었고, 2024년 두 번째 울림통은 실체에 집중해 시민들과 거대한 흙 구조를 쌓아 올렸습니다. 2025년에는 일곱 개의 울림통이 아이들이 들어가 노는 체험적 예술공간으로 진화했습니다.</p>
+          <p>올해 2026년, 작가는 울림통 설치계획을 다양한 지역으로 넓힘으로써 더 많은 사람과 울림통 간의 지속적 연결을 도모합니다.</p>
+        </div>
+      </div>
+
+      <div class="section" id="ch1-2">
+        <h3 class="section-title">1.2 프로젝트의 목적</h3>
+        <div class="section-body">
+          <p>울림통은 흙(점토)을 주 재료로 여러 사람이 함께 손으로 쌓아 올리는 공동 제작 구조물입니다. 단순한 조형물이 아니라, 완성 후 그 내부 공간을 소리 공명과 명상 체험의 장으로 활용하는 데 본질적 목적이 있습니다.</p>
+        </div>
+        <ul class="bullet-list" style="margin-top:16px;">
+          <li><strong>공동 창작 경험</strong> — 다수의 참여자가 손으로 직접 흙을 다루며 짓는 협업 예술</li>
+          <li><strong>감각 기반 예술교육</strong> — 재료의 질감, 무게, 냄새를 온몸으로 경험하는 예술</li>
+          <li><strong>공명과 명상의 경험</strong> — 완성된 내부 공간에서 울리는 소리와 고요함으로 몸과 마음을 되찾는 감각 체험</li>
+          <li><strong>지속가능 생태 예술</strong> — 흙·물·기름만으로 완성하며, 자연으로 회귀할 수 있는 환경 순환적 예술 실천</li>
+          <li><strong>공동체 유산</strong> — 학교·마을·기관에 물리적 흔적을 남기는 집단 기억의 공간</li>
+        </ul>
+      </div>
+
+      <div class="section" id="ch1-3">
+        <h3 class="section-title">1.3 프로젝트 철학</h3>
+        <div class="section-body">
+          <p>현대 사회는 빠름, 완벽함, 디지털화로 요약됩니다. 울림통은 이에 정반대의 가치를 제안합니다. <strong>느리게 손으로, 불완전하게, 함께.</strong> 흙이라는 가장 원초적인 재료가 가장 현대적인 예술 프로그램이 될 수 있습니다.</p>
+          <p>약간의 공간만 있으면 만들 수 있고, 때가 되면 물에 녹이거나 흙에 묻으면 됩니다. 이 순환 자체가 프로그램의 일부입니다.</p>
+        </div>
+        <div class="quote-box">
+          <p>"내 집에 가져다 놓았으면 좋겠다. 지금은 비좁아서 자리가 없지만, 넓은 집이 생기면 꼭 울림통을 하나 두고 들어가서 명상하면 좋겠다."</p>
+        </div>
+        <div class="section-body">
+          <p>아직 개인의 일상 공간에 보급하기는 어렵더라도, 사람들이 모이는 공공의 장소에 하나씩 설치하여 누구나 찾아와 마음을 들여다볼 수 있는 열린 공간을 조성하는 것은 가능하지 않을까. 이 생각에서 본 프로젝트는 출발했습니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 2장 ── -->
+    <div class="chapter" id="ch2">
+      <div class="chapter-header">
+        <span class="chapter-num">02</span>
+        <h2 class="chapter-title">울림통 구조 설계</h2>
+      </div>
+
+      <div class="section" id="ch2-1">
+        <h3 class="section-title">2.1 권장 규격</h3>
+        <div class="section-body">
+          <p>아래 수치는 성인 1명이 내부에서 명상 체험을 할 수 있도록 최적화한 기준입니다. 각 수치는 완전히 건조된 상태에서 측정한 값으로, <strong>성형 시 흙의 수축율(10% 내외)을 감안하여 작업하십시오.</strong></p>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr><th>항목</th><th>최솟값</th><th>최댓값</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>높이</td><td>90 cm</td><td>140 cm</td></tr>
+            <tr><td>내부 직경 (바닥 기준)</td><td>70 cm</td><td>110 cm</td></tr>
+            <tr><td>벽 두께</td><td>3.5~5 cm (적정)</td><td>8 cm (최하단)</td></tr>
+            <tr><td>입구 높이</td><td>60 cm</td><td>80 cm</td></tr>
+            <tr><td>입구 폭(지름)</td><td>50 cm</td><td>70 cm</td></tr>
+            <tr><td>기초 바닥 두께 (선택)</td><td>4 cm</td><td>5 cm</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section" id="ch2-2">
+        <h3 class="section-title">2.2 형태</h3>
+        <div class="section-body">
+          <p>울림통은 용도와 제작 인원, 공간 여건에 따라 다양한 형태로 시공할 수 있습니다. 단, 외부 설치 시 단순한 형태가 환경 내구성이 더 높습니다.</p>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr><th>형태</th><th>특징</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>빗살무늬토기형 (기본)</td><td>엎어놓은 종 모양, 가장 안정적, 공명 효과 우수</td></tr>
+            <tr><td>돔형</td><td>공명 효과 우수, 내구도 견고, 상부 시공 기술 필요</td></tr>
+            <tr><td>터널형</td><td>이동 동선 확보, 전시·퍼포먼스 공간 활용 유리</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section" id="ch2-3">
+        <h3 class="section-title">2.3 공명 구조 설계</h3>
+        <div class="section-body">
+          <p>울림통의 핵심 기능인 음향 공명은 여러 요소들의 상호작용으로 결정됩니다. 보다 정밀한 공명 최적화를 위한 연구를 계속 진행합니다.</p>
+        </div>
+        <div class="wip-section">※ 곡률에 따른 소리의 집중도, 벽 두께에 따른 외부 소음 차단 및 저음 공명 강화, 입구의 크기와 비율에 따른 공명 변화, 입구 방향에 따른 내부 정숙감 향상 등 세부 내용 추후 연구 진행 예정</div>
+      </div>
+    </div>
+
+    <!-- ── 3장 ── -->
+    <div class="chapter" id="ch3">
+      <div class="chapter-header">
+        <span class="chapter-num">03</span>
+        <h2 class="chapter-title">재료 및 도구</h2>
+      </div>
+
+      <div class="section" id="ch3-1">
+        <h3 class="section-title">3.1 점토 종류 및 혼합비</h3>
+        <div class="section-body">
+          <p>실제 제작에 사용한 점토 종류 및 혼합 기준입니다. 2019, 2024, 2025년 작업에는 3~5종류 점토를 조합하였고, 대체로 안정적인 결과를 보였습니다.</p>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>점토 종류</th>
+              <th style="text-align:center;">소성 기준<br>전체수축률(%)</th>
+              <th>특징</th>
+              <th style="text-align:center;">색상(건조 전·후)<br><span style="font-weight:400;letter-spacing:0;text-transform:none;font-size:10px;">※ 사진 추후 등록</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>나라 페이퍼클레이</td>
+              <td style="text-align:center;">13</td>
+              <td>종이섬유 포함, 균열 억제 효과</td>
+              <td><div class="color-chip-pair"><span class="color-chip"></span><span class="color-chip"></span></div></td>
+            </tr>
+            <tr>
+              <td>페이퍼클레이 (조형용)</td>
+              <td style="text-align:center;">14.5</td>
+              <td>종이섬유 포함, 균열 억제 효과, 기본태토</td>
+              <td><div class="color-chip-pair"><span class="color-chip"></span><span class="color-chip"></span></div></td>
+            </tr>
+            <tr>
+              <td>SCB 조형토</td>
+              <td style="text-align:center;">11</td>
+              <td>색감 및 조형성 향상</td>
+              <td><div class="color-chip-pair"><span class="color-chip"></span><span class="color-chip"></span></div></td>
+            </tr>
+            <tr>
+              <td>일반 조형토B</td>
+              <td style="text-align:center;">10~12</td>
+              <td>접근성 높음, 샤모트 함유로 조형성 향상</td>
+              <td><div class="color-chip-pair"><span class="color-chip"></span><span class="color-chip"></span></div></td>
+            </tr>
+            <tr>
+              <td>흑토</td>
+              <td style="text-align:center;">15</td>
+              <td>색감 다양화, 무게 감소</td>
+              <td><div class="color-chip-pair"><span class="color-chip"></span><span class="color-chip"></span></div></td>
+            </tr>
+            <tr>
+              <td>옹기토</td>
+              <td style="text-align:center;">20~22</td>
+              <td>저렴하며 대중적, 철분 함유량 높음, 기본태토</td>
+              <td><div class="color-chip-pair"><span class="color-chip"></span><span class="color-chip"></span></div></td>
+            </tr>
+            <tr>
+              <td>고려도토</td>
+              <td style="text-align:center;">10~13</td>
+              <td>뻑뻑함</td>
+              <td><div class="color-chip-pair"><span class="color-chip"></span><span class="color-chip"></span></div></td>
+            </tr>
+            <tr>
+              <td>바다 조형토</td>
+              <td style="text-align:center;">6~7</td>
+              <td>—</td>
+              <td><div class="color-chip-pair"><span class="color-chip"></span><span class="color-chip"></span></div></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="tip-box">
+          <strong>혼합 비율 예시</strong>
+          페이퍼클레이 : SCB조형토(or 일반조형토B) : 흑토 : 옹기토 = 1 : 1 : 1 : 1 (눈대중 비율)<br>
+          페이퍼클레이 입수가 어려운 경우의 조합방식은 연구 중입니다.
+        </div>
+        <div class="section-body" style="margin-top:16px;">
+          <p><strong>점토 사용량 참고 사례</strong></p>
+        </div>
+        <ul class="bullet-list">
+          <li>높이 180cm, 두께 3-4cm → 약 600kg 사용, 건조 후 약 400kg (2019년)</li>
+          <li>높이 200cm, 두께 4-6cm → 약 1톤 사용, 건조 후 약 700kg (2024년)</li>
+          <li>높이 100cm 전후 울림통 7기 → 약 1.2톤 사용 (2025년)</li>
+        </ul>
+        <div class="wip-section">※ 점토 총량 산출 공식 추후 연구 예정</div>
+      </div>
+
+      <div class="section" id="ch3-2">
+        <h3 class="section-title">3.2 기초 및 보강 재료</h3>
+        <div class="section-body">
+          <p>점토 단독 시공을 권장합니다. 흙 자체로 완성하고, 목재 등의 골재, 합성섬유(나일론, 폴리에스터 등) 사용은 피하십시오. 다만 상황에 맞게 아래 보강재를 선택하여 사용할 수 있습니다.</p>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr><th>보강재</th><th>역할</th><th>사용 방법</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>종이 펄프</td><td>균열 억제, 인장강도 강화</td><td>기 포함된 점토(페이퍼클레이) 사용 또는 일반 종이죽을 점토에 혼합</td></tr>
+            <tr><td>순면 거즈</td><td>구조 보강</td><td>외장 흙마감 혹은 유화아스팔트 혼합물 도포 시 외벽에 둘러 사용</td></tr>
+            <tr><td>샤모트 (모래)</td><td>구조물 강화, 수축균열 방지</td><td>기 포함된 점토 사용 또는 모래를 직접 점토에 혼합</td></tr>
+            <tr><td>볏짚 (3~5cm 절단)</td><td>전통 보강재, 균열 억제</td><td>이론적 대체재, 실사용 비율 낮음</td></tr>
+            <tr><td>코코넛 섬유 매트</td><td>바닥 물빠짐 처리</td><td>첫 단 타래 밑면에 깔기</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section" id="ch3-3">
+        <h3 class="section-title">3.3 마감 재료</h3>
+        <div class="section-body">
+          <p>마감은 울림통의 내구성과 방수성, 심미성을 결정합니다. 아래 재료의 조합과 순서를 준수하십시오.</p>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr><th>마감재</th><th>용도</th><th>사용 기준</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>동유 (桐油, Tung Oil)</td><td>외벽 하칠 (기본 오일 마감)</td><td>기본 2회 도포. 회차 사이 충분히 건조</td></tr>
+            <tr><td>옻칠동유</td><td>외벽 상칠 (도막 형성)</td><td>단독 3회 이상 시 니스처럼 반짝거림 주의. 도막 얇고 약함(긁힘에 취약)</td></tr>
+            <tr><td>옻칠 생칠</td><td>외벽 상칠 (고급 마감)</td><td>1회 도포 시 은은한 광택의 진한 갈색을 띰</td></tr>
+            <tr><td>유화아스팔트 + 점토 (3~4:1)</td><td>바닥 첫 단 및 외벽 전체 방수</td><td>반건조 시 도포. 하루 숙성 후 도포 권장. 쉽게 굳으므로 붓을 넉넉히 준비</td></tr>
+            <tr><td>옻칠동유 + 흙가루 페이스트</td><td>완전건조 후 균열 보수</td><td>동일 흙을 완전히 말려 부수어 체에 걸러 사용. 갈라진 곳에 채워 넣기</td></tr>
+            <tr><td>파인 우드칩</td><td>내부 바닥 마감 (옵션)</td><td>체험 쾌적성 향상</td></tr>
+            <tr><td>화학적 방수제 및 시멘트</td><td>최후 보수</td><td>흙가루 페이스트로 보수가 충분하지 않을 시 적용. 되도록이면 사용 지양</td></tr>
+          </tbody>
+        </table>
+        <div class="tip-box">
+          <strong>권장 마감 순서</strong>
+          완전건조 확인 → 동유 2회 (하칠) → 옻칠동유 또는 동유 1회 (상칠) → 균열 보수 (옻칠동유+흙가루)
+        </div>
+      </div>
+
+      <div class="section" id="ch3-4">
+        <h3 class="section-title">3.4 도구 및 장비</h3>
+
+        <p style="font-weight:600;color:var(--accent2);margin-bottom:10px;font-size:14px;">작업 도구 (성형-건조)</p>
+        <ul class="bullet-list">
+          <li>저울 (일반 저울, 용수철 저울) — 점토 계량용, 흙 사용량 기록에 필수</li>
+          <li>나무판, 흙자름줄, 스펀지, 분무기 — 기본 반죽·성형 도구</li>
+          <li>표면 다짐용 돌 또는 두드리개 — 벽체 밀도 강화의 핵심 도구</li>
+          <li>붓 — 유화아스팔트·오일 도포용 소모품</li>
+          <li>비닐 — 습도 조절 필수 장비</li>
+          <li>끈 — 비닐 고정용</li>
+          <li>토치 — 곰팡이·먼지 제거용. 화재 주의, 소화기 항상 비치</li>
+          <li>휴대용 송풍기 (블로워) — 건조 촉진 및 먼지 제거</li>
+          <li>라쳇 벨트, 탄력바 — 벌어짐 방지 및 형태 보정, 긴급 상황에 효과적</li>
+        </ul>
+
+        <p style="font-weight:600;color:var(--accent2);margin:20px 0 10px;font-size:14px;">작업 환경 장비</p>
+        <ul class="bullet-list">
+          <li>천막·차양막 — 직사광선·비 차단</li>
+          <li>충전형 투광기 — 야간 작업용</li>
+          <li>앉은뱅이 의자 — 하부 작업 편의</li>
+          <li>단프라 박스 — 물품 보관·정리</li>
+          <li>대차 — 물품 이동</li>
+          <li>전시대, 파렛트 — 작품을 파렛트에 올려 쌓으면 운송에 용이</li>
+        </ul>
+
+        <p style="font-weight:600;color:var(--accent2);margin:20px 0 10px;font-size:14px;">안전·보조 장비</p>
+        <ul class="bullet-list">
+          <li>보안경 — 흙먼지로부터 눈 보호. <strong>필수</strong></li>
+          <li>작업복, 앞치마, 장갑 — 의류 보호 및 위생</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── 4장 ── -->
+    <div class="chapter" id="ch4">
+      <div class="chapter-header">
+        <span class="chapter-num">04</span>
+        <h2 class="chapter-title">제작 단계별 가이드</h2>
+      </div>
+
+      <div class="tip-box" style="margin-bottom:32px;">
+        <strong>핵심 주의</strong>
+        각 단계를 건너뛰지 마십시오. 초반 기초가 불충분하면 이후 모든 단계에서 붕괴·균열로 이어집니다.
+      </div>
+
+      <table class="data-table" style="margin-bottom:40px;">
+        <thead>
+          <tr><th>단계</th><th>항목</th><th>핵심 작업</th><th>소요 시간</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1단계</td><td>흙 반죽</td><td>점토 조합 및 반죽, 기포 확인</td><td>성형 착수 전 미리 준비 권장</td></tr>
+          <tr><td>2단계</td><td>바닥 기초 제작</td><td>코코넛매트·거즈·유화아스팔트 방수</td><td>1~2시간</td></tr>
+          <tr><td>3단계</td><td>형태 제작 및 입구 형성</td><td>타래성형</td><td>높이 100cm 기준 1~2주, 하루 2~4시간</td></tr>
+          <tr><td>4단계</td><td>내·외벽 다지기</td><td>거즈 보강(선택), 외벽 유화아스팔트</td><td>높이 100cm 기준 1~3일, 하루 2~4시간</td></tr>
+          <tr><td>5단계</td><td>장식 및 개성 표현</td><td>색 점토 레이어, 새기기·찍기·붙이기</td><td>자유</td></tr>
+          <tr><td>6단계</td><td>건조</td><td>비닐 습도 조절, 느린 건조, 균열 수시 관찰</td><td>1~4주</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section" id="ch4-1">
+        <h3 class="section-title">4.1 점토 반죽 및 타래 제작</h3>
+        <div class="section-body"><p><strong>목표:</strong> 반죽 상태가 이후 모든 단계의 품질을 결정합니다. 제작 전 충분히 섞여 균일하게 숙성된 점토를 준비합니다.</p></div>
+        <ul class="bullet-list" style="margin-top:16px;">
+          <li>점토를 준비하고 혼합비율에 따라 소분합니다. 반죽하는 사람의 힘과 기술을 감안하여 덩어리 크기를 결정합니다. 눈대중으로 작업하거나 저울로 계량합니다.</li>
+          <li>손을 깨끗이 씻어 청결히 하고, 손의 열기를 식힙니다.</li>
+          <li>점토를 한데 모아 메치고, 손과 체중을 이용해 충분히 치댑니다(꼬막밀기). 반드시 정해진 방법으로 반죽할 필요는 없습니다.</li>
+          <li>흙자름줄로 덩어리를 반으로 갈라 기포(작은 구멍) 유무를 확인합니다. 기포가 보이면 치대는 과정을 반복합니다.</li>
+          <li>반죽이 완료되면 길쭉한 원통형의 타래를 손으로 주물러 빚어냅니다. 판에 대고 굴리는 방식은 지양합니다.</li>
+          <li>완성된 타래를 비닐로 밀봉하고 숙성합니다. 가능하면 전날 미리 반죽해 두는 것이 이상적입니다.</li>
+        </ul>
+
+        <p style="font-weight:600;color:var(--accent2);margin:24px 0 10px;font-size:14px;">반죽 상태 판정</p>
+        <ul class="bullet-list">
+          <li>갓 구입한 정상적인 점토를 반죽할 때는 물을 사용할 필요가 없습니다. 점토가 오래되었거나 너무 오래 반죽하여 덩어리가 마르고 갈라지면 분무기로 수분을 보충합니다.</li>
+          <li>타래의 굵기는 균일해야 합니다. 상부로 갈수록 벽 두께를 줄여갈 계획이라면 타래도 그에 맞추어 굵기를 조절합니다. 타래의 길이는 달라도 무관합니다.</li>
+          <li>마블링이 은은하게 질 정도로 반죽되면 흙자름줄로 덩어리를 반으로 갈라 기포 유무를 확인합니다. 작은 구멍이 보이면 기포가 들어간 것이므로 치대는 과정을 반복합니다.</li>
+          <li>적당한 마블링은 오히려 장식 요소가 될 수 있으므로 그대로 두어도 괜찮습니다.</li>
+        </ul>
+
+        <div class="warn-box">
+          ⚠ 반죽 시 손을 씻고 작업할 것. 불순물 유입은 곰팡이의 원인이 됩니다.<br>
+          ⚠ 흙이 튀거나 손에서 마른 흙가루가 날리기 쉬우니 보안경 착용을 권장합니다.
+        </div>
+      </div>
+
+      <div class="section" id="ch4-2">
+        <h3 class="section-title">4.2 바닥 기초 제작</h3>
+        <div class="section-body"><p><strong>목표:</strong> 전체 구조물의 하중을 지지하는 안정적인 기초를 마련하고, 방수층을 확보합니다.</p></div>
+        <ul class="bullet-list" style="margin-top:16px;">
+          <li>코코넛 매트를 잘라 원하는 바닥 형태대로 놓고, 3겹 이상 겹쳐 깔아 물빠짐이 가능하도록 만듭니다. 매트 조각은 이쑤시개나 실 등으로 연결합니다.</li>
+          <li>유화아스팔트와 흙의 혼합물을 코일 전체에 도포하여 방수를 보강합니다.</li>
+          <li>첫 단을 비롯해 2~3층의 타래를 추가로 올리고 충분히 다진 후, 반건조 상태가 되면 본격 벽체 성형으로 넘어갑니다.</li>
+          <li>바닥과 닿는 링(하단 첫 단)은 갈라짐을 예상하고 제작 중 지속적으로 다져서 보정합니다. 이 부위의 갈라짐은 구조적 문제가 아니며 일반적 현상입니다.</li>
+        </ul>
+        <div class="warn-box">
+          ⚠ 바닥 방수 처리를 절대 빠뜨리지 마십시오. 가장 밑단의 바닥면부터 방수 처리하지 않으면 이후 누수의 주된 원인이 됩니다.<br>
+          ⚠ 기초 반건조 전에 벽체를 올리면 기초가 밀려나며 전체 구조가 뒤틀립니다.
+        </div>
+      </div>
+
+      <div class="section" id="ch4-3">
+        <h3 class="section-title">4.3 형태 제작 및 출입구 형성</h3>
+        <div class="section-body"><p><strong>목표:</strong> 균일한 두께의 벽체를 쌓아 구조적 강도를 확보합니다. 쌓는 속도보다 반건조 상태 유지와 다지기가 핵심입니다.</p></div>
+
+        <p style="font-weight:600;color:var(--accent2);margin:20px 0 10px;font-size:14px;">타래성형(Coiling) 기법</p>
+        <ul class="bullet-list">
+          <li>타래를 얹고 아랫단과 붙도록 누르거나 쳐준 뒤, 손가락으로 틈을 아래위로 당겨 메꿔줍니다. 표면을 평평하게 만들기보다 타래 형상이 남도록 울퉁불퉁한 층을 유지합니다.</li>
+          <li>적층 시 위에서 아래로 누르는 힘을 가해 밀도를 높입니다. 전체 밀도를 균일하게 유지하십시오.</li>
+          <li>한 층씩 쌓거나 나선으로 올리는 방법 중 선택합니다. 참여자의 개성을 반영해 다양한 방식으로 쌓아갑니다.</li>
+          <li>안쪽과 바깥쪽 모두 손가락으로 강하게 눌러 다집니다. 이 다지기 작업이 내구성의 핵심입니다.</li>
+          <li>매 3~4단(약 20cm)마다 건조 후 다음 단을 올립니다. 한 번에 너무 높이 쌓으면 하중을 이기지 못해 무너집니다.</li>
+          <li>원하는 높이에 이를 때까지 점진적으로 적층합니다.</li>
+          <li>별도의 설계도면 없이 즉흥적으로 진행합니다.</li>
+        </ul>
+
+        <p style="font-weight:600;color:var(--accent2);margin:20px 0 10px;font-size:14px;">출입구 형성</p>
+        <ul class="bullet-list">
+          <li><strong>방법 A</strong> — 예정 위치를 미리 생각하여 해당 부분을 남겨 두고 양 옆으로 타래를 끊어 마감</li>
+          <li><strong>방법 B</strong> — 벽체를 다 짓고 난 뒤 원하는 부위를 뚫어서 입구를 내고, 잘라낸 조각을 임시 지지대로 사용</li>
+        </ul>
+
+        <p style="font-weight:600;color:var(--accent2);margin:20px 0 10px;font-size:14px;">상부 성형</p>
+        <ul class="bullet-list">
+          <li>상부 작업 전에는 손이 닿는 범위의 내부 작업(다지기 포함)을 먼저 완료하십시오.</li>
+          <li>상부로 갈수록 아래로 누르는 힘이 줄어드므로, 아랫단과의 밀착도를 높이는 데 각별히 주의합니다.</li>
+          <li>아래층이 충분히 건조된 상태라면 지지대 없이 돔 형태를 성형할 수 있습니다. 보조재 사용은 최대한 피하고, 마지막 형태가 완료될 때까지 천천히 적층합니다.</li>
+          <li>돔이나 종 형태가 외부 환경을 가장 무난히 버팁니다. 형태를 비대칭으로 변주하여 빗물이 특정 방향으로 흘러내리도록 설계할 수 있습니다.</li>
+          <li>최상부 마감 시 작은 개구부를 남겨두면 내부로 자연광 혹은 인공조명이 들어와 체험이 편해집니다.</li>
+        </ul>
+
+        <div class="warn-box">
+          ⚠ 새 타래층은 반드시 아래층이 충분히 반건조되어 단단해진 후에 올리십시오.<br>
+          ⚠ 흙벽은 비닐로 반건조 상태(손가락으로 눌렀을 때 살짝 들어가는 상태)를 유지해야 합니다. 그 이상 건조된 후에는 다지기 작업이 불가합니다.<br>
+          ⚠ 출입구 양 옆을 무리하게 쌓아올리면 무게를 견디지 못합니다. 반드시 충분한 건조 시간을 두고 작업하며, 필요 시 탄력바 등으로 보조하십시오.<br>
+          ⚠ 여러 사람이 함께 제작하는 경우 밀도가 불균일해지기 쉽습니다. 작업 전 충분한 매뉴얼 숙지 및 트레이닝을 거치십시오.
+        </div>
+        <div class="tip-box">
+          <strong>높이 150cm 이상 대형 작품</strong>
+          전체 형태를 파프리카를 위에서 본 단면처럼 두세 곳이 살짝 오므라드는 구조로 만들면 더 튼튼합니다.
+        </div>
+      </div>
+
+      <div class="section" id="ch4-4">
+        <h3 class="section-title">4.4 내·외벽 다지기</h3>
+        <div class="section-body"><p><strong>목표:</strong> 벽체 전체의 밀도를 고르게 높여 환경에 대한 내구도와 방수성을 높입니다.</p></div>
+        <ul class="bullet-list">
+          <li>다짐 도구로는 돌, 마른 흙덩어리, 단단하게 굳힌 붓 등을 사용합니다.</li>
+          <li>다지기는 다짐 도구에 진흙이 묻어나지 않을 정도의 반건조 상태에서 진행하는 것이 가장 이상적입니다.</li>
+          <li>빠뜨리는 부분 없이 안과 밖의 전체 면적을 모두 다져야 합니다.</li>
+          <li>접히는 부분이나 각진 부분 없이 완만한 곡면을 유지하면서 다져야 합니다.</li>
+          <li>외벽에 거즈 부착 및 유화아스팔트 혼합물을 도포하는 경우에는 외벽 다짐을 하지 않습니다.</li>
+        </ul>
+        <div class="warn-box">
+          ⚠ 반건조 이상 건조된 후에 벽 다짐을 하면 작품이 균열·파손됩니다.
+        </div>
+      </div>
+
+      <div class="section" id="ch4-5">
+        <h3 class="section-title">4.5 장식 및 개성 표현</h3>
+        <div class="section-body"><p>표면 장식은 울림통에 공동 제작자들의 흔적을 남기는 단계입니다.</p></div>
+        <table class="data-table">
+          <thead>
+            <tr><th>기법</th><th>작업 시점</th><th>설명</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>새기기 (음각)</td><td>반건조 또는 완전건조 상태</td><td>도구로 선·패턴·문자를 새김. 참여자 이름·날짜 등을 새겨 집단 기억으로 남길 수 있음</td></tr>
+            <tr><td>찍기 (압인)</td><td>반건조 상태 엄수</td><td>도장·나무·돌 등 물체를 눌러 질감 표현. 너무 깊이 누르면 벽체 손상</td></tr>
+            <tr><td>붙이기 (부조)</td><td>반건조 상태 엄수</td><td>작은 점토 형상을 표면에 덧붙여 입체 표현. 흙물로 접착면 처리 필수</td></tr>
+            <tr><td>점토 색 레이어</td><td>촉촉한 상태</td><td>흑토·옹기토 등 색이 뚜렷한 점토를 혼용하여 지층과 같은 느낌 연출. 각 반죽의 페이퍼클레이 비율을 동일하게 유지할 것 (페이퍼클레이 20% 이상 시 박리 위험 없음 확인)</td></tr>
+          </tbody>
+        </table>
+        <div class="tip-box">
+          <strong>퍼실리테이터 안내</strong>
+          비판 없이 참여자가 흔적을 남기도록 격려하십시오. 불완전함은 울림통의 일부입니다.
+        </div>
+      </div>
+
+      <div class="section" id="ch4-6">
+        <h3 class="section-title">4.6 건조</h3>
+        <div class="section-body"><p>최소 4~6주에 걸쳐 천천히, 고르게 건조합니다. 급격한 건조는 균열의 가장 큰 원인입니다.</p></div>
+        <table class="data-table">
+          <thead>
+            <tr><th>건조 단계</th><th>기간</th><th>관리 방법</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>초기 건조</td><td>1주차</td><td>비닐로 전체 덮어 습도 유지. 햇빛 직사 금지. 봄바람 주의 (빠르게 건조됨)</td></tr>
+            <tr><td>반건조</td><td>1~3주차</td><td>다지기 및 장식 작업 시 작업하는 부분만 부분 노출. 작업 후 비닐+방수포 덧씌우기</td></tr>
+            <tr><td>완전건조</td><td>4주차 이후</td><td>색이 밝아지고 크기가 다소 줄어듦. 기름칠(마감) 작업 가능</td></tr>
+          </tbody>
+        </table>
+        <p style="font-weight:600;color:var(--accent2);margin:24px 0 10px;font-size:14px;">상황별 비닐 관리법</p>
+        <ul class="bullet-list">
+          <li><strong>비닐 주름</strong> — 주름 사이로 물이 유입될 수 있으므로 주름 최소화 필수</li>
+          <li><strong>햇빛 노출</strong> — 비닐 내부에 증기가 맺히므로 천막·차양막 필수</li>
+          <li><strong>폭염기</strong> — 빠르게 건조되나 증기 맺힘으로 부분 파손 가능성 증가</li>
+          <li><strong>장마 시기</strong> — 빗물 유입에 유의</li>
+        </ul>
+      </div>
+
+      <div class="section" id="ch4-7">
+        <h3 class="section-title">4.7 작업 인원 및 소요 시간</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>제작 단계</th><th>적정 인원</th><th>소요 시간</th><th>비고</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>흙반죽 및 타래 제작</td><td>6명 내외 (최대 10명)</td><td>2시간 × 3회차</td><td>팔 힘 소모가 크므로 자주 휴식. 성형 전 미리 반죽 권장</td></tr>
+            <tr><td>바닥 기초 제작</td><td>6명 내외 (최대 10명)</td><td>2시간 × 1회차</td><td>기초 방수 처리 집중. 반건조 전 벽체 시공 금지</td></tr>
+            <tr><td>형태 제작 및 출입구 형성</td><td>10명 내외</td><td>2시간 × 5회차</td><td>층간 반건조 대기 필수. 생략 시 벽체 변형·붕괴 위험</td></tr>
+            <tr><td>내·외벽 다지기</td><td>6명 내외 (최대 10명)</td><td>2시간 × 2회차</td><td>여러 명 작업 시 밀도 일관성 유지에 주의</td></tr>
+            <tr><td>장식 및 개성 표현</td><td>제한 없음</td><td>30분~1시간</td><td>반건조 타이밍에 맞춰 진행. 과도한 장식은 균열 위험</td></tr>
+            <tr><td>건조</td><td>담당자 1~2명</td><td>4~6주</td><td>이틀에 1회 이상 육안 점검. 날씨 변화 시 즉시 점검</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── 5장 ── -->
+    <div class="chapter" id="ch5">
+      <div class="chapter-header">
+        <span class="chapter-num">05</span>
+        <h2 class="chapter-title">마감 작업 가이드</h2>
+      </div>
+      <div class="tip-box" style="margin-bottom:28px;">
+        <strong>선행 조건</strong>
+        마감 작업은 완전건조 확인 후 실시합니다.
+      </div>
+
+      <div class="section" id="ch5-1">
+        <h3 class="section-title">5.1 동유·옻칠동유 혼합 마감 (권장)</h3>
+        <div class="section-body"><p>가장 자연스럽고 내구성이 검증된 마감 방식입니다.</p></div>
+        <ul class="bullet-list" style="margin-top:16px;">
+          <li>작품이 완전히 건조되었는지 확인합니다.</li>
+          <li>붓으로 동유를 얇게 1회 도포하고 충분히 건조합니다.</li>
+          <li>동유 2회차를 도포하고 다시 건조합니다.</li>
+          <li>동유가 완전히 마른 후 옻칠동유로 상칠합니다.</li>
+          <li>균열 부분은 옻칠동유 + 흙가루 페이스트로 먼저 보수한 후 칠합니다.</li>
+        </ul>
+        <div class="warn-box">
+          ⚠ 옻칠동유만 3회 이상 칠하면 지나치게 반짝거려 흙의 자연스러운 느낌이 사라집니다.<br>
+          ⚠ 옻칠동유 도막은 얇고 약해 손톱으로도 벗겨질 수 있습니다. 취급에 주의하십시오.<br>
+          ⚠ 옻 알러지 반응을 반드시 사전에 확인하고, 작업 시 피부가 노출되지 않도록 주의하십시오.
+        </div>
+      </div>
+
+      <div class="section" id="ch5-2">
+        <h3 class="section-title">5.2 동유 단독 마감</h3>
+        <div class="section-body">
+          <p>자연스러운 무광 또는 은은한 광택 마감을 원할 경우 동유만 2~3회 도포합니다. 흙의 질감을 잘 살려주며 반짝거림이 적습니다.</p>
+        </div>
+        <div class="tip-box">
+          <strong>참고</strong>
+          동유 외에도 콩기름, 들기름, 린시드오일 등 다양한 천연 기름의 사용이 이론적으로 가능합니다. 다만 현재는 동유 사용에 대한 데이터만 확보되어 있으므로, 그 외 재료는 소규모 테스트 후 적용을 권장합니다.
+        </div>
+      </div>
+
+      <div class="section" id="ch5-3">
+        <h3 class="section-title">5.3 유화아스팔트 외벽 마감</h3>
+        <div class="section-body">
+          <p><strong>혼합 비율:</strong> 흙 : 유화아스팔트 = 1 : 3~4 (방수 효과 기준. 1:3 미만은 방수 효과 미흡)</p>
+        </div>
+        <ul class="bullet-list" style="margin-top:16px;">
+          <li>반죽 상태의 흙과 유화아스팔트를 1:3~4 비율로 혼합합니다. 장갑을 낀 손 또는 나무막대기로 섞습니다. 처음에는 덩어리가 많이 생기지만 밀봉하여 하루 정도 숙성하면 입자가 풀어집니다.</li>
+          <li>반죽 상태의 흙과 혼합하면 거친 표면 질감을, 흙을 말려 가루로 만든 후 섞으면 더 고운 표면을 얻을 수 있습니다.</li>
+          <li>붓으로 외벽에 도포합니다. 페인트처럼 칠하기보다 표면에 얹어내는 느낌으로, 덩어리 부분을 꼭꼭 눌러 구석구석 채워 넣습니다.</li>
+          <li>미세한 틈으로 유화아스팔트가 동글동글 새나오는 현상은 정상입니다.</li>
+          <li>건조에는 하루 이상 소요됩니다. 시간이 지나면 표면이 회빛을 띠며 얼룩덜룩해지기도 합니다.</li>
+          <li>건조 후 혼합점토를 1~2mm 두께로 얇게 덧발라 장식할 수 있습니다. 이 점토층에는 기름 또는 옻칠 마감을 추가로 실시합니다.</li>
+        </ul>
+        <div class="warn-box">
+          ⚠ 유화아스팔트 사용 시 환기 필수. 밀폐 공간 작업 금지. 토치 사용 시 소화기 반드시 비치.<br>
+          ⚠ 유화아스팔트가 붓에 엉겨 굳기 쉬우므로 붓을 넉넉히 준비하십시오.<br>
+          ⚠ 나무 막대기를 혼합물에 담근 채 보관하지 마십시오.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 6장 ── -->
+    <div class="chapter" id="ch6">
+      <div class="chapter-header">
+        <span class="chapter-num">06</span>
+        <h2 class="chapter-title">상황별 대응 매뉴얼</h2>
+      </div>
+      <div class="section-body" style="margin-bottom:24px;">
+        <p>실제 제작 경험에서 반복적으로 나타난 문제와 해결책을 정리한 실전 매뉴얼입니다. 문제 발생 시 당황하지 말고 아래 내용을 먼저 확인하십시오.</p>
+      </div>
+
+      <div class="situation-card" id="ch6-1" style="border-top:none;padding-top:0;">
+        <h3 class="section-title">6.1 구조 붕괴 위험</h3>
+        <div class="situation-meta">
+          <span><strong>증상</strong>벽체가 기울어지거나 무너질 조짐</span>
+          <span><strong>주요 원인</strong>출입구 상부 과도한 중량, 바깥으로 벌어지는 형태, 하단 미건조 상태의 과도한 적층</span>
+        </div>
+        <ul class="bullet-list">
+          <li>즉시 작업을 중단합니다.</li>
+          <li>벽 일부를 쐐기 모양으로 잘라내어 통을 좁힙니다.</li>
+          <li>라쳇 벨트를 외벽에 감아 벌어지는 부위를 고정하고 수축에 따라 계속 조입니다.</li>
+          <li>기운 방향에 따라 텐트 철골, 나무 등에 연결하여 당겨 고정합니다.</li>
+          <li>완전히 안정화될 때까지 관찰하며 추가 대응합니다.</li>
+        </ul>
+      </div>
+
+      <div class="situation-card" id="ch6-2">
+        <h3 class="section-title">6.2 일부 무너짐</h3>
+        <div class="situation-meta">
+          <span><strong>증상</strong>작품 반쪽 또는 일부가 무너짐</span>
+          <span><strong>주요 원인</strong>종이 팔레트 등 바닥이 휘어짐, 집중하중을 받지 못하는 받침대</span>
+        </div>
+        <ul class="bullet-list">
+          <li>담당 교사 및 작가에게 즉시 연락합니다.</li>
+          <li>무너진 부분을 사진으로 기록합니다.</li>
+          <li>재사용 가능한 흙을 분리하여 밀봉 보관합니다.</li>
+          <li>바닥 받침을 코코넛 매트, 단단한 판 등 견고한 것으로 교체합니다.</li>
+          <li>작품 재제작 또는 부분 수정 계획을 수립합니다.</li>
+        </ul>
+      </div>
+
+      <div class="situation-card" id="ch6-3">
+        <h3 class="section-title">6.3 심한 균열 발생</h3>
+        <div class="situation-meta">
+          <span><strong>증상</strong>하단부 또는 전체에 심한 갈라짐</span>
+          <span><strong>주요 원인</strong>너무 빠른 건조, 벌어지는 형태의 힘, 다지기 부족, 흙 조합 비율 부적절</span>
+        </div>
+        <ul class="bullet-list">
+          <li>반건조 이전: 라쳇으로 벌어진 곳을 당겨 고정</li>
+          <li>성형 시 균열: 갈라진 틈에 흙을 채우고 매우 단단히 다짐. 비닐로 덮어 천천히 건조</li>
+          <li>반건조 이후 심한 균열: 보수가 불가한 경우가 대부분. 손이 닿지 않는 내부 갈라짐은 보수 불필요</li>
+          <li>완전건조 후: 옻칠동유에 흙가루를 갠 페이스트를 균열에 채워 넣어 보수</li>
+          <li>위 방법으로 보수되지 않을 경우: 방수제 + 흙가루 페이스트 사용. 하단부 큰 균열은 색상을 맞춘 시멘트로 보강합니다.</li>
+        </ul>
+      </div>
+
+      <div class="situation-card" id="ch6-4">
+        <h3 class="section-title">6.4 물 유입</h3>
+        <div class="situation-meta">
+          <span><strong>증상</strong>비닐 안쪽이나 하단부에 물이 고임</span>
+          <span><strong>주요 원인</strong>비닐 주름 사이로 빗물 유입, 햇빛으로 인한 비닐 내부 증기 응결</span>
+        </div>
+        <ul class="bullet-list">
+          <li>즉시 비닐을 벗기고 물기를 제거합니다.</li>
+          <li>심하게 물을 먹은 경우(변색·물렁함) 추가 다지기 및 해당 부위의 추적 관찰이 필요합니다.</li>
+          <li>젖은 부분을 포함하여 비닐을 덮은 채로 천천히 자연 건조합니다. 급격한 건조는 금지합니다.</li>
+          <li>이슬 방지를 위해 햇빛 직사를 방지하기 위한 조치를 취합니다.</li>
+        </ul>
+      </div>
+
+      <div class="situation-card" id="ch6-5">
+        <h3 class="section-title">6.5 곰팡이 발생</h3>
+        <div class="situation-meta">
+          <span><strong>증상</strong>작품 표면에 하얀 곰팡이</span>
+          <span><strong>주요 원인</strong>높은 습도, 흙 보관 상태 불량, 반죽 시 불순물 유입</span>
+        </div>
+        <ul class="bullet-list">
+          <li>작품이 완전히 건조될 때까지 대기합니다.</li>
+          <li>건조 후 토치로 곰팡이를 제거합니다. (화재 주의, 소화기 비치 필수)</li>
+          <li>또는 마른 천으로 닦아냅니다.</li>
+          <li>향후 예방: 작업자 손 청결 유지, 흙 보관 방법 개선, 작업 공간 환기 철저</li>
+        </ul>
+      </div>
+
+      <div class="situation-card" id="ch6-6">
+        <h3 class="section-title">6.6 외벽 이끼 발생</h3>
+        <div class="situation-meta">
+          <span><strong>증상</strong>외벽에 연두색 이끼 성장</span>
+          <span><strong>주요 원인</strong>햇빛 직사를 받지 않는 면, 비닐 내부의 지속적 습한 환경</span>
+        </div>
+        <ul class="bullet-list">
+          <li>천막 등으로 직사광선을 차단합니다.</li>
+          <li>비닐을 제거하여 충분한 환기를 유도합니다.</li>
+          <li>이끼 제거: 건조 후 마른 천 또는 브러시로 닦아냅니다.</li>
+          <li><strong>창의적 대안:</strong> 이끼를 적극적으로 키우면 연둣빛 색감을 자연스럽게 연출할 수 있습니다. 생태 예술로서의 울림통 콘셉트와 어울리는 선택입니다.</li>
+        </ul>
+      </div>
+
+      <div class="situation-card" id="ch6-7">
+        <h3 class="section-title">6.7 외부 세척</h3>
+        <div class="situation-meta">
+          <span><strong>증상</strong>외벽이 거뭇해지고 새똥 등 오염 발생</span>
+          <span><strong>주요 원인</strong>자연환경 노출 (장기 야외 설치)</span>
+        </div>
+        <ul class="bullet-list">
+          <li>건조한 날 마른 천으로 표면을 닦아냅니다.</li>
+          <li>브러시로 이끼·오염 물질을 제거합니다.</li>
+          <li>세척 후 동유를 1회 재도포하여 방수 코팅을 보강합니다.</li>
+          <li>천막 설치로 직사광선 및 조류 접근을 차단하면 오염 빈도를 대폭 줄일 수 있습니다.</li>
+        </ul>
+      </div>
+
+      <div style="margin-top:32px;">
+        <p style="font-weight:600;color:var(--accent2);font-size:14px;margin-bottom:12px;">문제 해결 핵심 원칙</p>
+        <ul class="bullet-list">
+          <li><strong>천천히</strong> — 급할수록 더 천천히. 작업도, 건조도.</li>
+          <li><strong>고르게</strong> — 모든 부분을 일관된 밀도로.</li>
+          <li><strong>관찰하기</strong> — 매일 작품 상태를 직접 확인.</li>
+          <li><strong>기록하기</strong> — 과정을 사진과 일지로 남기기.</li>
+          <li><strong>협력하기</strong> — 문제가 생기면 즉시 공유하고 함께 해결.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── 7장 ── -->
+    <div class="chapter" id="ch7">
+      <div class="chapter-header">
+        <span class="chapter-num">07</span>
+        <h2 class="chapter-title">안전 관리</h2>
+      </div>
+
+      <div class="section" id="ch7-1">
+        <h3 class="section-title">7.1 구조 안전 기준</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>안전 항목</th><th>기준</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>작업 최대 인원 (제작 중)</td><td>1회 동시 작업 인원 최대 10명 권장</td></tr>
+            <tr><td>체험 최대 인원 (완성 후)</td><td>성인 기준 1명, 유아 기준 1~3인 (내부 직경 120cm 기준)</td></tr>
+            <tr><td>외벽 최소 두께</td><td>3cm (실측값 미만 시 즉시 보강)</td></tr>
+            <tr><td>이용 가능 건조 기간</td><td>제작 완료 후 72시간 이후</td></tr>
+            <tr><td>강우 후 이용</td><td>강우 종료 후 24시간 이후</td></tr>
+            <tr><td>점검 주기</td><td>월 1회 육안 점검 (기관 담당자), 연 1회 상세 점검 (작가 측)</td></tr>
+            <tr><td>안전 고지 사항</td><td>균열 등 붕괴 조짐 발견 시 즉시 이용 중단 및 접근 차단</td></tr>
+          </tbody>
+        </table>
+        <div class="wip-section">※ 하중 산출 추후 진행 예정</div>
+      </div>
+
+      <div class="section" id="ch7-2">
+        <h3 class="section-title">7.2 안전 지침</h3>
+        <p style="font-weight:600;color:var(--accent2);margin-bottom:10px;font-size:14px;">작업 전 필수 확인</p>
+        <ul class="bullet-list">
+          <li>보안경 필수 착용 확인 (흙먼지로부터 눈 보호)</li>
+          <li>작업 공간 환기 상태 확인</li>
+          <li>도구 상태 점검 (파손, 이상 유무)</li>
+          <li>날씨 확인 (비 예보 시 비닐 준비 및 천막 점검)</li>
+          <li>비상 연락망 작성 (참여 인원이 많거나 어린이 참여 시)</li>
+        </ul>
+        <p style="font-weight:600;color:var(--accent2);margin:20px 0 10px;font-size:14px;">작업 중 주의사항</p>
+        <ul class="bullet-list">
+          <li>반죽은 팔 힘이 많이 드는 작업 — 자주 휴식 (하루 최대 4시간 권장)</li>
+          <li>반죽·성형 시 반드시 손을 씻고 흙을 만질 것 (곰팡이 방지, 개인 위생)</li>
+          <li>유화아스팔트 사용 시 환기 필수, 밀폐 공간 작업 절대 금지</li>
+          <li>토치 사용 시 화재 주의, 소화기 반드시 비치</li>
+        </ul>
+        <p style="font-weight:600;color:var(--accent2);margin:20px 0 10px;font-size:14px;">미취학 아동</p>
+        <ul class="bullet-list">
+          <li>미취학 아동은 보호자가 반드시 동반합니다.</li>
+          <li>흙이 촉촉한 상태일 때 구조물에 기대거나 과하게 누르지 않도록 보호자가 주의합니다.</li>
+          <li>유화아스팔트 작업 시 어린이는 작업 구역에서 분리합니다.</li>
+        </ul>
+        <div class="warn-box">
+          ⚠ 구조물이 불안정해 보이면 즉시 내부 인원을 대피시키고 접근을 차단하십시오.<br>
+          ⚠ 균열이 벽 전체 두께를 관통하는 경우 즉시 운영 중단 및 전체 구조 점검.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 8장 ── -->
+    <div class="chapter" id="ch8">
+      <div class="chapter-header">
+        <span class="chapter-num">08</span>
+        <h2 class="chapter-title">프로그램 운영</h2>
+      </div>
+
+      <div class="section" id="ch8-1">
+        <h3 class="section-title">8.1 기본 워크숍 (구성에 따라 시간 및 회차 조율)</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>예상진행시간</th><th>단계</th><th>내용</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>40분</td><td>도입 및 재료 이해</td><td>울림통 개념 소개, 흙 재료 탐색, 참여자 자기소개</td></tr>
+            <tr><td>40분</td><td>흙 반죽 준비</td><td>점토 반죽, 부재료 혼합, 반죽 상태 확인 및 트레이닝</td></tr>
+            <tr><td>120분</td><td>공동 제작</td><td>기초~벽체 시공, 역할 분담, 다지기 협업</td></tr>
+            <tr><td>60분</td><td>마감 및 건조 준비</td><td>표면 정리, 거즈 처리, 건조 천 덮기, 이름 새기기</td></tr>
+            <tr><td>60분</td><td>울림 경험</td><td>내부 소리 공명 체험, 명상, 소감 나눔</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section" id="ch8-2">
+        <h3 class="section-title">8.2 확장 프로그램</h3>
+        <ul class="bullet-list">
+          <li><strong>명상·호흡 프로그램</strong> — 완성된 울림통 내부를 활용한 정기 명상 세션</li>
+          <li><strong>소리 체험 공연</strong> — 울림통을 악기로 활용하는 사운드 퍼포먼스</li>
+          <li><strong>이야기 활동</strong> — '흙으로 짓는 이야기' 구술 워크숍, 내부에서 이야기 낭독</li>
+          <li><strong>학교 교과 연계</strong> — 미술·과학·사회 교과 연계 수업 (재료, 구조, 공동체)</li>
+          <li><strong>다회차 프로그램</strong> — 10회차 시리즈로 제작 전 과정을 나누어 경험</li>
+          <li><strong>흙 크레용 워크숍</strong> — 울림통 철거 후 분쇄한 흙가루에 안료를 섞어 크레용 제작</li>
+          <li><strong>연구보고서 제작</strong> — '참여형 흙 구조물 울림통 제작 프로그램 연구' 병행 진행</li>
+        </ul>
+      </div>
+
+      <div class="section" id="ch8-3">
+        <h3 class="section-title">8.3 퍼실리테이터 운영 지침</h3>
+        <ul class="bullet-list">
+          <li>참여자의 불완전한 기술을 교정하기보다 창의적 시도를 격려합니다.</li>
+          <li>제작 중 침묵의 시간을 충분히 허용합니다. 꼭 대화가 없어도 됩니다.</li>
+          <li>완성도보다 과정의 즉흥적, 감각적 경험을 강조합니다.</li>
+          <li>작업 교육 시 다지기 등 핵심 작업은 충분한 트레이닝 후 시작합니다.</li>
+          <li>작가의 니닉(Ninnik) 세계관과 울림통의 관계를 참여자에게 소개합니다.</li>
+        </ul>
+        <div class="wip-section">※ 니닉 소개 자료 추후 별첨 예정</div>
+      </div>
+    </div>
+
+    <!-- ── 9장 ── -->
+    <div class="chapter" id="ch9">
+      <div class="chapter-header">
+        <span class="chapter-num">09</span>
+        <h2 class="chapter-title">유지 관리</h2>
+      </div>
+
+      <div class="section" id="ch9-1">
+        <h3 class="section-title">9.1 정기 점검 체크리스트</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>점검 항목</th><th>주간</th><th>월간</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>외벽 균열 육안 점검</td><td>○</td><td>○ + 폭·길이 기록</td></tr>
+            <tr><td>입구 아치 안정성 확인</td><td>○</td><td>○ + 손압 테스트</td></tr>
+            <tr><td>기초 침하 여부 확인</td><td>—</td><td>○</td></tr>
+            <tr><td>내벽 상태 및 공명 확인</td><td>—</td><td>○</td></tr>
+            <tr><td>배수 및 수분 상태 확인</td><td>○ (우천 후)</td><td>○</td></tr>
+            <tr><td>방수 코팅(동유) 상태 확인</td><td>—</td><td>○</td></tr>
+            <tr><td>이끼·곰팡이 발생 여부</td><td>○</td><td>○ + 처리</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section" id="ch9-2">
+        <h3 class="section-title">9.2 균열 보수 방법</h3>
+        <ul class="bullet-list">
+          <li>균열 주변 느슨한 점토를 완전히 제거합니다.</li>
+          <li>옻칠동유 + 흙가루 페이스트를 채워 마감합니다.</li>
+          <li>보수 부위를 최소 24시간 천천히 건조하고, 기름 혹은 옻칠동유 마감을 합니다.</li>
+        </ul>
+      </div>
+
+      <div class="section" id="ch9-3">
+        <h3 class="section-title">9.3 계절별 방수 코팅</h3>
+        <ul class="bullet-list">
+          <li><strong>봄·가을 (연 2회)</strong> — 동유를 붓으로 외벽 전체에 도포</li>
+          <li><strong>여름 장마 전</strong> — 방수 도포 강화 + 상부 방수포 고정</li>
+          <li><strong>겨울 혹한기</strong> — 내부에 짚 또는 단열재를 깔아 동결 문제 최소화</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── 10장 ── -->
+    <div class="chapter" id="ch10">
+      <div class="chapter-header">
+        <span class="chapter-num">10</span>
+        <h2 class="chapter-title">철거 및 재활용</h2>
+      </div>
+      <div class="tip-box" style="margin-bottom:24px;">
+        <strong>울림통의 큰 장점</strong>
+        물로 분해하고 흙으로 환원합니다. 철거 자체가 프로그램의 마지막 수업입니다.
+      </div>
+
+      <div class="section" id="ch10-1">
+        <h3 class="section-title">10.1 철거 판단 기준</h3>
+        <ul class="bullet-list">
+          <li>구조 안전성 확보 불가능 판단 시 (전문가 의견 포함)</li>
+          <li>프로그램 목적 완료 및 새로운 울림통 제작 계획 수립 시</li>
+          <li>설치 장소 원상 복구 필요 시</li>
+        </ul>
+      </div>
+
+      <div class="section" id="ch10-2">
+        <h3 class="section-title">10.2 철거 방법</h3>
+        <p style="font-weight:600;color:var(--accent2);margin-bottom:10px;font-size:14px;">방법 A: 수용해 철거</p>
+        <ul class="bullet-list">
+          <li>구조물 전체에 물을 충분히 뿌려 점토를 연화시킵니다.</li>
+          <li>연화된 부위부터 손으로 떼어내며 단계적으로 해체합니다.</li>
+          <li>수거한 점토는 재반죽하여 사용하거나 지면에 고르게 펼쳐 흙으로 환원합니다.</li>
+          <li>용해되는 데 며칠의 시간이 소요될 수 있습니다.</li>
+        </ul>
+        <p style="font-weight:600;color:var(--accent2);margin:20px 0 10px;font-size:14px;">방법 B: 물리적 해체 후 흙 환원</p>
+        <ul class="bullet-list">
+          <li>건조 상태의 구조물을 도구로 분쇄합니다.</li>
+          <li>분쇄된 점토 조각을 지면에 고르게 펼칩니다. 물을 뿌리면 흙먼지가 감소합니다.</li>
+        </ul>
+        <p style="font-weight:600;color:var(--accent2);margin:20px 0 10px;font-size:14px;">방법 C: 점토 재활용 + 흙 크레용 워크숍</p>
+        <ul class="bullet-list">
+          <li>구조물을 부분별로 분리하여 재반죽 용기에 담습니다.</li>
+          <li>분쇄한 흙가루에 안료를 섞어 크레용 제작 워크숍을 진행합니다.</li>
+          <li>남은 흙은 수비 후 다음 울림통 제작에 재사용 가능합니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── 11장 ── -->
+    <div class="chapter" id="ch11">
+      <div class="chapter-header">
+        <span class="chapter-num">11</span>
+        <h2 class="chapter-title">제작 이력 기록부</h2>
+      </div>
+      <div class="section-body" style="margin-bottom:16px;">
+        <p style="font-size:12px;color:var(--text-dim);">울림통의 탄생부터 철거까지 전 과정을 기록합니다. 각 입력란은 현장에서 직접 기재하십시오. 매 울림통마다 복사하여 사용하십시오.</p>
+      </div>
+
+      <!-- 기본 정보 및 안전 관리 -->
+      <p class="record-chapter-label">기본 정보 및 안전 관리</p>
+      <div class="record-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="record-item"><p class="label">울림통 고유 번호 / 이름</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">제작 기관 / 장소</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">제작 시작일</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">제작 참여 인원(명) 및 명단</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">안전 점검 담당자</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">점검 일지 보관 위치</p><p class="value">&nbsp;</p></div>
+      </div>
+
+      <!-- 제작 과정 -->
+      <p class="record-chapter-label">제작 과정</p>
+      <div class="record-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="record-item"><p class="label">점토 종류 및 실제 비율</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">총 투입량 (kg)</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">구매처 / 규격</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">상부 시공 방식 및 형태</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">상부 완료 일시</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">완전건조 확인 일시</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">제작 완료 일시</p><p class="value">&nbsp;</p></div>
+        <div class="record-item" style="grid-column:span 2"><p class="label">건조 중 특이사항</p><p class="value">&nbsp;</p></div>
+      </div>
+
+      <p class="record-chapter-label">구조 설계 — 실제 시공 수치</p>
+      <div class="record-grid" style="grid-template-columns:repeat(4,1fr);">
+        <div class="record-item"><p class="label">높이 — 반건조 (cm)</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">높이 — 건조 후 (cm)</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">내부 직경 (cm)</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">벽 두께 (cm)</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">입구 높이 (cm)</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">입구 폭 (cm)</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">바닥 두께 (cm)</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">공명 특성 메모</p><p class="value">&nbsp;</p></div>
+      </div>
+
+      <p class="record-chapter-label">마감</p>
+      <div class="record-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="record-item"><p class="label">마감 재료 및 방법</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">마감 완료 일시</p><p class="value">&nbsp;</p></div>
+      </div>
+
+      <p class="record-chapter-label">프로그램 운영 및 총괄</p>
+      <div class="record-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="record-item"><p class="label">운영 진행자</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">참여 인원</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">총 이용 횟수 / 운영 기간</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">첫 이용일</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">주요 문제 발생 이력</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">특이사항</p><p class="value">&nbsp;</p></div>
+      </div>
+
+      <p class="record-chapter-label">유지 관리</p>
+      <div class="record-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="record-item"><p class="label">최근 보수 일시</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">다음 예정 점검일</p><p class="value">&nbsp;</p></div>
+        <div class="record-item"><p class="label">보수 내용</p><p class="value">&nbsp;</p></div>
+      </div>
+
+      <p class="record-chapter-label">철거</p>
+      <div class="record-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="record-item"><p class="label">철거일</p><p class="value">&nbsp;</p></div>
+        <div class="record-item" style="grid-column:span 2"><p class="label">철거 방법</p><p class="value">&nbsp;</p></div>
+      </div>
+
+      <p style="margin-top:32px;border-top:1px solid var(--line);padding-top:24px;font-size:13px;color:var(--text-dim);text-align:center;letter-spacing:0.04e
