@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이포중학교 울림통 협력창작 프로젝트 OT</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+  :root {
+    --bg:        #edf0ec;
+    --bg2:       #dfe5db;
+    --bg3:       #cfd8c9;
+    --line:      #a8baa2;
+    --accent:    #3a6b4a;
+    --accent2:   #274d33;
+    --text:      #141f16;
+    --text-dim:  #4a6a52;
+    --white:     #edf0ec;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  section {
+    min-height: 100vh;
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+
+  h1, h2, h3 {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+  }
+
+  h2.section-title {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 40px;
+    border-left: 3px solid var(--accent);
+    padding-left: 20px;
+  }
+
+  /* ── 사진/영상 플레이스홀더 ── */
+  .media-placeholder {
+    background: var(--bg3);
+    border: 2px dashed var(--line);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--text-dim);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .media-placeholder .ph-icon {
+    font-size: 28px;
+    opacity: 0.5;
+  }
+
+  .media-placeholder .ph-label {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .media-placeholder img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: none;
+  }
+
+  /* ── 1. 커버 ── */
+  #cover {
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+    align-items: flex-start;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  .cover-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .cover-left {
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--bg);
+  }
+
+  .cover-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .cover-title {
+    font-size: clamp(36px, 5vw, 68px);
+    font-weight: 900;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .cover-subtitle {
+    font-size: clamp(16px, 2vw, 24px);
+    font-weight: 300;
+    color: var(--accent2);
+    letter-spacing: 0.1em;
+    margin-bottom: 40px;
+  }
+
+  .cover-meta {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 2.2;
+    letter-spacing: 0.05em;
+  }
+
+  .cover-meta strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .cover-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    margin: 32px 0;
+  }
+
+  /* ── 2. 목차 ── */
+  #toc {
+    background: var(--bg2);
+    min-height: auto;
+    padding: 60px;
+  }
+
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin-top: 16px;
+  }
+
+  .toc-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 28px 32px;
+    background: var(--bg3);
+    text-decoration: none;
+    color: var(--text);
+    transition: background 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+
+  .toc-item:hover {
+    background: var(--line);
+    transform: translateX(4px);
+  }
+
+  .toc-num {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--accent);
+    opacity: 0.35;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    min-width: 56px;
+    line-height: 1;
+  }
+
+  .toc-text h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .toc-text p {
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 0.03em;
+  }
+
+  /* ── 3. 프로젝트 소개 ── */
+  #intro {
+    background: var(--bg);
+  }
+
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    margin-top: 16px;
+  }
+
+  .intro-text p {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.9;
+    margin-bottom: 20px;
+  }
+
+  .history-list {
+    list-style: none;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+    margin-top: 8px;
+  }
+
+  .history-list li {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 16px;
+    padding: 10px 0;
+    font-size: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .history-list li .year {
+    color: var(--accent);
+    font-weight: 600;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+  }
+
+  .info-box {
+    background: var(--bg2);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 32px;
+  }
+
+  .info-box h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent2);
+    margin-bottom: 20px;
+    letter-spacing: 0.08em;
+  }
+
+  .info-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 12px;
+    padding: 10px 0;
+    font-size: 14px;
+    border-bottom: 1px solid var(--line);
+    line-height: 1.7;
+  }
+
+  .info-row:last-child {
+    border-bottom: none;
+  }
+
+  .info-row .label {
+    font-weight: 500;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  /* ── 4. 커리큘럼 전체 ── */
+  #curriculum {
+    background: var(--bg2);
+  }
+
+  .phase-block {
+    margin-bottom: 48px;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+  }
+
+  .phase-month {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .phase-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-dim);
+  }
+
+  .session-row {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    align-items: start;
+    gap: 24px;
+    padding: 16px 0;
+    font-size: 14px;
+  }
+
+  .session-num {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    padding-top: 2px;
+  }
+
+  .session-name {
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .session-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .session-time {
+    font-size: 12px;
+    color: var(--text-dim);
+    white-space: nowrap;
+    padding-top: 2px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── 5. 차시별 내용 공통 ── */
+  .session-section {
+    background: var(--bg);
+  }
+
+  .session-section:nth-child(even) {
+    background: var(--bg2);
+  }
+
+  .activity-block {
+    background: var(--bg2);
+    border-radius: 4px;
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+
+  .activity-block.alt {
+    background: var(--bg3);
+  }
+
+  .activity-num {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .activity-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .activity-title-en {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .activity-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .step-list {
+    list-style: none;
+  }
+
+  .step-list li {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .step-list li:last-child {
+    border-bottom: none;
+  }
+
+  .step-num {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 24px;
+    font-size: 14px;
+  }
+
+  .bullet-list {
+    list-style: none;
+  }
+
+  .bullet-list li {
+    padding: 7px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .bullet-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 300;
+  }
+
+  .materials-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .material-tag {
+    font-size: 12px;
+    border: 1px solid var(--line);
+    padding: 5px 14px;
+    border-radius: 2px;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    background: var(--bg);
+  }
+
+  /* ── 미디어 레이아웃 ── */
+  .media-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .media-row.three {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .media-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .media-caption {
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  /* ── 6. 전체 일정 캘린더 ── */
+  #schedule {
+    background: var(--bg);
+  }
+
+  .schedule-strip {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 8px;
+  }
+
+  .schedule-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    border-top: 1px solid var(--line);
+    padding: 20px 0;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .schedule-row:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .schedule-month {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+
+  .schedule-detail {
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
+  .schedule-highlight {
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .schedule-dim {
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    background: var(--accent);
+    color: var(--white);
+    padding: 2px 9px;
+    border-radius: 2px;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* ── 7. 역할 및 안전 ── */
+  #roles {
+    background: var(--bg2);
+  }
+
+  .role-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .role-card {
+    background: var(--bg);
+    border-radius: 4px;
+    padding: 32px;
+  }
+
+  .role-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* ── 8. 마무리 ── */
+  #closing {
+    background: var(--accent2);
+    min-height: 50vh;
+  }
+
+  #closing .section-label {
+    color: rgba(237,240,236,0.6);
+  }
+
+  #closing h2.section-title {
+    color: var(--white);
+    border-left-color: rgba(237,240,236,0.5);
+  }
+
+  #closing p {
+    font-size: 16px;
+    color: rgba(237,240,236,0.85);
+    line-height: 2;
+    max-width: 680px;
+    margin-bottom: 40px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(237,240,236,0.7);
+    text-decoration: none;
+    border: 1px solid rgba(237,240,236,0.3);
+    padding: 10px 24px;
+    border-radius: 2px;
+    letter-spacing: 0.06em;
+    transition: background 0.2s, color 0.2s;
+    align-self: flex-start;
+  }
+
+  .back-link:hover {
+    background: rgba(237,240,236,0.15);
+    color: var(--white);
+  }
+
+  /* ── 반응형 ── */
+
+  /* 태블릿 (820px 이하) */
+  @media (max-width: 820px) {
+    section { padding: 60px 24px; }
+    #toc { padding: 48px 24px; }
+    .toc-grid { grid-template-columns: 1fr; }
+    .intro-grid { grid-template-columns: 1fr; }
+    .activity-content { grid-template-columns: 1fr; }
+    .media-row { grid-template-columns: 1fr; }
+    .media-row.three { grid-template-columns: 1fr 1fr; }
+    .role-grid { grid-template-columns: 1fr; }
+    .cover-left { padding: 60px 24px; }
+    .session-row { grid-template-columns: 80px 1fr; }
+    .session-time { display: none; }
+    .activity-block { padding: 28px; }
+    .toc-item { padding: 22px 24px; }
+    .phase-header { gap: 12px; }
+  }
+
+  /* 스마트폰 (600px 이하) */
+  @media (max-width: 600px) {
+    section { padding: 48px 20px; }
+    #toc { padding: 40px 20px; }
+    .cover-left { padding: 56px 20px 48px; }
+
+    h2.section-title {
+      font-size: 24px;
+      margin-bottom: 24px;
+      padding-left: 14px;
+    }
+
+    /* 목차 */
+    .toc-item { padding: 18px 16px; gap: 14px; }
+    .toc-num { font-size: 26px; min-width: 38px; }
+    .toc-text h3 { font-size: 14px; }
+    .toc-text p { font-size: 12px; }
+
+    /* 활동 블록 */
+    .activity-block { padding: 18px 16px; }
+    .info-box { padding: 18px 16px; }
+    .info-row { grid-template-columns: 80px 1fr; gap: 8px; font-size: 13px; }
+
+    /* 커리큘럼 월별 */
+    .phase-month { font-size: 22px; }
+    .phase-header { gap: 8px; flex-wrap: wrap; }
+
+    /* 준비물 태그 */
+    .materials-grid { gap: 6px; }
+    .material-tag { font-size: 11px; padding: 4px 10px; }
+
+    /* 단계 리스트 */
+    .step-list li { font-size: 13px; gap: 10px; }
+    .bullet-list li { font-size: 13px; }
+
+    /* 미디어 3열 → 1열 */
+    .media-row.three { grid-template-columns: 1fr; }
+
+    /* 역할 배정 테이블 (인라인 180px 1fr 120px) → 세로 스택 */
+    div[style*="grid-template-columns:180px"] {
+      grid-template-columns: 1fr !important;
+      border-radius: 4px;
+    }
+    div[style*="grid-template-columns:180px"] > div {
+      border-left: none !important;
+      border-top: 1px solid var(--line) !important;
+    }
+    div[style*="grid-template-columns:180px"] > div:first-child {
+      border-top: none !important;
+      font-weight: 600;
+      font-size: 12px;
+      padding-bottom: 4px !important;
+    }
+
+    /* 달력 가로 스크롤 */
+    div[style*="max-width:460px"] {
+      max-width: 100% !important;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    div[style*="repeat(5,1fr)"] {
+      min-width: 300px;
+      font-size: 10px !important;
+    }
+
+    /* 커리큘럼 차시 열 */
+    div[style*="grid-template-columns:72px"] {
+      grid-template-columns: 52px 1fr !important;
+    }
+
+    /* 저널 체크박스 3열 → 2열 */
+    div[style*="grid-template-columns:1fr 1fr 1fr"] {
+      grid-template-columns: 1fr 1fr !important;
+    }
+
+    /* 마무리 */
+    #closing { min-height: 40vh; }
+    #closing p { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── 1. 커버 ── -->
+<section id="cover">
+  <div class="cover-inner">
+    <div class="cover-left">
+      <p class="cover-eyebrow">이포중학교 · 경기도교육청 학교갤러리 사업 · 2026</p>
+      <h1 class="cover-title">울림통 협력창작 프로젝트</h1>
+      <div class="cover-divider"></div>
+      <div class="cover-meta">
+        <strong>대상</strong>&ensp;이포중학교 전교생, 이포고등학교 학생 일부<br>
+        <strong>기간</strong>&ensp;2026년 5월 – 11월<br>
+        <strong>장소</strong>&ensp;이포중학교 일원<br>
+        <strong>기획·진행</strong>&ensp;김아영 작가 (니닉크라프트)
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 2. 목차 ── -->
+<section id="toc">
+  <p class="section-label">목차</p>
+  <h2 class="section-title">목차</h2>
+  <div class="toc-grid">
+    <a class="toc-item" href="#session01">
+      <span class="toc-num">01</span>
+      <div class="toc-text">
+        <h3>1단계 — 울림통 프로젝트의 이해</h3>
+        <p>소개 · 일정 · 역할 배정 · 명상 드로잉</p>
+      </div>
+    </a>
+    <a class="toc-item" href="#session02">
+      <span class="toc-num">02</span>
+      <div class="toc-text">
+        <h3>2단계 — 나만의 울림통 만들기</h3>
+        <p>흙 반죽 · 타래 빚기</p>
+      </div>
+    </a>
+    <a class="toc-item" href="#journal">
+      <span class="toc-num">부록</span>
+      <div class="toc-text">
+        <h3>작업 관찰 일지</h3>
+        <p>차시별 기록 양식</p>
+      </div>
+    </a>
+  </div>
+</section>
+<section id="session01" class="session-section">
+  <p class="section-label">01</p>
+  <h2 class="section-title">1단계 — 울림통 프로젝트의 이해</h2>
+
+  <div class="activity-block">
+    <h3 class="activity-title">울림통 프로젝트의 이해</h3>
+
+    <div class="activity-content">
+      <div>
+        <p style="font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.06em; margin-bottom:12px; text-transform:uppercase;">학습 목표</p>
+        <ul class="bullet-list">
+          <li>울림통 프로젝트의 의미와 협력창작의 개념 이해</li>
+          <li>전체 제작 일정 파악 및 나의 역할 인식</li>
+          <li>나만의 울림통 만들기를 위한 흙 반죽 실습</li>
+        </ul>
+
+        <p style="font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.06em; margin:28px 0 12px; text-transform:uppercase;">활동 순서</p>
+        <ul class="step-list">
+          <li><span class="step-num">1</span><span>작가 소개 (5분)</span></li>
+          <li><span class="step-num">2</span><span>울림통이란? — 과거 작품 소개 및 감상 (5분)</span></li>
+          <li><span class="step-num">3</span><span>전체 제작 일정 소개 (5분)</span></li>
+          <li><span class="step-num">4</span><span>역할 배정 논의 (5분, 차차 결정하기)</span></li>
+          <li><span class="step-num">5</span><span>명상 드로잉 소개 및 체험 (상황에 따라 다음 단계에서 진행)</span></li>
+          <li><span class="step-num">6</span><span>흙 반죽 시연 및 실습 (25분)</span></li>
+        </ul>
+
+        <p style="font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.06em; margin:28px 0 10px; text-transform:uppercase;">준비물</p>
+        <div class="materials-grid">
+          <span class="material-tag">상영 기기 (빔프로젝터)</span>
+          <span class="material-tag">참고 자료 (슬라이드)</span>
+          <span class="material-tag">역할 배정표 (학생 1인 1부)</span>
+          <span class="material-tag">작업 관찰 일지 (학생 1인 1부)</span>
+          <span class="material-tag">드로잉 종이 · 필기구</span>
+        </div>
+      </div>
+
+      <div>
+        <p style="font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.06em; margin-bottom:12px; text-transform:uppercase;">수업 현장 사진</p>
+        <div class="media-placeholder" style="height:200px; margin-bottom:16px;">
+          <span class="ph-icon">🖼</span>
+          <span class="ph-label">작품 감상 장면</span>
+          <img src="" alt="">
+        </div>
+        <div class="media-placeholder" style="height:160px;">
+          <span class="ph-icon">🖼</span>
+          <span class="ph-label">첫 기록 / 일지 작성</span>
+          <img src="" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 울림통이란 -->
+  <h3 style="font-family:'IBM Plex Sans KR',sans-serif; font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.12em; margin:40px 0 16px; text-transform:uppercase;">울림통이란</h3>
+<div class="intro-grid">
+    <div class="intro-text">
+      <p>울림통은 <strong>흙(도예점토)을 재료로 하여 시민이 함께 조형물을 만드는 협력창작 프로젝트</strong>입니다. 흙을 빚고 말리고 다지는 과정 속에서 참여자들의 손길과 시간이 축적되어 하나의 작품으로 완성됩니다.</p>
+      <p>결과물보다 과정을 중시하는 과정중심 미술교육의 사례로, 흙이라는 원초적 재료를 다루며 촉각적 경험을 하고 함께 작업하는 과정에서 협력과 인내를 배웁니다.</p>
+      <p>본 프로젝트에서 학생들은 단순 참여가 아닌 <strong>기획부터 완성, 전시까지 전 과정</strong>에 긴밀히 관여함으로써 예술 창작의 전체 사이클을 경험합니다.</p>
+
+      <h3 style="font-size:15px; font-weight:600; margin:32px 0 16px; color:var(--accent2); letter-spacing:0.04em;">울림통 시리즈 연혁</h3>
+      <ul class="history-list">
+        <li><span class="year">2019</span><span>울림통 1기 — 가상과 현실이 교차하는 융합의 장</span></li>
+        <li><span class="year">2024</span><span>울림통 2기 — 시민들과 함께 거대한 흙 구조를 쌓아 올리는 참여예술</span></li>
+        <li><span class="year">2025</span><span>울림통 3기 — 아이들이 들어가 노는 체험적 예술공간으로 진화</span></li>
+        <li><span class="year">2026</span><span>울림통: 확장 — 다양한 지역으로 넓히며 더 많은 연결 도모</span></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="info-box">
+        <h3>이포중학교 협력창작 프로젝트</h3>
+        <div class="info-row">
+          <span class="label">사업명</span>
+          <span>울림통 협력창작 프로젝트 및 전시</span>
+        </div>
+        <div class="info-row">
+          <span class="label">사업 목표</span>
+          <span>흙을 매개로 한 협력창작 과정 전체 참여, 완성 작품을 학교 공간에 전시하여 일상 속 예술 향유 문화 조성</span>
+        </div>
+        <div class="info-row">
+          <span class="label">참여 대상</span>
+          <span>이포중학교 전교생<br><span style="font-size:13px; color:var(--text-dim)">이포고등학교 학생 일부</span></span>
+        </div>
+        <div class="info-row">
+          <span class="label">기간</span>
+          <span>2026년 5월 – 11월 (7개월)</span>
+        </div>
+        <div class="info-row">
+          <span class="label">총 차시</span>
+          <span>20차시</span>
+        </div>
+        <div class="info-row">
+          <span class="label">기획·진행</span>
+          <span>김아영 작가 (니닉크라프트)</span>
+        </div>
+        <div class="info-row">
+          <span class="label">사업</span>
+          <span>경기도교육청 학교갤러리 사업</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 과거 울림통 사진 공란 -->
+  <h3 style="font-family:'IBM Plex Sans KR',sans-serif; font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.12em; margin:56px 0 16px; text-transform:uppercase;">과거 울림통 작품</h3>
+  <div class="media-row three">
+    <div class="media-col">
+      <div class="media-placeholder" style="height:200px;">
+        <span class="ph-icon">🖼</span>
+        <span class="ph-label">울림통 1기 · 2019</span>
+        <img src="" alt="">
+      </div>
+      <p class="media-caption">울림통 1기 · 2019</p>
+    </div>
+    <div class="media-col">
+      <div class="media-placeholder" style="height:200px;">
+        <span class="ph-icon">🖼</span>
+        <span class="ph-label">울림통 2기 · 2024</span>
+        <img src="" alt="">
+      </div>
+      <p class="media-caption">울림통 2기 · 2024</p>
+    </div>
+    <div class="media-col">
+      <div class="media-placeholder" style="height:200px;">
+        <span class="ph-icon">🖼</span>
+        <span class="ph-label">울림통 3기 · 2025</span>
+        <img src="" alt="">
+      </div>
+      <p class="media-caption">울림통 3기 · 2025</p>
+    </div>
+  </div>
+
+  <!-- 참고 영상 공란 -->
+  <h3 style="font-family:'IBM Plex Sans KR',sans-serif; font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.12em; margin:40px 0 16px; text-transform:uppercase;">참고 영상</h3>
+  <div class="media-row">
+    <div class="media-col">
+      <div class="media-placeholder" style="height:220px;">
+        <span class="ph-icon">▶</span>
+        <span class="ph-label">울림통 제작 과정 영상</span>
+        <img src="" alt="">
+      </div>
+      <p class="media-caption">울림통 제작 과정 영상</p>
+    </div>
+    <div class="media-col">
+      <div class="media-placeholder" style="height:220px;">
+        <span class="ph-icon">▶</span>
+        <span class="ph-label">전시 영상 / 인터뷰</span>
+        <img src="" alt="">
+      </div>
+      <p class="media-caption">전시 및 참여 인터뷰</p>
+    </div>
+  </div>
+
+  <!-- 전체 제작 일정 -->
+  <h3 style="font-family:'IBM Plex Sans KR',sans-serif; font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.12em; margin:40px 0 16px; text-transform:uppercase;">전체 제작 일정</h3>
+<p style="font-size:14px; color:var(--text-dim); margin-bottom:40px; letter-spacing:0.02em;">회당 45분 · 미술 시간 활용 · 일정은 변경될 수 있습니다</p>
+
+  <div style="max-width:640px;">
+
+  <!-- 5월 -->
+  <div class="phase-block">
+    <div class="phase-header">
+      <span class="phase-month">5월</span>
+      <span class="phase-title">오리엔테이션</span>
+      <span style="font-size:13px;color:var(--text-dim);margin-left:auto;align-self:center;">1–2차시</span>
+    </div>
+    <!-- 차시 행: 차시 + 날짜 / 활동명 / 설명 -->
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:14px;margin-bottom:8px;">
+      <div style="padding:8px 0 2px;font-family:'IBM Plex Sans KR',sans-serif;font-weight:600;color:var(--accent);font-size:13px;">1차시</div>
+      <div style="padding:8px 0 2px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;">
+        <span style="font-weight:500;color:var(--text);">울림통이란?</span>
+        <span style="color:var(--accent);font-size:12px;white-space:nowrap;">5/11–15</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:13px;margin-bottom:16px;">
+      <div></div>
+      <div style="color:var(--text-dim);padding-bottom:8px;border-bottom:1px solid var(--bg3);">프로젝트 소개, 참고 작품 감상, 명상 드로잉 소개, 첫 기록</div>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:14px;margin-bottom:8px;">
+      <div style="padding:8px 0 2px;font-family:'IBM Plex Sans KR',sans-serif;font-weight:600;color:var(--accent);font-size:13px;">2차시</div>
+      <div style="padding:8px 0 2px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;">
+        <span style="font-weight:500;color:var(--text);">나만의 울림통 만들기</span>
+        <span style="color:var(--accent);font-size:12px;white-space:nowrap;">5/18–22</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:13px;margin-bottom:16px;">
+      <div></div>
+      <div style="color:var(--text-dim);padding-bottom:8px;border-bottom:1px solid var(--bg3);">흙의 특성 이해 및 기초 체험</div>
+    </div>
+    <!-- 5월 수업 시간표 -->
+    <div style="margin-top:20px;max-width:460px;">
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:2px;font-size:12px;">
+        <div style="text-align:center;padding:5px 4px;background:var(--bg3);font-size:11px;letter-spacing:0.06em;color:var(--text-dim);font-weight:500;">월</div>
+        <div style="text-align:center;padding:5px 4px;background:var(--bg3);font-size:11px;letter-spacing:0.06em;color:var(--text-dim);font-weight:500;">화</div>
+        <div style="text-align:center;padding:5px 4px;background:var(--bg3);font-size:11px;letter-spacing:0.06em;color:var(--text-dim);font-weight:500;">수</div>
+        <div style="text-align:center;padding:5px 4px;background:var(--bg3);font-size:11px;letter-spacing:0.06em;color:var(--text-dim);font-weight:500;">목</div>
+        <div style="text-align:center;padding:5px 4px;background:var(--bg3);font-size:11px;letter-spacing:0.06em;color:var(--text-dim);font-weight:500;">금</div>
+        <div style="padding:8px 8px 6px;background:var(--bg);border-top:2px solid var(--accent);"><div style="font-size:11px;color:var(--text-dim);">5/11</div></div>
+        <div style="padding:8px 8px 6px;background:var(--bg);border-top:2px solid var(--accent);">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">5/12</div>
+          <div style="background:#C0DD97;border-radius:2px;padding:3px 6px;margin-bottom:3px;"><div style="font-size:11px;font-weight:500;color:#27500A;">09:10~</div><div style="font-size:10px;color:#3B6D11;">고3-1반</div></div>
+          <div style="background:#C0DD97;border-radius:2px;padding:3px 6px;"><div style="font-size:11px;font-weight:500;color:#27500A;">13:40~</div><div style="font-size:10px;color:#3B6D11;">고3-2반</div></div>
+        </div>
+        <div style="padding:8px 8px 6px;background:var(--bg);border-top:2px solid var(--accent);"><div style="font-size:11px;color:var(--text-dim);">5/13</div></div>
+        <div style="padding:8px 8px 6px;background:var(--bg);border-top:2px solid var(--accent);"><div style="font-size:11px;color:var(--text-dim);">5/14</div></div>
+        <div style="padding:8px 8px 6px;background:var(--bg);border-top:2px solid var(--accent);">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">5/15</div>
+          <div style="background:#C0DD97;border-radius:2px;padding:3px 6px;"><div style="font-size:11px;font-weight:500;color:#27500A;">11:35~</div><div style="font-size:10px;color:#3B6D11;">중3</div></div>
+        </div>
+        <div style="padding:8px 8px 6px;background:var(--bg);border-top:2px solid var(--accent2);">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">5/18</div>
+          <div style="background:#9FE1CB;border-radius:2px;padding:3px 6px;margin-bottom:3px;"><div style="font-size:11px;font-weight:500;color:#085041;">09:50~</div><div style="font-size:10px;color:#0F6E56;">중1</div></div>
+          <div style="background:#9FE1CB;border-radius:2px;padding:3px 6px;"><div style="font-size:11px;font-weight:500;color:#085041;">10:50~</div><div style="font-size:10px;color:#0F6E56;">중2</div></div>
+        </div>
+        <div style="padding:8px 8px 6px;background:var(--bg);border-top:2px solid var(--accent2);">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">5/19</div>
+          <div style="background:#9FE1CB;border-radius:2px;padding:3px 6px;margin-bottom:3px;"><div style="font-size:11px;font-weight:500;color:#085041;">09:10~</div><div style="font-size:10px;color:#0F6E56;">고3-1반</div></div>
+          <div style="background:#9FE1CB;border-radius:2px;padding:3px 6px;"><div style="font-size:11px;font-weight:500;color:#085041;">13:40~</div><div style="font-size:10px;color:#0F6E56;">고3-2반</div></div>
+        </div>
+        <div style="padding:8px 8px 6px;background:var(--bg);border-top:2px solid var(--accent2);"><div style="font-size:11px;color:var(--text-dim);">5/20</div></div>
+        <div style="padding:8px 8px 6px;background:var(--bg);border-top:2px solid var(--accent2);">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">5/21</div>
+          <div style="background:#9FE1CB;border-radius:2px;padding:3px 6px;"><div style="font-size:11px;font-weight:500;color:#085041;">09:00~</div><div style="font-size:10px;color:#0F6E56;">중1</div></div>
+        </div>
+        <div style="padding:8px 8px 6px;background:var(--bg);border-top:2px solid var(--accent2);">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">5/22</div>
+          <div style="background:#9FE1CB;border-radius:2px;padding:3px 6px;"><div style="font-size:11px;font-weight:500;color:#085041;">11:35~</div><div style="font-size:10px;color:#0F6E56;">중3</div></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;margin-top:8px;font-size:11px;color:var(--text-dim);">
+        <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:10px;height:10px;border-radius:1px;background:#C0DD97;"></span>1주차 (1차시)</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:10px;height:10px;border-radius:1px;background:#9FE1CB;"></span>2주차 (2차시)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6월 -->
+  <div class="phase-block">
+    <div class="phase-header">
+      <span class="phase-month">6월</span>
+      <span class="phase-title">점토 반죽</span>
+      <span style="font-size:13px;color:var(--text-dim);margin-left:auto;align-self:center;">3–8차시</span>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:14px;margin-bottom:8px;">
+      <div style="padding:8px 0 2px;font-family:'IBM Plex Sans KR',sans-serif;font-weight:600;color:var(--accent);font-size:13px;">3–5차시</div>
+      <div style="padding:8px 0 2px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;">
+        <span style="font-weight:500;color:var(--text);">점토 반죽 1</span>
+        <span style="color:var(--accent);font-size:12px;white-space:nowrap;">6/1–5</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:13px;margin-bottom:16px;">
+      <div></div>
+      <div style="color:var(--text-dim);padding-bottom:8px;border-bottom:1px solid var(--bg3);">흙 반죽·타래 만들기 시연 및 실습, 보관 장소 이동</div>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:14px;margin-bottom:8px;">
+      <div style="padding:8px 0 2px;font-family:'IBM Plex Sans KR',sans-serif;font-weight:600;color:var(--accent);font-size:13px;">6–8차시</div>
+      <div style="padding:8px 0 2px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;">
+        <span style="font-weight:500;color:var(--text);">점토 반죽 2</span>
+        <span style="color:var(--accent);font-size:12px;white-space:nowrap;">6/8–12</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:13px;margin-bottom:8px;">
+      <div></div>
+      <div style="color:var(--text-dim);padding-bottom:8px;border-bottom:1px solid var(--bg3);">흙 반죽·타래 만들기 완료 및 보관. 디자인 요소 회의·드로잉.</div>
+    </div>
+  </div>
+
+  <!-- 7월 -->
+  <div class="phase-block">
+    <div class="phase-header">
+      <span class="phase-month">7월</span>
+      <span class="phase-title">성형 · 다지기 · 기름칠</span>
+      <span style="font-size:13px;color:var(--text-dim);margin-left:auto;align-self:center;">9–20차시</span>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:14px;margin-bottom:8px;">
+      <div style="padding:8px 0 2px;font-family:'IBM Plex Sans KR',sans-serif;font-weight:600;color:var(--accent);font-size:13px;">9–11차시</div>
+      <div style="padding:8px 0 2px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;">
+        <span style="font-weight:500;color:var(--text);">울림통 짓기·다지기 1</span>
+        <span style="color:var(--accent);font-size:12px;white-space:nowrap;">6/29–7/3</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:13px;margin-bottom:16px;">
+      <div></div>
+      <div style="color:var(--text-dim);padding-bottom:8px;border-bottom:1px solid var(--bg3);">위치 확정, 하단부 쌓기 시작. 2기 동시 진행. 명상 드로잉 (상황에 따라 병행).</div>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:14px;margin-bottom:8px;">
+      <div style="padding:8px 0 2px;font-family:'IBM Plex Sans KR',sans-serif;font-weight:600;color:var(--accent);font-size:13px;">12–17차시</div>
+      <div style="padding:8px 0 2px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;">
+        <span style="font-weight:500;color:var(--text);">울림통 짓기·다지기 2</span>
+        <span style="color:var(--accent);font-size:12px;white-space:nowrap;">7/6–10</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:13px;margin-bottom:16px;">
+      <div></div>
+      <div style="color:var(--text-dim);padding-bottom:8px;border-bottom:1px solid var(--bg3);">형태 다듬기, 반건조 부분 다지기 교차 진행.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:14px;margin-bottom:8px;">
+      <div style="padding:8px 0 2px;font-family:'IBM Plex Sans KR',sans-serif;font-weight:600;color:var(--accent);font-size:13px;">18–20차시</div>
+      <div style="padding:8px 0 2px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;">
+        <span style="font-weight:500;color:var(--text);">기름칠하기 — 작품 완성</span>
+        <span style="color:var(--accent);font-size:12px;white-space:nowrap;">7/20–21</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:13px;margin-bottom:8px;">
+      <div></div>
+      <div style="color:var(--text-dim);padding-bottom:8px;border-bottom:1px solid var(--bg3);">완전 건조 확인, 기름칠, 이름 짓기, 전시 구성 논의. 학생 도슨트 프로그램 논의 (희망 시). 아카이빙 자료 정리.</div>
+    </div>
+  </div>
+
+  <!-- 9–11월 전시 -->
+  <div class="phase-block">
+    <div class="phase-header">
+      <span class="phase-month">9–11월</span>
+      <span class="phase-title">전시 기획·운영</span>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:14px;margin-bottom:8px;">
+      <div style="padding:8px 0 2px;font-family:'IBM Plex Sans KR',sans-serif;font-weight:600;color:var(--accent2);font-size:13px;">9월 초</div>
+      <div style="padding:8px 0 2px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;">
+        <span style="font-weight:500;color:var(--text);">전시 설치</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:13px;margin-bottom:16px;">
+      <div></div>
+      <div style="color:var(--text-dim);padding-bottom:8px;border-bottom:1px solid var(--bg3);">복도·계단 1–3층 연속 공간. 울림통 2기 + 아카이빙 사진·영상 + 대형 벽면 작품.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:14px;margin-bottom:8px;">
+      <div style="padding:8px 0 2px;font-family:'IBM Plex Sans KR',sans-serif;font-weight:600;color:var(--accent2);font-size:13px;">9/16</div>
+      <div style="padding:8px 0 2px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;">
+        <span style="font-weight:500;color:var(--text);">전시 오픈 (예정)</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:72px 1fr;gap:0;font-size:13px;margin-bottom:16px;">
+      <div></div>
+      <div style="color:var(--text-dim);padding-bottom:8px;border-bottom:1px solid var(--bg3);">《함께 빚은 울림, 이어지는 여정》 — 개막식, 학생 발표·도슨트 프로그램 (희망 시). 9–11월 운영.</div>
+    </div>
+  </div>
+
+  </div><!-- /max-width wrapper -->
+
+  <div style="max-width:640px; margin-top:16px; padding:24px 28px; background:var(--bg3); border-radius:4px; border-left:3px solid var(--accent);">
+    <p style="font-size:13px; font-weight:600; color:var(--accent2); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px;">안전 안내</p>
+    <ul class="bullet-list" style="font-size:13px; color:var(--text-dim);">
+      <li>흙 작업 중 분진 발생 최소화 — 작업 공간 환기 유지</li>
+      <li>장갑·앞치마 착용 권장 (필수 아님), 피부 트러블 시 교사에게 즉시 보고</li>
+      <li>도구(와이어 커터, 조각도 등) 사용 시 작가 지도 하에 진행</li>
+      <li>중학생 단독 사용 금지 도구는 작가가 직접 시연·보조</li>
+      <li>작업 후 손 세척 및 작업대 정리 습관화</li>
+    </ul>
+  </div>
+
+    <!-- 역할 배정 논의 -->
+  <h3 style="font-family:'IBM Plex Sans KR',sans-serif; font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.12em; margin:40px 0 16px; text-transform:uppercase;">역할 배정 논의</h3>
+  <div style="max-width:680px;margin-bottom:40px;">
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px;line-height:1.8;">프로젝트 기간 동안 필요한 역할을 학생들과 함께 정합니다. 누가 어떤 역할을 맡을지 이 자리에서 논의하고 기록해 두세요.</p>
+
+    <p style="font-size:11px;font-weight:600;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">작업일</p>
+    <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:20px;">
+      <div style="display:grid;grid-template-columns:180px 1fr 120px;gap:0;background:var(--bg2);border-radius:4px;overflow:hidden;">
+        <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--text);">사진·영상 기록</div>
+        <div style="padding:10px 14px;font-size:12px;color:var(--text-dim);border-left:1px solid var(--line);">매 작업일 작업 모습·흙 상태 촬영. 카톡방 업로드.</div>
+        <div style="padding:10px 14px;font-size:12px;color:var(--text-dim);border-left:1px solid var(--line);font-style:italic;">담당: ________</div>
+      </div>
+      <div style="display:grid;grid-template-columns:180px 1fr 120px;gap:0;background:var(--bg2);border-radius:4px;overflow:hidden;">
+        <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--text);">일지 작성</div>
+        <div style="padding:10px 14px;font-size:12px;color:var(--text-dim);border-left:1px solid var(--line);">작업 관찰 일지 항목 기록. 흙 상태·특이사항·느낀 점.</div>
+        <div style="padding:10px 14px;font-size:12px;color:var(--text-dim);border-left:1px solid var(--line);font-style:italic;">담당: ________</div>
+      </div>
+      <div style="display:grid;grid-template-columns:180px 1fr 120px;gap:0;background:var(--bg2);border-radius:4px;overflow:hidden;">
+        <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--text);">준비·정리</div>
+        <div style="padding:10px 14px;font-size:12px;color:var(--text-dim);border-left:1px solid var(--line);">재료·도구 준비, 작업 후 현장 정리 및 흙 보관 확인.</div>
+        <div style="padding:10px 14px;font-size:12px;color:var(--text-dim);border-left:1px solid var(--line);font-style:italic;">담당: ________</div>
+      </div>
+    </div>
+
+    <p style="font-size:11px;font-weight:600;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">비작업일 (건조·휴지 기간)</p>
+    <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:20px;">
+      <div style="display:grid;grid-template-columns:180px 1fr 120px;gap:0;background:var(--bg2);border-radius:4px;overflow:hidden;">
+        <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--text);">현장 순찰</div>
+        <div style="padding:10px 14px;font-size:12px;color:var(--text-dim);border-left:1px solid var(--line);">등교·점심·하교 시 현장 확인. 이상 발견 시 카톡방 즉시 공유.</div>
+        <div style="padding:10px 14px;font-size:12px;color:var(--text-dim);border-left:1px solid var(--line);font-style:italic;">담당: ________</div>
+      </div>
+      <div style="display:grid;grid-template-columns:180px 1fr 120px;gap:0;background:var(--bg2);border-radius:4px;overflow:hidden;">
+        <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--text);">환경 체크</div>
+        <div style="padding:10px 14px;font-size:12px;color:var(--text-dim);border-left:1px solid var(--line);">날씨·습도 변화 체크. 비 예보·고온 건조 시 선생님·작가에게 알림.</div>
+        <div style="padding:10px 14px;font-size:12px;color:var(--text-dim);border-left:1px solid var(--line);font-style:italic;">담당: ________</div>
+      </div>
+    </div>
+
+    <p style="font-size:11px;font-weight:600;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">아카이빙</p>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:grid;grid-template-columns:180px 1fr 120px;gap:0;background:var(--bg2);border-radius:4px;overflow:hidden;">
+        <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--text);">사진 정리</div>
+        <div style="padding:10px 14px;font-size:12px;color:var(--text-dim);border-left:1px solid var(--line);">카톡방 사진 중 대표 이미지 선별·분류. 날짜별 보관.</div>
+        <div style="padding:10px 14px;font-size:12px;color:var(--text-dim);border-left:1px solid var(--line);font-style:italic;">담당: ________</div>
+      </div>
+      <div style="display:grid;grid-template-columns:180px 1fr 120px;gap:0;background:var(--bg2);border-radius:4px;overflow:hidden;">
+        <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--text);">카톡방 관리</div>
+        <div style="padding:10px 14px;font-size:12px;color:var(--text-dim);border-left:1px solid var(--line);">공지 관리, 업로드 독려. 중요 이미지 공지 고정.</div>
+        <div style="padding:10px 14px;font-size:12px;color:var(--text-dim);border-left:1px solid var(--line);font-style:italic;">담당: ________</div>
+      </div>
+    </div>
+  </div></section>
+
+<!-- ── 7. 2단계 ── -->
+<section id="session02" class="session-section" style="background:var(--bg2);">
+  <p class="section-label">02</p>
+  <h2 class="section-title">2단계 — 나만의 울림통 만들기</h2>
+
+  <div class="activity-block alt">
+    <h3 class="activity-title">흙 반죽 · 타래 빚기</h3>
+
+    <div class="activity-content">
+      <div>
+        <p style="font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.06em; margin-bottom:12px; text-transform:uppercase;">학습 목표</p>
+        <ul class="bullet-list">
+          <li>흙의 물리적 특성 이해 (건조, 수축, 균열 등)</li>
+          <li>촉각적 경험을 통한 재료 친밀감 형성</li>
+          <li>흙 작업 흐름에 대한 전반적 이해</li>
+        </ul>
+
+        <p style="font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.06em; margin:28px 0 12px; text-transform:uppercase;">활동 순서</p>
+        <ul class="step-list">
+          <li><span class="step-num">1</span><span>흙의 특성 설명 및 시연 — 각자 흙 타일을 만들고 건조도 관찰 (10분)</span></li>
+          <li><span class="step-num">2</span><span>나만의 울림통 성형 (30분)</span></li>
+          <li><span class="step-num">3</span><span>작업 정리 및 소감 나누기 (5분)</span></li>
+        </ul>
+
+        <p style="font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.06em; margin:28px 0 10px; text-transform:uppercase;">준비물</p>
+        <div class="materials-grid">
+          <span class="material-tag">흙 (도예점토)</span>
+          <span class="material-tag">분무기</span>
+          <span class="material-tag">앞치마</span>
+          <span class="material-tag">장갑 (선택)</span>
+          <span class="material-tag">작업대 커버</span>
+          <span class="material-tag">스폰지</span>
+          <span class="material-tag">버킷 (물)</span>
+        </div>
+      </div>
+
+      <div>
+        <p style="font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.06em; margin-bottom:12px; text-transform:uppercase;">수업 현장 사진</p>
+        <div class="media-placeholder" style="height:200px; margin-bottom:16px;">
+          <span class="ph-icon">🖼</span>
+          <span class="ph-label">흙 시연 장면</span>
+          <img src="" alt="">
+        </div>
+        <div class="media-placeholder" style="height:160px;">
+          <span class="ph-icon">🖼</span>
+          <span class="ph-label">학생 실습 장면</span>
+          <img src="" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 흙 특성 참고 이미지 공란 -->
+  <h3 style="font-family:'IBM Plex Sans KR',sans-serif; font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.12em; margin:40px 0 16px; text-transform:uppercase;">흙 재료 참고 이미지</h3>
+  <div class="media-row three">
+    <div class="media-col">
+      <div class="media-placeholder" style="height:160px;">
+        <span class="ph-icon">🖼</span>
+        <span class="ph-label">건조 전후 비교</span>
+        <img src="" alt="">
+      </div>
+      <p class="media-caption">건조 전후 수축 비교</p>
+    </div>
+    <div class="media-col">
+      <div class="media-placeholder" style="height:160px;">
+        <span class="ph-icon">🖼</span>
+        <span class="ph-label">흙 종류 비교</span>
+        <img src="" alt="">
+      </div>
+      <p class="media-caption">흙 종류 (페이퍼클레이 · 샤모트 · 옹기토)</p>
+    </div>
+    <div class="media-col">
+      <div class="media-placeholder" style="height:160px;">
+        <span class="ph-icon">🖼</span>
+        <span class="ph-label">기초 성형 예시</span>
+        <img src="" alt="">
+      </div>
+      <p class="media-caption">기초 성형 예시</p>
+    </div>
+  </div>
+
+  <!-- 실습 영상 공란 -->
+  <h3 style="font-family:'IBM Plex Sans KR',sans-serif; font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.12em; margin:32px 0 16px; text-transform:uppercase;">시연 영상</h3>
+  <div class="media-row">
+    <div class="media-col">
+      <div class="media-placeholder" style="height:200px;">
+        <span class="ph-icon">▶</span>
+        <span class="ph-label">흙 반죽 시연 영상</span>
+        <img src="" alt="">
+      </div>
+      <p class="media-caption">흙 반죽 기초 시연</p>
+    </div>
+    <div class="media-col">
+      <div class="media-placeholder" style="height:200px;">
+        <span class="ph-icon">▶</span>
+        <span class="ph-label">타래 만들기 영상</span>
+        <img src="" alt="">
+      </div>
+      <p class="media-caption">타래 만들기 기초 영상</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 부록. 작업 관찰 일지 ── -->
+<section id="journal">
+  <p class="section-label">부록</p>
+  <h2 class="section-title">작업 관찰 일지</h2>
+  <p style="font-size:14px;color:var(--text-dim);margin-bottom:40px;">매 작업을 마친 뒤 아래 내용을 기록해 두세요. 나중에 다양한 자료로 활용됩니다.</p>
+
+  <div style="max-width:680px;">
+
+    <!-- 일지 카드 -->
+    <div style="background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:32px;">
+      <!-- 기본 정보 행 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px;">
+        <div style="background:var(--bg2);border-radius:4px;padding:12px 14px;">
+          <p style="font-size:11px;font-weight:600;color:var(--accent2);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">날짜</p>
+          <p style="font-size:13px;color:var(--text-dim);">2026년 &nbsp;&nbsp;&nbsp;&nbsp;월 &nbsp;&nbsp;&nbsp;&nbsp;일</p>
+        </div>
+        <div style="background:var(--bg2);border-radius:4px;padding:12px 14px;">
+          <p style="font-size:11px;font-weight:600;color:var(--accent2);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">작성자</p>
+          <p style="font-size:13px;color:var(--text-dim);">이름: ________________</p>
+        </div>
+        <div style="background:var(--bg2);border-radius:4px;padding:12px 14px;">
+          <p style="font-size:11px;font-weight:600;color:var(--accent2);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">작업한 사람</p>
+          <p style="font-size:13px;color:var(--text-dim);">____________________________</p>
+        </div>
+        <div style="background:var(--bg2);border-radius:4px;padding:12px 14px;">
+          <p style="font-size:11px;font-weight:600;color:var(--accent2);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">날씨 및 작업 환경</p>
+          <p style="font-size:13px;color:var(--text-dim);">____________________________</p>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:22px;">
+
+        <!-- 오늘의 작업 -->
+        <div>
+          <p style="font-size:12px;font-weight:600;color:var(--accent2);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;">오늘의 작업</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;">
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);cursor:default;">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>점토 혼합·반죽
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);cursor:default;">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>타래뽑기
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);cursor:default;">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>타래 성형
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);cursor:default;">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>장식
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);cursor:default;">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>건조
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);cursor:default;">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>상태 확인
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);cursor:default;">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>기름칠
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);cursor:default;">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>기타 워크숍
+            </label>
+          </div>
+        </div>
+
+        <!-- 흙의 상태 관찰 -->
+        <div>
+          <p style="font-size:12px;font-weight:600;color:var(--accent2);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;">흙의 상태 관찰</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;">
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>촉촉함
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>부드러운 반건조
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>반건조
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>단단한 반건조
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>완전 건조
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>균열 발견
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>파손 발견
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;background:var(--bg2);border-radius:4px;padding:7px 10px;font-size:12px;color:var(--text-dim);">
+              <span style="display:inline-block;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:2px;flex-shrink:0;"></span>이끼 발견
+            </label>
+          </div>
+        </div>
+
+        <!-- 특이사항 -->
+        <div>
+          <p style="font-size:12px;font-weight:600;color:var(--accent2);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">특이사항</p>
+          <div style="background:var(--bg2);border-radius:4px;padding:14px 16px;min-height:52px;font-size:13px;color:var(--text-dim);font-style:italic;">예: 작업 중 균열이 생겨 물을 살짝 바르고 손으로 눌러 붙였다.</div>
+        </div>
+
+        <!-- 느낀 점 -->
+        <div>
+          <p style="font-size:12px;font-weight:600;color:var(--accent2);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">느낀 점</p>
+          <div style="background:var(--bg2);border-radius:4px;padding:14px 16px;min-height:72px;font-size:13px;color:var(--text-dim);font-style:italic;">예: 흙이 내 손 모양을 그대로 기억하는 것 같아서 신기했다. 다음엔 더 얇게 올려보고 싶다.</div>
+        </div>
+
+        <!-- 사진 / 스케치 공란 -->
+        <div>
+          <p style="font-size:12px;font-weight:600;color:var(--accent2);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">사진 / 스케치 기록</p>
+          <div style="background:var(--bg2);border:1px dashed var(--line);border-radius:4px;height:100px;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--text-dim);font-size:13px;">
+            <span style="font-size:20px;opacity:0.4;">📷</span> 사진 붙이기 또는 스케치 공간
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── 6. 1단계 ── -->
+
+<!-- ── 8. 마무리 ── -->
+<section id="closing">
+  <p class="section-label">마무리</p>
+  <h2 class="section-title">함께 만드는 울림통</h2>
+  <p>흙을 빚는 손길들이 모여 하나의 공간이 됩니다.<br>이포중학교 학생들과 함께 만드는 울림통을 기대합니다.</p>
+  <p style="font-size:14px; color:rgba(237,240,236,0.6);">문의 · 김아영 작가 (니닉크라프트) · <a href="https://instagram.com/ninnik_kraft" target="_blank" style="color:rgba(237,240,236,0.6); text-decoration:none;">@ninnik_kraft</a></p>
+  <a href="index.html" class="back-link">← 울림통 아카이브로 돌아가기</a>
+</section>
+
+</body>
+</html>

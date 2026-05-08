@@ -521,6 +521,40 @@
     .situation-meta { grid-template-columns: 1fr; }
     .page-footer { padding: 24px; flex-direction: column; gap: 14px; }
   }
+
+  @media (max-width: 600px) {
+    .page-header { padding: 28px 20px 24px; }
+    .main-content { padding: 32px 20px 60px; }
+
+    .chapter-header { gap: 12px; margin-bottom: 24px; }
+    .chapter-num { font-size: 26px; min-width: 40px; }
+    .chapter-title { font-size: 19px; }
+    .section-title { font-size: 16px; padding-left: 12px; }
+    .section-body { font-size: 14px; }
+
+    /* 테이블 가로 스크롤 */
+    .data-table {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
+    }
+    .data-table tbody td { white-space: normal; }
+    .data-table tbody td:first-child { white-space: nowrap; }
+
+    /* 단계 리스트 */
+    .step-list li { gap: 12px; font-size: 14px; padding: 12px 0; }
+
+    /* 원칙 목록 */
+    .principle-list { grid-template-columns: 1fr 1fr; }
+
+    /* 상황 카드 */
+    .situation-card { padding-top: 20px; }
+
+    .tip-box, .warn-box { padding: 14px 18px; font-size: 13px; }
+
+    .page-footer { padding: 20px; font-size: 11px; }
+  }
 </style>
 </head>
 <body>
