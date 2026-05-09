@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>보조 작업자 근무일지 | 울림통-변주 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+  :root {
+    --bg:       #f6ede6;
+    --bg2:      #eee0d6;
+    --bg3:      #e4d0c4;
+    --line:     #ceb0a0;
+    --accent:   #c03828;
+    --accent2:  #8c2418;
+    --text:     #261410;
+    --text-dim: #7a4c3c;
+    --white:    #f6ede6;
+    --ot:       #d4a090;
+    --work:     #c89080;
+    --admin:    #b87860;
+    --exhibit:  #8c5040;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* ── 헤더 ── */
+  .page-header {
+    background: var(--accent2);
+    padding: 56px 64px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    right: -60px; bottom: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    border: 1px solid rgba(246,237,230,0.15);
+    pointer-events: none;
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(246,237,230,0.6);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .header-title {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: clamp(24px, 4vw, 38px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+  .header-sub {
+    font-size: 14px;
+    color: rgba(246,237,230,0.7);
+    margin-bottom: 32px;
+  }
+  .header-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 0;
+    max-width: 640px;
+    border: 1px solid rgba(246,237,230,0.2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .header-info-item {
+    padding: 14px 20px;
+    border-right: 1px solid rgba(246,237,230,0.15);
+  }
+  .header-info-item:last-child { border-right: none; }
+  .header-info-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(246,237,230,0.5);
+    margin-bottom: 4px;
+  }
+  .header-info-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    font-family: 'IBM Plex Sans KR', sans-serif;
+  }
+
+  /* ── 네비 ── */
+  .page-nav {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--line);
+    padding: 0 64px;
+    display: flex;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .page-nav a {
+    padding: 16px 20px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .page-nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ── 본문 공통 ── */
+  .content-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .section {
+    padding: 64px 0 48px;
+    border-bottom: 1px solid var(--line);
+    scroll-margin-top: 56px;
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    border-left: 3px solid var(--accent);
+    padding-left: 16px;
+    margin-bottom: 8px;
+  }
+  .section-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    padding-left: 19px;
+    margin-bottom: 28px;
+    line-height: 1.7;
+  }
+
+  /* ── 업무 설명 카드 ── */
+  .duty-group { margin-bottom: 32px; }
+  .duty-group-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    background: var(--bg3);
+    padding: 8px 16px;
+    margin-bottom: 2px;
+    border-left: 3px solid var(--accent);
+  }
+  .duty-row {
+    display: grid;
+    grid-template-columns: 160px 1fr 100px;
+    gap: 0;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--line);
+  }
+  .duty-row:last-child { border-bottom: none; }
+  .duty-cell {
+    padding: 14px 18px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    border-right: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .duty-cell:last-child { border-right: none; }
+  .duty-name {
+    font-weight: 600;
+    color: var(--text);
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 13px;
+  }
+  .duty-desc { color: var(--text-dim); font-size: 13px; }
+  .duty-timing {
+    font-size: 12px;
+    color: var(--accent2);
+    font-weight: 500;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .duty-note {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* ── 배지 ── */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+  }
+  .badge-ot      { background: #d4a090; color: #4a1a0c; }
+  .badge-work    { background: #c89080; color: #3a1008; }
+  .badge-admin   { background: #e4d0c4; color: #5a2a18; }
+  .badge-exhibit { background: #8c5040; color: #f6ede6; }
+
+  /* ── 예상 일정 테이블 ── */
+  .schedule-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-bottom: 24px;
+  }
+  .summary-card {
+    background: var(--bg2);
+    padding: 18px 20px;
+    border-top: 3px solid var(--accent);
+  }
+  .summary-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .summary-value {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .summary-sub {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  .data-table thead th {
+    background: var(--bg3);
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 12px 14px;
+    text-align: left;
+    font-weight: 500;
+    border-bottom: 1px solid var(--accent);
+    white-space: nowrap;
+  }
+  .data-table tbody td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+    line-height: 1.6;
+  }
+  .data-table tbody tr:last-child td { border-bottom: none; }
+  .data-table tbody tr:hover { background: var(--bg2); }
+  .td-num { color: var(--text-dim); font-size: 12px; text-align: center; width: 36px; }
+  .td-date { font-weight: 500; white-space: nowrap; }
+  .td-day { color: var(--text-dim); text-align: center; white-space: nowrap; }
+  .td-h {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-weight: 600;
+    color: var(--accent);
+    text-align: center;
+    white-space: nowrap;
+  }
+  .td-time { color: var(--text-dim); text-align: center; white-space: nowrap; font-size: 13px; }
+  .td-task { color: var(--text-dim); font-size: 13px; }
+  .td-note { color: var(--text-dim); font-size: 12px; font-style: italic; }
+  .total-row td {
+    background: var(--bg3);
+    font-weight: 700;
+    color: var(--text);
+    border-top: 2px solid var(--accent);
+  }
+
+  /* ── 근무일지 양식 ── */
+  .worker-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 20px;
+  }
+  .info-field {
+    background: var(--bg2);
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .info-field label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+  .info-field input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    padding: 4px 0;
+    outline: none;
+    width: 100%;
+  }
+  .info-field input:focus { border-bottom-color: var(--accent); }
+  .info-field .fixed-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .log-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .log-table thead th {
+    background: var(--bg3);
+    color: var(--accent);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: 500;
+    border-bottom: 1px solid var(--accent);
+    white-space: nowrap;
+  }
+  .log-table tbody td {
+    padding: 0;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    vertical-align: middle;
+  }
+  .log-table tbody td:last-child { border-right: none; }
+  .log-table tbody td input,
+  .log-table tbody td select {
+    width: 100%;
+    height: 100%;
+    min-height: 38px;
+    background: transparent;
+    border: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12.5px;
+    color: var(--text);
+    padding: 8px 10px;
+    outline: none;
+    text-align: center;
+  }
+  .log-table tbody td input:focus,
+  .log-table tbody td select:focus {
+    background: rgba(192,56,40,0.04);
+  }
+  .log-table tbody td.td-content input {
+    text-align: left;
+  }
+  .log-table tfoot td {
+    background: var(--bg3);
+    padding: 12px 14px;
+    font-weight: 600;
+    font-size: 13px;
+    border-top: 2px solid var(--accent);
+  }
+  .log-table .td-idx {
+    color: var(--text-dim);
+    font-size: 11px;
+    text-align: center;
+    width: 36px;
+    background: var(--bg2);
+    padding: 8px 4px;
+  }
+  .total-label { text-align: right; color: var(--text-dim); }
+  .total-amount { color: var(--accent); font-family: 'IBM Plex Sans KR', sans-serif; }
+
+  /* ── 인쇄 버튼 ── */
+  .print-bar {
+    background: var(--bg2);
+    border-top: 1px solid var(--line);
+    padding: 16px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .print-note { font-size: 12px; color: var(--text-dim); }
+  .print-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 22px;
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: background 0.15s;
+  }
+  .print-btn:hover { background: var(--accent2); }
+
+  /* ── 푸터 ── */
+  .page-footer {
+    background: var(--accent2);
+    padding: 28px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: rgba(246,237,230,0.6);
+  }
+
+  /* ── 반응형 ── */
+  @media (max-width: 820px) {
+    .page-header { padding: 40px 24px 36px; }
+    .page-nav { padding: 0 20px; overflow-x: auto; }
+    .content-wrap { padding: 0 20px; }
+    .header-info-grid { grid-template-columns: 1fr 1fr; }
+    .duty-row { grid-template-columns: 1fr; }
+    .duty-timing { justify-content: flex-start; }
+    .schedule-summary { grid-template-columns: 1fr 1fr; }
+    .worker-info-grid { grid-template-columns: 1fr; }
+    .print-bar { padding: 16px 20px; flex-direction: column; gap: 12px; }
+    .page-footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+
+  @media (max-width: 600px) {
+    .data-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .log-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .schedule-summary { grid-template-columns: 1fr 1fr; }
+    .header-info-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    .page-nav, .print-bar { display: none; }
+    .section { page-break-inside: avoid; }
+    body { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<header class="page-header">
+  <p class="header-eyebrow">울림통-변주 2026 · Ninnik Kraft</p>
+  <h1 class="header-title">보조 작업자 업무 설명 및 근무일지</h1>
+  <p class="header-sub">협력창작 보조 인력 · 업무 안내 · 예상 일정 · 근무 기록</p>
+  <div class="header-info-grid">
+    <div class="header-info-item">
+      <p class="header-info-label">시급</p>
+      <p class="header-info-value">10,320원</p>
+    </div>
+    <div class="header-info-item">
+      <p class="header-info-label">예상 근무</p>
+      <p class="header-info-value">36일 · 115h</p>
+    </div>
+    <div class="header-info-item">
+      <p class="header-info-label">예상 총액</p>
+      <p class="header-info-value">1,186,800원</p>
+    </div>
+  </div>
+</header>
+
+<!-- 네비 -->
+<nav class="page-nav">
+  <a href="#duties">업무 설명</a>
+  <a href="#schedule">예상 일정</a>
+  <a href="#log">근무일지 양식</a>
+</nav>
+
+<main class="content-wrap">
+
+  <!-- ── 1. 업무 설명 ── -->
+  <div class="section" id="duties">
+    <p class="section-eyebrow">Job Description</p>
+    <h2 class="section-title">업무 설명</h2>
+    <p class="section-desc">회차별 작업 보조 전반 · 시민작가 협력창작 (주말 20회) + OT · 행정 · 전시 준비 포함</p>
+
+    <!-- 사전 준비 -->
+    <div class="duty-group">
+      <div class="duty-group-label">사전준비 &nbsp;<span style="font-weight:400; font-size:11px; opacity:0.8;">회차 시작 1시간 전</span></div>
+      <div class="duty-row">
+        <div class="duty-cell">
+          <p class="duty-name">재료 준비 및 점검</p>
+        </div>
+        <div class="duty-cell duty-desc">
+          점토 소분, 작업도구(주걱·실·스펀지 등) 세척·배치, 방수포·작업대 세팅. 재료 목록표 기준으로 빠진 항목 확인.
+          <p class="duty-note">※ 재료 목록표 기준</p>
+        </div>
+        <div class="duty-cell duty-timing"></div>
+      </div>
+      <div class="duty-row">
+        <div class="duty-cell">
+          <p class="duty-name">공간 세팅</p>
+        </div>
+        <div class="duty-cell duty-desc">
+          작업 동선 확보, 조명·환기 확인, 참여자 자리 배치, 안전 매트 설치. 어린이·노약자 참여 회차는 이동 경로 별도 점검.
+        </div>
+        <div class="duty-cell duty-timing"></div>
+      </div>
+      <div class="duty-row">
+        <div class="duty-cell">
+          <p class="duty-name">기록 장비 준비</p>
+        </div>
+        <div class="duty-cell duty-desc">
+          카메라·삼각대 충전 및 세팅, 촬영 앵글 사전 확인, 구글 드라이브 업로드 폴더 경로 확인. 파일명 규칙(날짜_회차_순번) 숙지.
+          <p class="duty-note">※ 저장 경로 통일 필수</p>
+        </div>
+        <div class="duty-cell duty-timing"></div>
+      </div>
+    </div>
+
+    <!-- 작업 진행 중 -->
+    <div class="duty-group">
+      <div class="duty-group-label">작업 진행 중</div>
+      <div class="duty-row">
+        <div class="duty-cell">
+          <p class="duty-name">작업 기록<br><span style="font-size:11px;color:var(--text-dim);">사진·영상</span></p>
+        </div>
+        <div class="duty-cell duty-desc">
+          회차별 전 과정 촬영(작업 전·중·후). 파일명 규칙에 따라 저장 후 당일 드라이브 업로드.
+        </div>
+        <div class="duty-cell duty-timing">전 회차</div>
+      </div>
+      <div class="duty-row">
+        <div class="duty-cell">
+          <p class="duty-name">재료 보충 및 운반</p>
+        </div>
+        <div class="duty-cell duty-desc">
+          점토 타래 추가 제공, 도구 부족 시 즉시 보충. 20kg 이상 무거운 재료 운반 시 이륜 카트 사용.
+          <p class="duty-note">※ 작가 지시에 따름</p>
+        </div>
+        <div class="duty-cell duty-timing">전 회차</div>
+      </div>
+      <div class="duty-row">
+        <div class="duty-cell">
+          <p class="duty-name">점토 반죽 추가 작업</p>
+        </div>
+        <div class="duty-cell duty-desc">
+          회차 중 점토 수분 증발·굳음 발생 시 반죽을 보충하거나 재조련하여 작업 가능 상태로 유지.
+        </div>
+        <div class="duty-cell duty-timing">필요 시</div>
+      </div>
+      <div class="duty-row">
+        <div class="duty-cell">
+          <p class="duty-name">참여자 안전 보조</p>
+        </div>
+        <div class="duty-cell duty-desc">
+          와이어 커터·조각도 등 날카로운 도구 사용 시 안전 지도. 어린이·노약자 참여 회차 밀착 지원. 이상 상황 즉시 작가에게 보고.
+        </div>
+        <div class="duty-cell duty-timing">자유참여 회차</div>
+      </div>
+      <div class="duty-row">
+        <div class="duty-cell">
+          <p class="duty-name">현장 안내 보조</p>
+        </div>
+        <div class="duty-cell duty-desc">
+          참여자 출석 체크 및 명찰 배부. 화장실·주차 등 시설 안내. 지각·결석 연락 수신 후 작가에게 전달. 출석부 양식 사용.
+        </div>
+        <div class="duty-cell duty-timing">자유참여 회차</div>
+      </div>
+    </div>
+
+    <!-- 작업 후 정리 -->
+    <div class="duty-group">
+      <div class="duty-group-label">작업 후 정리</div>
+      <div class="duty-row">
+        <div class="duty-cell">
+          <p class="duty-name">작업 공간 청소</p>
+        </div>
+        <div class="duty-cell duty-desc">
+          점토 잔여물 수거 및 분리배출, 도구 세척·건조·수납, 바닥·작업대 물청소. 다음 회차를 위한 소모품 잔량 메모.
+        </div>
+        <div class="duty-cell duty-timing"></div>
+      </div>
+      <div class="duty-row">
+        <div class="duty-cell">
+          <p class="duty-name">작품·재료 보관</p>
+        </div>
+        <div class="duty-cell duty-desc">
+          진행 중 작품 건조 상태 확인 후 적정 위치 이동. 재습 방지 비닐 처리. 점토 추적 시트에 재료 잔량 기재.
+          <p class="duty-note">※ 점토 추적 시트 기재</p>
+        </div>
+        <div class="duty-cell duty-timing"></div>
+      </div>
+      <div class="duty-row">
+        <div class="duty-cell">
+          <p class="duty-name">기록 정리 및<br>근무일지 작성</p>
+        </div>
+        <div class="duty-cell duty-desc">
+          촬영 파일 선별 후 공유 드라이브 업로드. 회차별 간단 메모(참여 인원·특이사항·흙 상태) 작성. 출근·퇴근 시각, 업무 내용, 특이사항 근무일지 기재 후 작가 확인 서명 수령.
+        </div>
+        <div class="duty-cell duty-timing">매 근무일<br>당일 내</div>
+      </div>
+    </div>
+
+    <!-- 전시 준비 -->
+    <div class="duty-group">
+      <div class="duty-group-label">전시 준비 · 마무리 &nbsp;<span style="font-weight:400; font-size:11px; opacity:0.75;">— 해당 시기에 별도 협의</span></div>
+      <div class="duty-row">
+        <div class="duty-cell">
+          <p class="duty-name">전시 설치 보조</p>
+        </div>
+        <div class="duty-cell duty-desc">
+          작품 이동·배치 보조, 전시 라벨·안내판 부착, 조명 위치 확인 및 연장선 정리. 설치 동선 사전 파악 후 작업.
+          <p class="duty-note">※ 11월 중순 예정</p>
+        </div>
+        <div class="duty-cell duty-timing">전시<br>설치 기간</div>
+      </div>
+      <div class="duty-row">
+        <div class="duty-cell">
+          <p class="duty-name">도록·아카이브<br>자료 정리</p>
+        </div>
+        <div class="duty-cell duty-desc">
+          회차별 촬영 파일 최종 선별 보조, 참여자 이름·작품명 목록 정리, 인쇄 파일 전달. 작가 검수 후 확정.
+        </div>
+        <div class="duty-cell duty-timing">전시 전<br>2주</div>
+      </div>
+      <div class="duty-row">
+        <div class="duty-cell">
+          <p class="duty-name">전시 해체 및<br>공간 복원</p>
+        </div>
+        <div class="duty-cell duty-desc">
+          전시 마지막 날 작품 안전 포장·이동, 전시 구조물 해체 보조, 공간 원상 복원 및 청소.
+          <p class="duty-note">※ 12월 13일 예정</p>
+        </div>
+        <div class="duty-cell duty-timing">전시<br>종료 당일</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. 예상 일정 ── -->
+  <div class="section" id="schedule">
+    <p class="section-eyebrow">Estimated Schedule</p>
+    <h2 class="section-title">예상 일정 및 시간 산정</h2>
+    <p class="section-desc">아래 일정·시간은 추정치입니다. 실제 일정 확정 후 근무일지에 직접 기입하세요.</p>
+
+    <div class="schedule-summary">
+      <div class="summary-card">
+        <p class="summary-label">총 근무일</p>
+        <p class="summary-value">36일</p>
+        <p class="summary-sub">OT 1 · 창작 20 · 자유참여 10 · 행정 2 · 전시 3</p>
+      </div>
+      <div class="summary-card">
+        <p class="summary-label">예상 총 시간</p>
+        <p class="summary-value">115시간</p>
+        <p class="summary-sub">창작 40h + 자유참여 40h + 기타 35h</p>
+      </div>
+      <div class="summary-card">
+        <p class="summary-label">시급</p>
+        <p class="summary-value">10,320원</p>
+        <p class="summary-sub">2026년 법정 최저임금</p>
+      </div>
+      <div class="summary-card">
+        <p class="summary-label">예상 총액</p>
+        <p class="summary-value">1,186,800원</p>
+        <p class="summary-sub">115h × 10,320원</p>
+      </div>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th style="text-align:center;">No</th>
+          <th>날짜</th>
+          <th style="text-align:center;">요일</th>
+          <th>구분</th>
+          <th style="text-align:center;">출근</th>
+          <th style="text-align:center;">퇴근</th>
+          <th style="text-align:center;">시간</th>
+          <th>주요 예상 업무</th>
+          <th>비고</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-num">1</td><td class="td-date">2026. 4. 25</td><td class="td-day">토</td><td style="font-size:13px;">OT</td><td class="td-time">13:00</td><td class="td-time">19:00</td><td class="td-h">6h</td><td class="td-task">공간 세팅, 출석 체크, OT 진행 보조, 정리정돈</td><td class="td-note">오후 2시 OT 시작</td></tr>
+        <tr><td class="td-num">2</td><td class="td-date">2026. 5. 9</td><td class="td-day">토</td><td style="font-size:13px;">창작 1회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">3</td><td class="td-date">2026. 5. 10</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 1회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">4</td><td class="td-date">2026. 5. 16</td><td class="td-day">토</td><td style="font-size:13px;">창작 2회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">5</td><td class="td-date">2026. 5. 23</td><td class="td-day">토</td><td style="font-size:13px;">창작 3회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">6</td><td class="td-date">2026. 5. 24</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 2회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">7</td><td class="td-date">2026. 5. 30</td><td class="td-day">토</td><td style="font-size:13px;">창작 4회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">8</td><td class="td-date">2026. 6. 6</td><td class="td-day">토</td><td style="font-size:13px;">창작 5회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">9</td><td class="td-date">2026. 6. 7</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 3회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">10</td><td class="td-date">2026. 6. 13</td><td class="td-day">토</td><td style="font-size:13px;">창작 6회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">11</td><td class="td-date">2026. 6. 20</td><td class="td-day">토</td><td style="font-size:13px;">창작 7회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">12</td><td class="td-date">2026. 6. 21</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 4회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">13</td><td class="td-date">2026. 6. 27</td><td class="td-day">토</td><td style="font-size:13px;">창작 8회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">14</td><td class="td-date">2026. 7. 4</td><td class="td-day">토</td><td style="font-size:13px;">창작 9회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">15</td><td class="td-date">2026. 7. 5</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 5회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">16</td><td class="td-date">2026. 7. 11</td><td class="td-day">토</td><td style="font-size:13px;">창작 10회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">17</td><td class="td-date">2026. 7. 18</td><td class="td-day">토</td><td style="font-size:13px;">창작 11회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">18</td><td class="td-date">2026. 7. 19</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 6회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">19</td><td class="td-date">2026. 7. 25</td><td class="td-day">토</td><td style="font-size:13px;">창작 12회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">20</td><td class="td-date">2026. 8. 8</td><td class="td-day">토</td><td style="font-size:13px;">창작 13회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">21</td><td class="td-date">2026. 8. 9</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 7회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">22</td><td class="td-date">2026. 8. 22</td><td class="td-day">토</td><td style="font-size:13px;">창작 14회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">23</td><td class="td-date">2026. 8. 29</td><td class="td-day">토</td><td style="font-size:13px;">창작 15회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">24</td><td class="td-date">2026. 8. 30</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 8회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">25</td><td class="td-date">2026. 9. 5</td><td class="td-day">토</td><td style="font-size:13px;">창작 16회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">26</td><td class="td-date">2026. 9. 12</td><td class="td-day">토</td><td style="font-size:13px;">창작 17회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">27</td><td class="td-date">2026. 9. 13</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 9회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">28</td><td class="td-date">2026. 9. 19</td><td class="td-day">토</td><td style="font-size:13px;">창작 18회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">29</td><td class="td-date">2026. 9. 26</td><td class="td-day">토</td><td style="font-size:13px;">창작 19회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">30</td><td class="td-date">2026. 9. 27</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 10회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">31</td><td class="td-date">2026. 10. 10</td><td class="td-day">토</td><td style="font-size:13px;">창작 20회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">마지막 창작 회차 보조, 작품 보관 처리</td><td class="td-note">추석 전후 확인</td></tr>
+        <tr><td class="td-num">32</td><td class="td-date">2026. 10. 24</td><td class="td-day">토</td><td style="font-size:13px;">행정</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">기록 파일 최종 정리, 참여자 목록 정리</td><td class="td-note">작가와 협의</td></tr>
+        <tr><td class="td-num">33</td><td class="td-date">2026. 11. 7</td><td class="td-day">토</td><td style="font-size:13px;">행정</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">도록 자료 정리, 아카이브 파일 전달 보조</td><td class="td-note"></td></tr>
+        <tr><td class="td-num">34</td><td class="td-date">2026. 11. 14</td><td class="td-day">토</td><td style="font-size:13px;">전시 준비</td><td class="td-time">09:00</td><td class="td-time">16:00</td><td class="td-h">7h</td><td class="td-task">전시 설치 보조, 작품 이동·배치, 라벨 부착</td><td class="td-note">전시 11/21 개막</td></tr>
+        <tr><td class="td-num">35</td><td class="td-date">2026. 11. 19</td><td class="td-day">목</td><td style="font-size:13px;">전시 준비</td><td class="td-time">09:00</td><td class="td-time">16:00</td><td class="td-h">7h</td><td class="td-task">최종 설치 점검, 조명 확인, 공간 청소</td><td class="td-note">개막 전날 최종 점검</td></tr>
+        <tr><td class="td-num">36</td><td class="td-date">2026. 12. 13</td><td class="td-day">일</td><td style="font-size:13px;">전시 종료</td><td class="td-time">10:00</td><td class="td-time">17:00</td><td class="td-h">7h</td><td class="td-task">전시 해체 보조, 작품 안전 포장, 공간 복원</td><td class="td-note">전시 마지막 날</td></tr>
+        <tr class="total-row">
+          <td colspan="6" class="total-label">총 합계 (36일)</td>
+          <td class="td-h" style="text-align:center;">115h</td>
+          <td colspan="2" class="total-amount">115h × 10,320원 = <strong>1,186,800원</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── 3. 근무일지 양식 ── -->
+  <div class="section" id="log">
+    <p class="section-eyebrow">Work Log</p>
+    <h2 class="section-title">근무일지 양식</h2>
+    <p class="section-desc">매 근무일 작성 후 작가 확인 서명을 받아 보관하세요.</p>
+
+    <!-- 기본 정보 -->
+    <div class="worker-info-grid" style="margin-bottom:24px;">
+      <div class="info-field">
+        <label>성명</label>
+        <input type="text" placeholder="이름을 입력하세요">
+      </div>
+      <div class="info-field">
+        <label>연락처</label>
+        <input type="text" placeholder="010-0000-0000">
+      </div>
+      <div class="info-field">
+        <label>소속</label>
+        <div class="fixed-value">니닉크라프트 (Ninnik Kraft)</div>
+      </div>
+      <div class="info-field">
+        <label>시급</label>
+        <div class="fixed-value">10,320원 (2026년 법정최저임금)</div>
+      </div>
+      <div class="info-field">
+        <label>목표 근무시간</label>
+        <div class="fixed-value">115시간 (예상)</div>
+      </div>
+      <div class="info-field">
+        <label>예상 총 급여</label>
+        <div class="fixed-value">1,186,800원</div>
+      </div>
+    </div>
+
+    <!-- 근무 기록 테이블 -->
+    <table class="log-table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>날짜</th>
+          <th>요일</th>
+          <th>구분</th>
+          <th>출근</th>
+          <th>퇴근</th>
+          <th>시간(h)</th>
+          <th>일급(원)</th>
+          <th style="min-width:200px;">주요 업무 내용</th>
+          <th style="min-width:120px;">특이사항</th>
+          <th>확인(서명)</th>
+        </tr>
+      </thead>
+      <tbody id="log-body">
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="6" class="total-label">합 계</td>
+          <td id="total-h" class="total-amount" style="text-align:center;">0h</td>
+          <td id="total-pay" class="total-amount" style="text-align:right;">0원</td>
+          <td colspan="3"></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+</main>
+
+<!-- 인쇄 / 저장 -->
+<div class="print-bar">
+  <span class="print-note">근무일지는 매월 취합하여 보관 · 인쇄 후 서명란에 직접 서명</span>
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+</div>
+
+<!-- 푸터 -->
+<footer class="page-footer">
+  <span>울림통-변주 2026 · Ninnik Kraft</span>
+  <span>보조 작업자 근무일지 · 2026년 시즌</span>
+</footer>
+
+<script>
+  // 근무일지 행 생성 (35행)
+  const body = document.getElementById('log-body');
+  for (let i = 1; i <= 35; i++) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="td-idx">${i}</td>
+      <td><input type="text" placeholder="00. 00."></td>
+      <td><input type="text" placeholder="토" style="width:40px;"></td>
+      <td><input type="text" placeholder="창작"></td>
+      <td><input type="text" placeholder="09:00" style="width:60px;"></td>
+      <td><input type="text" placeholder="15:00" style="width:60px;"></td>
+      <td><input type="number" min="0" max="24" step="0.5" placeholder="6" class="hour-input" data-row="${i}" style="width:50px;"></td>
+      <td class="pay-cell" id="pay-${i}" style="text-align:right; padding:8px 10px; font-size:12.5px; color:var(--text-dim);">—</td>
+      <td class="td-content"><input type="text" placeholder="업무 내용 기재"></td>
+      <td class="td-content"><input type="text" placeholder="특이사항"></td>
+      <td><input type="text" placeholder="서명"></td>
+    `;
+    body.appendChild(tr);
+  }
+
+  // 시간 입력 시 일급·합계 자동 계산
+  const HOURLY = 10320;
+  document.addEventListener('input', e => {
+    if (!e.target.classList.contains('hour-input')) return;
+    const row = e.target.dataset.row;
+    const h = parseFloat(e.target.value) || 0;
+    const pay = Math.round(h * HOURLY);
+    document.getElementById(`pay-${row}`).textContent = pay > 0 ? pay.toLocaleString() + '원' : '—';
+
+    // 합계
+    let totalH = 0, totalPay = 0;
+    document.querySelectorAll('.hour-input').forEach(inp => {
+      const v = parseFloat(inp.value) || 0;
+      totalH += v;
+      totalPay += Math.round(v * HOURLY);
+    });
+    document.getElementById('total-h').textContent = totalH + 'h';
+    document.getElementById('total-pay').textContent = totalPay.toLocaleString() + '원';
+  });
+</script>
+
+</body>
+</html>
