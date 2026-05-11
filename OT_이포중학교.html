@@ -797,9 +797,51 @@
   }
   section { scroll-margin-top: 56px; }
   #cover { scroll-margin-top: 0; }
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+    background: none;
+    border: none;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+    transition: all 0.2s;
+  }
   @media (max-width: 900px) {
     #nav { padding: 0 20px; }
-    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 56px; left: 0; right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      background: rgba(237,240,236,0.98);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+      padding: 8px 0;
+      gap: 0;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a {
+      padding: 13px 24px;
+      font-size: 13px;
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-links a:last-child { border-bottom: none; }
+    .nav-manual-btn {
+      margin: 8px 24px;
+      text-align: center;
+      justify-content: center;
+      border-radius: 2px;
+    }
   }
 </style>
 </head>
@@ -808,15 +850,26 @@
 <!-- ── 고정 네비게이션 ── -->
 <nav id="nav">
   <span class="nav-logo">ninnik × 이포중학교 울림통 2026</span>
-  <div class="nav-links">
-    <a href="#cover">홈</a>
-    <a href="#toc">목차</a>
-    <a href="#session01">1단계</a>
-    <a href="#session02">2단계</a>
-    <a href="#journal">관찰일지</a>
-    <a href="매뉴얼.html" target="_blank" class="nav-manual-btn">울림통 매뉴얼 ↗</a>
+  <button class="nav-hamburger" onclick="toggleNav()" aria-label="메뉴 열기">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="nav-links">
+    <a href="#cover" onclick="closeNav()">홈</a>
+    <a href="#toc" onclick="closeNav()">목차</a>
+    <a href="#session01" onclick="closeNav()">1단계</a>
+    <a href="#session02" onclick="closeNav()">2단계</a>
+    <a href="#journal" onclick="closeNav()">관찰일지</a>
+    <a href="매뉴얼.html" target="_blank" class="nav-manual-btn" onclick="closeNav()">울림통 매뉴얼 ↗</a>
   </div>
 </nav>
+<script>
+  function toggleNav() {
+    document.getElementById('nav-links').classList.toggle('open');
+  }
+  function closeNav() {
+    document.getElementById('nav-links').classList.remove('open');
+  }
+</script>
 
 <!-- ── 1. 커버 ── -->
 <section id="cover">
