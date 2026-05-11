@@ -740,9 +740,83 @@
     #closing { min-height: 40vh; }
     #closing p { font-size: 14px; }
   }
+
+  /* ── 고정 네비게이션 ── */
+  #nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(237, 240, 236, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 56px;
+  }
+  .nav-logo {
+    font-size: 13px;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .nav-links a {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-manual-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--accent) !important;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+  .nav-manual-btn:hover {
+    background: var(--accent) !important;
+    color: var(--white) !important;
+  }
+  section { scroll-margin-top: 56px; }
+  #cover { scroll-margin-top: 0; }
+  @media (max-width: 900px) {
+    #nav { padding: 0 20px; }
+    .nav-links { display: none; }
+  }
 </style>
 </head>
 <body>
+
+<!-- ── 고정 네비게이션 ── -->
+<nav id="nav">
+  <span class="nav-logo">ninnik × 이포중학교 울림통 2026</span>
+  <div class="nav-links">
+    <a href="#cover">홈</a>
+    <a href="#toc">목차</a>
+    <a href="#session01">1단계</a>
+    <a href="#session02">2단계</a>
+    <a href="#journal">관찰일지</a>
+    <a href="매뉴얼.html" target="_blank" class="nav-manual-btn">울림통 매뉴얼 ↗</a>
+  </div>
+</nav>
 
 <!-- ── 1. 커버 ── -->
 <section id="cover">
@@ -817,25 +891,29 @@
 
         <p style="font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.06em; margin:28px 0 10px; text-transform:uppercase;">준비물</p>
         <div class="materials-grid">
-          <span class="material-tag">상영 기기 (빔프로젝터)</span>
-          <span class="material-tag">참고 자료 (슬라이드)</span>
-          <span class="material-tag">역할 배정표 (학생 1인 1부)</span>
-          <span class="material-tag">작업 관찰 일지 (학생 1인 1부)</span>
+          <span class="material-tag">상영 기기, 참고 자료</span>
           <span class="material-tag">드로잉 종이 · 필기구</span>
+          <span class="material-tag">점토</span>
+          <span class="material-tag">흙자름줄</span>
+          <span class="material-tag">손물레</span>
+          <span class="material-tag">천</span>
+          <span class="material-tag">비닐</span>
         </div>
       </div>
 
       <div>
-        <p style="font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.06em; margin-bottom:12px; text-transform:uppercase;">수업 현장 사진</p>
-        <div class="media-placeholder" style="height:200px; margin-bottom:16px;">
-          <span class="ph-icon">🖼</span>
-          <span class="ph-label">작품 감상 장면</span>
-          <img src="" alt="">
-        </div>
-        <div class="media-placeholder" style="height:160px;">
-          <span class="ph-icon">🖼</span>
-          <span class="ph-label">첫 기록 / 일지 작성</span>
-          <img src="" alt="">
+        <div class="media-col">
+          <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
+            <img class="yt-thumb" src="https://img.youtube.com/vi/_ECeTUaH4wU/hqdefault.jpg" alt="2025 울림통 작업 현장감" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+            <span class="yt-play-icon" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(255,0,0,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
+            <iframe style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; border:0;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5);">
+              <button onclick="ytPopup(event,'_ECeTUaH4wU')" style="padding:11px 20px; background:#1a3322; color:#edf0ec; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#274d33'" onmouseout="this.style.background='#1a3322'">▶&ensp;바로 보기</button>
+              <div style="height:1px; background:rgba(255,255,255,0.12); flex-shrink:0;"></div>
+              <button onclick="ytOpenTab(event,'_ECeTUaH4wU')" style="padding:11px 20px; background:#1a3322; color:#edf0ec; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#274d33'" onmouseout="this.style.background='#1a3322'">↗&ensp;새 탭으로 열기</button>
+            </div>
+          </div>
+          <p class="media-caption">2025 울림통 작업 현장감</p>
         </div>
       </div>
     </div>
@@ -899,49 +977,87 @@
   <h3 style="font-family:'IBM Plex Sans KR',sans-serif; font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.12em; margin:56px 0 16px; text-transform:uppercase;">과거 울림통 작품</h3>
   <div class="media-row three">
     <div class="media-col">
-      <div class="media-placeholder" style="height:200px;">
-        <span class="ph-icon">🖼</span>
-        <span class="ph-label">울림통 1기 · 2019</span>
-        <img src="" alt="">
+      <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
+        <img class="yt-thumb" src="https://img.youtube.com/vi/uyS_KK7Ff6k/hqdefault.jpg" alt="울림통 1기 2019" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+        <span class="yt-play-icon" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(255,0,0,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
+        <iframe style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; border:0;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5);">
+          <button onclick="ytPopup(event,'uyS_KK7Ff6k')" style="padding:11px 20px; background:#1a3322; color:#edf0ec; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#274d33'" onmouseout="this.style.background='#1a3322'">▶&ensp;바로 보기</button>
+          <div style="height:1px; background:rgba(255,255,255,0.12); flex-shrink:0;"></div>
+          <button onclick="ytOpenTab(event,'uyS_KK7Ff6k')" style="padding:11px 20px; background:#1a3322; color:#edf0ec; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#274d33'" onmouseout="this.style.background='#1a3322'">↗&ensp;새 탭으로 열기</button>
+        </div>
       </div>
-      <p class="media-caption">울림통 1기 · 2019</p>
+      <p class="media-caption">2024 울림통 제작 과정 (타래 쌓기, 다지기)</p>
     </div>
     <div class="media-col">
-      <div class="media-placeholder" style="height:200px;">
-        <span class="ph-icon">🖼</span>
-        <span class="ph-label">울림통 2기 · 2024</span>
-        <img src="" alt="">
+      <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
+        <img class="yt-thumb" src="https://img.youtube.com/vi/uZEq8I6-TzI/hqdefault.jpg" alt="울림통 2기 2024" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+        <span class="yt-play-icon" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(255,0,0,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
+        <iframe style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; border:0;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5);">
+          <button onclick="ytPopup(event,'uZEq8I6-TzI')" style="padding:11px 20px; background:#1a3322; color:#edf0ec; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#274d33'" onmouseout="this.style.background='#1a3322'">▶&ensp;바로 보기</button>
+          <div style="height:1px; background:rgba(255,255,255,0.12); flex-shrink:0;"></div>
+          <button onclick="ytOpenTab(event,'uZEq8I6-TzI')" style="padding:11px 20px; background:#1a3322; color:#edf0ec; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#274d33'" onmouseout="this.style.background='#1a3322'">↗&ensp;새 탭으로 열기</button>
+        </div>
       </div>
-      <p class="media-caption">울림통 2기 · 2024</p>
+      <p class="media-caption">2024 완성된 울림통 내부 명상 체험</p>
     </div>
     <div class="media-col">
-      <div class="media-placeholder" style="height:200px;">
-        <span class="ph-icon">🖼</span>
-        <span class="ph-label">울림통 3기 · 2025</span>
-        <img src="" alt="">
+      <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
+        <img class="yt-thumb" src="https://img.youtube.com/vi/PJyoVUYpkmU/hqdefault.jpg" alt="울림통 3기 2025" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+        <span class="yt-play-icon" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(255,0,0,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
+        <iframe style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; border:0;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5);">
+          <button onclick="ytPopup(event,'PJyoVUYpkmU')" style="padding:11px 20px; background:#1a3322; color:#edf0ec; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#274d33'" onmouseout="this.style.background='#1a3322'">▶&ensp;바로 보기</button>
+          <div style="height:1px; background:rgba(255,255,255,0.12); flex-shrink:0;"></div>
+          <button onclick="ytOpenTab(event,'PJyoVUYpkmU')" style="padding:11px 20px; background:#1a3322; color:#edf0ec; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#274d33'" onmouseout="this.style.background='#1a3322'">↗&ensp;새 탭으로 열기</button>
+        </div>
       </div>
-      <p class="media-caption">울림통 3기 · 2025</p>
+      <p class="media-caption">2025 울림통</p>
     </div>
   </div>
 
-  <!-- 참고 영상 공란 -->
+  <!-- 참고 영상 -->
   <h3 style="font-family:'IBM Plex Sans KR',sans-serif; font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.12em; margin:40px 0 16px; text-transform:uppercase;">참고 영상</h3>
-  <div class="media-row">
+  <div class="media-row three">
     <div class="media-col">
-      <div class="media-placeholder" style="height:220px;">
-        <span class="ph-icon">▶</span>
-        <span class="ph-label">울림통 제작 과정 영상</span>
-        <img src="" alt="">
+      <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
+        <img class="yt-thumb" src="https://img.youtube.com/vi/4O1IsdXeIwA/hqdefault.jpg" alt="흙반죽 꼬막밀기 2025" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+        <span class="yt-play-icon" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(255,0,0,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
+        <iframe style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; border:0;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5);">
+          <button onclick="ytPopup(event,'4O1IsdXeIwA')" style="padding:11px 20px; background:#1a3322; color:#edf0ec; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#274d33'" onmouseout="this.style.background='#1a3322'">▶&ensp;바로 보기</button>
+          <div style="height:1px; background:rgba(255,255,255,0.12); flex-shrink:0;"></div>
+          <button onclick="ytOpenTab(event,'4O1IsdXeIwA')" style="padding:11px 20px; background:#1a3322; color:#edf0ec; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#274d33'" onmouseout="this.style.background='#1a3322'">↗&ensp;새 탭으로 열기</button>
+        </div>
       </div>
-      <p class="media-caption">울림통 제작 과정 영상</p>
+      <p class="media-caption">흙반죽 (꼬막밀기) 2025</p>
     </div>
     <div class="media-col">
-      <div class="media-placeholder" style="height:220px;">
-        <span class="ph-icon">▶</span>
-        <span class="ph-label">전시 영상 / 인터뷰</span>
-        <img src="" alt="">
+      <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
+        <img class="yt-thumb" src="https://img.youtube.com/vi/zQOGEoMlknk/hqdefault.jpg" alt="흙반죽 꼬막밀기 2024" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+        <span class="yt-play-icon" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(255,0,0,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
+        <iframe style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; border:0;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5);">
+          <button onclick="ytPopup(event,'zQOGEoMlknk')" style="padding:11px 20px; background:#1a3322; color:#edf0ec; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#274d33'" onmouseout="this.style.background='#1a3322'">▶&ensp;바로 보기</button>
+          <div style="height:1px; background:rgba(255,255,255,0.12); flex-shrink:0;"></div>
+          <button onclick="ytOpenTab(event,'zQOGEoMlknk')" style="padding:11px 20px; background:#1a3322; color:#edf0ec; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#274d33'" onmouseout="this.style.background='#1a3322'">↗&ensp;새 탭으로 열기</button>
+        </div>
       </div>
-      <p class="media-caption">전시 및 참여 인터뷰</p>
+      <p class="media-caption">흙반죽 (꼬막밀기) 2024</p>
+    </div>
+    <div class="media-col">
+      <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
+        <img class="yt-thumb" src="https://img.youtube.com/vi/2riTY87rCBQ/hqdefault.jpg" alt="타래 성형 기초 교육 자료" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+        <span class="yt-play-icon" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(255,0,0,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
+        <iframe style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; border:0;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5);">
+          <button onclick="ytPopup(event,'2riTY87rCBQ')" style="padding:11px 20px; background:#1a3322; color:#edf0ec; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#274d33'" onmouseout="this.style.background='#1a3322'">▶&ensp;바로 보기</button>
+          <div style="height:1px; background:rgba(255,255,255,0.12); flex-shrink:0;"></div>
+          <button onclick="ytOpenTab(event,'2riTY87rCBQ')" style="padding:11px 20px; background:#1a3322; color:#edf0ec; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#274d33'" onmouseout="this.style.background='#1a3322'">↗&ensp;새 탭으로 열기</button>
+        </div>
+      </div>
+      <p class="media-caption">타래 성형 기초 교육 자료 2020</p>
     </div>
   </div>
 
@@ -1210,11 +1326,12 @@
           <li>흙의 물리적 특성 이해 (건조, 수축, 균열 등)</li>
           <li>촉각적 경험을 통한 재료 친밀감 형성</li>
           <li>흙 작업 흐름에 대한 전반적 이해</li>
+          <li>각자가 작가로서 창작에 참여한다는 개념 이해</li>
         </ul>
 
         <p style="font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.06em; margin:28px 0 12px; text-transform:uppercase;">활동 순서</p>
         <ul class="step-list">
-          <li><span class="step-num">1</span><span>흙의 특성 설명 및 시연 — 각자 흙 타일을 만들고 건조도 관찰 (10분)</span></li>
+          <li><span class="step-num">1</span><span>흙의 특성 설명 및 시연 — 각자 흙 타일을 만들고 이후 건조도 관찰 (10분)</span></li>
           <li><span class="step-num">2</span><span>나만의 울림통 성형 (30분)</span></li>
           <li><span class="step-num">3</span><span>작업 정리 및 소감 나누기 (5분)</span></li>
         </ul>
@@ -1232,70 +1349,14 @@
       </div>
 
       <div>
-        <p style="font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.06em; margin-bottom:12px; text-transform:uppercase;">수업 현장 사진</p>
-        <div class="media-placeholder" style="height:200px; margin-bottom:16px;">
-          <span class="ph-icon">🖼</span>
-          <span class="ph-label">흙 시연 장면</span>
-          <img src="" alt="">
-        </div>
-        <div class="media-placeholder" style="height:160px;">
-          <span class="ph-icon">🖼</span>
-          <span class="ph-label">학생 실습 장면</span>
-          <img src="" alt="">
+        <p style="font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.06em; margin-bottom:12px; text-transform:uppercase;">2024 나만의 울림통 만들기</p>
+        <div style="border-radius:4px; overflow:hidden;">
+          <img src="20240710_163516.jpg" alt="2024 나만의 울림통 만들기" style="width:100%; display:block; object-fit:cover;">
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 흙 특성 참고 이미지 공란 -->
-  <h3 style="font-family:'IBM Plex Sans KR',sans-serif; font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.12em; margin:40px 0 16px; text-transform:uppercase;">흙 재료 참고 이미지</h3>
-  <div class="media-row three">
-    <div class="media-col">
-      <div class="media-placeholder" style="height:160px;">
-        <span class="ph-icon">🖼</span>
-        <span class="ph-label">건조 전후 비교</span>
-        <img src="" alt="">
-      </div>
-      <p class="media-caption">건조 전후 수축 비교</p>
-    </div>
-    <div class="media-col">
-      <div class="media-placeholder" style="height:160px;">
-        <span class="ph-icon">🖼</span>
-        <span class="ph-label">흙 종류 비교</span>
-        <img src="" alt="">
-      </div>
-      <p class="media-caption">흙 종류 (페이퍼클레이 · 샤모트 · 옹기토)</p>
-    </div>
-    <div class="media-col">
-      <div class="media-placeholder" style="height:160px;">
-        <span class="ph-icon">🖼</span>
-        <span class="ph-label">기초 성형 예시</span>
-        <img src="" alt="">
-      </div>
-      <p class="media-caption">기초 성형 예시</p>
-    </div>
-  </div>
-
-  <!-- 실습 영상 공란 -->
-  <h3 style="font-family:'IBM Plex Sans KR',sans-serif; font-size:14px; font-weight:600; color:var(--text-dim); letter-spacing:0.12em; margin:32px 0 16px; text-transform:uppercase;">시연 영상</h3>
-  <div class="media-row">
-    <div class="media-col">
-      <div class="media-placeholder" style="height:200px;">
-        <span class="ph-icon">▶</span>
-        <span class="ph-label">흙 반죽 시연 영상</span>
-        <img src="" alt="">
-      </div>
-      <p class="media-caption">흙 반죽 기초 시연</p>
-    </div>
-    <div class="media-col">
-      <div class="media-placeholder" style="height:200px;">
-        <span class="ph-icon">▶</span>
-        <span class="ph-label">타래 만들기 영상</span>
-        <img src="" alt="">
-      </div>
-      <p class="media-caption">타래 만들기 기초 영상</p>
-    </div>
-  </div>
 </section>
 
 <!-- ── 부록. 작업 관찰 일지 ── -->
@@ -1428,6 +1489,44 @@
   <p style="font-size:14px; color:rgba(237,240,236,0.6);">문의 · 김아영 작가 (니닉크라프트) · <a href="https://instagram.com/ninnik_kraft" target="_blank" style="color:rgba(237,240,236,0.6); text-decoration:none;">@ninnik_kraft</a></p>
   <a href="index.html" class="back-link">← 울림통 아카이브로 돌아가기</a>
 </section>
+
+
+<script>
+  function ytToggleMenu(e, wrap) {
+    var menu = wrap.querySelector('.yt-menu');
+    // 다른 열려있는 메뉴 먼저 닫기
+    document.querySelectorAll('.yt-menu').forEach(function(m) {
+      if (m !== menu) m.style.display = 'none';
+    });
+    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+  }
+  function ytPopup(e, id) {
+    e.stopPropagation();
+    var w = 1280, h = 800;
+    var left = Math.round(window.screenX + (window.outerWidth - w) / 2);
+    var top  = Math.round(window.screenY + (window.outerHeight - h) / 2);
+    window.open(
+      'https://www.youtube.com/watch?v=' + id,
+      'yt_' + id,
+      'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top +
+      ',resizable=yes,scrollbars=no,toolbar=no,menubar=no,location=no'
+    );
+    e.target.closest('.yt-wrap').querySelector('.yt-menu').style.display = 'none';
+  }
+  function ytOpenTab(e, id) {
+    e.stopPropagation();
+    window.open('https://youtu.be/' + id, '_blank');
+    e.target.closest('.yt-wrap').querySelector('.yt-menu').style.display = 'none';
+  }
+  // 카드 바깥 클릭 시 메뉴 닫기
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.yt-wrap')) {
+      document.querySelectorAll('.yt-menu').forEach(function(m) {
+        m.style.display = 'none';
+      });
+    }
+  });
+</script>
 
 </body>
 </html>
