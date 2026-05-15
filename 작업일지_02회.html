@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2회 작업일지 | 울림통-변주 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+  :root {
+    --bg:        #f6ede6;
+    --bg2:       #eee0d6;
+    --bg3:       #e4d0c4;
+    --line:      #ceb0a0;
+    --accent:    #c03828;
+    --accent2:   #8c2418;
+    --text:      #261410;
+    --text-dim:  #7a4c3c;
+    --white:     #f6ede6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  /* ── 상단 헤더 ── */
+  .page-header {
+    background: var(--accent);
+    border-bottom: 2px solid var(--accent2);
+    padding: 48px 64px 40px;
+  }
+  .header-meta {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(246,237,230,0.65);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .header-title {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: clamp(26px, 4vw, 42px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+  .header-sub {
+    font-size: 14px;
+    color: rgba(246,237,230,0.75);
+  }
+  .header-date {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 6px 18px;
+    border: 1px solid rgba(246,237,230,0.4);
+    border-radius: 2px;
+    font-size: 13px;
+    color: rgba(246,237,230,0.8);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── 본문 레이아웃 ── */
+  .content-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+  }
+
+  /* ── 섹션 공통 ── */
+  .section {
+    margin-bottom: 56px;
+  }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    border-left: 3px solid var(--accent);
+    padding-left: 16px;
+    margin-bottom: 24px;
+  }
+
+  /* ── 메타 카드 ── */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 56px;
+  }
+  .meta-card {
+    background: var(--bg2);
+    padding: 24px 22px;
+    border-top: 3px solid var(--accent);
+  }
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .meta-value {
+    font-size: 15px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .meta-placeholder {
+    font-size: 14px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  /* ── 텍스트 블록 ── */
+  .text-block {
+    background: var(--bg2);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    padding: 24px 28px;
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .text-block.empty {
+    color: var(--text-dim);
+    font-style: italic;
+    min-height: 80px;
+  }
+
+  /* ── 대화 인용 ── */
+  .quote-block {
+    border-left: 3px solid var(--line);
+    padding: 14px 20px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.8;
+  }
+  .quote-block .speaker {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 600;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  /* ── 사진 그리드 ── */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    margin-top: 4px;
+  }
+  .photo-slot {
+    aspect-ratio: 4/3;
+    background: var(--bg3);
+    border: 1.5px dashed var(--line);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .photo-slot:hover {
+    border-color: var(--accent);
+    background: var(--bg2);
+  }
+  .photo-slot input[type=file] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .photo-slot img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .photo-slot .slot-icon {
+    font-size: 20px;
+    color: var(--line);
+    pointer-events: none;
+  }
+  .photo-slot .slot-num {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--line);
+    font-weight: 600;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  /* ── 메모 필드 ── */
+  .memo-area {
+    width: 100%;
+    min-height: 160px;
+    background: var(--bg2);
+    border: 1.5px solid var(--line);
+    border-radius: 2px;
+    padding: 18px 20px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.8;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .memo-area:focus { border-color: var(--accent); }
+  .memo-area::placeholder {
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  /* ── 다음 회차 안내 ── */
+  .next-card {
+    background: var(--bg2);
+    border-top: 3px solid var(--accent2);
+    padding: 28px 32px;
+  }
+  .next-card h3 {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent2);
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+  }
+  .next-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 6px 0;
+    font-size: 15px;
+    color: var(--text);
+    border-bottom: 1px solid var(--line);
+  }
+  .next-item:last-child { border-bottom: none; }
+  .next-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 9px;
+  }
+
+  /* ── 저장 버튼 ── */
+  .save-btn {
+    display: inline-block;
+    margin-top: 32px;
+    padding: 10px 28px;
+    background: var(--accent);
+    color: var(--white);
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .save-btn:hover { background: var(--accent2); }
+
+  /* ── 푸터 ── */
+  .page-footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--line);
+    padding: 32px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .footer-back {
+    display: inline-block;
+    padding: 8px 20px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 2px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .footer-back:hover {
+    background: var(--accent);
+    color: var(--white);
+  }
+
+  @media (max-width: 640px) {
+    .page-header { padding: 36px 24px 28px; }
+    .content-wrap { padding: 40px 20px 80px; }
+    .meta-grid { grid-template-columns: 1fr; }
+    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    .page-footer { padding: 24px; flex-direction: column; gap: 16px; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .section-title { font-size: 18px; padding-left: 12px; }
+    .next-card { padding: 20px 20px; }
+    .page-footer { padding: 20px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── 헤더 ── -->
+<header class="page-header">
+  <p class="header-meta">울림통-변주 2026 · 2회 작업일지</p>
+  <h1 class="header-title">재료 준비 · 개별작업 개시</h1>
+  <p class="header-sub">점토를 반죽하고, 각자의 모뉴먼트가 시작되는 날의 기록</p>
+  <span class="header-date">5. 16. 토 &nbsp;/&nbsp; 5. 17. 일 &nbsp;·&nbsp; 3시간</span>
+</header>
+
+<!-- ── 본문 ── -->
+<main class="content-wrap">
+
+  <!-- 메타 정보 -->
+  <div class="meta-grid">
+    <div class="meta-card">
+      <p class="meta-label">날짜</p>
+      <p class="meta-value">2026. 5. 16. 토<br>2026. 5. 17. 일</p>
+    </div>
+    <div class="meta-card">
+      <p class="meta-label">장소</p>
+      <p class="meta-value meta-placeholder">—</p>
+    </div>
+    <div class="meta-card">
+      <p class="meta-label">참여 팀원</p>
+      <p class="meta-value meta-placeholder">—</p>
+    </div>
+  </div>
+
+  <!-- 오늘의 작업 -->
+  <div class="section">
+    <p class="section-label">Today's Work</p>
+    <h2 class="section-title">오늘의 작업</h2>
+    <div class="text-block empty">
+      오늘 진행된 작업 내용을 기록합니다.<br>
+      점토 혼합·반죽 실습 · 개인 모뉴먼트 제작 시작 · 작가와의 개별 피드백 등 진행된 순서대로 기술해 주세요.
+    </div>
+  </div>
+
+  <!-- 오늘의 대화 -->
+  <div class="section">
+    <p class="section-label">Today's Dialogue</p>
+    <h2 class="section-title">오늘의 대화</h2>
+    <div class="quote-block">
+      <span class="speaker">Participant · —</span>
+      "인상적인 발언이나 질문을 여기에 기록합니다."
+    </div>
+    <div class="quote-block">
+      <span class="speaker">Participant · —</span>
+      "참여자나 작가의 이야기 중 기억하고 싶은 한 마디."
+    </div>
+    <div class="quote-block">
+      <span class="speaker">작가 메모</span>
+      "이 대화가 왜 의미 있었는지, 어떤 맥락이었는지 덧붙일 수 있습니다."
+    </div>
+  </div>
+
+  <!-- 오늘의 장면 -->
+  <div class="section">
+    <p class="section-label">Today's Scene</p>
+    <h2 class="section-title">오늘의 장면</h2>
+    <div class="photo-grid">
+      <div class="photo-slot" onclick="this.querySelector('input').click()">
+        <input type="file" accept="image/*" onchange="previewPhoto(event, this.closest('.photo-slot'))">
+        <span class="slot-icon">＋</span>
+        <span class="slot-num">Photo 01</span>
+      </div>
+      <div class="photo-slot" onclick="this.querySelector('input').click()">
+        <input type="file" accept="image/*" onchange="previewPhoto(event, this.closest('.photo-slot'))">
+        <span class="slot-icon">＋</span>
+        <span class="slot-num">Photo 02</span>
+      </div>
+      <div class="photo-slot" onclick="this.querySelector('input').click()">
+        <input type="file" accept="image/*" onchange="previewPhoto(event, this.closest('.photo-slot'))">
+        <span class="slot-icon">＋</span>
+        <span class="slot-num">Photo 03</span>
+      </div>
+      <div class="photo-slot" onclick="this.querySelector('input').click()">
+        <input type="file" accept="image/*" onchange="previewPhoto(event, this.closest('.photo-slot'))">
+        <span class="slot-icon">＋</span>
+        <span class="slot-num">Photo 04</span>
+      </div>
+      <div class="photo-slot" onclick="this.querySelector('input').click()">
+        <input type="file" accept="image/*" onchange="previewPhoto(event, this.closest('.photo-slot'))">
+        <span class="slot-icon">＋</span>
+        <span class="slot-num">Photo 05</span>
+      </div>
+      <div class="photo-slot" onclick="this.querySelector('input').click()">
+        <input type="file" accept="image/*" onchange="previewPhoto(event, this.closest('.photo-slot'))">
+        <span class="slot-icon">＋</span>
+        <span class="slot-num">Photo 06</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 작가 메모 -->
+  <div class="section">
+    <p class="section-label">Artist's Note</p>
+    <h2 class="section-title">작가 메모</h2>
+    <textarea class="memo-area" placeholder="오늘의 작업을 마치고 드는 생각, 관찰, 앞으로의 방향성 등을 자유롭게 기록합니다."></textarea>
+    <button class="save-btn" onclick="saveMemo()">메모 저장</button>
+  </div>
+
+
+</main>
+
+<!-- ── 푸터 ── -->
+<footer class="page-footer">
+  <span>울림통-변주 2026 · ninnik_kraft</span>
+  <a href="자료_02회.html" class="footer-back">← 2회 자료로 돌아가기</a>
+</footer>
+
+<script>
+  function previewPhoto(event, slot) {
+    var file = event.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var existing = slot.querySelector('img');
+      if (existing) existing.remove();
+      var img = document.createElement('img');
+      img.src = e.target.result;
+      slot.appendChild(img);
+      slot.querySelector('.slot-icon').style.display = 'none';
+      slot.querySelector('.slot-num').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function saveMemo() {
+    var memo = document.querySelector('.memo-area').value;
+    localStorage.setItem('memo_02', memo);
+    var btn = document.querySelector('.save-btn');
+    btn.textContent = '저장됨 ✓';
+    btn.style.background = 'var(--accent2)';
+    setTimeout(function() {
+      btn.textContent = '메모 저장';
+      btn.style.background = '';
+    }, 2000);
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    var saved = localStorage.getItem('memo_02');
+    if (saved) document.querySelector('.memo-area').value = saved;
+  });
+</script>
+
+</body>
+</html>
