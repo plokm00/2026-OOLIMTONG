@@ -816,6 +816,45 @@
     scroll-margin-top: 0;
   }
 
+  /* ────────── 커리큘럼 모바일 카드 ────────── */
+  .curriculum-cards {
+    display: none;
+    flex-direction: column;
+  }
+  .curr-card {
+    border-bottom: 1px solid var(--line);
+    padding: 16px 0;
+  }
+  .curr-card-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .curr-date {
+    font-size: 12px;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+  .curr-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    flex: 1 1 auto;
+  }
+  .curr-content {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+  .curr-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
   @media (max-width: 900px) {
     section { padding: 64px 24px; }
     .cover-inner, .artist-layout, .universe-layout,
@@ -858,18 +897,9 @@
     .rules-grid { gap: 2px; }
     .rule-card { padding: 28px 20px; }
 
-    /* 커리큘럼 테이블 가로 스크롤 */
-    .curriculum-table {
-      display: block;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      white-space: nowrap;
-    }
-    .curriculum-table td {
-      white-space: normal;
-      min-width: 80px;
-    }
-    .curriculum-table th { white-space: nowrap; }
+    /* 커리큘럼 — 모바일 카드 뷰 전환 */
+    .curriculum-table { display: none !important; }
+    .curriculum-cards { display: flex !important; }
 
     /* 인라인 고정 grid (역할 배정 등) */
     div[style*="grid-template-columns:180px"] {
@@ -1392,10 +1422,57 @@
       </tr>
     </tbody>
   </table>
+  <div id="curriculum-cards" class="curriculum-cards"></div>
   <p style="margin-top:20px;font-size:13px;color:var(--text-dim);">
     ※ 일정은 참여자 협의에 따라 조정될 수 있습니다.
   </p>
 </section>
+
+<script>
+(function () {
+  function buildCards() {
+    var container = document.getElementById('curriculum-cards');
+    var table = document.querySelector('.curriculum-table');
+    if (!container || !table || container.children.length > 0) return;
+
+    var rows = table.querySelectorAll('tbody tr');
+    rows.forEach(function (row) {
+      var cells = row.querySelectorAll('td');
+      if (cells.length < 5) return;
+
+      // 날짜: <br> → ' / '
+      var dateClone = cells[0].cloneNode(true);
+      dateClone.querySelectorAll('br').forEach(function (br) {
+        br.replaceWith(' / ');
+      });
+      var dateText = dateClone.textContent.trim().replace(/\s+/g, ' ');
+
+      var badgeHTML   = cells[1].innerHTML;
+      var titleHTML   = cells[2].innerHTML;
+      var contentHTML = cells[3].innerHTML;
+      var btnsHTML    = cells[4].innerHTML;
+
+      var card = document.createElement('div');
+      card.className = 'curr-card';
+      card.innerHTML =
+        '<div class="curr-card-top">' +
+          '<span class="curr-date">' + dateText + '</span>' +
+          '<span>' + badgeHTML + '</span>' +
+          '<span class="curr-title">' + titleHTML + '</span>' +
+        '</div>' +
+        '<div class="curr-content">' + contentHTML + '</div>' +
+        '<div class="curr-btns">' + btnsHTML + '</div>';
+      container.appendChild(card);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', buildCards);
+  } else {
+    buildCards();
+  }
+})();
+</script>
 
 
 <!-- ── 8. 참여 규칙 ── -->
