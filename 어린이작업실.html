@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHILDREN'S WORKSHOP at NINNIK KRAFT</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap');
+
+  :root {
+    --cream:    #FFF8F2;
+    --cream2:   #FFF2E8;
+    --card:     #FFFDF9;
+    --line:     #F0DDD0;
+    --line2:    #E0C8B8;
+    --peach:    #FF9E7A;
+    --coral:    #E8604A;
+    --green:    #74C59A;
+    --green2:   #A8DEC0;
+    --yellow:   #FFD060;
+    --blue:     #7BBDE8;
+    --purple:   #B89ADA;
+    --pink:     #F0A0C0;
+    --text:     #3A2418;
+    --text-mid: #7A5040;
+    --text-dim: #B09080;
+    --white:    #FFFDF9;
+
+    /* Per-child colors */
+    --c1: #FFB5B5; /* 소은 - pink */
+    --c2: #B5D8FF; /* 이서 - blue */
+    --c3: #B5FFD4; /* 이준 - green */
+    --c4: #FFE4B5; /* 봄   - yellow */
+    --c5: #D8B5FF; /* 규태 - purple */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* ─── HEADER ─── */
+  .site-header {
+    background: linear-gradient(160deg, #FFE8D8 0%, #FFD8EE 40%, #D8EEFF 100%);
+    padding: 56px 32px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header .deco-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.25;
+  }
+  .site-header .deco-circle.c1 { width:220px; height:220px; background:#FFB5B5; top:-70px; left:-60px; }
+  .site-header .deco-circle.c2 { width:160px; height:160px; background:#B5D8FF; top:20px; right:-40px; }
+  .site-header .deco-circle.c3 { width:120px; height:120px; background:#FFE4B5; bottom:-40px; left:30%; }
+
+  .header-icon {
+    font-size: 60px;
+    display: block;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0) rotate(-3deg); }
+    50%      { transform: translateY(-10px) rotate(3deg); }
+  }
+
+  .header-title {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: clamp(26px, 5vw, 46px);
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 6px;
+  }
+  .header-title span { color: var(--coral); }
+
+  .header-sub {
+    font-size: 13px;
+    color: var(--text-mid);
+    letter-spacing: 0.12em;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 20px;
+  }
+
+  .header-chips {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .chip {
+    background: rgba(255,255,255,0.75);
+    border: 1.5px solid rgba(255,255,255,0.9);
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 12.5px;
+    color: var(--text-mid);
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ─── TAB BAR ─── */
+  .tab-bar {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: rgba(255,248,242,0.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--line);
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 14px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-mid);
+    white-space: nowrap;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+    font-family: 'Noto Sans KR', sans-serif;
+    margin-bottom: -2px;
+  }
+  .tab-btn:hover { color: var(--coral); }
+  .tab-btn.active {
+    color: var(--coral);
+    border-bottom-color: var(--coral);
+    background: rgba(232,96,74,0.05);
+  }
+
+  /* ─── TAB PANELS ─── */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ─── MAIN WRAP ─── */
+  .main-wrap {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 40px 20px 100px;
+  }
+
+  /* ─── SECTION LABEL ─── */
+  .section-lead {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 52px 0 24px;
+  }
+  .section-lead .ico { font-size: 26px; }
+  .section-lead h2 {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .section-lead .bar {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to right, var(--peach), transparent);
+    border-radius: 2px;
+  }
+
+  /* ─── SESSION CARD ─── */
+  .session-card {
+    background: var(--card);
+    border-radius: 22px;
+    overflow: hidden;
+    margin-bottom: 48px;
+    box-shadow: 0 2px 16px rgba(100,60,30,0.07), 0 0 0 1.5px var(--line);
+  }
+
+  .session-top {
+    padding: 22px 28px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .session-num-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: white;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+  }
+  .session-num-badge .n-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; opacity: 0.85; }
+  .session-num-badge .n-num  { font-size: 22px; font-weight: 700; line-height: 1; }
+
+  .session-top-info h3 {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .session-top-info p { font-size: 12.5px; color: var(--text-dim); }
+
+  .session-divider {
+    height: 1.5px;
+    background: var(--line);
+    margin: 0 28px;
+  }
+
+  /* ─── INFO GRID ─── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 22px 28px 0;
+  }
+  @media (max-width: 580px) { .info-grid { grid-template-columns: 1fr; } }
+
+  .info-box {
+    background: var(--cream);
+    border-radius: 14px;
+    padding: 16px 18px;
+    border: 1.5px solid var(--line);
+  }
+  .info-box.full { grid-column: 1 / -1; }
+
+  .info-box-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .info-text {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.75;
+  }
+
+  .placeholder {
+    color: #C8B0A0;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* 오늘의 책 */
+  .book-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .book-cover-placeholder {
+    width: 52px;
+    height: 68px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+    border: 1.5px dashed var(--line2);
+    background: var(--cream2);
+  }
+  .book-details .b-title { font-weight: 600; font-size: 14px; }
+  .book-details .b-author { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+
+  /* 특이사항 */
+  .note-text {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.75;
+    background: #FFF9F0;
+    padding: 10px 14px;
+    border-radius: 10px;
+  }
+
+  /* ─── PHOTO SECTION ─── */
+  .photo-section {
+    padding: 20px 28px 28px;
+  }
+  .photo-sub-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    margin-top: 8px;
+  }
+
+  /* children row */
+  .children-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  @media (max-width: 560px) { .children-row { grid-template-columns: repeat(3, 1fr); } }
+
+  .child-cell { text-align: center; }
+  .child-photo {
+    aspect-ratio: 3/4;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+    font-size: 28px;
+    border: 2.5px dashed;
+    position: relative;
+    overflow: hidden;
+    background: white;
+  }
+  .child-photo img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 11px;
+  }
+  .child-photo .add-hint {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+  .child-name-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-mid);
+  }
+
+  /* group photos */
+  .group-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  @media (max-width: 500px) { .group-row { grid-template-columns: 1fr 1fr; } }
+
+  .group-photo {
+    aspect-ratio: 4/3;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    border: 2.5px dashed var(--line2);
+    background: var(--cream2);
+    position: relative;
+    overflow: hidden;
+  }
+  .group-photo img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 11px;
+  }
+
+  /* ─── ADD NEXT SESSION ─── */
+  .add-session-card {
+    border: 2.5px dashed var(--line2);
+    border-radius: 22px;
+    padding: 28px;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  .add-session-card .plus { font-size: 36px; margin-bottom: 8px; }
+
+  /* ─── PROGRAM SECTION ─── */
+  .program-wrap {
+    margin-top: 72px;
+    padding-top: 48px;
+    border-top: 3px dashed var(--line);
+  }
+
+  .program-banner {
+    background: linear-gradient(135deg, #FFF0E6 0%, #E8F8EE 50%, #E8F0FF 100%);
+    border-radius: 22px;
+    padding: 36px;
+    margin-bottom: 28px;
+    border: 1.5px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .program-banner::after {
+    content: '🎨';
+    position: absolute;
+    right: 28px;
+    top: 20px;
+    font-size: 80px;
+    opacity: 0.12;
+  }
+
+  .program-banner h3 {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+
+  .program-banner p {
+    font-size: 14.5px;
+    color: var(--text-mid);
+    line-height: 1.85;
+    max-width: 680px;
+  }
+
+  .philosophy-quote {
+    background: rgba(255,255,255,0.7);
+    border-radius: 14px;
+    padding: 14px 20px;
+    margin: 20px 0 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--coral);
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  /* info table */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 580px) { .overview-grid { grid-template-columns: 1fr; } }
+
+  .ov-card {
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-radius: 16px;
+    padding: 18px 20px;
+  }
+  .ov-card h4 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--peach);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ov-card p, .ov-card li {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.8;
+  }
+  .ov-card ul { list-style: none; }
+  .ov-card ul li { padding-left: 14px; position: relative; }
+  .ov-card ul li::before { content: '✦'; position: absolute; left: 0; font-size: 9px; color: var(--peach); top: 5px; }
+
+  /* Rules */
+  .rules-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 580px) { .rules-row { grid-template-columns: 1fr; } }
+
+  .rule-box {
+    border-radius: 16px;
+    padding: 20px;
+    border: 1.5px solid transparent;
+  }
+  .rule-box.guide {
+    background: #FFF5F0;
+    border-color: #FFD8C8;
+  }
+  .rule-box.free {
+    background: #F0FFF6;
+    border-color: #C8F0D8;
+  }
+  .rule-box h4 {
+    font-size: 13.5px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .rule-box ul { list-style: none; }
+  .rule-box ul li {
+    font-size: 13.5px;
+    color: var(--text-mid);
+    padding: 3px 0 3px 16px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .rule-box.guide ul li::before { content: '🔒'; position: absolute; left: 0; font-size: 10px; top: 5px; }
+  .rule-box.free  ul li::before { content: '🌿'; position: absolute; left: 0; font-size: 10px; top: 5px; }
+
+  /* Flow timeline */
+  .flow-list { list-style: none; }
+  .flow-item {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: flex-start;
+  }
+  .flow-item:last-child { border-bottom: none; }
+  .flow-time {
+    font-size: 12px;
+    color: var(--text-dim);
+    min-width: 58px;
+    padding-top: 2px;
+    flex-shrink: 0;
+  }
+  .flow-stage {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    min-width: 64px;
+    flex-shrink: 0;
+  }
+  .flow-desc {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+
+  /* Roster */
+  .roster-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .roster-pill {
+    border-radius: 40px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border: 2px solid;
+  }
+  .roster-pill .emoji { font-size: 16px; }
+
+  /* Schedule preview */
+  .schedule-mini {
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .schedule-mini h4 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--peach);
+    margin-bottom: 14px;
+  }
+  .schedule-dot-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--text-mid);
+    padding: 5px 0;
+  }
+  .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot.done   { background: var(--green); }
+  .dot.coming { background: var(--line2); border: 2px dashed var(--text-dim); }
+
+  /* Events */
+  .event-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .event-chip {
+    background: white;
+    border: 1.5px solid var(--line2);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 13px;
+    color: var(--text-mid);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Deco strip */
+  .deco-strip {
+    font-size: 20px;
+    text-align: center;
+    letter-spacing: 4px;
+    margin: 28px 0;
+    opacity: 0.5;
+  }
+
+  /* ─── FOOTER ─── */
+  .site-footer {
+    background: var(--cream2);
+    border-top: 2px solid var(--line);
+    text-align: center;
+    padding: 32px 20px;
+    font-size: 12.5px;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+  .site-footer strong { color: var(--text-mid); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
+<header class="site-header">
+  <div class="deco-circle c1"></div>
+  <div class="deco-circle c2"></div>
+  <div class="deco-circle c3"></div>
+  <span class="header-icon">🎨</span>
+  <h1 class="header-title">니닉크라프트 <span>어린이 작업실</span></h1>
+  <div class="header-chips">
+    <span class="chip">과정 중심 · 다매체 · 통합 인문예술 교육</span>
+    <span class="chip">그림책과 함께</span>
+
+    <span class="chip">전시 · 공연</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════ TAB BAR ═══════════════════════════════ -->
+<nav class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('records', this)">📋 수업 기록</button>
+  <button class="tab-btn" onclick="switchTab('program', this)">🌱 프로그램 소개</button>
+</nav>
+
+<!-- ═══════════════════════════════ MAIN ═══════════════════════════════ -->
+<div class="main-wrap">
+
+  <!-- ══════════ TAB: 수업 기록 ══════════ -->
+  <div id="tab-records" class="tab-panel active">
+  <div class="section-lead">
+    <span class="ico">📋</span>
+    <h2>수업 기록</h2>
+    <div class="bar"></div>
+  </div>
+
+  <!-- ════════ 1회차 · 5월 7일 ════════ -->
+  <div class="session-card">
+    <div class="session-top" style="background: linear-gradient(120deg, #FFF0E8, #FFE8F8);">
+      <div class="session-num-badge" style="background: linear-gradient(135deg, var(--peach), var(--coral));">
+        <span class="n-label">NO.</span>
+        <span class="n-num">01</span>
+      </div>
+      <div class="session-top-info">
+        <h3>2026년 5월 7일 목요일</h3>
+        <p>🌸 봄 · 평면 조형 &amp; 콜라주 시리즈 첫 번째</p>
+      </div>
+    </div>
+    <div class="session-divider"></div>
+
+    <!-- Info grid -->
+    <div class="info-grid">
+      <!-- 재료 -->
+      <div class="info-box">
+        <div class="info-box-label" style="color: var(--coral);">✂️ &nbsp;재료</div>
+        <div class="info-text placeholder">
+          <!-- 실제 수업 재료를 이 곳에 기입해 주세요 -->
+          예) 색종이, 풀, 가위, 글루건, 크레파스 …
+        </div>
+      </div>
+
+      <!-- 오늘의 책 -->
+      <div class="info-box">
+        <div class="info-box-label" style="color: var(--blue);">📖 &nbsp;오늘의 책</div>
+        <div class="book-row">
+          <div class="book-cover-placeholder">📗</div>
+          <!-- 책 정보를 기입해 주세요 -->
+          <div class="book-details">
+            <div class="b-title placeholder">책 제목을 입력해 주세요</div>
+            <div class="b-author placeholder">글·그림 / 출판사</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 수업 흐름 -->
+      <div class="info-box full">
+        <div class="info-box-label" style="color: var(--green);">🖌️ &nbsp;수업 흐름</div>
+        <div class="info-text placeholder">
+          <!-- 수업 진행 내용을 간략히 기록해 주세요. 예시: -->
+          예) 오늘의 키워드 소개 → 색종이로 좋아하는 색 골라 붙이기 → 작품 한 문장 소개 → 정리
+        </div>
+      </div>
+
+      <!-- 특이사항 -->
+      <div class="info-box full">
+        <div class="info-box-label" style="color: var(--yellow);">⭐ &nbsp;특이사항 &amp; 오늘의 한마디</div>
+        <div class="note-text placeholder">
+          <!-- 재미있는 에피소드, 아이들 반응, 선생님 메모 등 자유롭게 기록해 주세요 -->
+          예) "봄이가 오늘 처음으로 스스로 색을 골랐어요!" 🌟
+        </div>
+      </div>
+    </div>
+
+    <!-- Photos -->
+    <div class="session-divider" style="margin-top: 22px;"></div>
+    <div class="photo-section">
+      <div class="photo-sub-title">📸 &nbsp;아이별 작업 사진</div>
+      <div class="children-row">
+        <!-- 소은 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c1); background: #FFF0F0;">
+            <!-- <img src="사진경로/소은_1회.jpg" alt="김소은"> -->
+            <span>🧡</span>
+            <span class="add-hint">사진 추가</span>
+          </div>
+          <div class="child-name-label">김소은</div>
+        </div>
+        <!-- 이서 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c2); background: #F0F5FF;">
+            <!-- <img src="사진경로/이서_1회.jpg" alt="한이서"> -->
+            <span>💙</span>
+            <span class="add-hint">사진 추가</span>
+          </div>
+          <div class="child-name-label">한이서</div>
+        </div>
+        <!-- 이준 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c3); background: #F0FFF5;">
+            <!-- <img src="사진경로/이준_1회.jpg" alt="한이준"> -->
+            <span>💚</span>
+            <span class="add-hint">사진 추가</span>
+          </div>
+          <div class="child-name-label">한이준</div>
+        </div>
+        <!-- 봄 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c4); background: #FFFDF0;">
+            <!-- <img src="사진경로/봄_1회.jpg" alt="신봄"> -->
+            <span>💛</span>
+            <span class="add-hint">사진 추가</span>
+          </div>
+          <div class="child-name-label">신봄</div>
+        </div>
+        <!-- 규태 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c5); background: #F8F0FF;">
+            <!-- <img src="사진경로/규태_1회.jpg" alt="박규태"> -->
+            <span>💜</span>
+            <span class="add-hint">사진 추가</span>
+          </div>
+          <div class="child-name-label">박규태</div>
+        </div>
+      </div>
+
+      <div class="photo-sub-title" style="margin-top: 18px;">📷 &nbsp;전체 · 일반 사진</div>
+      <div class="group-row">
+        <div class="group-photo" style="border-color: var(--line2);">
+          <!-- <img src="사진경로/전체_1회_1.jpg" alt="전체사진"> -->
+          <span>🌟</span>
+        </div>
+        <div class="group-photo" style="border-color: var(--line2);">
+          <!-- <img src="사진경로/전체_1회_2.jpg" alt="작업사진"> -->
+          <span>🖌️</span>
+        </div>
+        <div class="group-photo" style="border-color: var(--line2);">
+          <!-- <img src="사진경로/전체_1회_3.jpg" alt="결과물"> -->
+          <span>🎨</span>
+        </div>
+      </div>
+    </div>
+  </div><!-- /session-card 01 -->
+
+
+  <!-- ════════ 2회차 · 5월 14일 ════════ -->
+  <div class="session-card">
+    <div class="session-top" style="background: linear-gradient(120deg, #E8F8EE, #E8F4FF);">
+      <div class="session-num-badge" style="background: linear-gradient(135deg, var(--green), #4AAE80);">
+        <span class="n-label">NO.</span>
+        <span class="n-num">02</span>
+      </div>
+      <div class="session-top-info">
+        <h3>2026년 5월 14일 목요일</h3>
+        <p>🌸 봄 · 평면 조형 &amp; 콜라주 시리즈 두 번째</p>
+      </div>
+    </div>
+    <div class="session-divider"></div>
+
+    <div class="info-grid">
+      <div class="info-box">
+        <div class="info-box-label" style="color: var(--coral);">✂️ &nbsp;재료</div>
+        <div class="info-text placeholder">
+          예) 각종 재활용 종이, 신문지, 골판지 …
+        </div>
+      </div>
+
+      <div class="info-box">
+        <div class="info-box-label" style="color: var(--blue);">📖 &nbsp;오늘의 책</div>
+        <div class="book-row">
+          <div class="book-cover-placeholder">📘</div>
+          <div class="book-details">
+            <div class="b-title placeholder">책 제목을 입력해 주세요</div>
+            <div class="b-author placeholder">글·그림 / 출판사</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box full">
+        <div class="info-box-label" style="color: var(--green);">🖌️ &nbsp;수업 흐름</div>
+        <div class="info-text placeholder">
+          예) 종이의 질감 탐색 → 찢고 구기고 접기 → 손과 종이만으로 동물 만들기 → 내가 만든 것 소개 → 정리
+        </div>
+      </div>
+
+      <div class="info-box full">
+        <div class="info-box-label" style="color: var(--yellow);">⭐ &nbsp;특이사항 &amp; 오늘의 한마디</div>
+        <div class="note-text placeholder">
+          특이사항, 재미있는 순간, 선생님 메모를 여기에 기록해 주세요 ✏️
+        </div>
+      </div>
+    </div>
+
+    <div class="session-divider" style="margin-top: 22px;"></div>
+    <div class="photo-section">
+      <div class="photo-sub-title">📸 &nbsp;아이별 작업 사진</div>
+      <div class="children-row">
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c1); background: #FFF0F0;">
+            <!-- <img src="사진경로/소은_2회.jpg" alt="김소은"> -->
+            <span>🧡</span>
+            <span class="add-hint">사진 추가</span>
+          </div>
+          <div class="child-name-label">김소은</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c2); background: #F0F5FF;">
+            <!-- <img src="사진경로/이서_2회.jpg" alt="한이서"> -->
+            <span>💙</span>
+            <span class="add-hint">사진 추가</span>
+          </div>
+          <div class="child-name-label">한이서</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c3); background: #F0FFF5;">
+            <!-- <img src="사진경로/이준_2회.jpg" alt="한이준"> -->
+            <span>💚</span>
+            <span class="add-hint">사진 추가</span>
+          </div>
+          <div class="child-name-label">한이준</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c4); background: #FFFDF0;">
+            <!-- <img src="사진경로/봄_2회.jpg" alt="신봄"> -->
+            <span>💛</span>
+            <span class="add-hint">사진 추가</span>
+          </div>
+          <div class="child-name-label">신봄</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c5); background: #F8F0FF;">
+            <!-- <img src="사진경로/규태_2회.jpg" alt="박규태"> -->
+            <span>💜</span>
+            <span class="add-hint">사진 추가</span>
+          </div>
+          <div class="child-name-label">박규태</div>
+        </div>
+      </div>
+
+      <div class="photo-sub-title" style="margin-top: 18px;">📷 &nbsp;전체 · 일반 사진</div>
+      <div class="group-row">
+        <div class="group-photo">
+          <!-- <img src="사진경로/전체_2회_1.jpg" alt="전체사진"> -->
+          <span>🌟</span>
+        </div>
+        <div class="group-photo">
+          <!-- <img src="사진경로/전체_2회_2.jpg" alt="작업사진"> -->
+          <span>✂️</span>
+        </div>
+        <div class="group-photo">
+          <!-- <img src="사진경로/전체_2회_3.jpg" alt="결과물"> -->
+          <span>🎨</span>
+        </div>
+      </div>
+    </div>
+  </div><!-- /session-card 02 -->
+
+
+  <!-- ════════ 다음 수업 예고 ════════ -->
+  <div class="add-session-card">
+    <div class="plus">📅</div>
+    <strong>다음 수업</strong> — 2026년 5월 21일 목요일<br>
+    <span style="font-size: 13px; color: var(--text-dim);">수업 후 기록이 업데이트될 예정입니다 🌿</span>
+  </div>
+
+
+  </div><!-- /tab-records -->
+
+  <!-- ══════════ TAB: 프로그램 소개 ══════════ -->
+  <div id="tab-program" class="tab-panel">
+  <div class="program-wrap">
+    <div class="section-lead">
+      <span class="ico">🌱</span>
+      <h2>프로그램 소개</h2>
+      <div class="bar"></div>
+    </div>
+
+    <!-- Banner -->
+    <div class="program-banner">
+      <h3>CHILDREN'S WORKSHOP at NINNIK KRAFT</h3>
+      <p>
+        어린이 작업실은 <strong>결과물이 아닌 과정</strong>을 중심에 두는 프로젝트형 유아미술 교육 프로그램입니다.
+        그림·조형·설치부터 전시·공연·영상 제작까지, 아이들은 한 해 동안 다양한 재료와 방법을 직접 탐색하고
+        실험하며 자신만의 표현 방식을 찾아갑니다.<br><br>
+        수업 중간에는 수업 내용과 어울리는 그림책을 함께 읽습니다. 책을 바탕으로 작업을 진행하지는 않으며, 아이들이 잠시 쉬어가는 시간으로 활용합니다.
+      </p>
+    </div>
+
+    <!-- Overview -->
+    <div class="overview-grid">
+      <div class="ov-card">
+        <h4>👧 교육 대상</h4>
+        <p>6–7세<br>소수 정원 · 최대 9명</p>
+      </div>
+      <div class="ov-card">
+        <h4>⏰ 수업 일정</h4>
+        <p>매주 목요일 16:10 – 17:30<br>니닉크라프트<br><span style="font-size:12.5px; color: var(--text-dim);">17시 이후 자유 귀가 가능 (당일 알려주세요)</span></p>
+      </div>
+    </div>
+
+    <!-- Rules -->
+    <div class="rules-row">
+      <div class="rule-box guide">
+        <h4 style="color: var(--coral);">🔒 꼭 지켜요</h4>
+        <ul>
+          <li>주제·재료·기법을 알아가기</li>
+          <li>친구 작업을 존중하고 협업에 적극 참여하기</li>
+          <li>작업 후 정리정돈</li>
+        </ul>
+      </div>
+      <div class="rule-box free">
+        <h4 style="color: var(--green);">🌿 마음껏 해도 돼요</h4>
+        <ul>
+          <li>논의를 통해 변형·응용하기</li>
+          <li>내 작업을 스스로 이어가거나 새롭게 바꾸기</li>
+          <li>계획과 다른 방향으로 가도 OK!</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 80분 수업 흐름 -->
+    <div class="ov-card" style="margin-bottom: 24px;">
+      <h4>⏱️ 80분 수업 흐름</h4>
+      <ul class="flow-list">
+        <li class="flow-item">
+          <span class="flow-time">0 – 10분</span>
+          <span class="flow-stage">🌅 열기</span>
+          <span class="flow-desc">입장, 앞치마 착용, 지난 작업 짧게 돌아보기</span>
+        </li>
+        <li class="flow-item">
+          <span class="flow-time">10 – 20분</span>
+          <span class="flow-stage">💭 소개</span>
+          <span class="flow-desc">오늘의 키워드와 재료 소개, "무엇을 표현하고 싶은가?"</span>
+        </li>
+        <li class="flow-item">
+          <span class="flow-time">20 – 65분</span>
+          <span class="flow-stage">✏️ 작업</span>
+          <span class="flow-desc">개별 또는 공동 작업 (선생님 개입 최소화) — 중간에 그림책 함께 읽기</span>
+        </li>
+        <li class="flow-item">
+          <span class="flow-time">65 – 80분</span>
+          <span class="flow-stage">👀 마무리</span>
+          <span class="flow-desc">작업물을 관찰·감상하고 질문하기, 자리·재료 정돈</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 연간 계획 요약 -->
+    <div class="ov-card" style="margin-bottom: 24px;">
+      <h4>🗓️ 연간 커리큘럼 흐름</h4>
+      <div style="font-size: 13.5px; color: var(--text-mid); line-height: 2;">
+        <strong style="color: var(--text);">🌸 봄 (3–5월)</strong> &nbsp;그리기 · 만들기 — 건식/습식 재료 탐색, 콜라주, 평면 조형<br>
+        <strong style="color: var(--text);">☀️ 여름 (6–7월)</strong> &nbsp;공감각 · 도예 — 즉흥 드로잉, 릴레이 그림책, 흙과 도예 체험<br>
+        <strong style="color: var(--text);">🍂 가을 (9–11월)</strong> &nbsp;공간 · 전시 · 공연 — 큐레이팅, 직조, 무대 만들기, 가족 공연 발표회<br>
+        <strong style="color: var(--text);">❄️ 겨울 (12–1월)</strong> &nbsp;디지털 · 콘텐츠 — 사진, 포토샵 체험, 스톱모션 애니메이션<br>
+      </div>
+      <div class="event-chips">
+        <span class="event-chip">🎪 9월 미니 전시</span>
+        <span class="event-chip">🎭 11월 가족 공연</span>
+        <span class="event-chip">💻 온라인 아카이브</span>
+        <span class="event-chip">📅 연말 달력 제작</span>
+      </div>
+    </div>
+
+    <!-- 교습비 -->
+    <div class="ov-card" style="margin-bottom: 14px;">
+      <h4>💰 교습비</h4>
+      <div style="font-size: 14px; color: var(--text-mid); line-height: 2;">
+        월 12만원 / 한 가정에서 2명 이상 등록 시 둘째부터 50% 할인<br>
+        <strong style="color: var(--text);">교습비는 매월 첫 주 내 선납 부탁드립니다.</strong><br>
+        <span style="font-size: 12.5px; color: var(--text-dim);">국민은행 303837-04-008431 · 니닉크라프트</span>
+      </div>
+    </div>
+
+    <!-- 준비사항 & 재료 -->
+    <div class="ov-card" style="margin-bottom: 14px;">
+      <h4>🎒 준비 사항</h4>
+      <ul style="font-size: 13.5px; color: var(--text-mid); list-style: none; line-height: 2;">
+        <li style="padding-left: 18px; position: relative;"><span style="position:absolute; left:0;">👕</span> 물감 등으로 옷이 더러워질 수 있으니, 앞치마나 활동복을 공방에 두고 사용하셔도 좋습니다</li>
+        <li style="padding-left: 18px; position: relative;"><span style="position:absolute; left:0;">🖌️</span> 기본 재료는 모두 제공되며, 재활용품·콜라주 재료 등을 가져와야 할 수 있습니다</li>
+      </ul>
+    </div>
+
+    <!-- 운영 안내 -->
+    <div class="ov-card">
+      <h4>📌 운영 안내</h4>
+      <ul style="font-size: 13.5px; color: var(--text-mid); list-style: none; line-height: 2;">
+        <li style="padding-left: 18px; position: relative;"><span style="position:absolute; left:0;">📖</span> 부모 참여 (예정) — 3월 가족 그리기, 7월 도예작업, 9월 미니 전시, 11월 공연</li>
+        <li style="padding-left: 18px; position: relative;"><span style="position:absolute; left:0;">🗓️</span> 결석 시 보강은 일반 그리기 수업으로 대체될 수 있습니다</li>
+        <li style="padding-left: 18px; position: relative;"><span style="position:absolute; left:0;">💬</span> 재능·진로 상담은 진행하지 않습니다</li>
+      </ul>
+    </div>
+
+    <div class="deco-strip">🎨 ✂️ 📚 🌿 🖌️ 🎭 ⭐ 🖼️</div>
+
+  </div><!-- /program-wrap -->
+  </div><!-- /tab-program -->
+
+</div><!-- /main-wrap -->
+
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<footer class="site-footer">
+  <div style="font-size: 24px; margin-bottom: 8px;">🎨</div>
+  <strong>CHILDREN'S WORKSHOP at NINNIK KRAFT</strong><br>
+  process-oriented, multimedia, integrated &amp; liberal art<br>
+  <span style="font-size: 11.5px;">Thursday 4:10 – 5:30 PM &nbsp;|&nbsp; @ninnik_kraft</span>
+</footer>
+
+<script>
+  function switchTab(tabId, btn) {
+    // 모든 패널 숨기기
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    // 모든 버튼 비활성화
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    // 선택한 탭 활성화
+    document.getElementById('tab-' + tabId).classList.add('active');
+    btn.classList.add('active');
+    // 상단으로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
