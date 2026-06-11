@@ -35,7 +35,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-y: scroll; scrollbar-gutter: stable; }
 
   body {
     background: var(--cream);
@@ -123,6 +123,11 @@
     background: rgba(255,248,242,0.96);
     backdrop-filter: blur(10px);
     border-bottom: 2px solid var(--line);
+  }
+  .tab-bar-inner {
+    max-width: 940px;
+    margin: 0 auto -2px;
+    padding: 0 20px;
     display: flex;
     gap: 0;
     overflow-x: auto;
@@ -143,7 +148,6 @@
     transition: all 0.2s;
     letter-spacing: 0.03em;
     font-family: 'Noto Sans KR', sans-serif;
-    margin-bottom: -2px;
   }
   .tab-btn:hover { color: var(--coral); }
   .tab-btn.active {
@@ -396,9 +400,6 @@
 
   /* ─── PROGRAM SECTION ─── */
   .program-wrap {
-    margin-top: 72px;
-    padding-top: 48px;
-    border-top: 3px dashed var(--line);
   }
 
   .program-banner {
@@ -663,8 +664,10 @@
 
 <!-- ═══════════════════════════════ TAB BAR ═══════════════════════════════ -->
 <nav class="tab-bar">
-  <button class="tab-btn active" onclick="switchTab('records', this)">📋 수업 기록</button>
-  <button class="tab-btn" onclick="switchTab('program', this)">🌱 프로그램 소개</button>
+  <div class="tab-bar-inner">
+    <button class="tab-btn active" onclick="switchTab('records', this)">📋 수업 기록</button>
+    <button class="tab-btn" onclick="switchTab('program', this)">🌱 프로그램 소개</button>
+  </div>
 </nav>
 
 <!-- ═══════════════════════════════ MAIN ═══════════════════════════════ -->

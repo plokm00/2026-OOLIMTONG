@@ -24,46 +24,38 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-y: scroll; scrollbar-gutter: stable; }
 
   body {
     background: var(--bg);
     color: var(--text);
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 15px;
-    line-height: 1.8;
+    line-height: 1.75;
   }
 
   /* ── 헤더 ── */
   .page-header {
     background: var(--accent2);
-    padding: 56px 64px 48px;
+    border-bottom: 2px solid var(--accent);
+    padding: 48px 64px 40px;
     position: relative;
     overflow: hidden;
   }
-  .page-header::after {
-    content: '';
-    position: absolute;
-    right: -60px; bottom: -60px;
-    width: 300px; height: 300px;
-    border-radius: 50%;
-    border: 1px solid rgba(246,237,230,0.15);
-    pointer-events: none;
-  }
   .header-eyebrow {
     font-size: 11px;
-    letter-spacing: 0.4em;
+    letter-spacing: 0.35em;
     text-transform: uppercase;
     color: rgba(246,237,230,0.6);
     font-weight: 500;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
   .header-title {
     font-family: 'IBM Plex Sans KR', sans-serif;
-    font-size: clamp(24px, 4vw, 38px);
+    font-size: clamp(26px, 4vw, 42px);
     font-weight: 700;
     color: var(--white);
-    line-height: 1.25;
+    line-height: 1.3;
     margin-bottom: 8px;
   }
   .header-sub {
@@ -103,12 +95,18 @@
   .page-nav {
     background: var(--bg2);
     border-bottom: 1px solid var(--line);
-    padding: 0 64px;
-    display: flex;
-    gap: 0;
     position: sticky;
     top: 0;
     z-index: 50;
+  }
+  .page-nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
   }
   .page-nav a {
     padding: 16px 20px;
@@ -119,8 +117,11 @@
     border-bottom: 2px solid transparent;
     transition: color 0.15s, border-color 0.15s;
     white-space: nowrap;
+    cursor: pointer;
   }
   .page-nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  .page-nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .nav-print { margin-left: auto; white-space: nowrap; }
 
   /* ── 본문 공통 ── */
   .content-wrap {
@@ -130,11 +131,10 @@
   }
 
   .section {
-    padding: 64px 0 48px;
-    border-bottom: 1px solid var(--line);
-    scroll-margin-top: 56px;
+    padding: 48px 0 64px;
+    display: none;
   }
-  .section:last-child { border-bottom: none; }
+  .section.active { display: block; }
 
   .section-eyebrow {
     font-size: 11px;
@@ -160,6 +160,12 @@
     margin-bottom: 28px;
     line-height: 1.7;
   }
+  .lock-gate { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 8px 0 8px; }
+  .lock-input { font-family: 'Noto Sans KR', sans-serif; font-size: 14px; color: var(--text); background: var(--bg2); border: 1px solid var(--line); border-radius: 3px; padding: 9px 14px; width: 200px; outline: none; }
+  .lock-input:focus { border-color: var(--accent); }
+  .lock-btn { padding: 9px 18px; }
+  .lock-msg { font-size: 13px; color: var(--accent2); }
+  .wage-note { font-weight: 400; font-size: 10px; letter-spacing: 0; text-transform: none; color: var(--text-dim); }
 
   /* ── 업무 설명 카드 ── */
   .duty-group { margin-bottom: 32px; }
@@ -176,7 +182,7 @@
   }
   .duty-row {
     display: grid;
-    grid-template-columns: 160px 1fr 100px;
+    grid-template-columns: 200px 1fr 120px;
     gap: 0;
     background: var(--bg2);
     border-bottom: 1px solid var(--line);
@@ -195,6 +201,7 @@
     color: var(--text);
     font-family: 'IBM Plex Sans KR', sans-serif;
     font-size: 13px;
+    white-space: nowrap;
   }
   .duty-desc { color: var(--text-dim); font-size: 13px; }
   .duty-timing {
@@ -205,6 +212,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    white-space: nowrap;
+    padding: 14px 6px;
   }
   .duty-note {
     font-size: 11px;
@@ -268,9 +277,9 @@
     background: var(--bg3);
     color: var(--accent);
     font-size: 11px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    padding: 12px 14px;
+    padding: 12px 12px;
     text-align: left;
     font-weight: 500;
     border-bottom: 1px solid var(--accent);
@@ -296,7 +305,7 @@
   }
   .td-time { color: var(--text-dim); text-align: center; white-space: nowrap; font-size: 13px; }
   .td-task { color: var(--text-dim); font-size: 13px; }
-  .td-note { color: var(--text-dim); font-size: 12px; font-style: italic; }
+  .td-note { color: var(--text-dim); font-size: 12px; font-style: italic; white-space: nowrap; }
   .total-row td {
     background: var(--bg3);
     font-weight: 700;
@@ -354,9 +363,9 @@
     background: var(--bg3);
     color: var(--accent);
     font-size: 10px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
-    padding: 10px 12px;
+    padding: 10px 10px;
     text-align: center;
     font-weight: 500;
     border-bottom: 1px solid var(--accent);
@@ -449,7 +458,7 @@
   /* ── 반응형 ── */
   @media (max-width: 820px) {
     .page-header { padding: 40px 24px 36px; }
-    .page-nav { padding: 0 20px; overflow-x: auto; }
+    .page-nav-inner { padding: 0 20px; }
     .content-wrap { padding: 0 20px; }
     .header-info-grid { grid-template-columns: 1fr 1fr; }
     .duty-row { grid-template-columns: 1fr; }
@@ -480,48 +489,36 @@
 <header class="page-header">
   <p class="header-eyebrow">울림통-변주 2026 · Ninnik Kraft</p>
   <h1 class="header-title">보조 작업자 업무 설명 및 근무일지</h1>
-  <p class="header-sub">협력창작 보조 인력 · 업무 안내 · 예상 일정 · 근무 기록</p>
-  <div class="header-info-grid">
-    <div class="header-info-item">
-      <p class="header-info-label">시급</p>
-      <p class="header-info-value">10,320원</p>
-    </div>
-    <div class="header-info-item">
-      <p class="header-info-label">예상 근무</p>
-      <p class="header-info-value">36일 · 115h</p>
-    </div>
-    <div class="header-info-item">
-      <p class="header-info-label">예상 총액</p>
-      <p class="header-info-value">1,186,800원</p>
-    </div>
-  </div>
+  <p class="header-sub">인동욱 (작업 보조 및 시민 작가 겸임)</p>
 </header>
 
 <!-- 네비 -->
 <nav class="page-nav">
-  <a href="#duties">업무 설명</a>
-  <a href="#schedule">예상 일정</a>
-  <a href="#log">근무일지 양식</a>
+  <div class="page-nav-inner">
+    <a class="active" onclick="switchSection('duties', this)">업무 설명</a>
+    <a onclick="switchSection('schedule', this)">예상 일정</a>
+    <a onclick="switchSection('log', this)">근무일지 양식</a>
+    <button class="print-btn nav-print" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+  </div>
 </nav>
 
 <main class="content-wrap">
 
   <!-- ── 1. 업무 설명 ── -->
-  <div class="section" id="duties">
+  <div class="section active" id="duties">
     <p class="section-eyebrow">Job Description</p>
     <h2 class="section-title">업무 설명</h2>
-    <p class="section-desc">회차별 작업 보조 전반 · 시민작가 협력창작 (주말 20회) + OT · 행정 · 전시 준비 포함</p>
+    <p class="section-desc">회차별 작업 보조 전반 · 시민작가 협력창작 (주말 20회) · 체험 보조 · 추후 전시 준비</p>
 
     <!-- 사전 준비 -->
     <div class="duty-group">
-      <div class="duty-group-label">사전준비 &nbsp;<span style="font-weight:400; font-size:11px; opacity:0.8;">회차 시작 1시간 전</span></div>
+      <div class="duty-group-label">사전준비</div>
       <div class="duty-row">
         <div class="duty-cell">
           <p class="duty-name">재료 준비 및 점검</p>
         </div>
         <div class="duty-cell duty-desc">
-          점토 소분, 작업도구(주걱·실·스펀지 등) 세척·배치, 방수포·작업대 세팅. 재료 목록표 기준으로 빠진 항목 확인.
-          <p class="duty-note">※ 재료 목록표 기준</p>
+          점토 소분, 작업도구 세척·배치, 방수포·작업대 세팅.
         </div>
         <div class="duty-cell duty-timing"></div>
       </div>
@@ -530,7 +527,7 @@
           <p class="duty-name">공간 세팅</p>
         </div>
         <div class="duty-cell duty-desc">
-          작업 동선 확보, 조명·환기 확인, 참여자 자리 배치, 안전 매트 설치. 어린이·노약자 참여 회차는 이동 경로 별도 점검.
+          작업 동선 확보, 조명·환기 확인, 참여자 자리 배치.
         </div>
         <div class="duty-cell duty-timing"></div>
       </div>
@@ -539,8 +536,7 @@
           <p class="duty-name">기록 장비 준비</p>
         </div>
         <div class="duty-cell duty-desc">
-          카메라·삼각대 충전 및 세팅, 촬영 앵글 사전 확인, 구글 드라이브 업로드 폴더 경로 확인. 파일명 규칙(날짜_회차_순번) 숙지.
-          <p class="duty-note">※ 저장 경로 통일 필수</p>
+          카메라·삼각대 충전 및 세팅, 촬영 앵글 사전 확인.
         </div>
         <div class="duty-cell duty-timing"></div>
       </div>
@@ -551,10 +547,10 @@
       <div class="duty-group-label">작업 진행 중</div>
       <div class="duty-row">
         <div class="duty-cell">
-          <p class="duty-name">작업 기록<br><span style="font-size:11px;color:var(--text-dim);">사진·영상</span></p>
+          <p class="duty-name">작업 기록</p>
         </div>
         <div class="duty-cell duty-desc">
-          회차별 전 과정 촬영(작업 전·중·후). 파일명 규칙에 따라 저장 후 당일 드라이브 업로드.
+          회차별 전 과정 촬영 후 당일 드라이브 업로드.
         </div>
         <div class="duty-cell duty-timing">전 회차</div>
       </div>
@@ -563,26 +559,16 @@
           <p class="duty-name">재료 보충 및 운반</p>
         </div>
         <div class="duty-cell duty-desc">
-          점토 타래 추가 제공, 도구 부족 시 즉시 보충. 20kg 이상 무거운 재료 운반 시 이륜 카트 사용.
-          <p class="duty-note">※ 작가 지시에 따름</p>
+          점토 타래 부족 시 보충. 20kg 이상 무거운 재료 운반 시 이륜 카트 사용.
         </div>
         <div class="duty-cell duty-timing">전 회차</div>
-      </div>
-      <div class="duty-row">
-        <div class="duty-cell">
-          <p class="duty-name">점토 반죽 추가 작업</p>
-        </div>
-        <div class="duty-cell duty-desc">
-          회차 중 점토 수분 증발·굳음 발생 시 반죽을 보충하거나 재조련하여 작업 가능 상태로 유지.
-        </div>
-        <div class="duty-cell duty-timing">필요 시</div>
       </div>
       <div class="duty-row">
         <div class="duty-cell">
           <p class="duty-name">참여자 안전 보조</p>
         </div>
         <div class="duty-cell duty-desc">
-          와이어 커터·조각도 등 날카로운 도구 사용 시 안전 지도. 어린이·노약자 참여 회차 밀착 지원. 이상 상황 즉시 작가에게 보고.
+          와이어 커터·조각도 등 날카로운 도구 사용 시 안전 지도. 어린이·노약자 참여 회차 밀착 지원.
         </div>
         <div class="duty-cell duty-timing">자유참여 회차</div>
       </div>
@@ -591,7 +577,7 @@
           <p class="duty-name">현장 안내 보조</p>
         </div>
         <div class="duty-cell duty-desc">
-          참여자 출석 체크 및 명찰 배부. 화장실·주차 등 시설 안내. 지각·결석 연락 수신 후 작가에게 전달. 출석부 양식 사용.
+          화장실·주차 등 시설 안내.
         </div>
         <div class="duty-cell duty-timing">자유참여 회차</div>
       </div>
@@ -605,28 +591,18 @@
           <p class="duty-name">작업 공간 청소</p>
         </div>
         <div class="duty-cell duty-desc">
-          점토 잔여물 수거 및 분리배출, 도구 세척·건조·수납, 바닥·작업대 물청소. 다음 회차를 위한 소모품 잔량 메모.
+          폐기물 수거 및 분리배출, 도구 세척, 바닥·작업대 물청소. 다음 회차를 위한 소모품 잔량 체크.
         </div>
         <div class="duty-cell duty-timing"></div>
       </div>
       <div class="duty-row">
         <div class="duty-cell">
-          <p class="duty-name">작품·재료 보관</p>
+          <p class="duty-name">기록 정리 및 근무일지 작성</p>
         </div>
         <div class="duty-cell duty-desc">
-          진행 중 작품 건조 상태 확인 후 적정 위치 이동. 재습 방지 비닐 처리. 점토 추적 시트에 재료 잔량 기재.
-          <p class="duty-note">※ 점토 추적 시트 기재</p>
+          촬영 파일 공유. 근무일지 기재 후 작가 확인 서명 수령.
         </div>
-        <div class="duty-cell duty-timing"></div>
-      </div>
-      <div class="duty-row">
-        <div class="duty-cell">
-          <p class="duty-name">기록 정리 및<br>근무일지 작성</p>
-        </div>
-        <div class="duty-cell duty-desc">
-          촬영 파일 선별 후 공유 드라이브 업로드. 회차별 간단 메모(참여 인원·특이사항·흙 상태) 작성. 출근·퇴근 시각, 업무 내용, 특이사항 근무일지 기재 후 작가 확인 서명 수령.
-        </div>
-        <div class="duty-cell duty-timing">매 근무일<br>당일 내</div>
+        <div class="duty-cell duty-timing">매 근무일</div>
       </div>
     </div>
 
@@ -638,29 +614,20 @@
           <p class="duty-name">전시 설치 보조</p>
         </div>
         <div class="duty-cell duty-desc">
-          작품 이동·배치 보조, 전시 라벨·안내판 부착, 조명 위치 확인 및 연장선 정리. 설치 동선 사전 파악 후 작업.
+          작품 이동·배치 보조, 전시 라벨·안내판 부착, 조명 위치 확인 및 연장선 정리.
           <p class="duty-note">※ 11월 중순 예정</p>
         </div>
-        <div class="duty-cell duty-timing">전시<br>설치 기간</div>
+        <div class="duty-cell duty-timing">전시 설치 기간</div>
       </div>
       <div class="duty-row">
         <div class="duty-cell">
-          <p class="duty-name">도록·아카이브<br>자료 정리</p>
+          <p class="duty-name">전시 해체 및 공간 복원</p>
         </div>
         <div class="duty-cell duty-desc">
-          회차별 촬영 파일 최종 선별 보조, 참여자 이름·작품명 목록 정리, 인쇄 파일 전달. 작가 검수 후 확정.
-        </div>
-        <div class="duty-cell duty-timing">전시 전<br>2주</div>
-      </div>
-      <div class="duty-row">
-        <div class="duty-cell">
-          <p class="duty-name">전시 해체 및<br>공간 복원</p>
-        </div>
-        <div class="duty-cell duty-desc">
-          전시 마지막 날 작품 안전 포장·이동, 전시 구조물 해체 보조, 공간 원상 복원 및 청소.
+          전시 구조물 해체 보조, 공간 원상 복원 및 청소.
           <p class="duty-note">※ 12월 13일 예정</p>
         </div>
-        <div class="duty-cell duty-timing">전시<br>종료 당일</div>
+        <div class="duty-cell duty-timing">전시 종료 당일</div>
       </div>
     </div>
   </div>
@@ -669,89 +636,15 @@
   <div class="section" id="schedule">
     <p class="section-eyebrow">Estimated Schedule</p>
     <h2 class="section-title">예상 일정 및 시간 산정</h2>
-    <p class="section-desc">아래 일정·시간은 추정치입니다. 실제 일정 확정 후 근무일지에 직접 기입하세요.</p>
+    <p class="section-desc">이 내용은 비밀번호로 보호됩니다. 관리자 비밀번호를 입력하면 예상 일정·시간 산정 표가 표시됩니다.</p>
 
-    <div class="schedule-summary">
-      <div class="summary-card">
-        <p class="summary-label">총 근무일</p>
-        <p class="summary-value">36일</p>
-        <p class="summary-sub">OT 1 · 창작 20 · 자유참여 10 · 행정 2 · 전시 3</p>
-      </div>
-      <div class="summary-card">
-        <p class="summary-label">예상 총 시간</p>
-        <p class="summary-value">115시간</p>
-        <p class="summary-sub">창작 40h + 자유참여 40h + 기타 35h</p>
-      </div>
-      <div class="summary-card">
-        <p class="summary-label">시급</p>
-        <p class="summary-value">10,320원</p>
-        <p class="summary-sub">2026년 법정 최저임금</p>
-      </div>
-      <div class="summary-card">
-        <p class="summary-label">예상 총액</p>
-        <p class="summary-value">1,186,800원</p>
-        <p class="summary-sub">115h × 10,320원</p>
-      </div>
+    <div id="schedule-gate" class="lock-gate">
+      <input type="password" id="schedule-pw" class="lock-input" placeholder="비밀번호" autocomplete="off">
+      <button type="button" class="print-btn lock-btn" id="schedule-unlock">🔓 열기</button>
+      <span id="schedule-msg" class="lock-msg"></span>
     </div>
-
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th style="text-align:center;">No</th>
-          <th>날짜</th>
-          <th style="text-align:center;">요일</th>
-          <th>구분</th>
-          <th style="text-align:center;">출근</th>
-          <th style="text-align:center;">퇴근</th>
-          <th style="text-align:center;">시간</th>
-          <th>주요 예상 업무</th>
-          <th>비고</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td class="td-num">1</td><td class="td-date">2026. 4. 25</td><td class="td-day">토</td><td style="font-size:13px;">OT</td><td class="td-time">13:00</td><td class="td-time">19:00</td><td class="td-h">6h</td><td class="td-task">공간 세팅, 출석 체크, OT 진행 보조, 정리정돈</td><td class="td-note">오후 2시 OT 시작</td></tr>
-        <tr><td class="td-num">2</td><td class="td-date">2026. 5. 9</td><td class="td-day">토</td><td style="font-size:13px;">창작 1회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">3</td><td class="td-date">2026. 5. 10</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 1회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">4</td><td class="td-date">2026. 5. 16</td><td class="td-day">토</td><td style="font-size:13px;">창작 2회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">5</td><td class="td-date">2026. 5. 23</td><td class="td-day">토</td><td style="font-size:13px;">창작 3회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">6</td><td class="td-date">2026. 5. 24</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 2회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">7</td><td class="td-date">2026. 5. 30</td><td class="td-day">토</td><td style="font-size:13px;">창작 4회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">8</td><td class="td-date">2026. 6. 6</td><td class="td-day">토</td><td style="font-size:13px;">창작 5회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">9</td><td class="td-date">2026. 6. 7</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 3회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">10</td><td class="td-date">2026. 6. 13</td><td class="td-day">토</td><td style="font-size:13px;">창작 6회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">11</td><td class="td-date">2026. 6. 20</td><td class="td-day">토</td><td style="font-size:13px;">창작 7회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">12</td><td class="td-date">2026. 6. 21</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 4회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">13</td><td class="td-date">2026. 6. 27</td><td class="td-day">토</td><td style="font-size:13px;">창작 8회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">14</td><td class="td-date">2026. 7. 4</td><td class="td-day">토</td><td style="font-size:13px;">창작 9회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">15</td><td class="td-date">2026. 7. 5</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 5회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">16</td><td class="td-date">2026. 7. 11</td><td class="td-day">토</td><td style="font-size:13px;">창작 10회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">17</td><td class="td-date">2026. 7. 18</td><td class="td-day">토</td><td style="font-size:13px;">창작 11회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">18</td><td class="td-date">2026. 7. 19</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 6회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">19</td><td class="td-date">2026. 7. 25</td><td class="td-day">토</td><td style="font-size:13px;">창작 12회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">20</td><td class="td-date">2026. 8. 8</td><td class="td-day">토</td><td style="font-size:13px;">창작 13회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">21</td><td class="td-date">2026. 8. 9</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 7회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">22</td><td class="td-date">2026. 8. 22</td><td class="td-day">토</td><td style="font-size:13px;">창작 14회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">23</td><td class="td-date">2026. 8. 29</td><td class="td-day">토</td><td style="font-size:13px;">창작 15회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">24</td><td class="td-date">2026. 8. 30</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 8회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">25</td><td class="td-date">2026. 9. 5</td><td class="td-day">토</td><td style="font-size:13px;">창작 16회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">26</td><td class="td-date">2026. 9. 12</td><td class="td-day">토</td><td style="font-size:13px;">창작 17회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">27</td><td class="td-date">2026. 9. 13</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 9회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">28</td><td class="td-date">2026. 9. 19</td><td class="td-day">토</td><td style="font-size:13px;">창작 18회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">29</td><td class="td-date">2026. 9. 26</td><td class="td-day">토</td><td style="font-size:13px;">창작 19회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">재료 준비·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">30</td><td class="td-date">2026. 9. 27</td><td class="td-day">일</td><td style="font-size:13px;">자유참여 10회</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">공간 세팅, 참여자 안내·보조, 사진 기록, 정리</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">31</td><td class="td-date">2026. 10. 10</td><td class="td-day">토</td><td style="font-size:13px;">창작 20회</td><td class="td-time">10:00</td><td class="td-time">12:00</td><td class="td-h">2h</td><td class="td-task">마지막 창작 회차 보조, 작품 보관 처리</td><td class="td-note">추석 전후 확인</td></tr>
-        <tr><td class="td-num">32</td><td class="td-date">2026. 10. 24</td><td class="td-day">토</td><td style="font-size:13px;">행정</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">기록 파일 최종 정리, 참여자 목록 정리</td><td class="td-note">작가와 협의</td></tr>
-        <tr><td class="td-num">33</td><td class="td-date">2026. 11. 7</td><td class="td-day">토</td><td style="font-size:13px;">행정</td><td class="td-time">10:00</td><td class="td-time">14:00</td><td class="td-h">4h</td><td class="td-task">도록 자료 정리, 아카이브 파일 전달 보조</td><td class="td-note"></td></tr>
-        <tr><td class="td-num">34</td><td class="td-date">2026. 11. 14</td><td class="td-day">토</td><td style="font-size:13px;">전시 준비</td><td class="td-time">09:00</td><td class="td-time">16:00</td><td class="td-h">7h</td><td class="td-task">전시 설치 보조, 작품 이동·배치, 라벨 부착</td><td class="td-note">전시 11/21 개막</td></tr>
-        <tr><td class="td-num">35</td><td class="td-date">2026. 11. 19</td><td class="td-day">목</td><td style="font-size:13px;">전시 준비</td><td class="td-time">09:00</td><td class="td-time">16:00</td><td class="td-h">7h</td><td class="td-task">최종 설치 점검, 조명 확인, 공간 청소</td><td class="td-note">개막 전날 최종 점검</td></tr>
-        <tr><td class="td-num">36</td><td class="td-date">2026. 12. 13</td><td class="td-day">일</td><td style="font-size:13px;">전시 종료</td><td class="td-time">10:00</td><td class="td-time">17:00</td><td class="td-h">7h</td><td class="td-task">전시 해체 보조, 작품 안전 포장, 공간 복원</td><td class="td-note">전시 마지막 날</td></tr>
-        <tr class="total-row">
-          <td colspan="6" class="total-label">총 합계 (36일)</td>
-          <td class="td-h" style="text-align:center;">115h</td>
-          <td colspan="2" class="total-amount">115h × 10,320원 = <strong>1,186,800원</strong></td>
-        </tr>
-      </tbody>
-    </table>
+    <div id="schedule-content"></div>
+    <script type="application/json" id="schedule-cipher">{"salt":"kX+uw/1mOpLPacg1m59wkQ==","iv":"aYRUQnjk5JRypJ96","data":"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","iter":100000}</script>
   </div>
 
   <!-- ── 3. 근무일지 양식 ── -->
@@ -760,119 +653,97 @@
     <h2 class="section-title">근무일지 양식</h2>
     <p class="section-desc">매 근무일 작성 후 작가 확인 서명을 받아 보관하세요.</p>
 
-    <!-- 기본 정보 -->
-    <div class="worker-info-grid" style="margin-bottom:24px;">
-      <div class="info-field">
-        <label>성명</label>
-        <input type="text" placeholder="이름을 입력하세요">
-      </div>
-      <div class="info-field">
-        <label>연락처</label>
-        <input type="text" placeholder="010-0000-0000">
-      </div>
-      <div class="info-field">
-        <label>소속</label>
-        <div class="fixed-value">니닉크라프트 (Ninnik Kraft)</div>
-      </div>
-      <div class="info-field">
-        <label>시급</label>
-        <div class="fixed-value">10,320원 (2026년 법정최저임금)</div>
-      </div>
-      <div class="info-field">
-        <label>목표 근무시간</label>
-        <div class="fixed-value">115시간 (예상)</div>
-      </div>
-      <div class="info-field">
-        <label>예상 총 급여</label>
-        <div class="fixed-value">1,186,800원</div>
-      </div>
+    <div id="log-gate" class="lock-gate">
+      <input type="password" id="log-pw" class="lock-input" placeholder="비밀번호" autocomplete="off">
+      <button type="button" class="print-btn lock-btn" id="log-unlock">🔓 열기</button>
+      <span id="log-msg" class="lock-msg"></span>
     </div>
-
-    <!-- 근무 기록 테이블 -->
-    <table class="log-table">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>날짜</th>
-          <th>요일</th>
-          <th>구분</th>
-          <th>출근</th>
-          <th>퇴근</th>
-          <th>시간(h)</th>
-          <th>일급(원)</th>
-          <th style="min-width:200px;">주요 업무 내용</th>
-          <th style="min-width:120px;">특이사항</th>
-          <th>확인(서명)</th>
-        </tr>
-      </thead>
-      <tbody id="log-body">
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="6" class="total-label">합 계</td>
-          <td id="total-h" class="total-amount" style="text-align:center;">0h</td>
-          <td id="total-pay" class="total-amount" style="text-align:right;">0원</td>
-          <td colspan="3"></td>
-        </tr>
-      </tfoot>
-    </table>
+    <div id="log-content"></div>
+    <script type="application/json" id="log-cipher">{"salt":"QpyZ3wwLT4v1AUmH+ihCgg==","iv":"m+xkbpUVOOc//Q/i","data":"jesIsbahC7p7CKGE5c+Vas054kcyawzkKYlzcvVhQGM/a3LVx4XRIr9cCdaAqMAWmk78iSWhi37otkVFznalokNrwKfvpTOJr3a5S6XRLLshPyp8iIzuMqd+cQBykHJe2YFlDmhHmCvLicvlltT50GgqN42kRy73tiiG73qRIu7vBORRiIrbAX1jK5h2uxcd2PkB5vGoziZBogjazjOdXg0+4aLubVlFLLhkYoLeaGcsZcTv5bp4KoNp6iIusNdqfT1wa4oiIfS7epaJ11A+Qgo6cTTIWof7cdHgCJjpYCYqFKvml0UfLsRQ9uKGIOF2T0onT3BlYGGOkDqDdsVYoM4UHFp3dPKgyRQCrUoGxgib2Y8MAHJPmPPjP33CZduClZ7aI/QcnvB5lUduoQ0ZmkgBR8/BhoE0BIrDHY40QSPPK6KuaQPAip322YJv8YG65aL0UJLqnghOZk+S6+KYamEIIfZse/qkH9mS+yV0lrduuuyXRUCCBLDe0XNlxthp7ME6wSRV6KbXf3blSsAH4RvNVlQs9WslMMFSx1p343hpqte9iXyVEDH9MRyovTcQjnRYSV/AiKkG67U9OOIqBkhNk0a3IIfcmzU4jWabnDsxaskIoM9E4XGGwBB28pFDE9LB50y51/DOs7iuMTie6RsyoX66rlkW7DX73xsJK9vL7G5Dpv7uGCWCCPBNmAxM8SleFyGlbRdzpEmx5KCfIv59tFd4FjLI2Tz9ZxVpCewhBQv6uRgwcABzfReGZb5NwleqK8rOnCX/F6LcjsWedwapvlF2i9tFndwWnJU2D4WrWb82qsPSQ70sb3XQSgpz1gV1w4e8/wXgWQ1qxdWK42LAD4G4b1NVbGEHcWRjAOy5iL9lgtta5jzIuVoFdloVXZ7ENyhbr7379cehZQkRbYPBl1h8993x70dgxapZE2WQ7foH55sNA2HO4+SRVeu7CK/XrFt4B4LmYyL2jurN0jboMa7gYRChT5jWdOjE25yI5+z5QJ1r96e4mTHJIFdDCOVLlIa4qhR4Fd2xDJVwA79d7FVOupmQRjopG4GnkWV9rlIGGt4uerBeNJ+gbAUsXakp7m0KUQznm2LnqyG5r9j0Uz/gagdue+6tZp5diaNITRFK6kWMZUVs2ViNB7tJNQs1Fh05pyRWBA9JhE1tLgyWenQyR4RWVU4pn4sKGItxDDLHwPkdNwu74GOyobWrqzUPQ2yB2abgNWnWGDcZV0H2BrGsRbN3TSPTZhSV+ci32h3f0f216z7sXjQj9SBIDNQ4J6crVFFVKRhbc10zO/GaRVJ9P+uAT2ukvRe0k3OG5X+vahsE6cCOONHQZk3en7SMRkRCpfZRXOSKtHGkciKrC9BWtHmmFVylWPO+By1q4L2AHHwUo/DKf2plF0oxB7qWJDpEo16QHwuHvNOWgykFRLnKXxJYFhLbKncFgxo0oxaHPcxx3YszA29ZpvyD8AcNLUsXS5ii56Amg7N5G0Hl98JXmPq1u7DLhN6y5ffkif3Bo5tcLH8pJHYCH5Nrr5sD2RSbd0B9H396+MZiRGuQcwg7QZF0NGFMlhOta8yZobdFwQ5dBxQvGrX2RozP2kdQj7J/izWcX2OoAHT4o+qeBX3xTDMwvIeJEdnbvOw/qzqwzVJw+5ICHZxhOHQp/C2L0oOw/MmzqyA/jP7hWeoRpfkz3IKjdvIBfEe4uO1gwazg78r9FvLnL68XSJlSo8gTY/G+1bdLibGaJng5d52bfzRo8zGoGcxzi7gIS0ZqEZn1Ld2WavHWb8x2kli0HKzHFLGyRjY4K7Rd5m0M6PBLfDGHJg4jfxsI75eEavP3GPdSXaLvgGLoIauX6V1OPl0v4nls9KLP2Q==","iter":100000}</script>
   </div>
 
 </main>
 
-<!-- 인쇄 / 저장 -->
-<div class="print-bar">
-  <span class="print-note">근무일지는 매월 취합하여 보관 · 인쇄 후 서명란에 직접 서명</span>
-  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
-</div>
-
-<!-- 푸터 -->
-<footer class="page-footer">
-  <span>울림통-변주 2026 · Ninnik Kraft</span>
-  <span>보조 작업자 근무일지 · 2026년 시즌</span>
-</footer>
-
 <script>
-  // 근무일지 행 생성 (35행)
-  const body = document.getElementById('log-body');
-  for (let i = 1; i <= 35; i++) {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td class="td-idx">${i}</td>
-      <td><input type="text" placeholder="00. 00."></td>
-      <td><input type="text" placeholder="토" style="width:40px;"></td>
-      <td><input type="text" placeholder="창작"></td>
-      <td><input type="text" placeholder="09:00" style="width:60px;"></td>
-      <td><input type="text" placeholder="15:00" style="width:60px;"></td>
-      <td><input type="number" min="0" max="24" step="0.5" placeholder="6" class="hour-input" data-row="${i}" style="width:50px;"></td>
-      <td class="pay-cell" id="pay-${i}" style="text-align:right; padding:8px 10px; font-size:12.5px; color:var(--text-dim);">—</td>
-      <td class="td-content"><input type="text" placeholder="업무 내용 기재"></td>
-      <td class="td-content"><input type="text" placeholder="특이사항"></td>
-      <td><input type="text" placeholder="서명"></td>
-    `;
-    body.appendChild(tr);
+  function relock(prefix) {
+    var c = document.getElementById(prefix + '-content');
+    var g = document.getElementById(prefix + '-gate');
+    var p = document.getElementById(prefix + '-pw');
+    var m = document.getElementById(prefix + '-msg');
+    if (c) c.innerHTML = '';
+    if (g) g.style.display = '';
+    if (p) p.value = '';
+    if (m) m.textContent = '';
   }
 
-  // 시간 입력 시 일급·합계 자동 계산
-  const HOURLY = 10320;
-  document.addEventListener('input', e => {
-    if (!e.target.classList.contains('hour-input')) return;
-    const row = e.target.dataset.row;
-    const h = parseFloat(e.target.value) || 0;
-    const pay = Math.round(h * HOURLY);
-    document.getElementById(`pay-${row}`).textContent = pay > 0 ? pay.toLocaleString() + '원' : '—';
+  function switchSection(id, el) {
+    document.querySelectorAll('main.content-wrap > .section').forEach(function (s) { s.classList.toggle('active', s.id === id); });
+    document.querySelectorAll('.page-nav-inner a').forEach(function (a) { a.classList.remove('active'); });
+    el.classList.add('active');
+    window.scrollTo({ top: 0 });
+    relock('schedule');
+    relock('log');
+  }
 
-    // 합계
-    let totalH = 0, totalPay = 0;
-    document.querySelectorAll('.hour-input').forEach(inp => {
-      const v = parseFloat(inp.value) || 0;
-      totalH += v;
-      totalPay += Math.round(v * HOURLY);
-    });
-    document.getElementById('total-h').textContent = totalH + 'h';
-    document.getElementById('total-pay').textContent = totalPay.toLocaleString() + '원';
+  function initLogRows() {
+    var body = document.getElementById('log-body');
+    if (!body || body.children.length) return;
+    for (var i = 1; i <= 35; i++) {
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td class="td-idx">' + i + '</td>' +
+        '<td><input type="text" value="  .       .  " style="text-align:center;"></td>' +
+        '<td><input type="text" style="width:40px;"></td>' +
+        '<td><input type="text" value="  :        ~        :        /        :        ~        :  " style="text-align:center; min-width:260px;"></td>' +
+        '<td><input type="number" min="0" max="24" step="0.5" class="hour-input" data-row="' + i + '" style="width:58px; text-align:left;"></td>' +
+        '<td class="td-content"><input type="text"></td>' +
+        '<td><input type="text"></td>';
+      body.appendChild(tr);
+    }
+  }
+
+  document.addEventListener('input', function (e) {
+    if (!e.target.classList.contains('hour-input')) return;
+    var totalH = 0;
+    document.querySelectorAll('.hour-input').forEach(function (inp) { totalH += parseFloat(inp.value) || 0; });
+    var th = document.getElementById('total-h');
+    if (th) th.textContent = totalH + 'h';
   });
+
+  function setupLock(prefix, afterInject) {
+    var gate = document.getElementById(prefix + '-gate');
+    var pw = document.getElementById(prefix + '-pw');
+    var btn = document.getElementById(prefix + '-unlock');
+    var msg = document.getElementById(prefix + '-msg');
+    var target = document.getElementById(prefix + '-content');
+    var node = document.getElementById(prefix + '-cipher');
+    if (!gate || !pw || !btn || !node) return;
+    var cfg = JSON.parse(node.textContent);
+    function b64(s) { return Uint8Array.from(atob(s), function (c) { return c.charCodeAt(0); }); }
+    async function unlock() {
+      msg.textContent = '확인 중…';
+      try {
+        var enc = new TextEncoder();
+        var keyMat = await crypto.subtle.importKey('raw', enc.encode(pw.value), 'PBKDF2', false, ['deriveKey']);
+        var key = await crypto.subtle.deriveKey(
+          { name: 'PBKDF2', salt: b64(cfg.salt), iterations: cfg.iter, hash: 'SHA-256' },
+          keyMat, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+        var plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(cfg.iv) }, key, b64(cfg.data));
+        target.innerHTML = new TextDecoder().decode(plain);
+        gate.style.display = 'none';
+        msg.textContent = '';
+        if (afterInject) afterInject();
+      } catch (e) {
+        msg.textContent = '비밀번호가 올바르지 않습니다.';
+      }
+    }
+    btn.addEventListener('click', unlock);
+    pw.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); unlock(); } });
+  }
+  setupLock('schedule');
+  setupLock('log', initLogRows);
 </script>
 
 </body>
 </html>
+                                                         

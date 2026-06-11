@@ -12,7 +12,7 @@
     --accent:#c03828; --accent2:#8c2418; --text:#261410; --text-dim:#7a4c3c; --white:#f6ede6; --salmon:#ffb8b0;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
+  html { scroll-behavior:smooth; overflow-y:scroll; scrollbar-gutter:stable; }
   body { background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; font-size:15px; line-height:1.75; }
 
   /* ── 상단 헤더 (새먼 배너) ── */
@@ -60,12 +60,14 @@
   .session-badge { font-size:11px; font-weight:700; background:var(--accent); color:var(--white); padding:3px 10px; border-radius:2px; letter-spacing:0.06em; text-align:center; }
   .session-title { font-size:14px; font-weight:500; color:var(--text); }
   .session-toggle { font-size:18px; color:var(--text-dim); transition:transform 0.2s; }
+  .session-header.open { background:var(--bg3); }
+  .session-header.open:hover { background:var(--bg3); }
   .session-body { display:none; padding:0 24px 20px; border-top:1px solid var(--line); }
-  .session-body.open { display:block; }
+  .session-body.open { display:block; background:var(--bg); border-top:2px solid var(--accent); padding-top:18px; }
   .session-toggle.open { transform:rotate(180deg); }
   .record-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px; }
   .record-field label { font-size:11px; letter-spacing:0.15em; color:var(--accent2); text-transform:uppercase; font-weight:600; display:block; margin-bottom:6px; }
-  .record-field p { font-size:13px; color:var(--text-dim); background:var(--bg3); border-radius:2px; padding:10px 14px; min-height:36px; line-height:1.7; }
+  .record-field p { font-size:13px; color:var(--text-dim); background:transparent; border-bottom:1px solid var(--line); padding:8px 2px; min-height:36px; line-height:1.7; }
   .record-field.full { grid-column:1/-1; }
 
   /* ── 사진 (썸네일 + 드라이브 링크) ── */
@@ -80,7 +82,7 @@
   /* ── 오늘의 대화 ── */
   .dialogue-block { margin-top:16px; }
   .dialogue-label { font-size:11px; letter-spacing:0.15em; color:var(--accent2); text-transform:uppercase; font-weight:600; margin-bottom:8px; }
-  .quote-block { border-left:3px solid var(--line); padding:12px 18px; margin-bottom:8px; font-size:14px; color:var(--text-dim); font-style:italic; line-height:1.75; }
+  .quote-block { padding:12px 0; margin-bottom:8px; font-size:14px; color:var(--text-dim); font-style:italic; line-height:1.75; }
   .quote-block:last-child { margin-bottom:0; }
   .quote-block .speaker { display:block; font-size:11px; letter-spacing:0.1em; color:var(--accent); font-style:normal; font-weight:600; margin-bottom:4px; text-transform:uppercase; }
 
@@ -471,6 +473,7 @@ function toggleSession(header) {
   var toggle = header.querySelector('.session-toggle');
   body.classList.toggle('open');
   toggle.classList.toggle('open');
+  header.classList.toggle('open');
 }
 </script>
 
