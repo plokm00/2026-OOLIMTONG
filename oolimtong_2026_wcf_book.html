@@ -12,7 +12,7 @@
   body { background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; font-size:15px; line-height:1.75; padding-top:56px; }
   #nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(246,237,230,0.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; padding:0 40px; height:56px; }
   .nav-left { display:flex; align-items:baseline; gap:14px; min-width:0; }
-  .nav-logo { font-size:13px; letter-spacing:0.2em; color:var(--accent); font-weight:600; text-transform:uppercase; white-space:nowrap; }
+  .nav-logo { font-size:13px; letter-spacing:0.25em; color:var(--accent); font-weight:500; text-transform:uppercase; white-space:nowrap; }
   .nav-title { font-family:'IBM Plex Sans KR',sans-serif; font-size:16px; font-weight:700; color:var(--text); letter-spacing:0.02em; white-space:nowrap; }
   .nav-right { display:flex; align-items:center; gap:14px; }
   .nav-updated { font-size:12px; color:var(--accent2); background:var(--salmon); padding:4px 12px; border-radius:2px; letter-spacing:0.04em; white-space:nowrap; }
@@ -73,12 +73,12 @@
   .cal-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
   .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; min-width:480px; }
   .cal-head { text-align:center; padding:6px 4px; background:var(--bg3); font-size:11px; letter-spacing:0.05em; color:var(--text-dim); font-weight:600; }
-  .cal-head.sat { color:#3a6ea5; }
+  .cal-head.sat { color:var(--accent); }
   .cal-head.sun { color:var(--accent); }
   .cal-cell { background:var(--bg2); border-top:2px solid var(--line); padding:5px 6px 8px; min-height:56px; }
   .cal-cell.weekend { background:var(--bg); }
   .cal-cell .d { font-size:11px; color:var(--text-dim); margin-bottom:2px; }
-  .cal-cell.sun .d { color:var(--accent); }
+  .cal-cell.weekend .d { color:var(--accent); }
   .cal-chip { background:var(--salmon); border-radius:2px; padding:3px 6px; margin-top:3px; }
   .cal-chip .t { font-size:10.5px; font-weight:700; color:var(--accent2); white-space:nowrap; }
   .cal-chip .w { font-size:10px; color:var(--text); line-height:1.4; }
@@ -98,19 +98,20 @@
   </span>
   <span class="nav-right">
     <span class="nav-updated">최종 업데이트 · 2026. 6. 11.</span>
-    <a href="OT_울림통변주_2026.html" class="nav-back">← 메인으로</a>
+    <a href="oolimtong_2026_wcf.html" class="nav-back">← 메인으로</a>
   </span>
 </nav>
 
 <section id="guide">
-  <h2>운영 안내</h2>
-  <div class="notice">
-    <p>
-      김아영 작가와 시민작가 17명이 함께 만드는 울림통 신작 3점 제작에 직접 참여합니다.<br>
-      울림통 제작 진행도로 인해 체험이 한 달 늦춰진 점 양해를 구합니다.<br>
-      <b style="color:var(--accent2);">6/11(목) 운영 시작 · 7월 초 종료 예정</b>
-    </p>
-  </div>
+  <h2>체험 운영 안내</h2>
+  <p style="font-size:14px; color:var(--text-dim); line-height:1.95; margin-bottom:14px;">
+    김아영 작가와 시민작가 17명이 함께 만드는 대형 울림통 신작 3점 제작에 직접 참여합니다.<br>
+    울림통 제작 일정에 맞춰 체험 시작이 한 달가량 늦춰졌습니다.<br>
+    <b style="color:var(--accent2);">6/11(목) 운영 시작 · 7월 초 종료 예정</b>
+  </p>
+  <p style="font-size:14px; color:var(--text-dim); line-height:1.95; margin-bottom:24px;">
+    <b>✍️ 신청 방법</b> — 희망일자와 참여인원을 회신하여 주시면, 순차적으로 전화드려 일정을 조율합니다.
+  </p>
   <div class="info-grid">
     <div class="info-cell">
       <p class="info-type">평일 체험 · 실내</p>
@@ -136,10 +137,6 @@
       </p>
     </div>
   </div>
-  <div class="apply-box">
-    <h3>✍️ 신청 방법</h3>
-    <p>희망일자와 참여인원을 회신하여 주시면, 순차적으로 전화드려 일정을 조율합니다.</p>
-  </div>
 </section>
 
 <section id="reservations">
@@ -161,7 +158,7 @@
         <div class="cal-cell"><div class="d">6/11</div><div class="cal-start">운영 시작</div></div>
         <div class="cal-cell"><div class="d">6/12</div></div>
         <div class="cal-cell weekend"><div class="d">6/13</div></div>
-        <div class="cal-cell weekend sun"><div class="d">6/14</div><div class="cal-chip"><div class="t">11:00</div><div class="w">개인 · 고리</div></div></div>
+        <div class="cal-cell weekend sun"><div class="d">6/14</div><div class="cal-chip"><div class="t">11:00</div><div class="w">개인</div></div></div>
         <div class="cal-cell"><div class="d">6/15</div></div>
         <div class="cal-cell"><div class="d">6/16</div></div>
         <div class="cal-cell"><div class="d">6/17</div></div>
@@ -179,16 +176,11 @@
         <div class="cal-cell"><div class="d">6/29</div></div>
         <div class="cal-cell"><div class="d">6/30</div></div>
         <div class="cal-cell"><div class="d">7/1</div></div>
-        <div class="cal-cell"><div class="d">7/2</div><div class="cal-end">종료 예정</div></div>
+        <div class="cal-cell"><div class="d">7/2</div></div>
         <div class="cal-cell"><div class="d">7/3</div></div>
         <div class="cal-cell weekend"><div class="d">7/4</div></div>
-        <div class="cal-cell weekend sun"><div class="d">7/5</div></div>
+        <div class="cal-cell weekend sun"><div class="d">7/5</div><div class="cal-end">종료 예정</div></div>
       </div>
-    </div>
-    <div class="cal-legend">
-      <span><i style="background:var(--salmon);"></i>예약 확정</span>
-      <span><i style="background:#9FE1CB;"></i>운영 시작</span>
-      <span><i style="background:var(--bg3);"></i>종료 예정</span>
     </div>
   </div>
   <div class="res-list">
@@ -224,4 +216,12 @@
     <div class="res-card">
       <div class="res-when">
         <span class="res-date">6/24 (수)</span>
-        <span clas
+        <span class="res-time">10:00</span>
+      </div>
+      <div class="res-body">
+        <div class="res-line1">
+          <span class="res-tag group">단체</span>
+          <span class="res-place">니닉크라프트 실내 · 고리 작업 참여</span>
+        </div>
+        <span class="res-people">코아루어린이집 · 인원 미정</span>
+        <span class="res-note">※ 어린
