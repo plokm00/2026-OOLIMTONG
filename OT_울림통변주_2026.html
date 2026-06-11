@@ -818,6 +818,46 @@
     color: #f6ede6 !important;
   }
 
+  /* 작업일지 드롭다운 (핑크 박스) */
+  .worklog-dropdown {
+    position: relative;
+    display: inline-flex;
+  }
+  .worklog-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+    background: #ffb8b0;
+    border-radius: 6px;
+    box-shadow: 0 12px 30px rgba(38, 20, 16, 0.28);
+    z-index: 200;
+  }
+  .worklog-menu.open { display: flex; }
+  .worklog-menu a {
+    display: block;
+    padding: 8px 18px;
+    background: var(--bg);
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--accent) !important;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-align: center;
+    transition: background 0.2s, color 0.2s;
+  }
+  .worklog-menu a:hover {
+    background: var(--accent) !important;
+    color: #f6ede6 !important;
+  }
+
   /* section padding 보정 (고정 nav 높이) */
   section {
     scroll-margin-top: 56px;
@@ -956,7 +996,14 @@
     <a href="#curriculum">커리큘럼</a>
     <a href="#minutes">OT 회의록</a>
     <a href="#gallery">현장 기록</a>
-    <a href="#worklogs" class="nav-manual-btn">작업일지 ↗</a>
+    <span class="worklog-dropdown">
+      <a href="#worklogs" id="worklog-open-btn" class="nav-manual-btn" aria-haspopup="true" aria-expanded="false">작업일지 ↗</a>
+      <div id="worklog-menu" class="worklog-menu" role="menu">
+        <a href="작업일지_네모.html" target="_blank" role="menuitem">네모 작업일지 ↗</a>
+        <a href="작업일지_고리.html" target="_blank" role="menuitem">고리 작업일지 ↗</a>
+        <a href="작업일지_미로.html" target="_blank" role="menuitem">미로 작업일지 ↗</a>
+      </div>
+    </span>
     <a href="매뉴얼.html" target="_blank" class="nav-manual-btn">울림통 매뉴얼 ↗</a>
   </div>
 </nav>
@@ -1456,21 +1503,28 @@
     ※ 일정은 참여자 협의에 따라 조정될 수 있습니다.
   </p>
 
-  <div id="worklogs" style="margin-top:36px;scroll-margin-top:80px;align-self:flex-start;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch;">
-    <div class="overview-card" style="background:#ffb8b0;padding:18px 40px;">
+  <div id="worklogs" class="overview-cards" style="margin-top:36px;scroll-margin-top:80px;gap:16px;">
+    <div class="overview-card" style="background:#ffb8b0;padding:18px 28px;">
       <h4 style="margin-bottom:4px;">팀별 작업일지</h4>
       <p style="margin-bottom:14px;">각 팀의 회차별 작업 기록을 확인할 수 있습니다.</p>
-      <div style="display:flex;gap:10px;flex-wrap:nowrap;">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
         <a href="작업일지_네모.html" target="_blank" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">네모 작업일지 ↗</a>
         <a href="작업일지_고리.html" target="_blank" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">고리 작업일지 ↗</a>
         <a href="작업일지_미로.html" target="_blank" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">미로 작업일지 ↗</a>
       </div>
     </div>
-    <div class="overview-card" style="background:#ffb8b0;padding:18px 40px;">
+    <div class="overview-card" style="background:#ffb8b0;padding:18px 28px;">
       <h4 style="margin-bottom:4px;">울림통 매뉴얼</h4>
       <p style="margin-bottom:14px;">제작·운영 전 과정의 상세 지침은 매뉴얼에서 확인하십시오.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
         <a href="매뉴얼.html" target="_blank" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">울림통 매뉴얼 ↗</a>
+      </div>
+    </div>
+    <div class="overview-card" style="background:#ffb8b0;padding:18px 28px;">
+      <h4 style="margin-bottom:4px;">일반 자유체험</h4>
+      <p style="margin-bottom:14px;">자유체험 회차별 예약 현황을 확인할 수 있습니다.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="예약현황.html" target="_blank" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">예약 현황 ↗</a>
       </div>
     </div>
   </div>
@@ -1651,25 +1705,23 @@
 </section>
 
 
-<!-- ── 자료 모달 ── -->
-<div id="material-modal" class="modal-overlay" role="dialog" aria-modal="true">
-  <div class="modal-box">
-    <div class="modal-header">
-      <h3 id="modal-title">자료</h3>
-      <button class="modal-close" id="modal-close-btn" aria-label="닫기">✕</button>
-    </div>
-    <div class="modal-body">
-      <iframe id="modal-iframe" src="" title="자료 미리보기"></iframe>
-    </div>
-    <div class="modal-footer">
-      <span class="modal-footer-note">PDF가 보이지 않으면 아래 버튼으로 다운로드하세요.</span>
-      <a id="modal-download-btn" href="#" download class="download-btn">⬇ 다운로드</a>
-    </div>
-  </div>
-</div>
-
 <script>
-  // ── 자료 모달 동작 ──
-  const modal      = document.getElementById('material-modal');
-  const modalTitle = document.getElementById('modal-title');
-  const modalIframe= document.getElementByI
+(function () {
+  var btn = document.getElementById('worklog-open-btn');
+  var menu = document.getElementById('worklog-menu');
+  if (!btn || !menu) return;
+  function openMenu() { menu.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+  function closeMenu() { menu.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
+    menu.classList.contains('open') ? closeMenu() : openMenu();
+  });
+  document.addEventListener('click', function (e) {
+    if (!menu.contains(e.target) && e.target !== btn) closeMenu();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+})();
+</script>
+
+</body>
+</html>

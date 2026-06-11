@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일반 자유체험 — 예약 현황 | 울림통-변주 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+  :root { --bg:#f6ede6; --bg2:#eee0d6; --bg3:#e4d0c4; --line:#ceb0a0; --accent:#c03828; --accent2:#8c2418; --text:#261410; --text-dim:#7a4c3c; --white:#f6ede6; --salmon:#ffb8b0; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; font-size:15px; line-height:1.75; padding-top:56px; }
+  #nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(246,237,230,0.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; padding:0 40px; height:56px; }
+  .nav-left { display:flex; align-items:baseline; gap:14px; min-width:0; }
+  .nav-logo { font-size:13px; letter-spacing:0.2em; color:var(--accent); font-weight:600; text-transform:uppercase; white-space:nowrap; }
+  .nav-title { font-family:'IBM Plex Sans KR',sans-serif; font-size:16px; font-weight:700; color:var(--text); letter-spacing:0.02em; white-space:nowrap; }
+  .nav-right { display:flex; align-items:center; gap:14px; }
+  .nav-updated { font-size:12px; color:var(--accent2); background:var(--salmon); padding:4px 12px; border-radius:2px; letter-spacing:0.04em; white-space:nowrap; }
+  .nav-back { font-size:12px; color:var(--text-dim); text-decoration:none; letter-spacing:0.08em; border:1px solid var(--line); padding:5px 14px; border-radius:2px; transition:background 0.2s; white-space:nowrap; }
+  .nav-back:hover { background:var(--bg2); }
+  section { padding:64px 60px; border-bottom:1px solid var(--line); }
+  h2 { font-family:'IBM Plex Sans KR',sans-serif; font-size:clamp(22px,3vw,32px); font-weight:700; color:var(--text); margin-bottom:28px; border-left:3px solid var(--accent); padding-left:18px; }
+  #cover { background:var(--bg); min-height:36vh; display:flex; flex-direction:column; justify-content:center; padding:80px 60px; }
+  .cover-tag { font-size:11px; letter-spacing:0.4em; color:var(--accent); text-transform:uppercase; font-weight:600; margin-bottom:20px; }
+  .cover-title { font-family:'IBM Plex Sans KR',sans-serif; font-size:clamp(36px,5.5vw,68px); font-weight:900; color:var(--text); line-height:1.1; margin-bottom:16px; }
+  .cover-divider { width:40px; height:2px; background:var(--accent); margin:24px 0; }
+  .cover-sub { font-size:15px; color:var(--text-dim); letter-spacing:0.04em; }
+  .updated { align-self:flex-start; display:inline-block; margin-top:18px; font-size:12px; color:var(--accent2); background:var(--salmon); padding:5px 14px; border-radius:2px; letter-spacing:0.04em; }
+
+  /* 운영 안내 */
+  .notice { background:var(--bg2); border-radius:4px; padding:28px 32px; margin-bottom:8px; max-width:50%; }
+  .notice p { font-size:14px; color:var(--text-dim); line-height:1.95; }
+  .info-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:8px; }
+  .info-cell { background:var(--bg2); padding:22px 26px; }
+  .info-type { font-size:11px; letter-spacing:0.2em; color:var(--accent); text-transform:uppercase; font-weight:600; margin-bottom:10px; }
+  .info-time { font-size:17px; font-weight:700; color:var(--text); font-family:'IBM Plex Sans KR',sans-serif; margin-bottom:10px; }
+  .info-detail { font-size:13px; color:var(--text-dim); line-height:1.85; }
+  .weekend-list { list-style:none; margin:6px 0 10px; }
+  .weekend-list li { font-size:13.5px; color:var(--text); padding:4px 0; border-bottom:1px dashed var(--line); }
+  .weekend-list li:last-child { border-bottom:none; }
+  .weekend-list b { color:var(--accent2); }
+
+  /* 예약 현황 */
+  .res-summary { font-size:14px; color:var(--text-dim); margin-bottom:22px; }
+  .res-summary strong { color:var(--accent); font-size:17px; }
+  .res-list { display:flex; flex-direction:column; gap:14px; max-width:600px; }
+  .res-card { background:var(--salmon); border-radius:6px; padding:22px 26px; display:grid; grid-template-columns:160px 1fr; gap:20px; align-items:start; }
+  .res-when { display:flex; flex-direction:column; gap:4px; }
+  .res-date { font-family:'IBM Plex Sans KR',sans-serif; font-size:18px; font-weight:700; color:var(--text); }
+  .res-time { font-size:14px; color:var(--accent2); font-weight:600; }
+  .res-body { display:flex; flex-direction:column; gap:8px; }
+  .res-line1 { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .res-tag { font-size:11px; font-weight:700; color:var(--white); background:var(--accent); padding:3px 11px; border-radius:2px; letter-spacing:0.06em; }
+  .res-tag.group { background:var(--accent2); }
+  .res-place { font-size:13px; color:var(--text-dim); }
+  .res-people { font-size:15px; color:var(--text); font-weight:500; background:var(--bg); border-radius:3px; padding:8px 14px; display:inline-block; }
+  .res-note { font-size:12.5px; color:var(--accent2); }
+
+  .apply-box { background:var(--bg2); border-radius:4px; padding:24px 30px; margin-top:24px; max-width:50%; }
+  .apply-box h3 { font-family:'IBM Plex Sans KR',sans-serif; font-size:15px; font-weight:600; color:var(--text); margin-bottom:8px; }
+  .apply-box p { font-size:13.5px; color:var(--text-dim); line-height:1.9; }
+
+  @media(max-width:700px) {
+    section { padding:48px 20px; } #nav { padding:0 20px; }
+    .nav-logo, .nav-updated { display:none; }
+    .info-grid { grid-template-columns:1fr; }
+    .res-card { grid-template-columns:1fr; gap:12px; }
+    .notice { padding:22px 20px; max-width:100%; } .apply-box { padding:20px 20px; max-width:100%; }
+  }
+
+  /* 예약 달력 */
+  .cal-section { max-width:600px; margin-bottom:30px; }
+  .cal-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; min-width:480px; }
+  .cal-head { text-align:center; padding:6px 4px; background:var(--bg3); font-size:11px; letter-spacing:0.05em; color:var(--text-dim); font-weight:600; }
+  .cal-head.sat { color:#3a6ea5; }
+  .cal-head.sun { color:var(--accent); }
+  .cal-cell { background:var(--bg2); border-top:2px solid var(--line); padding:5px 6px 8px; min-height:56px; }
+  .cal-cell.weekend { background:var(--bg); }
+  .cal-cell .d { font-size:11px; color:var(--text-dim); margin-bottom:2px; }
+  .cal-cell.sun .d { color:var(--accent); }
+  .cal-chip { background:var(--salmon); border-radius:2px; padding:3px 6px; margin-top:3px; }
+  .cal-chip .t { font-size:10.5px; font-weight:700; color:var(--accent2); white-space:nowrap; }
+  .cal-chip .w { font-size:10px; color:var(--text); line-height:1.4; }
+  .cal-start { display:inline-block; background:#9FE1CB; border-radius:2px; padding:2px 6px; margin-top:3px; font-size:10px; font-weight:600; color:#0F6E56; white-space:nowrap; }
+  .cal-end { display:inline-block; background:var(--bg3); border-radius:2px; padding:2px 6px; margin-top:3px; font-size:10px; color:var(--text-dim); white-space:nowrap; }
+  .cal-legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:12px; font-size:11.5px; color:var(--text-dim); }
+  .cal-legend span { display:inline-flex; align-items:center; gap:5px; }
+  .cal-legend i { width:11px; height:11px; border-radius:2px; display:inline-block; }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <span class="nav-left">
+    <span class="nav-logo">일반 자유체험 — 울림통-변주 2026</span>
+    <span class="nav-title">예약 현황</span>
+  </span>
+  <span class="nav-right">
+    <span class="nav-updated">최종 업데이트 · 2026. 6. 11.</span>
+    <a href="OT_울림통변주_2026.html" class="nav-back">← 메인으로</a>
+  </span>
+</nav>
+
+<section id="guide">
+  <h2>운영 안내</h2>
+  <div class="notice">
+    <p>
+      김아영 작가와 시민작가 17명이 함께 만드는 울림통 신작 3점 제작에 직접 참여합니다.<br>
+      울림통 제작 진행도로 인해 체험이 한 달 늦춰진 점 양해를 구합니다.<br>
+      <b style="color:var(--accent2);">6/11(목) 운영 시작 · 7월 초 종료 예정</b>
+    </p>
+  </div>
+  <div class="info-grid">
+    <div class="info-cell">
+      <p class="info-type">평일 체험 · 실내</p>
+      <p class="info-time">목 · 금 10:00 – 14:00</p>
+      <p class="info-detail">
+        니닉크라프트 실내에서 진행됩니다.<br>
+        위 시간 내 희망 시간 회신 시 연령·인원 맞춰 배정 (그 외 시간 별도 문의).<br>
+        유·초등 약 40분 / 청소년·성인 1–2시간 소요<br>
+        회차당 최대 12명 (초과 시 그룹 분할 진행)
+      </p>
+    </div>
+    <div class="info-cell">
+      <p class="info-type">주말 체험 · 울림통별</p>
+      <ul class="weekend-list">
+        <li><b>네모</b> · 토요일 오후 3시 · 니닉크라프트 실내</li>
+        <li><b>고리</b> · 일요일 오전 11시 · 니닉크라프트 실내</li>
+        <li><b>미로</b> · 일요일 오후 3시 · 하나어린이집 야외</li>
+      </ul>
+      <p class="info-detail">
+        신청 시 참여 희망 울림통을 알려주세요.<br>
+        유·초등 약 40분 / 청소년·성인 1–2시간 소요<br>
+        회차당 6인 이내
+      </p>
+    </div>
+  </div>
+  <div class="apply-box">
+    <h3>✍️ 신청 방법</h3>
+    <p>희망일자와 참여인원을 회신하여 주시면, 순차적으로 전화드려 일정을 조율합니다.</p>
+  </div>
+</section>
+
+<section id="reservations">
+  <h2>예약 현황</h2>
+  <p class="res-summary">현재까지 접수된 예약 <strong>3</strong>건</p>
+  <div class="cal-section">
+    <div class="cal-wrap">
+      <div class="cal-grid">
+        <div class="cal-head">월</div>
+        <div class="cal-head">화</div>
+        <div class="cal-head">수</div>
+        <div class="cal-head">목</div>
+        <div class="cal-head">금</div>
+        <div class="cal-head sat">토</div>
+        <div class="cal-head sun">일</div>
+        <div class="cal-cell"><div class="d">6/8</div></div>
+        <div class="cal-cell"><div class="d">6/9</div></div>
+        <div class="cal-cell"><div class="d">6/10</div></div>
+        <div class="cal-cell"><div class="d">6/11</div><div class="cal-start">운영 시작</div></div>
+        <div class="cal-cell"><div class="d">6/12</div></div>
+        <div class="cal-cell weekend"><div class="d">6/13</div></div>
+        <div class="cal-cell weekend sun"><div class="d">6/14</div><div class="cal-chip"><div class="t">11:00</div><div class="w">개인 · 고리</div></div></div>
+        <div class="cal-cell"><div class="d">6/15</div></div>
+        <div class="cal-cell"><div class="d">6/16</div></div>
+        <div class="cal-cell"><div class="d">6/17</div></div>
+        <div class="cal-cell"><div class="d">6/18</div></div>
+        <div class="cal-cell"><div class="d">6/19</div></div>
+        <div class="cal-cell weekend"><div class="d">6/20</div></div>
+        <div class="cal-cell weekend sun"><div class="d">6/21</div></div>
+        <div class="cal-cell"><div class="d">6/22</div><div class="cal-chip"><div class="t">10:30</div><div class="w">단체 · 무실어린이집</div></div></div>
+        <div class="cal-cell"><div class="d">6/23</div></div>
+        <div class="cal-cell"><div class="d">6/24</div><div class="cal-chip"><div class="t">10:00</div><div class="w">단체 · 코아루어린이집</div></div></div>
+        <div class="cal-cell"><div class="d">6/25</div></div>
+        <div class="cal-cell"><div class="d">6/26</div></div>
+        <div class="cal-cell weekend"><div class="d">6/27</div></div>
+        <div class="cal-cell weekend sun"><div class="d">6/28</div></div>
+        <div class="cal-cell"><div class="d">6/29</div></div>
+        <div class="cal-cell"><div class="d">6/30</div></div>
+        <div class="cal-cell"><div class="d">7/1</div></div>
+        <div class="cal-cell"><div class="d">7/2</div><div class="cal-end">종료 예정</div></div>
+        <div class="cal-cell"><div class="d">7/3</div></div>
+        <div class="cal-cell weekend"><div class="d">7/4</div></div>
+        <div class="cal-cell weekend sun"><div class="d">7/5</div></div>
+      </div>
+    </div>
+    <div class="cal-legend">
+      <span><i style="background:var(--salmon);"></i>예약 확정</span>
+      <span><i style="background:#9FE1CB;"></i>운영 시작</span>
+      <span><i style="background:var(--bg3);"></i>종료 예정</span>
+    </div>
+  </div>
+  <div class="res-list">
+
+    <div class="res-card">
+      <div class="res-when">
+        <span class="res-date">6/14 (일)</span>
+        <span class="res-time">11:00</span>
+      </div>
+      <div class="res-body">
+        <div class="res-line1">
+          <span class="res-tag">개인</span>
+          <span class="res-place">니닉크라프트 실내 · 고리 작업 참여</span>
+        </div>
+        <span class="res-people">9세 1명 · 5세 1명 · 보호자 1명 &nbsp;|&nbsp; 총 3명</span>
+      </div>
+    </div>
+
+    <div class="res-card">
+      <div class="res-when">
+        <span class="res-date">6/22 (월)</span>
+        <span class="res-time">10:30</span>
+      </div>
+      <div class="res-body">
+        <div class="res-line1">
+          <span class="res-tag group">단체</span>
+          <span class="res-place">니닉크라프트 실내 · 고리 작업 참여</span>
+        </div>
+        <span class="res-people">무실어린이집 14명 · 인솔자 3명 &nbsp;|&nbsp; 총 17명</span>
+      </div>
+    </div>
+
+    <div class="res-card">
+      <div class="res-when">
+        <span class="res-date">6/24 (수)</span>
+        <span clas
