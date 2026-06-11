@@ -348,50 +348,77 @@
     color: var(--white);
   }
 
+  /* ── 태블릿 (820px 이하) ── */
+  @media (max-width: 820px) {
+    .page-header { padding: 40px 40px 32px; }
+    .content-wrap { padding: 48px 32px 80px; }
+    .drawing-guide { grid-template-columns: 1fr; }
+  }
+
+  /* ── 스마트폰 (640px 이하) ── */
   @media (max-width: 640px) {
     .page-header { padding: 36px 24px 28px; }
     .content-wrap { padding: 40px 20px 80px; }
     .drawing-guide { grid-template-columns: 1fr; }
-    .page-footer { padding: 24px; flex-direction: column; gap: 16px; text-align: center; }
     .tool-grid { grid-template-columns: repeat(2, 1fr); }
+    .sense-list { grid-template-columns: 1fr 1fr; }
+    .page-footer { padding: 24px; flex-direction: column; gap: 16px; text-align: center; }
   }
 
+  /* ── 소형 스마트폰 (480px 이하) ── */
   @media (max-width: 480px) {
     .page-header { padding: 28px 20px 24px; }
     .content-wrap { padding: 32px 16px 60px; }
-
     .section-title { font-size: 18px; padding-left: 12px; }
     .section-body { font-size: 14px; }
-
-    /* 일정 카드 */
     .schedule-grid { grid-template-columns: 1fr 1fr; }
     .schedule-card { padding: 18px 16px; }
     .schedule-item { font-size: 14px; }
-
-    /* 재료 테이블 가로 스크롤 */
-    .material-table {
-      display: block;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      white-space: nowrap;
-    }
-    .material-table thead th { white-space: nowrap; }
-    .material-table tbody td { white-space: normal; min-width: 80px; }
-    .material-table tbody td:first-child { white-space: nowrap; min-width: unset; }
-
-    /* 단계 리스트 */
-    .step-list li { gap: 14px; font-size: 14px; padding: 14px 0; }
-
-    /* 도구 그리드 */
+    .step-list li { gap: 12px; font-size: 14px; padding: 12px 0; }
     .tool-grid { grid-template-columns: 1fr 1fr; }
     .tool-item { font-size: 12px; padding: 10px; }
-
-    /* 감각 체크 */
     .sense-list { grid-template-columns: 1fr; }
-
     .tip-box, .warn-box { padding: 14px 18px; font-size: 13px; }
-
     .page-footer { padding: 20px; font-size: 11px; }
+
+    /* 재료 테이블 → 카드 변환 */
+    .material-table thead { display: none; }
+    .material-table,
+    .material-table tbody,
+    .material-table tr,
+    .material-table td { display: block; width: 100%; }
+    .material-table tr {
+      margin-bottom: 8px;
+      background: var(--bg2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .material-table tr:last-child { margin-bottom: 0; }
+    .material-table td { border-bottom: none; padding: 10px 16px; }
+    .material-table td:first-child {
+      background: var(--bg3);
+      width: 100%;
+      white-space: normal;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 8px 16px;
+    }
+    .material-table td:not(:first-child) {
+      font-size: 14px;
+      color: var(--text-dim);
+    }
+
+    /* drawing-card 내부 2열 그리드 → 1열 */
+    .drawing-card div[style*="grid-template-columns:1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+      gap: 0 !important;
+    }
+    /* 기타 인라인 2열 그리드 → 1열 */
+    div[style*="grid-template-columns:1fr 1fr"],
+    div[style*="grid-template-columns: 1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
   }
 </style>
 </head>
@@ -438,7 +465,7 @@
   <!-- 오늘의 재료와 도구 -->
   <div class="section">
     <p class="section-label">Materials &amp; Tools</p>
-    <h2 class="section-title">오늘 사용하는 재료와 도구</h2>
+    <h2 class="section-title">재료와 도구</h2>
     <div class="tool-grid">
       <div class="tool-item"><span class="tool-dot"></span>점토</div>
       <div class="tool-item"><span class="tool-dot"></span>연필 · 종이</div>

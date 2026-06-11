@@ -341,28 +341,53 @@
     align-items: center;
   }
 
+  /* ── 태블릿 (820px 이하) ── */
+  @media (max-width: 820px) {
+    .page-header { padding: 40px 40px 32px; }
+    .content-wrap { padding: 48px 32px 80px; }
+    .media-row.three { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── 스마트폰 (640px 이하) ── */
   @media (max-width: 640px) {
     .page-header { padding: 36px 24px 28px; }
     .content-wrap { padding: 40px 20px 80px; }
     .feedback-grid { grid-template-columns: 1fr; }
     .media-row.three { grid-template-columns: 1fr; }
-    .page-footer { padding: 24px; flex-direction: column; gap: 16px; text-align: center; }
     .tool-grid { grid-template-columns: repeat(2, 1fr); }
+    .page-footer { padding: 24px; flex-direction: column; gap: 16px; text-align: center; }
+    /* 4열 인라인 일정 그리드 → 2열 */
+    div[style*="grid-template-columns:repeat(4,1fr)"] {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+    /* span-2 카드 → 일반으로 */
+    .schedule-card[style*="grid-column"] {
+      grid-column: span 1 !important;
+    }
   }
 
+  /* ── 소형 스마트폰 (480px 이하) ── */
   @media (max-width: 480px) {
     .page-header { padding: 28px 20px 24px; }
     .content-wrap { padding: 32px 16px 60px; }
     .section-title { font-size: 18px; padding-left: 12px; }
     .section-body { font-size: 14px; }
-    .schedule-grid { grid-template-columns: 1fr 1fr; }
-    .schedule-card { padding: 18px 16px; }
+    .schedule-card { padding: 16px 14px; }
     .schedule-item { font-size: 14px; }
-    .step-list li { gap: 14px; font-size: 14px; padding: 14px 0; }
+    .step-list li { gap: 12px; font-size: 14px; padding: 12px 0; }
     .tool-grid { grid-template-columns: 1fr 1fr; }
     .tool-item { font-size: 12px; padding: 10px; }
     .tip-box, .warn-box { padding: 14px 18px; font-size: 13px; }
     .page-footer { padding: 20px; font-size: 11px; }
+    /* 4열 → 1열 */
+    div[style*="grid-template-columns:repeat(4,1fr)"] {
+      grid-template-columns: 1fr !important;
+    }
+    /* 2열 인라인 그리드 → 1열 */
+    div[style*="grid-template-columns:1fr 1fr"],
+    div[style*="grid-template-columns: 1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
   }
 </style>
 </head>
@@ -405,14 +430,14 @@
     </div>
   </div>
 
-  <!-- 오늘 사용하는 재료와 도구 -->
+  <!-- 재료와 도구 -->
   <div class="section">
     <p class="section-label">Materials &amp; Tools</p>
-    <h2 class="section-title">오늘 사용하는 재료와 도구</h2>
+    <h2 class="section-title">재료와 도구</h2>
     <div class="tool-grid">
       <div class="tool-item"><span class="tool-dot"></span>점토</div>
       <div class="tool-item"><span class="tool-dot"></span>흙자름줄</div>
-      <div class="tool-item"><span class="tool-dot"></span>물레</div>
+      <div class="tool-item"><span class="tool-dot"></span>손물레</div>
       <div class="tool-item"><span class="tool-dot"></span>천</div>
       <div class="tool-item"><span class="tool-dot"></span>스펀지</div>
       <div class="tool-item"><span class="tool-dot"></span>분무기</div>
@@ -428,7 +453,7 @@
 
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
       1회에 만든 드로잉과 마케트를 옆에 두고, 실제 타래 성형을 시작합니다.<br>
-      아직 형태가 바뀌어도 좋습니다. 오늘의 목표는 <strong>자신의 모뉴먼트 형태를 흙 위에서 구체화하기 시작하는 것</strong>입니다.    </p>
+      형태가 바뀌어도 좋습니다. 오늘의 목표는 <strong>자신의 모뉴먼트 형태를 흙 위에서 구체화하기 시작하는 것</strong>입니다.    </p>
 
     <ul style="font-size:15px;line-height:1.85;color:var(--text);list-style:none;margin-bottom:20px;">
       <li style="padding:6px 0 6px 16px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>반죽은 충분히 치댈수록 밀도가 균일해집니다. 기포가 남아있으면 건조·소성 과정에서 균열이 생길 수 있습니다.</li>
