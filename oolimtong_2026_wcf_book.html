@@ -8,19 +8,20 @@
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
   :root { --bg:#f6ede6; --bg2:#eee0d6; --bg3:#e4d0c4; --line:#ceb0a0; --accent:#c03828; --accent2:#8c2418; --text:#261410; --text-dim:#7a4c3c; --white:#f6ede6; --salmon:#ffb8b0; }
   * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; font-size:15px; line-height:1.75; padding-top:56px; }
-  #nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(246,237,230,0.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; padding:0 40px; height:56px; }
+  html { scroll-behavior:smooth; overflow-y:scroll; scrollbar-gutter:stable; }
+  body {
+ background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; font-size:15px; line-height:1.75; padding-top:56px; }
+  #nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(246,237,230,0.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; padding:0 max(40px, calc((100% - 860px) / 2)); height:56px; }
   .nav-left { display:flex; align-items:baseline; gap:14px; min-width:0; }
   .nav-logo { font-size:13px; letter-spacing:0.25em; color:var(--accent); font-weight:500; text-transform:uppercase; white-space:nowrap; }
   .nav-title { font-family:'IBM Plex Sans KR',sans-serif; font-size:16px; font-weight:700; color:var(--text); letter-spacing:0.02em; white-space:nowrap; }
   .nav-right { display:flex; align-items:center; gap:14px; }
   .nav-updated { font-size:12px; color:var(--accent2); background:var(--salmon); padding:4px 12px; border-radius:2px; letter-spacing:0.04em; white-space:nowrap; }
-  .nav-back { font-size:12px; color:var(--text-dim); text-decoration:none; letter-spacing:0.08em; border:1px solid var(--line); padding:5px 14px; border-radius:2px; transition:background 0.2s; white-space:nowrap; }
-  .nav-back:hover { background:var(--bg2); }
-  section { padding:64px 60px; border-bottom:1px solid var(--line); }
+  .nav-back { font-size:12px; color:var(--text-dim); text-decoration:none; letter-spacing:0.08em; transition:color 0.2s; white-space:nowrap; }
+  .nav-back:hover { color:var(--accent); }
+  section { padding:64px max(40px, calc((100% - 860px) / 2)); border-bottom:1px solid var(--line); }
   h2 { font-family:'IBM Plex Sans KR',sans-serif; font-size:clamp(22px,3vw,32px); font-weight:700; color:var(--text); margin-bottom:28px; border-left:3px solid var(--accent); padding-left:18px; }
-  #cover { background:var(--bg); min-height:36vh; display:flex; flex-direction:column; justify-content:center; padding:80px 60px; }
+  #cover { background:var(--bg); min-height:36vh; display:flex; flex-direction:column; justify-content:center; padding:80px max(40px, calc((100% - 860px) / 2)); }
   .cover-tag { font-size:11px; letter-spacing:0.4em; color:var(--accent); text-transform:uppercase; font-weight:600; margin-bottom:20px; }
   .cover-title { font-family:'IBM Plex Sans KR',sans-serif; font-size:clamp(36px,5.5vw,68px); font-weight:900; color:var(--text); line-height:1.1; margin-bottom:16px; }
   .cover-divider { width:40px; height:2px; background:var(--accent); margin:24px 0; }
@@ -30,14 +31,13 @@
   /* 운영 안내 */
   .notice { background:var(--bg2); border-radius:4px; padding:28px 32px; margin-bottom:8px; max-width:50%; }
   .notice p { font-size:14px; color:var(--text-dim); line-height:1.95; }
-  .info-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:8px; }
-  .info-cell { background:var(--bg2); padding:22px 26px; }
+  .info-grid { display:flex; flex-direction:column; gap:14px; margin-top:8px; }
+  .info-cell { background:var(--bg2); padding:22px 26px; display:grid; grid-template-columns:1fr 1fr; gap:0 28px; }
   .info-type { font-size:11px; letter-spacing:0.2em; color:var(--accent); text-transform:uppercase; font-weight:600; margin-bottom:10px; }
-  .info-time { font-size:17px; font-weight:700; color:var(--text); font-family:'IBM Plex Sans KR',sans-serif; margin-bottom:10px; }
-  .info-detail { font-size:13px; color:var(--text-dim); line-height:1.85; }
-  .weekend-list { list-style:none; margin:6px 0 10px; }
-  .weekend-list li { font-size:13.5px; color:var(--text); padding:4px 0; border-bottom:1px dashed var(--line); }
-  .weekend-list li:last-child { border-bottom:none; }
+  .info-time { font-size:17px; font-weight:700; color:var(--text); font-family:'IBM Plex Sans KR',sans-serif; }
+  .info-detail { font-size:13px; color:var(--text-dim); line-height:1.85; border-left:1px solid var(--line); padding-left:28px; align-self:center; }
+  .weekend-list { list-style:none; margin:6px 0 0; }
+  .weekend-list li { font-size:17px; font-weight:700; font-family:'IBM Plex Sans KR',sans-serif; color:var(--text); padding:0; line-height:1.6; }
   .weekend-list b { color:var(--accent2); }
 
   /* 예약 현황 */
@@ -63,13 +63,14 @@
   @media(max-width:700px) {
     section { padding:48px 20px; } #nav { padding:0 20px; }
     .nav-logo, .nav-updated { display:none; }
-    .info-grid { grid-template-columns:1fr; }
+    .info-cell { grid-template-columns:1fr; gap:14px 0; }
+    .info-detail { border-left:none; border-top:1px solid var(--line); padding-left:0; padding-top:14px; align-self:auto; }
     .res-card { grid-template-columns:1fr; gap:12px; }
     .notice { padding:22px 20px; max-width:100%; } .apply-box { padding:20px 20px; max-width:100%; }
   }
 
   /* 예약 달력 */
-  .cal-section { max-width:600px; margin-bottom:30px; }
+  .cal-section { margin-bottom:30px; }
   .cal-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
   .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; min-width:480px; }
   .cal-head { text-align:center; padding:6px 4px; background:var(--bg3); font-size:11px; letter-spacing:0.05em; color:var(--text-dim); font-weight:600; }
@@ -93,8 +94,8 @@
 
 <nav id="nav">
   <span class="nav-left">
-    <span class="nav-logo">일반 자유체험 — 울림통-변주 2026</span>
-    <span class="nav-title">예약 현황</span>
+    <span class="nav-logo">ninnik × 울림통-변주 2026</span>
+    <span class="nav-title">일반 자유체험 예약 현황</span>
   </span>
   <span class="nav-right">
     <span class="nav-updated">최종 업데이트 · 2026. 6. 11.</span>
@@ -114,22 +115,25 @@
   </p>
   <div class="info-grid">
     <div class="info-cell">
-      <p class="info-type">평일 체험 · 실내</p>
-      <p class="info-time">목 · 금 10:00 – 14:00</p>
+      <div class="info-main">
+        <p class="info-type">평일 체험 · 실내</p>
+        <p class="info-time">목 · 금 10:00 – 14:00&ensp;·&ensp;니닉크라프트 실내</p>
+      </div>
       <p class="info-detail">
-        니닉크라프트 실내에서 진행됩니다.<br>
-        위 시간 내 희망 시간 회신 시 연령·인원 맞춰 배정 (그 외 시간 별도 문의).<br>
+        희망 시간 회신 시 연령·인원 맞춰 배정 (이외 시간 별도 문의)<br>
         유·초등 약 40분 / 청소년·성인 1–2시간 소요<br>
         회차당 최대 12명 (초과 시 그룹 분할 진행)
       </p>
     </div>
     <div class="info-cell">
-      <p class="info-type">주말 체험 · 울림통별</p>
-      <ul class="weekend-list">
-        <li><b>네모</b> · 토요일 오후 3시 · 니닉크라프트 실내</li>
-        <li><b>고리</b> · 일요일 오전 11시 · 니닉크라프트 실내</li>
-        <li><b>미로</b> · 일요일 오후 3시 · 하나어린이집 야외</li>
-      </ul>
+      <div class="info-main">
+        <p class="info-type">주말 체험 · 울림통별</p>
+        <ul class="weekend-list">
+          <li><b>네모</b>&ensp;·&ensp;토요일 15:00&ensp;·&ensp;니닉크라프트 실내</li>
+          <li><b>고리</b>&ensp;·&ensp;일요일 11:00&ensp;·&ensp;니닉크라프트 실내</li>
+          <li><b>미로</b>&ensp;·&ensp;일요일 15:00&ensp;·&ensp;하나어린이집 야외</li>
+        </ul>
+      </div>
       <p class="info-detail">
         신청 시 참여 희망 울림통을 알려주세요.<br>
         유·초등 약 40분 / 청소년·성인 1–2시간 소요<br>
@@ -224,4 +228,12 @@
           <span class="res-place">니닉크라프트 실내 · 고리 작업 참여</span>
         </div>
         <span class="res-people">코아루어린이집 · 인원 미정</span>
-        <span class="res-note">※ 어린
+        <span class="res-note">※ 어린이집 단체 일정·인원은 조율 중입니다.</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</body>
+</html>                                                                                                                                  

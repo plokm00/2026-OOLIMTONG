@@ -169,6 +169,11 @@
   /* ────────── 2. 목차 ────────── */
   #toc {
     background: var(--bg2);
+    justify-content: flex-start;
+  }
+
+  #gallery {
+    justify-content: flex-start;
   }
 
   .toc-grid {
@@ -181,8 +186,8 @@
   .toc-item {
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 28px 32px;
+    gap: 16px;
+    padding: 14px 28px;
     background: var(--bg3);
     text-decoration: none;
     color: var(--text);
@@ -196,12 +201,12 @@
   }
 
   .toc-num {
-    font-size: 36px;
+    font-size: 28px;
     font-weight: 900;
     color: var(--accent);
     opacity: 0.35;
     font-family: 'IBM Plex Sans KR', sans-serif;
-    min-width: 56px;
+    min-width: 46px;
     line-height: 1;
   }
 
@@ -346,6 +351,7 @@
     border-bottom: 1px solid var(--line);
     align-items: start;
   }
+  .timeline-item:last-child { border-bottom: none; }
 
   .timeline-year {
     font-size: 48px;
@@ -749,7 +755,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
+    padding: 0 60px;
     height: 56px;
   }
 
@@ -840,6 +846,25 @@
     color: #f6ede6 !important;
   }
 
+  /* 모바일 햄버거 버튼 */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+    background: none;
+    border: none;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+    transition: all 0.2s;
+  }
+
   /* section padding 보정 (고정 nav 높이) */
   section {
     scroll-margin-top: 56px;
@@ -895,7 +920,46 @@
       grid-template-columns: 1fr;
     }
     .cover-img { min-height: 300px; }
-    .nav-links { display: none; }
+
+    /* 모바일: 햄버거 메뉴 */
+    #nav { padding: 0 20px; }
+    .nav-hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 56px; left: 0; right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      background: rgba(246,237,230,0.98);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+      padding: 8px 0;
+      gap: 0;
+      max-height: calc(100vh - 56px);
+      overflow-y: auto;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links > a {
+      padding: 13px 24px;
+      font-size: 13px;
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-links > a:last-child { border-bottom: none; }
+    .nav-links .nav-manual-btn,
+    .nav-links > a.nav-manual-btn {
+      margin: 8px 24px;
+      text-align: center;
+      justify-content: center;
+      border-bottom: none;
+    }
+    .worklog-dropdown { display: flex; flex-direction: column; }
+    .worklog-dropdown > .nav-manual-btn { margin: 8px 24px 4px; }
+    .worklog-menu {
+      position: static;
+      box-shadow: none;
+      background: transparent;
+      padding: 0 36px 8px;
+    }
     .toc-item { padding: 22px 24px; }
     .activity-block { padding: 28px; }
   }
@@ -969,24 +1033,18 @@
 
 <!-- ── 고정 네비게이션 ── -->
 <nav id="nav">
-  <span class="nav-logo">ninnik × 울림통-변주 2026</span>
-  <div class="nav-links">
-    <a href="#artist">작가 소개</a>
-    <a href="#universe">니닉 세계관</a>
-    <a href="#history">울림통 연보</a>
-    <a href="#overview">프로젝트 개요</a>
+  <a href="#cover" class="nav-logo" style="text-decoration:none;">ninnik × 울림통-변주 2026</a>
+  <button class="nav-hamburger" onclick="toggleNav()" aria-label="메뉴 열기">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="nav-links">
+    <a href="#toc">목차</a>
     <a href="#curriculum">커리큘럼</a>
-    <a href="#minutes">OT 회의록</a>
-    <a href="#gallery">현장 기록</a>
-    <span class="worklog-dropdown">
-      <a href="#worklogs" id="worklog-open-btn" class="nav-manual-btn" aria-haspopup="true" aria-expanded="false">작업 기록 ↗</a>
-      <div id="worklog-menu" class="worklog-menu" role="menu">
-        <a href="oolimtong_2026_wcf_record_1.html" target="_blank" role="menuitem">네모 작업 기록 ↗</a>
-        <a href="oolimtong_2026_wcf_record_2.html" target="_blank" role="menuitem">고리 작업 기록 ↗</a>
-        <a href="oolimtong_2026_wcf_record_3.html" target="_blank" role="menuitem">미로 작업 기록 ↗</a>
-      </div>
-    </span>
-    <a href="oolimtong_manual.html" target="_blank" class="nav-manual-btn">울림통 매뉴얼 ↗</a>
+    <a href="oolimtong_2026_wcf_record.html" class="nav-manual-btn">작업 기록 ↗</a>
+    <a href="oolimtong_2026_wcf_book.html" class="nav-manual-btn">예약 현황 ↗</a>
+    <a href="oolimtong_2026_wcf_assistant.html" class="nav-manual-btn">근무 일지 ↗</a>
+    <a href="oolimtong_manual.html" class="nav-manual-btn">울림통 매뉴얼 ↗</a>
+    <a href="https://drive.google.com/drive/folders/1oMWrVGzkAMElQyV4Yv1uCNEvCzd90gCz?usp=drive_link" target="_blank" class="nav-manual-btn" style="background:var(--accent);color:var(--white) !important;border-color:var(--accent);" onmouseover="this.style.background='var(--accent2)';this.style.borderColor='var(--accent2)'" onmouseout="this.style.background='var(--accent)';this.style.borderColor='var(--accent)'">사진·영상 올리기 ↗</a>
   </div>
 </nav>
 
@@ -1021,14 +1079,14 @@
       <span class="toc-num">01</span>
       <div class="toc-text">
         <h3>작가 소개</h3>
-        <p>ninnik_kraft 프로필 &amp; 주요 이력</p>
+        <p>작가 프로필 · 주요 이력</p>
       </div>
     </a>
     <a class="toc-item" href="#universe">
       <span class="toc-num">02</span>
       <div class="toc-text">
         <h3>니닉 세계관</h3>
-        <p>창작 철학 &amp; 키워드 구조</p>
+        <p>창작 철학 · 키워드 구조</p>
       </div>
     </a>
     <a class="toc-item" href="#history">
@@ -1042,14 +1100,14 @@
       <span class="toc-num">04</span>
       <div class="toc-text">
         <h3>프로젝트 개요</h3>
-        <p>울림통-변주 2026 소개</p>
+        <p>2026 울림통-변주 프로젝트 소개</p>
       </div>
     </a>
     <a class="toc-item" href="#curriculum">
       <span class="toc-num">05</span>
       <div class="toc-text">
         <h3>커리큘럼</h3>
-        <p>OT → 창작 → 전시 전체 일정</p>
+        <p>창작 · 전시 전체 일정 · 작업 기록 · 체험 현황</p>
       </div>
     </a>
     <a class="toc-item" href="#minutes">
@@ -1062,8 +1120,8 @@
     <a class="toc-item" href="#gallery">
       <span class="toc-num">07</span>
       <div class="toc-text">
-        <h3>현장 기록</h3>
-        <p>OT 및 작업 현장 사진</p>
+        <h3>현장 사진</h3>
+        <p>OT · 작업 현장 사진</p>
       </div>
     </a>
   </div>
@@ -1078,7 +1136,7 @@
 
     <div>
       <h3 class="artist-name">김아영 니닉 작가</h3>
-      <p class="artist-name-en">ninnik_kraft</p>
+      <p class="artist-name-en">KIM AH YOUNG NINNIK CONCEPTUAL IMAGINARY ARTIST</p>
       <p class="artist-bio">
         이화여자대학교에서 도예를 전공하고 호주 애들레이드 대학에서 디지털미디어 석사를 마쳤다.
         도예·회화·설치·영상·퍼포먼스를 아우르며 자신만의 판타지 세계 '니닉(Ninnik)'을 구축해 왔다.
@@ -1113,23 +1171,22 @@
       <p>
         2002년, 채팅창에 실수로 입력한 오타 하나가 모든 것의 시작이었다.
         그 단어가 바로 <strong style="color:var(--text)">'니닉(Ninnik)'</strong>.
-        마치 벼락 같았던 이 단어로부터, 20여 년에 걸쳐 오직 하나뿐인 판타지 세계가 구축되어 왔다.
+        마치 벼락 같았던 이 단어로부터, 20여 년에 걸쳐 세상에 오직 하나뿐인 판타지 세계가 구축되어 왔다.
       </p>
       <h3 style="margin-top:28px;">니닉 세계의 구조</h3>
       <p>
         니닉에는 고유한 <strong style="color:var(--text)">우주 탄생 신화</strong>가 있고,
         살아있는 생명체와 물리법칙, 사건과 에피소드가 존재한다.
-        나아가 <strong style="color:var(--text)">니닉어(Ninnik語)</strong>라는 독자적인 언어 체계를 갖추고
-        있으며, 이미 문장과 노랫말로까지 발전했다.
-        김아영 작가는 이 세계를 도예·설치·회화·소설·음악 등 다양한 매체로 현실에 끌어내고 있다.
+        나아가 <strong style="color:var(--text)">니닉어(Ninnikian)</strong>라는 독자적인 언어 체계를 갖추어가고
+        있으며, 문장과 노랫말로도 실험하고 있다.
+        김아영 작가는 이 세계를 도예조형·설치·회화·소설·미디어·음악 등 다양한 매체로 현실에 끌어내고 있다.
       </p>
       <h3 style="margin-top:28px;">울림통 — 상상을 울려주는 조형물</h3>
       <p>
-        울림통은 니닉 세계관 속 한 언덕에 자리한 대형 흙 조형물이다.
-        단순히 소리를 울리는 것이 아닌, <strong style="color:var(--text)">상상을 울려주는 존재</strong>다.
-        흙과 정성으로 만들어지되 불에 굽지 않아, 왜곡 없이 그 자체로 작품이 된다.
-        변주(Variation)는 하나의 주제를 여러 참여자가 각자의 언어로 다시 써 내려가는 방식이다.
-        정답은 없고, 각자의 고유한 울림이 있을 뿐이다.
+        울림통은 니닉 세계관 속 한 언덕에 자리한 구조물로, 다른 세상과 이어진 통로이기도 하다.
+        현실에 구현된 이 울림통은 단순히 소리를 울리는 것이 아닌, <strong style="color:var(--text)">상상을 울려주는 존재</strong>로 거듭난다.
+        흙으로 만들어지되 불에 굽지 않아, 자연으로 회귀하는 짧은 생애주기 자체가 작품의 일부가 된다.
+        이번 변주(Variation) 프로젝트를 통해 울림통의 개념을 여러 참여자와 함께 고민하고, 각자의 고유한 울림을 한데 모으는 작업을 진행한다.
       </p>
       <div class="keyword-chips">
         <span class="chip">니닉 세계관</span>
@@ -1351,11 +1408,11 @@
 
   <!-- 두 가지 참여 방식 -->
   <div style="margin-top:48px;">
-    <h3 style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--line);">두 가지 참여 방식</h3>
+    <h3 style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:16px;">두 가지 참여 방식</h3>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
 
       <div class="overview-card">
-        <p style="font-size:11px;letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;margin-bottom:8px;font-weight:600;">시민작가 참여 <span style="letter-spacing:0;font-weight:400;color:var(--text-dim);">/</span> <a href="https://forms.gle/4K4qQNMnHqVmeftT7" target="_blank" style="letter-spacing:0;font-weight:400;color:var(--accent);text-decoration:none;">작가 참가 신청 구글폼 (모집기간: ~2026. 4. 30. *연장) ↗</a></p>
+        <p style="font-size:11px;letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;margin-bottom:8px;font-weight:600;">시민작가 참여 <span style="letter-spacing:0;font-weight:400;color:var(--text-dim);">/</span> <a href="https://forms.gle/4K4qQNMnHqVmeftT7" style="letter-spacing:0;font-weight:400;color:var(--accent);text-decoration:none;">작가 참가 신청 구글폼 (모집기간: ~2026. 4. 30. *연장) ↗</a></p>
         <h4 style="margin-bottom:8px;">협력창작자</h4>
         <p>총 10회차 정기 작업에 참여하는 시민작가로, 울림통 제작 전 과정을 함께합니다. 개인 모뉴먼트도 제작합니다.</p>
         <div style="margin-top:12px;font-size:13px;color:var(--text-dim);border-top:1px solid var(--line);padding-top:10px;">
@@ -1366,15 +1423,16 @@
       </div>
 
       <div class="overview-card">
-        <p style="font-size:11px;letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;margin-bottom:8px;font-weight:600;">일반 자유체험 <span style="letter-spacing:0;font-weight:400;color:var(--text-dim);">/</span> <a href="https://forms.gle/8SZx7wiVRJ9v8wdG6" target="_blank" style="letter-spacing:0;font-weight:400;color:var(--accent);text-decoration:none;">체험 참가 신청 구글폼 (모집기간: ~2026. 6. 30.) ↗</a></p>
+        <p style="font-size:11px;letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;margin-bottom:8px;font-weight:600;">일반 자유체험 <span style="letter-spacing:0;font-weight:400;color:var(--text-dim);">/</span> <a href="https://forms.gle/8SZx7wiVRJ9v8wdG6" style="letter-spacing:0;font-weight:400;color:var(--accent);text-decoration:none;">체험 참가 신청 구글폼 (모집기간: ~2026. 6. 30.) ↗</a></p>
         <h4 style="margin-bottom:8px;">누구나 참여</h4>
-        <p>사전 신청 후 원하는 날 한 번 참여하는 체험 프로그램입니다. 울림통 제작에 직접 손을 보태는 경험을 할 수 있습니다.</p>
+        <p>사전 신청 후 원하는 날 제작에 참여하는 1회 체험 프로그램입니다.</p>
         <div style="margin-top:12px;font-size:13px;color:var(--text-dim);border-top:1px solid var(--line);padding-top:10px;">
           <div style="margin-bottom:3px;">· 주중 (목·금) 10:00–14:00 — 네모·고리 (니닉크라프트 실내)</div>
           <div style="margin-bottom:3px;">· 토요일 15:00 — 네모 (니닉크라프트 실내)</div>
           <div style="margin-bottom:3px;">· 일요일 11:00 — 고리 (니닉크라프트 실내)</div>
           <div style="margin-bottom:3px;">· 일요일 15:00 — 미로 (하나어린이집 야외)</div>
         </div>
+
       </div>
 
     </div>
@@ -1406,64 +1464,64 @@
       </tr>
       <tr>
         <td>5. 9. 토 14:00<br>5. 10. 일 10:00 / 14:00</td>
-        <td><a href="oolimtong_2026_wcf_curriculum_01.html" target="_blank" class="session-badge badge-work" style="text-decoration:none;display:inline-block;">1회 ↗</a></td>
+        <td><a href="oolimtong_2026_wcf_curriculum.html#tab-1" class="session-badge badge-work" style="text-decoration:none;display:inline-block;">1회 ↗</a></td>
         <td>재료 이해 · 모뉴먼트 드로잉 <small style="color:var(--text-dim)">(2시간)</small></td>
         <td>흙(점토) 재료 특성 이해 / 자신의 모뉴먼트 드로잉 구상 / 타래성형 기초(모뉴먼트 모델링) / 손과 흙의 감각 익히기</td>
       </tr>
       <tr>
         <td>5. 16. 토 14:00<br>5. 17. 일 10:00 / 14:00</td>
-        <td><a href="oolimtong_2026_wcf_curriculum_02.html" target="_blank" class="session-badge badge-work" style="text-decoration:none;display:inline-block;">2회 ↗</a></td>
+        <td><a href="oolimtong_2026_wcf_curriculum.html#tab-2" class="session-badge badge-work" style="text-decoration:none;display:inline-block;">2회 ↗</a></td>
         <td>모뉴먼트 울림통 제작 <small style="color:var(--text-dim)">(3시간)</small></td>
         <td>점토 반죽 및 타래 성형 실습 / 개인 모뉴먼트 제작 시작 / 작가와 개별 피드백</td>
       </tr>
       <tr>
         <td>5. 23. 토 14:00<br>5. 24. 일 10:00 / 14:00</td>
-        <td><a href="oolimtong_2026_wcf_curriculum_03.html" target="_blank" class="session-badge badge-work" style="text-decoration:none;display:inline-block;">3회 ↗</a></td>
+        <td><a href="oolimtong_2026_wcf_curriculum.html#tab-3" class="session-badge badge-work" style="text-decoration:none;display:inline-block;">3회 ↗</a></td>
         <td>모뉴먼트 마무리 · 타래 만들기 <small style="color:var(--text-dim)">(3시간)</small></td>
         <td>모뉴먼트 NFC 칩 매립 / 점토 혼합 반죽 및 타래 만들기</td>
       </tr>
       <tr>
         <td>5. 30. 토 14:00<br>5. 31. 일 10:00 / 14:00</td>
-        <td><a href="oolimtong_2026_wcf_curriculum_04.html" target="_blank" class="session-badge badge-work" style="text-decoration:none;display:inline-block;">4회 ↗</a></td>
+        <td><a href="oolimtong_2026_wcf_curriculum.html#tab-4" class="session-badge badge-work" style="text-decoration:none;display:inline-block;">4회 ↗</a></td>
         <td>대형 울림통 제작 <small style="color:var(--text-dim)">(3시간)</small></td>
         <td>울림통 기초 제작 / 반죽과 타래 쌓기 병행</td>
         </td>
       </tr>
       <tr>
         <td>6. 6. 토 14:00<br>6. 7. 일 10:00 / 14:00</td>
-        <td><span class="session-badge badge-work">5회</span></td>
+        <td><a href="oolimtong_2026_wcf_curriculum.html#tab-5" class="session-badge badge-work" style="text-decoration:none;display:inline-block;">5회 ↗</a></td>
         <td>대형 울림통 제작 <small style="color:var(--text-dim)">(3시간+α)</small></td>
-        <td>반죽 · 타래 쌓기 병행 / 사운드 녹음 진행</td>
+        <td>울림통 기초 제작 / 반죽과 타래 쌓기 병행</td>
       </tr>
       <tr>
         <td>6. 13. 토 14:00<br>6. 14. 일 10:00 / 14:00</td>
-        <td><span class="session-badge badge-work">6회</span></td>
+        <td><a href="oolimtong_2026_wcf_curriculum.html#tab-6" class="session-badge badge-work" style="text-decoration:none;display:inline-block;">6회 ↗</a></td>
         <td>대형 울림통 제작 <small style="color:var(--text-dim)">(3시간+α)</small></td>
-        <td>성형 · 다지기 병행 / 사운드 녹음 진행</td>
+        <td>반죽 · 타래 쌓기 병행 / 자유체험 진행 시작 / 중간 간담회</td>
       </tr>
       <tr>
         <td>6. 20. 토 14:00<br>6. 21. 일 10:00 / 14:00</td>
-        <td><span class="session-badge badge-work">7회</span></td>
-        <td>대형 울림통 제작 마무리 <small style="color:var(--text-dim)">(3시간+α)</small></td>
-        <td>성형 · 다지기 병행 / NFC 칩 매립</td>
+        <td><a href="oolimtong_2026_wcf_curriculum.html#tab-7" class="session-badge badge-work" style="text-decoration:none;display:inline-block;">7회 ↗</a></td>
+        <td>대형 울림통 제작 <small style="color:var(--text-dim)">(3시간+α)</small></td>
+        <td>반죽 · 타래 쌓기 병행 / 사운드 녹음 · 퍼포먼스 녹화 진행</td>
       </tr>
       <tr>
         <td>6. 27. 토 14:00<br>6. 28. 일 10:00 / 14:00</td>
         <td><span class="session-badge badge-work">8회</span></td>
-        <td>개인 모뉴먼트 점검 · 완료 <small style="color:var(--text-dim)">(3시간)</small></td>
-        <td>개인 모뉴먼트 점검 · 완료 / NFC 칩 매립 / 보완 작업 / 건조 과정 관찰</td>
+        <td>대형 울림통 제작 마무리 <small style="color:var(--text-dim)">(3시간+α)</small></td>
+        <td>대형 울림통 성형 및 다지기 마무리 / 보완 작업 / 건조 과정 관찰</td>
       </tr>
       <tr>
         <td>7. 4. 토 14:00<br>7. 5. 일 10:00 / 14:00</td>
         <td><span class="session-badge badge-work">9회</span></td>
-        <td>표면 마감 · 이름짓기 <small style="color:var(--text-dim)">(3시간)</small></td>
-        <td>표면 정리 · 기름 마감 / 작품 이름짓기 / 작가 노트 작성</td>
+        <td>작품 표면 마감 · 이름짓기 <small style="color:var(--text-dim)">(3시간)</small></td>
+        <td>표면 정리 · 기름 마감 / 작품 이름짓기 / 개인 모뉴먼트 점검 · 기름 마감</td>
       </tr>
       <tr>
         <td>7. 11. 토 14:00<br>7. 12. 일 10:00 / 14:00</td>
         <td><span class="session-badge badge-work">10회</span></td>
         <td>설치 계획 공유 · 리뷰 <small style="color:var(--text-dim)">(2시간 · ZOOM 가능)</small></td>
-        <td>모뉴먼트 설치 공간 발표 / 전체 프로그램 리뷰 / 전시 준비 안내</td>
+        <td>작가 노트 작성 / 모뉴먼트 설치 공간 발표 / 전체 프로그램 리뷰 / 전시 준비 안내</td>
       </tr>
       <tr>
         <td>11. 21. 토</td>
@@ -1490,25 +1548,21 @@
       <h4 style="margin-bottom:4px;">팀별 작업 기록</h4>
       <p style="margin-bottom:14px;">각 팀의 회차별 작업 기록을 확인할 수 있습니다.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <a href="oolimtong_2026_wcf_record_1.html" target="_blank" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">네모 작업 기록 ↗</a>
-        <a href="oolimtong_2026_wcf_record_2.html" target="_blank" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">고리 작업 기록 ↗</a>
-        <a href="oolimtong_2026_wcf_record_3.html" target="_blank" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">미로 작업 기록 ↗</a>
+        <a href="oolimtong_2026_wcf_record.html#nemo" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">네모 작업 기록 ↗</a>
+        <a href="oolimtong_2026_wcf_record.html#gori" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">고리 작업 기록 ↗</a>
+        <a href="oolimtong_2026_wcf_record.html#miro" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">미로 작업 기록 ↗</a>
       </div>
     </div>
     <div class="overview-card" style="background:#ffb8b0;padding:18px 28px;">
-      <h4 style="margin-bottom:4px;">울림통 매뉴얼</h4>
-      <p style="margin-bottom:14px;">제작·운영 전 과정의 상세 지침은 매뉴얼에서 확인하십시오.</p>
+      <h4 style="margin-bottom:4px;">운영 자료</h4>
+      <p style="margin-bottom:14px;">제작·운영 전 과정의 상세 지침은 아래 파일에서 확인하십시오.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <a href="oolimtong_manual.html" target="_blank" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">울림통 매뉴얼 ↗</a>
+        <a href="oolimtong_2026_wcf_book.html" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">예약 현황 ↗</a>
+        <a href="oolimtong_manual.html" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">울림통 매뉴얼 ↗</a>
+        <a href="oolimtong_2026_wcf_assistant.html" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">근무 일지 ↗</a>
       </div>
     </div>
-    <div class="overview-card" style="background:#ffb8b0;padding:18px 28px;">
-      <h4 style="margin-bottom:4px;">일반 자유체험</h4>
-      <p style="margin-bottom:14px;">자유체험 회차별 예약 현황을 확인할 수 있습니다.</p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <a href="oolimtong_2026_wcf_book.html" target="_blank" class="nav-manual-btn" style="font-size:12px;padding:8px 20px;background:var(--bg);">예약 현황 ↗</a>
-      </div>
-    </div>
+
   </div>
 </section>
 
@@ -1566,7 +1620,7 @@
 
   <!-- 팀 편성 -->
   <div style="margin-bottom:48px;">
-    <h3 style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--line);">팀 편성 <span style="font-size:13px;font-weight:400;color:var(--text-dim);margin-left:8px;">— 최종 조정 결과</span></h3>
+    <h3 style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:16px;">팀 편성 <span style="font-size:13px;font-weight:400;color:var(--text-dim);margin-left:8px;">— 최종 조정 결과</span></h3>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
 
       <div style="background:var(--bg2);padding:24px 20px;">
@@ -1588,12 +1642,12 @@
       </div>
 
     </div>
-    <p style="margin-top:12px;font-size:13px;color:var(--text-dim);">※ 조영범님 토·일 오후 두 팀 동시 활동 &nbsp;|&nbsp; 작가는 모든 팀에 함께합니다</p>
+    <p style="margin-top:12px;font-size:13px;color:var(--text-dim);">※ 조영범님 토·일 오후 두 팀 동시 활동 &nbsp;|&nbsp; 작가는 모든 팀에 함께합니다 &nbsp;|&nbsp; 인동욱 님은 시민 작가와 작업 보조를 겸임합니다</p>
   </div>
 
   <!-- 결정 사항 -->
   <div>
-    <h3 style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--line);">주요 결정 사항</h3>
+    <h3 style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:16px;">주요 결정 사항</h3>
 
     <div style="display:flex;flex-direction:column;gap:2px;">
 
@@ -1652,13 +1706,13 @@
 </section>
 
 
-<!-- ── 8. 현장 기록 ── -->
+<!-- ── 8. 현장 사진 ── -->
 <section id="gallery">
   <p class="section-label">07 · Field Records</p>
-  <h2 class="section-title">현장 기록</h2>
+  <h2 class="section-title">현장 사진</h2>
 
   <h3 style="font-size:15px;font-weight:600;color:var(--text-dim);letter-spacing:0.1em;margin-bottom:16px;">OT 현장 · 2026. 4. 25.</h3>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start;max-width:50%;">
     <img src="1.jpg" alt="OT 현장 - 참여자들" style="width:100%;display:block;border-radius:2px;">
     <img src="2_crop.jpg" alt="OT 현장 - 공간" style="width:100%;display:block;border-radius:2px;">
   </div>
@@ -1671,7 +1725,7 @@
   <div class="closing-inner">
     <p class="closing-eyebrow">Closing · 울림통 변주 2026</p>
     <h2 class="closing-quote">
-      각자의 삶과 이야기가<br>하나의 울림통 안에서<br>공명하기를
+      여러 삶과 이야기가<br>하나의 울림통 안에서<br>공명하기를
     </h2>
     <p class="closing-sub">
       여러분의 삶과 이야기는 그 자체로 작품입니다.<br>
@@ -1683,25 +1737,18 @@
   </div>
 </section>
 
-
 <script>
-(function () {
-  var btn = document.getElementById('worklog-open-btn');
-  var menu = document.getElementById('worklog-menu');
-  if (!btn || !menu) return;
-  function openMenu() { menu.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
-  function closeMenu() { menu.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
-  btn.addEventListener('click', function (e) {
-    e.preventDefault();
-    menu.classList.contains('open') ? closeMenu() : openMenu();
+  function toggleNav() {
+    document.getElementById('nav-links').classList.toggle('open');
+  }
+  function closeNav() {
+    document.getElementById('nav-links').classList.remove('open');
+  }
+  /* 메뉴 항목 클릭 시 패널 닫기 */
+  document.querySelectorAll('#nav-links a').forEach(function(a) {
+    a.addEventListener('click', closeNav);
   });
-  document.addEventListener('click', function (e) {
-    if (!menu.contains(e.target) && e.target !== btn) closeMenu();
-  });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
-})();
 </script>
 
 </body>
 </html>
-                                          

@@ -177,6 +177,10 @@
     padding: 60px;
   }
 
+  #session05 {
+    justify-content: flex-start;
+  }
+
   .toc-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -187,8 +191,8 @@
   .toc-item {
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 28px 32px;
+    gap: 16px;
+    padding: 14px 28px;
     background: var(--bg3);
     text-decoration: none;
     color: var(--text);
@@ -202,12 +206,12 @@
   }
 
   .toc-num {
-    font-size: 36px;
+    font-size: 28px;
     font-weight: 900;
     color: var(--accent);
     opacity: 0.35;
     font-family: 'IBM Plex Sans KR', sans-serif;
-    min-width: 56px;
+    min-width: 46px;
     line-height: 1;
   }
 
@@ -783,7 +787,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
+    padding: 0 60px;
     height: 56px;
   }
   .nav-logo {
@@ -880,13 +884,11 @@
 
 <!-- ── 고정 네비게이션 ── -->
 <nav id="nav">
-  <span class="nav-logo">ninnik × 이포중학교 울림통 2026</span>
+  <a href="#cover" class="nav-logo" style="text-decoration:none;">ninnik × 이포중학교 울림통 2026</a>
   <button class="nav-hamburger" onclick="toggleNav()" aria-label="메뉴 열기">
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="nav-links">
-    <a href="#cover" onclick="closeNav()">홈</a>
-    <a href="#toc" onclick="closeNav()">목차</a>
     <a href="#session01" onclick="closeNav()">1단계</a>
     <a href="#session02" onclick="closeNav()">2단계</a>
     <a href="#session03" onclick="closeNav()">3단계</a>
@@ -894,8 +896,8 @@
     <a href="#session05" onclick="closeNav()">5단계</a>
     <a href="#schedule" onclick="closeNav()">일정</a>
     <a href="#journal" onclick="closeNav()">관찰·기록</a>
+    <a href="oolimtong_manual.html" class="nav-manual-btn" onclick="closeNav()">울림통 매뉴얼 ↗</a>
     <a href="https://drive.google.com/drive/folders/1v5CFiY9KVzGC-FzUlIpdOIAVIF2ODSxp?usp=drive_link" target="_blank" class="nav-manual-btn" style="background:var(--accent);color:var(--white) !important;border-color:var(--accent);" onmouseover="this.style.background='var(--accent2)';this.style.borderColor='var(--accent2)'" onmouseout="this.style.background='var(--accent)';this.style.borderColor='var(--accent)'" onclick="closeNav()">사진·영상 올리기 ↗</a>
-    <a href="oolimtong_manual.html" target="_blank" class="nav-manual-btn" onclick="closeNav()">울림통 매뉴얼 ↗</a>
   </div>
 </nav>
 <script>
@@ -1174,7 +1176,7 @@
   </div>
 
 
-  <div style="max-width:640px; margin-top:16px; padding:24px 28px; background:var(--bg3); border-radius:4px; border-left:3px solid var(--accent);">
+  <div style="max-width:640px; margin-top:16px; padding:24px 28px; background:var(--bg3); border-radius:4px;">
     <p style="font-size:13px; font-weight:600; color:var(--accent2); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px;">안전 안내</p>
     <ul class="bullet-list" style="font-size:13px; color:var(--text-dim);">
       <li>흙 작업 중 분진 발생 최소화 — 작업 공간 환기 유지</li>
@@ -1764,7 +1766,7 @@
 <section id="closing">
   <h2 class="section-title">함께 만드는 울림통</h2>
   <p>흙을 빚는 손길들이 모여 하나의 공간이 됩니다.<br>이포 중·고등학교 학생들과 함께 만드는 울림통을 기대합니다.</p>
-  <p style="font-size:14px; color:rgba(237,240,236,0.6);">문의 · 김아영 작가 (니닉크라프트) · <a href="https://instagram.com/ninnik_kraft" target="_blank" style="color:rgba(237,240,236,0.6); text-decoration:none;">@ninnik_kraft</a></p>
+  <p style="font-size:14px; color:rgba(237,240,236,0.6);">문의 · 김아영 작가 (니닉크라프트) · <a href="https://instagram.com/ninnik_kraft" style="color:rgba(237,240,236,0.6); text-decoration:none;">@ninnik_kraft</a></p>
   <a href="index.html" class="back-link">← 울림통 아카이브로 돌아가기</a>
 </section>
 
@@ -1807,4 +1809,5 @@
 </script>
 
 </body>
-</html>                                                                                                                                                                                                                    
+</html>
+                                     

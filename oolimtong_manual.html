@@ -35,8 +35,9 @@
   .page-header {
     background: var(--bg2);
     border-bottom: 2px solid var(--accent);
-    padding: 48px 64px 40px;
+    padding: 48px 0 40px;
   }
+  .header-inner { max-width:1200px; margin:0 auto; padding:0 64px; }
   .header-nav {
     display: flex;
     justify-content: space-between;
@@ -460,7 +461,7 @@
 
   /* ── 인쇄 ── */
   @media print {
-    .sidebar, .page-header, .page-footer { display: none !important; }
+    .sidebar, .page-header, .page-footer, .toc-toggle, #toc-dim { display: none !important; }
     .layout { display: block; }
     .main-content { padding: 0; }
     body { background: white; color: black; font-size: 12px; }
@@ -513,17 +514,68 @@
   }
   .back-btn:hover { background: var(--accent); color: var(--white); }
 
+  /* ── 모바일 햄버거 목차 ── */
+  .toc-toggle {
+    display: none;
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 210;
+    width: 48px;
+    height: 48px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: var(--accent);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(38,20,16,0.3);
+  }
+  .toc-toggle span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--white);
+    border-radius: 1px;
+  }
+  #toc-dim {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(38,20,16,0.45);
+    z-index: 190;
+  }
+  #toc-dim.show { display: block; }
+
   @media (max-width: 900px) {
-    .sidebar { display: none; }
+    .toc-toggle { display: flex; }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: auto;
+      height: 100vh;
+      width: min(78vw, 300px);
+      transform: translateX(105%);
+      transition: transform 0.25s ease;
+      z-index: 200;
+      border-right: none;
+      border-left: 1px solid var(--line);
+      box-shadow: -10px 0 30px rgba(38,20,16,0.18);
+      padding: 28px 20px 60px 24px;
+    }
+    .sidebar.open { transform: translateX(0); }
     .main-content { padding: 40px 24px 80px; }
-    .page-header { padding: 32px 24px 28px; }
+    .page-header { padding: 32px 0 28px; }
     .record-grid { grid-template-columns: 1fr; }
     .situation-meta { grid-template-columns: 1fr; }
     .page-footer { padding: 24px; flex-direction: column; gap: 14px; }
   }
 
   @media (max-width: 600px) {
-    .page-header { padding: 28px 20px 24px; }
+    .page-header { padding: 28px 0 24px; }
     .main-content { padding: 32px 20px 60px; }
 
     .chapter-header { gap: 12px; margin-bottom: 24px; }
@@ -562,13 +614,21 @@
 
 <!-- ── 헤더 ── -->
 <header class="page-header">
+<div class="header-inner">
   <div class="header-nav">
     <p class="header-eyebrow">울림통-변주 2026 · 제작 및 운영 매뉴얼</p>
     <a href="oolimtong_2026_wcf.html" class="back-link">← 메인으로</a>
   </div>
   <h1 class="header-title">울림통<br>제작 및 운영 매뉴얼</h1>
   <p class="header-subtitle">흙으로 짓는 공명의 기(器), 함께 만드는 명상의 공간</p>
+</div>
 </header>
+
+<!-- ── 모바일 목차 버튼 ── -->
+<button class="toc-toggle" onclick="toggleToc()" aria-label="목차 열기">
+  <span></span><span></span><span></span>
+</button>
+<div id="toc-dim" onclick="closeToc()"></div>
 
 <!-- ── 레이아웃 ── -->
 <div class="layout">
@@ -1530,4 +1590,36 @@
         <div class="record-item" style="grid-column:span 2"><p class="label">철거 방법</p><p class="value">&nbsp;</p></div>
       </div>
 
-      <p style="margin-top:32px;border-top:1px solid var(--line);padding-top:24px;font-size:13px;color:var(--text-dim);text-align:center;letter-spacing:0.04e
+      <p style="margin-top:32px;border-top:1px solid var(--line);padding-top:24px;font-size:13px;color:var(--text-dim);text-align:center;letter-spacing:0.04em;">매 울림통마다 본 기록부를 복사하여 사용하십시오.</p>
+
+    </div>
+
+  </main>
+</div>
+
+<!-- ── 푸터 ── -->
+<footer class="page-footer">
+  <span>ⓒ 2026 ninnik · 울림통-변주</span>
+  <a href="oolimtong_2026_wcf.html" class="back-btn">← 메인으로</a>
+</footer>
+
+<script>
+  function toggleToc() {
+    document.querySelector('.sidebar').classList.toggle('open');
+    document.getElementById('toc-dim').classList.toggle('show');
+  }
+  function closeToc() {
+    document.querySelector('.sidebar').classList.remove('open');
+    document.getElementById('toc-dim').classList.remove('show');
+  }
+  /* 목차 항목 클릭 시 자동 닫기 */
+  document.querySelectorAll('.sidebar a').forEach(function(a) {
+    a.addEventListener('click', closeToc);
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeToc();
+  });
+</script>
+
+</body>
+</html>

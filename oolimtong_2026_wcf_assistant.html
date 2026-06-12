@@ -32,15 +32,47 @@
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 15px;
     line-height: 1.75;
+    padding-top: 56px;
+  }
+
+  /* ── 얇은 고정 헤더 ── */
+  #nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(246,237,230,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 max(40px, calc((100% - 880px) / 2));
+    height: 56px;
+  }
+  .nav-left { display: flex; align-items: baseline; gap: 14px; min-width: 0; }
+  .nav-logo { font-size: 13px; letter-spacing: 0.25em; color: var(--accent); font-weight: 500; text-transform: uppercase; white-space: nowrap; }
+  .nav-title { font-family: 'IBM Plex Sans KR', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: 0.02em; white-space: nowrap; }
+  .nav-name { font-size: 12px; color: var(--text-dim); letter-spacing: 0.04em; white-space: nowrap; }
+  @media (max-width: 700px) {
+    #nav { padding: 0 20px; }
+    .nav-logo { display: none; }
+  }
+  @media (max-width: 560px) {
+    .nav-name { display: none; }
   }
 
   /* ── 헤더 ── */
   .page-header {
     background: var(--accent2);
     border-bottom: 2px solid var(--accent);
-    padding: 48px 64px 40px;
+    padding: 48px 0 40px;
     position: relative;
     overflow: hidden;
+  }
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 40px;
   }
   .header-eyebrow {
     font-size: 11px;
@@ -96,7 +128,7 @@
     background: var(--bg2);
     border-bottom: 1px solid var(--line);
     position: sticky;
-    top: 0;
+    top: 56px;
     z-index: 50;
   }
   .page-nav-inner {
@@ -121,7 +153,7 @@
   }
   .page-nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
   .page-nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
-  .nav-print { margin-left: auto; white-space: nowrap; }
+  .nav-print { white-space: nowrap; }
 
   /* ── 본문 공통 ── */
   .content-wrap {
@@ -414,6 +446,13 @@
     background: var(--bg2);
     padding: 8px 4px;
   }
+  .log-table .td-sign {
+    background: var(--bg2);
+    width: 72px;
+  }
+  .log-table .td-sign-last {
+    border-right: none;
+  }
   .total-label { text-align: right; color: var(--text-dim); }
   .total-amount { color: var(--accent); font-family: 'IBM Plex Sans KR', sans-serif; }
 
@@ -427,6 +466,8 @@
     align-items: center;
   }
   .print-note { font-size: 12px; color: var(--text-dim); }
+  .nav-back-inline { padding:16px 20px; font-size:12px; letter-spacing:0.1em; color:var(--text-dim); text-decoration:none; transition:color 0.15s; white-space:nowrap; }
+  .nav-back-inline:hover { color:var(--accent); border-bottom-color:transparent !important; }
   .print-btn {
     display: inline-flex;
     align-items: center;
@@ -457,7 +498,7 @@
 
   /* ── 반응형 ── */
   @media (max-width: 820px) {
-    .page-header { padding: 40px 24px 36px; }
+    .page-header { padding: 40px 0 36px; } .header-inner { padding: 0 24px; }
     .page-nav-inner { padding: 0 20px; }
     .content-wrap { padding: 0 20px; }
     .header-info-grid { grid-template-columns: 1fr 1fr; }
@@ -477,20 +518,26 @@
   }
 
   @media print {
-    .page-nav, .print-bar { display: none; }
+    #nav, .page-nav, .print-bar { display: none; }
     .section { page-break-inside: avoid; }
-    body { font-size: 12px; }
+    body { font-size: 12px; padding-top: 0; }
   }
+  .header-nav { position:absolute; top:42px; right:40px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end; max-width:60%; }
+  .nav-back { font-size:12px; color:var(--white); text-decoration:none; letter-spacing:0.06em; border:1px solid rgba(246,237,230,0.5); padding:5px 12px; border-radius:2px; white-space:nowrap; transition:background 0.2s,color 0.2s; }
+  .nav-back:hover { background:var(--white); color:var(--accent2); }
+  @media(max-width:800px) { .header-nav { top:34px; right:40px; } }
+  @media(max-width:500px) { .header-nav { position:static; margin-bottom:20px; justify-content:flex-start; max-width:none; } }
 </style>
 </head>
 <body>
 
-<!-- 헤더 -->
-<header class="page-header">
-  <p class="header-eyebrow">울림통-변주 2026 · Ninnik Kraft</p>
-  <h1 class="header-title">보조 작업자 업무 설명 및 근무일지</h1>
-  <p class="header-sub">인동욱 (작업 보조 및 시민 작가 겸임)</p>
-</header>
+<!-- 얇은 고정 헤더 -->
+<div id="nav">
+  <div class="nav-left">
+    <span class="nav-logo">ninnik × 울림통-변주 2026</span>
+    <span class="nav-title">보조 작업자 근무일지</span>
+  </div>
+</div>
 
 <!-- 네비 -->
 <nav class="page-nav">
@@ -498,7 +545,7 @@
     <a class="active" onclick="switchSection('duties', this)">업무 설명</a>
     <a onclick="switchSection('schedule', this)">예상 일정</a>
     <a onclick="switchSection('log', this)">근무일지 양식</a>
-    <button class="print-btn nav-print" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+    <div style="margin-left:auto; display:flex; align-items:center;"><a href="oolimtong_2026_wcf.html" class="nav-back-inline">← 메인으로</a><button class="print-btn nav-print" onclick="window.print()">🖨 인쇄 / PDF 저장</button></div>
   </div>
 </nav>
 
@@ -651,7 +698,6 @@
   <div class="section" id="log">
     <p class="section-eyebrow">Work Log</p>
     <h2 class="section-title">근무일지 양식</h2>
-    <p class="section-desc">매 근무일 작성 후 작가 확인 서명을 받아 보관하세요.</p>
 
     <div id="log-gate" class="lock-gate">
       <input type="password" id="log-pw" class="lock-input" placeholder="비밀번호" autocomplete="off">
@@ -688,16 +734,36 @@
   function initLogRows() {
     var body = document.getElementById('log-body');
     if (!body || body.children.length) return;
+    // thead 마지막 열 → 근무자 확인 / 작가 확인 두 열로 교체
+    var tbl = body.closest('table');
+    if (tbl) {
+      var headRow = tbl.querySelector('thead tr');
+      if (headRow) {
+        var lastTh = headRow.querySelector('th:last-child');
+        if (lastTh) {
+          lastTh.textContent = '근무자 확인';
+          var thArtist = document.createElement('th');
+          thArtist.textContent = '작가 확인';
+          headRow.appendChild(thArtist);
+        }
+        // tfoot colspan 확장
+        var tfootTd = tbl.querySelector('tfoot td[colspan]');
+        if (tfootTd) {
+          var cur = parseInt(tfootTd.getAttribute('colspan')) || 1;
+          tfootTd.setAttribute('colspan', cur + 1);
+        }
+      }
+    }
     for (var i = 1; i <= 35; i++) {
       var tr = document.createElement('tr');
       tr.innerHTML =
         '<td class="td-idx">' + i + '</td>' +
-        '<td><input type="text" value="  .       .  " style="text-align:center;"></td>' +
+        '<td style="width:88px;"><input type="text" value="  .       .  " style="text-align:center;"></td>' +
         '<td><input type="text" style="width:40px;"></td>' +
         '<td><input type="text" value="  :        ~        :        /        :        ~        :  " style="text-align:center; min-width:260px;"></td>' +
         '<td><input type="number" min="0" max="24" step="0.5" class="hour-input" data-row="' + i + '" style="width:58px; text-align:left;"></td>' +
         '<td class="td-content"><input type="text"></td>' +
-        '<td><input type="text"></td>';
+        '<td class="td-sign"><input type="text" placeholder=""></td>' + '<td class="td-sign td-sign-last"><input type="text" placeholder=""></td>';
       body.appendChild(tr);
     }
   }

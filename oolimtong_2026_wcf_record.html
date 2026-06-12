@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>작업 기록 — 네모 · 고리 · 미로 | 울림통-변주 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+  :root {
+    --bg:#f6ede6; --bg2:#eee0d6; --bg3:#e4d0c4; --line:#ceb0a0;
+    --accent:#c03828; --accent2:#8c2418; --text:#261410; --text-dim:#7a4c3c; --white:#f6ede6; --salmon:#ffb8b0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; overflow-y:scroll; scrollbar-gutter:stable; }
+  body {
+ background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; font-size:15px; line-height:1.75; padding-top:56px; }
+
+  /* ── 얇은 고정 헤더 ── */
+  #nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(246,237,230,0.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; padding:0 max(40px, calc((100% - 860px) / 2)); height:56px; }
+  .nav-left { display:flex; align-items:baseline; gap:14px; min-width:0; }
+  .nav-logo { font-size:13px; letter-spacing:0.25em; color:var(--accent); font-weight:500; text-transform:uppercase; white-space:nowrap; }
+  .nav-title { font-family:'IBM Plex Sans KR',sans-serif; font-size:16px; font-weight:700; color:var(--text); letter-spacing:0.02em; white-space:nowrap; }
+  .nav-right { display:flex; align-items:center; gap:8px; }
+  .nav-team { font-size:12px; color:var(--text-dim); text-decoration:none; letter-spacing:0.06em; border:1px solid var(--line); padding:5px 12px; border-radius:2px; white-space:nowrap; transition:background 0.2s,color 0.2s; }
+  .nav-team:hover { background:var(--bg3); color:var(--accent); }
+  .nav-back { font-size:12px; color:var(--text-dim); text-decoration:none; letter-spacing:0.08em; white-space:nowrap; transition:color 0.2s; }
+  .nav-back:hover { color:var(--accent); }
+
+  /* ── 팀 정보 한 줄 ── */
+  .team-line { font-size:13.5px; color:var(--text); font-weight:600; line-height:1.9; margin-top:2px; }
+  .team-when { color:var(--text-dim); font-weight:400; }
+  .team-artist { color:var(--accent2); font-weight:700; }
+
+  /* ── 본문 상단 팀 전환 ── */
+  .team-bar { max-width:940px; margin:0 auto; padding:44px 40px 0; }
+  .team-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+  .team-tab {
+    font-family:'IBM Plex Sans KR',sans-serif;
+    font-size:clamp(20px,3vw,30px);
+    font-weight:700;
+    line-height:1.3;
+    padding:6px 24px;
+    border:2px solid var(--accent);
+    border-radius:4px;
+    background:transparent;
+    color:var(--accent);
+    cursor:pointer;
+    transition:background 0.15s, color 0.15s;
+  }
+  .team-tab:hover:not(.active) { background:rgba(192,56,40,0.08); }
+  .team-tab.active { background:var(--accent); color:var(--white); cursor:default; }
+
+  .team-head { display:none; }
+  .team-head.active { display:block; }
+
+  .header-members { display:flex; flex-wrap:wrap; align-items:center; gap:2px 0; margin-top:16px; }
+  .header-members .member-chip { font-size:13.5px; background:none; border:none; padding:0; color:var(--text); font-weight:600; }
+  .header-members .member-chip:not(:last-child)::after { content:'·'; margin:0 10px; color:var(--accent2); opacity:0.45; }
+  .header-members .member-chip.artist { color:var(--accent2); font-weight:700; }
+  .header-note { font-size:12px; color:var(--accent2); margin-top:10px; }
+
+  /* ── 섹션 ── */
+  section { max-width:940px; margin:0 auto; padding:36px 40px 100px; }
+  h2 { font-family:'IBM Plex Sans KR',sans-serif; font-size:clamp(22px,2.6vw,30px); font-weight:700; color:var(--text); margin-bottom:28px; border-left:3px solid var(--accent); padding-left:16px; }
+
+  .team-pane { display:none; }
+  .team-pane.active { display:block; }
+
+  /* ── 작업 기록 ── */
+  .session-list { display:flex; flex-direction:column; gap:2px; }
+  .session-item { background:var(--bg2); }
+  .session-header { display:grid; grid-template-columns:100px 80px 1fr auto; gap:16px; align-items:center; padding:16px 24px; cursor:pointer; transition:background 0.15s; }
+  .session-header:hover { background:var(--bg3); }
+  .session-date { font-size:13px; color:var(--text-dim); font-family:'IBM Plex Sans KR',sans-serif; }
+  .session-badge { font-size:11px; font-weight:700; background:var(--accent); color:var(--white); padding:3px 10px; border-radius:2px; letter-spacing:0.06em; text-align:center; }
+  .session-title { font-size:14px; font-weight:500; color:var(--text); }
+  .session-toggle { font-size:18px; color:var(--text-dim); transition:transform 0.2s; }
+  .session-header.open { background:var(--bg3); }
+  .session-header.open:hover { background:var(--bg3); }
+  .session-body { display:none; padding:0 24px 20px; border-top:1px solid var(--line); }
+  .session-body.open { display:block; background:var(--bg); border-top:2px solid var(--accent); padding-top:18px; }
+  .session-toggle.open { transform:rotate(180deg); }
+  .record-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px; }
+  .record-field label { font-size:11px; letter-spacing:0.15em; color:var(--accent2); text-transform:uppercase; font-weight:600; display:block; margin-bottom:6px; }
+  .label-hint { font-weight:400; color:var(--text-dim); letter-spacing:0.05em; text-transform:none; }
+  .record-field p { font-size:13px; color:var(--text-dim); background:transparent; border-bottom:1px solid var(--line); padding:8px 2px; min-height:36px; line-height:1.7; }
+  .record-field.full { grid-column:1/-1; }
+
+  /* ── 사진 (썸네일 + 드라이브 링크) ── */
+  .photo-block { margin-top:16px; }
+  .photo-label { font-size:11px; letter-spacing:0.15em; color:var(--accent2); text-transform:uppercase; font-weight:600; margin-bottom:8px; }
+  .photo-row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .photo-thumb { width:88px; height:66px; background:var(--bg3); border:1.5px dashed var(--line); border-radius:2px; display:flex; align-items:center; justify-content:center; color:var(--line); font-size:18px; overflow:hidden; }
+  .photo-thumb img { width:100%; height:100%; object-fit:cover; }
+  .album-link { font-size:12px; color:var(--accent); border:1px solid var(--accent); border-radius:2px; padding:8px 16px; text-decoration:none; letter-spacing:0.04em; white-space:nowrap; transition:background 0.2s,color 0.2s; }
+  .album-link:hover { background:var(--accent); color:var(--white); }
+
+  /* ── 오늘의 대화 ── */
+  .dialogue-block { margin-top:16px; }
+  .dialogue-label { font-size:11px; letter-spacing:0.15em; color:var(--accent2); text-transform:uppercase; font-weight:600; margin-bottom:8px; }
+  .quote-block { padding:12px 0; margin-bottom:8px; font-size:14px; color:var(--text-dim); font-style:italic; line-height:1.75; }
+  .quote-block:last-child { margin-bottom:0; }
+  .quote-block .speaker { display:block; font-size:11px; letter-spacing:0.1em; color:var(--accent); font-style:normal; font-weight:600; margin-bottom:4px; text-transform:uppercase; }
+
+  /* ── 반응형 ── */
+  @media(max-width:700px) {
+    #nav { padding:0 20px; }
+    .nav-logo { display:none; }
+    .team-bar { padding:32px 20px 0; }
+    .team-tab { padding:5px 18px; }
+    section { padding:28px 20px 80px; }
+    .record-grid { grid-template-columns:1fr; }
+    .session-header { grid-template-columns:80px 60px 1fr auto; gap:10px; padding:14px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="nav">
+  <div class="nav-left">
+    <span class="nav-logo">ninnik × 울림통-변주 2026</span>
+    <span class="nav-title">팀별 작업 기록</span>
+  </div>
+  <div class="nav-right">
+    <a href="oolimtong_2026_wcf.html" class="nav-back">← 메인으로</a>
+    <a href="oolimtong_2026_wcf_book.html" class="nav-team">예약 현황 ↗</a>
+    <a href="https://drive.google.com/drive/folders/1oMWrVGzkAMElQyV4Yv1uCNEvCzd90gCz?usp=drive_link" target="_blank" class="nav-team" style="background:var(--accent); color:var(--white); border-color:var(--accent);" onmouseover="this.style.background='var(--accent2)';this.style.borderColor='var(--accent2)'" onmouseout="this.style.background='var(--accent)';this.style.borderColor='var(--accent)'">사진·영상 올리기 ↗</a>
+  </div>
+</div>
+
+<div class="team-bar">
+  <div class="team-tabs">
+    <button class="team-tab active" data-team="nemo" onclick="switchTeam('nemo')">네모</button>
+    <button class="team-tab" data-team="gori" onclick="switchTeam('gori')">고리</button>
+    <button class="team-tab" data-team="miro" onclick="switchTeam('miro')">미로</button>
+  </div>
+
+  <div class="team-head active" data-team="nemo">
+    <p class="team-line"><span class="team-when">매주 토요일 14:00 · 니닉크라프트 실내</span>&ensp;·&ensp;허양 · 이재홍 · 조영범 · 임계화 · 신정숙 · <span class="team-artist">김아영</span></p>
+  </div>
+
+  <div class="team-head" data-team="gori">
+    <p class="team-line"><span class="team-when">매주 일요일 10:00 · 니닉크라프트 실내</span>&ensp;·&ensp;이채명 · 박수연 · 박소연 · 이안 · 박진희 · 이성순 · <span class="team-artist">김아영</span></p>
+  </div>
+
+  <div class="team-head" data-team="miro">
+    <p class="team-line"><span class="team-when">매주 일요일 14:00 · 하나어린이집 야외 부지</span>&ensp;·&ensp;인동욱 · 민지현 · 조영범 · 김주원 · 김현국 · 이새롬 · 주장석 · <span class="team-artist">김아영</span></p>
+  </div>
+</div>
+
+<!-- ══════════ 네모 ══════════ -->
+<section id="nemo" class="team-pane active" data-team="nemo">
+  <div class="session-list">
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">5. 9. 토</span>
+          <span class="session-badge">1회</span>
+          <span class="session-title">재료 이해 · 모뉴먼트 드로잉</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">5. 16. 토</span>
+          <span class="session-badge">2회</span>
+          <span class="session-title">모뉴먼트 울림통 제작</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">5. 23. 토</span>
+          <span class="session-badge">3회</span>
+          <span class="session-title">모뉴먼트 마무리 · 타래 만들기</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">5. 30. 토</span>
+          <span class="session-badge">4회</span>
+          <span class="session-title">대형 울림통 제작</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">6. 6. 토</span>
+          <span class="session-badge">5회</span>
+          <span class="session-title">대형 울림통 제작</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">6. 13. 토</span>
+          <span class="session-badge">6회</span>
+          <span class="session-title">대형 울림통 제작</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">6. 20. 토</span>
+          <span class="session-badge">7회</span>
+          <span class="session-title">대형 울림통 제작 마무리</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">6. 27. 토</span>
+          <span class="session-badge">8회</span>
+          <span class="session-title">개인 모뉴먼트 점검 · 완료</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">7. 4. 토</span>
+          <span class="session-badge">9회</span>
+          <span class="session-title">표면 마감 · 이름짓기</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">7. 11. 토</span>
+          <span class="session-badge">10회</span>
+          <span class="session-title">설치 계획 공유 · 리뷰</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+  </div>
+</section>
+
+<!-- ══════════ 고리 ══════════ -->
+<section id="gori" class="team-pane" data-team="gori">
+  <div class="session-list">
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">5. 10. 일</span>
+          <span class="session-badge">1회</span>
+          <span class="session-title">재료 이해 · 모뉴먼트 드로잉</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">5. 17. 일</span>
+          <span class="session-badge">2회</span>
+          <span class="session-title">모뉴먼트 울림통 제작</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">5. 24. 일</span>
+          <span class="session-badge">3회</span>
+          <span class="session-title">모뉴먼트 마무리 · 타래 만들기</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">5. 31. 일</span>
+          <span class="session-badge">4회</span>
+          <span class="session-title">대형 울림통 제작</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">6. 7. 일</span>
+          <span class="session-badge">5회</span>
+          <span class="session-title">대형 울림통 제작</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">6. 14. 일</span>
+          <span class="session-badge">6회</span>
+          <span class="session-title">대형 울림통 제작</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">6. 21. 일</span>
+          <span class="session-badge">7회</span>
+          <span class="session-title">대형 울림통 제작 마무리</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">6. 28. 일</span>
+          <span class="session-badge">8회</span>
+          <span class="session-title">개인 모뉴먼트 점검 · 완료</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">7. 5. 일</span>
+          <span class="session-badge">9회</span>
+          <span class="session-title">표면 마감 · 이름짓기</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">7. 12. 일</span>
+          <span class="session-badge">10회</span>
+          <span class="session-title">설치 계획 공유 · 리뷰</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+  </div>
+</section>
+
+<!-- ══════════ 미로 ══════════ -->
+<section id="miro" class="team-pane" data-team="miro">
+  <div class="session-list">
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">5. 10. 일</span>
+          <span class="session-badge">1회</span>
+          <span class="session-title">재료 이해 · 모뉴먼트 드로잉</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">5. 17. 일</span>
+          <span class="session-badge">2회</span>
+          <span class="session-title">모뉴먼트 울림통 제작</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">5. 24. 일</span>
+          <span class="session-badge">3회</span>
+          <span class="session-title">모뉴먼트 마무리 · 타래 만들기</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">5. 31. 일</span>
+          <span class="session-badge">4회</span>
+          <span class="session-title">대형 울림통 제작</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">6. 7. 일</span>
+          <span class="session-badge">5회</span>
+          <span class="session-title">대형 울림통 제작</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">6. 14. 일</span>
+          <span class="session-badge">6회</span>
+          <span class="session-title">대형 울림통 제작</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">6. 21. 일</span>
+          <span class="session-badge">7회</span>
+          <span class="session-title">대형 울림통 제작 마무리</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">6. 28. 일</span>
+          <span class="session-badge">8회</span>
+          <span class="session-title">개인 모뉴먼트 점검 · 완료</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">7. 5. 일</span>
+          <span class="session-badge">9회</span>
+          <span class="session-title">표면 마감 · 이름짓기</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">7. 12. 일</span>
+          <span class="session-badge">10회</span>
+          <span class="session-title">설치 계획 공유 · 리뷰</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p></p></div>
+            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+  </div>
+</section>
+
+<script>
+function switchTeam(team) {
+  document.querySelectorAll('.team-tab').forEach(function(t){ t.classList.toggle('active', t.dataset.team === team); });
+  document.querySelectorAll('.team-head').forEach(function(h){ h.classList.toggle('active', h.dataset.team === team); });
+  document.querySelectorAll('.team-pane').forEach(function(p){ p.classList.toggle('active', p.dataset.team === team); });
+  history.replaceState(null, '', '#' + team);
+}
+
+function toggleSession(header) {
+  var body = header.nextElementSibling;
+  var toggle = header.querySelector('.session-toggle');
+  body.classList.toggle('open');
+  toggle.classList.toggle('open');
+  header.classList.toggle('open');
+}
+
+/* 주소에 #nemo / #gori / #miro 가 있으면 해당 팀으로 시작 */
+var hash = window.location.hash.replace('#','');
+if (['nemo','gori','miro'].indexOf(hash) > -1) switchTeam(hash);
+</script>
+
+</body>
+</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
