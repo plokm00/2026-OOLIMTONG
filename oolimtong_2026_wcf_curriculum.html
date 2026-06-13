@@ -158,16 +158,15 @@
     counter-reset: steps;
     margin-top: 8px;
   }
+  /* 넘버링: 가로 구분선 없이, 좁은 줄간격 (전 회차 공통) */
   .step-list li {
     counter-increment: steps;
     display: flex;
     gap: 14px;
     align-items: flex-start;
-    padding: 7px 0;
-    border-bottom: 1px solid var(--line);
+    padding: 4px 0;
     font-size: 15px;
   }
-  .step-list li:last-child { border-bottom: none; }
   .step-list li::before {
     content: counter(steps);
     display: flex;
@@ -475,7 +474,7 @@
     .schedule-grid { grid-template-columns: 1fr 1fr; }
     .schedule-card { padding: 18px 16px; }
     .schedule-item { font-size: 14px; }
-    .step-list li { gap: 12px; font-size: 14px; padding: 12px 0; }
+    .step-list li { gap: 12px; font-size: 14px; padding: 4px 0; }
     .tool-item { font-size: 13px; }
     .sense-list { grid-template-columns: 1fr; }
     .tip-box, .warn-box { padding: 14px 18px; font-size: 13px; }
@@ -1122,36 +1121,36 @@
       </p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
         <div style="background:var(--bg3);padding:18px 20px;">
-          <p style="font-size:13px;font-weight:600;color:var(--accent2);margin-bottom:8px;letter-spacing:0.06em;">칩에 담길 수 있는 것</p>
+          <p style="font-size:13px;font-weight:600;color:var(--accent2);margin-bottom:8px;letter-spacing:0.06em;">칩에 담을 수 있는 것</p>
           <ul style="list-style:none;font-size:14px;color:var(--text-dim);">
-            <li style="padding:3px 0 3px 12px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>작가 소개 페이지 (URL)</li>
-            <li style="padding:3px 0 3px 12px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>작품 제작기 / 일지</li>
-            <li style="padding:3px 0 3px 12px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>소리 파일 또는 영상</li>
-            <li style="padding:3px 0 3px 12px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>짧은 텍스트 메시지</li>
+            <li style="padding:3px 0 3px 12px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>NFC 태그에는 URL·텍스트·연락처·지도 위치·와이파이 정보 등을 연결할 수 있습니다.</li>
+            <li style="padding:3px 0 3px 12px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>전시·체험에서는 사용자의 앱을 직접 작동하는 방식보다 URL 연결을 활용합니다.</li>
+            <li style="padding:3px 0 3px 12px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>작품 설명·제작 기록·이미지·영상·사운드가 담긴 모바일 웹페이지를 제작하여 이동하도록 합니다.</li>
           </ul>
         </div>
         <div style="background:var(--bg3);padding:18px 20px;">
           <p style="font-size:13px;font-weight:600;color:var(--accent2);margin-bottom:8px;letter-spacing:0.06em;">심는 위치 고르기</p>
           <ul style="list-style:none;font-size:14px;color:var(--text-dim);">
-            <li style="padding:3px 0 3px 12px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>외부에서 폰을 댈 수 있는 곳 (안 숨겨도 됩니다)</li>
-            <li style="padding:3px 0 3px 12px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>벽 두께가 충분한 곳 (얇으면 건조 중 칩이 드러날 수 있음)</li>
-            <li style="padding:3px 0 3px 12px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>의도적으로 바닥, 안쪽 등 숨겨진 곳도 좋습니다</li>
+            <li style="padding:3px 0 3px 12px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>휴대폰이 NFC 태그를 인식하는 위치를 확인합니다 (상단·중앙·카메라 주변 등 기기마다 조금씩 다름).</li>
+            <li style="padding:3px 0 3px 12px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>그 부위가 작품에 닿는지 확인합니다. 즉, 최하단·움푹 들어간 부분 등을 피하여 위치를 결정합니다.</li>
           </ul>
         </div>
       </div>
     </div>
 
-    <ol class="step-list" style="margin-top:24px;">
-      <li>모뉴먼트에서 NFC 칩을 심을 위치를 정합니다. 벽 안쪽에 납작하게 눌러 넣는 방식입니다.</li>
-      <li>칩 크기에 맞게 흙 표면을 살짝 눌러 자리를 만들고, 칩을 넣은 뒤 흙으로 얇게 덮어 봉합니다.</li>
-      <li>칩 위의 흙이 너무 두꺼우면 NFC 인식이 어려울 수 있습니다 — 3~5mm 이내로 덮는 것이 좋습니다.</li>
-      <li>봉합 후 표면을 부드럽게 정리하고, 위치를 기억해두세요 (작업 일지에 기록 권장).</li>
-      <li>칩에 연결할 링크나 콘텐츠는 지금 정하지 않아도 됩니다. 소성 이후 NFC 앱으로 언제든 설정 가능합니다.</li>
+    <ol class="step-list no-divider" style="margin-top:24px;">
+      <li>모뉴먼트에서 NFC 칩을 심을 위치를 정합니다.</li>
+      <li>칩 매립은 작품이 반건조된 상태일 때 진행합니다.</li>
+      <li>매립할 위치에 NFC 칩이 들어갈 자리를 파냅니다. 흙은 건조 시 수축하므로, 칩보다 사방 2~3mm 정도 넓게 자리를 만듭니다.</li>
+      <li>칩을 넣은 뒤 덮을 뚜껑은 따로 제작합니다. 뚜껑은 약 3mm 내외의 얇은 두께로 만들고, 작품과 건조 상태가 비슷하도록 작품에서 떼어낸 흙을 사용하거나 수분을 적당히 날린 흙으로 만듭니다.</li>
+      <li>작품의 표면 굴곡에 맞춰 뚜껑의 형태를 잡고, NFC 칩의 중앙부에 들러붙지 않도록 주의하며 가장자리 위주로 부착합니다. 뚜껑과 작품이 맞닿는 부분을 살짝 긁어낸 뒤, 붓으로 물을 바르고 뚜껑을 얹습니다. 부착 부위를 꼭꼭 눌러 단단히 붙입니다. 작은 면적을 다루는 정밀한 작업이므로 도구를 적극 활용합니다.</li>
+      <li>표면을 정리하고, 비닐을 덮은 채 천천히 건조합니다.</li>
+      <li>칩에 연결할 링크나 콘텐츠를 구상합니다. NFC 앱으로 언제든 설정 가능합니다.</li>
     </ol>
 
     <div class="warn-box">
       <strong>주의</strong>
-      칩을 심은 뒤 그 부위를 과도하게 두드리거나 누르지 마세요. 칩은 얇고 쉽게 구부러질 수 있습니다. 소성(가마 소성)은 칩에 영향을 줄 수 있으므로, 소성 계획에 따라 시기를 조율합니다.
+      칩을 심은 위치는 잊지 않도록 기록하거나 표시해 두세요. 이후 제작할 대형 울림통의 경우, 벽을 다지는 과정에서 칩이 깊이 밀려 들어가면 스마트폰 인식이 어려워질 수 있습니다.
     </div>
   </div>
 
@@ -1161,39 +1160,35 @@
     <h2 class="section-title">점토 혼합 반죽 및 타래 대량 제작</h2>
 
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
-      대형 울림통 제작에 앞서, 다음 회차(4회)에 바로 쌓기를 시작할 수 있도록 <strong>타래를 대량으로 미리 만들어 둡니다</strong>.<br>
-      오늘 만든 타래는 비닐로 밀봉해 숙성시키면 다음 주 작업에서 더 다루기 좋아집니다.
+      대형 울림통 제작에 앞서, 다음 시간에 바로 쌓기를 시작할 수 있도록 타래를 대량으로 미리 만들어 둡니다.<br>
+      만든 타래는 비닐로 밀봉하여 둡니다.
     </p>
 
-    <div class="feedback-grid">
-      <div class="feedback-card">
-        <h4>대형 타래의 기준</h4>
-        <ul>
-          <li>모뉴먼트용 타래보다 굵게 — 엄지손가락 굵기 전후 (약 2~3cm)</li>
-          <li>길이는 작업대 절반 이상 — 약 40~60cm</li>
-          <li>너무 굵으면 건조가 느리고 무게로 무너질 수 있습니다</li>
-          <li>한 사람이 오늘 최소 20개 이상 목표</li>
-        </ul>
-      </div>
-      <div class="feedback-card">
-        <h4>반죽 및 타래 제작 순서</h4>
-        <ul>
-          <li>4종 점토를 정해진 비율에 따라 한데 모읍니다</li>
-          <li>충분히 메치고 꼬막밀기로 치대어 기포를 제거합니다</li>
-          <li>반죽을 적당량 떼어내 손바닥과 작업대 사이에서 굴려 타래를 뽑습니다</li>
-          <li>완성된 타래는 겹치지 않게 나무판 위에 늘어놓고 비닐로 덮습니다</li>
-        </ul>
-      </div>
+    <div class="feedback-card" style="margin-bottom:2px;">
+      <h4>대형 타래의 기준</h4>
+      <ul>
+        <li>모뉴먼트용 타래는 손가락 굵기였지만, 대형 울림통용 타래는 그보다 많이 굵습니다.</li>
+        <li>각자의 손 힘과 기술에 따라 덩어리 크기를 조절하여 타래를 만듭니다. 단면의 지름은 5cm 내외입니다. 타래는 굵기가 일정한 것이 중요하며, 길이는 달라도 무관합니다.</li>
+      </ul>
     </div>
 
-    <div class="tip-box">
-      <strong>Tip · 타래 굴리기</strong>
-      손가락을 모아 타래의 중앙에 올리고, 손바닥을 약간 아치형으로 유지한 채 앞뒤로 균일하게 굴립니다. 한 곳에서만 굴리면 그 지점만 얇아지므로, 계속 위치를 이동하며 전체 길이를 균일하게 만드세요. 리듬감 있게 반복하면 금방 익숙해집니다.
+    <div class="feedback-card">
+      <h4>반죽 및 타래 제작 순서</h4>
+      <ul>
+        <li>4종의 점토를 흙자름줄로 잘라 소분한 뒤, 정해진 비율에 따라 포개어 둡니다.</li>
+        <li>흙의 상태를 확인하며 반죽을 준비합니다. 조금 단단해진 흙이 있다면 해당 부분을 충분히 늘리고, 치고, 찢는 등 사전 작업을 한 뒤 덩어리 메치기를 시작합니다.</li>
+        <li>흙을 충분히 메친 뒤, 꼬막밀기로 치대어 기포를 제거하고 조직을 고르게 만듭니다. 이때 마블링이 사라질 때까지 충분히 반죽합니다.</li>
+        <li>반죽이 완료되면 일정한 굵기의 타래를 제작합니다.</li>
+        <li>완성된 타래는 서로 교차해 쌓고, 마르지 않도록 비닐로 덮어 보관합니다.</li>
+      </ul>
+      <p style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:12.5px;color:var(--text-dim);line-height:1.65;">
+        ※ 초기에는 마블링을 남기도록 권장하였으나, 2026년 6월 이후 충분히 혼합하는 방식으로 변경함.
+      </p>
     </div>
 
     <div class="warn-box">
       <strong>주의 · 혼합 비율</strong>
-      점토 혼합 비율은 작가가 지정한 기준을 따릅니다. 임의로 비율을 바꾸면 전체 작품의 색감과 강도가 달라질 수 있습니다.
+      점토 혼합 비율은 지정한 기준을 따릅니다. 임의로 비율을 바꾸면 전체 작품의 색감과 강도가 달라질 수 있습니다.
     </div>
   </div>
 
@@ -1231,20 +1226,6 @@
         <p class="media-caption">흙반죽 (꼬막밀기) 2024</p>
       </div>
 
-      <!-- 영상 3: 타래 성형 기초 교육 자료 2020 -->
-      <div class="media-col">
-        <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
-          <img class="yt-thumb" src="https://img.youtube.com/vi/2riTY87rCBQ/hqdefault.jpg" alt="타래 성형 기초 교육 자료 2020" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-          <span class="yt-play-icon" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(192,56,40,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
-          <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5); z-index:20;">
-            <button onclick="ytPopup(event,'2riTY87rCBQ')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">▶&ensp;바로 보기</button>
-            <div style="height:1px; background:rgba(255,255,255,0.12); flex-shrink:0;"></div>
-            <button onclick="ytOpenTab(event,'2riTY87rCBQ')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">↗&ensp;새 탭으로 열기</button>
-          </div>
-        </div>
-        <p class="media-caption">타래 성형 기초 교육 자료 2020</p>
-      </div>
-
     </div>
   </div>
 
@@ -1253,7 +1234,7 @@
   <div id="tab-4" class="tab-pane">
     <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
 <p class="header-meta">울림통-변주 2026 · 4회 자료</p>
-  <h1 class="header-title">대형 울림통 제작</h1>
+  <h1 class="header-title">대형 울림통 제작 1</h1>
   <p class="header-sub">협력창작의 본격적인 시작 — 반죽과 타래 쌓기를 병행하며 대형 울림통의 기초를 세웁니다</p>
   <span class="header-date">5. 30. 토 &nbsp;/&nbsp; 5. 31. 일 &nbsp;·&nbsp; 3시간</span>
     </div></div>
@@ -1269,8 +1250,8 @@
         <p class="schedule-item">3회 리뷰, 대형 울림통 전체 계획 공유</p>
       </div>
       <div class="schedule-card" style="grid-column: span 2;">
-        <p class="schedule-time">실습 · 140분</p>
-        <p class="schedule-item">울림통 기초 제작 (바닥 &amp; 하부 타래 쌓기) · 반죽과 쌓기 병행</p>
+        <p class="schedule-time">실습 · 160분</p>
+        <p class="schedule-item">울림통 기초 제작 · 반죽과 쌓기 병행</p>
       </div>
       <div class="schedule-card">
         <p class="schedule-time">마무리 · 10분</p>
@@ -1286,12 +1267,11 @@
     <div class="tool-grid">
       <div class="tool-item"><span class="tool-dot"></span>점토 4종</div>
       <div class="tool-item"><span class="tool-dot"></span>흙자름줄</div>
-      <div class="tool-item"><span class="tool-dot"></span>천 · 나무판</div>
-      <div class="tool-item"><span class="tool-dot"></span>스펀지</div>
       <div class="tool-item"><span class="tool-dot"></span>분무기</div>
       <div class="tool-item"><span class="tool-dot"></span>비닐</div>
-      <div class="tool-item"><span class="tool-dot"></span>수평계</div>
-      <div class="tool-item"><span class="tool-dot"></span>기본 성형 도구</div>
+      <div class="tool-item"><span class="tool-dot"></span>샤모트 · 자갈</div>
+      <div class="tool-item"><span class="tool-dot"></span>허니컴 종이 팔레트</div>
+      <div class="tool-item"><span class="tool-dot"></span>기름 · 붓</div>
     </div>
   </div>
 
@@ -1302,52 +1282,54 @@
 
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
       개인 모뉴먼트가 각자의 작품이라면, <strong>대형 울림통은 모두가 함께 만드는 하나의 구조물</strong>입니다.<br>
-      각자가 만든 타래가 모여 하나의 큰 그릇을 이루는 과정 — 그 자체가 이 프로젝트의 핵심입니다.
+      각자가 만든 타래가 모여 하나의 큰 형상을 이루는 과정, 그 자체가 이 프로젝트의 핵심입니다.
     </p>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:0;">
       <div style="background:var(--bg2); padding:26px 24px;">
         <p style="font-size:13px;font-weight:600;color:var(--accent2);margin-bottom:10px;letter-spacing:0.06em;">형태 원칙</p>
         <ul style="list-style:none;font-size:14px;color:var(--text-dim);">
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>사람이 들어가거나 가까이 다가설 수 있는 크기</li>
+          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>사람이 들어갈 수 있는 크기 (어른, 아이 등 기준 체형에 따라 구조물의 크기가 달라짐)</li>
           <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>내부에 울림이 생기는 공간 구조</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>자연광이 들어오는 개구부 포함</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>타래성형 기법만으로 완성</li>
+          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>자연광과 외부 소리가 들어오는 개구부 형성</li>
+          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>바닥면 없이 타래성형 기법만으로 완성</li>
         </ul>
       </div>
       <div style="background:var(--bg2); padding:26px 24px;">
-        <p style="font-size:13px;font-weight:600;color:var(--accent2);margin-bottom:10px;letter-spacing:0.06em;">오늘의 목표</p>
+        <p style="font-size:13px;font-weight:600;color:var(--accent2);margin-bottom:10px;letter-spacing:0.06em;">협력 작업의 원칙</p>
         <ul style="list-style:none;font-size:14px;color:var(--text-dim);">
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>바닥판(슬래브 또는 첫 링) 완성</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>하부 타래를 최소 10단 이상 쌓기</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>반죽 팀은 쌓기 팀에 타래를 지속 공급</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>오늘 작업분을 비닐로 밀봉해 보관</li>
+          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>내 타래와 옆 사람의 타래가 한 줄처럼 이어지도록 이음새 부위의 밀도·두께에 유의하세요.</li>
+          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>형태가 예상과 달라지는 것은 자연스럽습니다. 흙과 대화하는 과정입니다.</li>
+          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>결정이 필요할 때는 멈추고 함께 이야기하세요.</li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- 역할 분담 -->
+  <!-- 설치 현장 및 바닥면 조성 -->
   <div class="section">
-    <p class="section-label">Team Roles</p>
-    <h2 class="section-title">반죽 팀 · 쌓기 팀 병행</h2>
-
-    <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:20px;">
-      오늘은 두 팀이 동시에 작업합니다. 역할은 고정이 아니며 중간에 교대할 수 있습니다.
+    <p class="section-label">Site &amp; Base</p>
+    <h2 class="section-title">울림통 설치 현장 및 바닥면 조성</h2>
+    <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
+      울림통은 완성 후 이동이 어려우므로, 설치할 자리를 먼저 정하고 그 자리에서 바닥면부터 조성합니다.<br>현장 조건에 따라 준비가 달라집니다.
     </p>
-
-    <div class="role-grid">
-      <div class="role-card">
-        <h4>반죽 팀</h4>
-        <p>점토를 혼합·반죽하고 대형 타래를 만들어 쌓기 팀에 지속적으로 공급합니다. 타래가 끊기면 쌓기가 멈추므로, 반죽 팀의 속도가 전체 진행을 결정합니다.</p>
+    <div class="feedback-grid">
+      <div class="feedback-card">
+        <h4>실내 현장</h4>
+        <ul>
+          <li>바닥이 평평한지 확인하고, 종이 팔레트를 깔아 작품과 바닥을 분리합니다.</li>
+          <li>종이 팔레트 윗면에 붓으로 기름(동유)을 바르고 충분히 스며들게 합니다.</li>
+          <li>장소에 따라 흙물·기름이 바닥에 묻지 않도록 주변을 비닐이나 천으로 보호합니다.</li>
+          <li>환기가 너무 강하면 건조가 빨라지므로, 작업 중에는 바람을 직접 맞지 않도록 합니다.</li>
+        </ul>
       </div>
-      <div class="role-card">
-        <h4>쌓기 팀</h4>
-        <p>공급된 타래를 이어가며 구조물을 쌓아올립니다. 한 번에 너무 높이 쌓지 않도록 조절하며, 안쪽과 바깥쪽 접합을 번갈아 마무리합니다.</p>
-      </div>
-      <div class="role-card">
-        <h4>교대 원칙</h4>
-        <p>30~40분마다 교대를 제안합니다. 한 가지 역할만 하기보다 양쪽을 모두 경험하는 것이 전체 작업을 이해하는 데 도움이 됩니다.</p>
+      <div class="feedback-card">
+        <h4>실외 현장</h4>
+        <ul>
+          <li>흙바닥에서 작업할 경우, 먼저 지면을 고르고 수평을 맞춥니다. 이후 블록, 벽돌, 판 등을 전체적으로 깔거나, 울림통 첫 단이 올라가는 부분에 맞추어 깔아 바닥면을 조성합니다. 필요 시 코코넛매트 등을 사용해 바닥과 구조물 사이에 유격을 둡니다.</li>
+          <li>직사광선과 바람은 흙을 빠르게 말려 균열을 유발합니다. 햇볕, 비 등을 대비해 천막이나 그늘막을 설치합니다.</li>
+          <li>지면의 습기가 바닥면으로 올라오지 않도록 받침을 충분히 둡니다.</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -1358,66 +1340,36 @@
     <h2 class="section-title">울림통 기초 제작 순서</h2>
 
     <ol class="step-list">
-      <li>작업 위치를 정하고, 이동 가능한 나무판이나 천 위에 시작합니다. 구조물은 나중에 위치를 옮길 수 없으므로 처음부터 적절한 자리를 정합니다.</li>
-      <li>바닥면을 먼저 만듭니다. 두꺼운 슬래브(판)를 짜거나, 넓은 타래 링을 여러 겹 겹쳐 바닥을 형성합니다. 수평을 확인하세요.</li>
-      <li>첫 번째 타래 링을 바닥 위에 올립니다. 안쪽과 바깥쪽 모두 손가락으로 꾹꾹 눌러 완전히 접합합니다.</li>
-      <li>타래를 이어 쌓습니다. 이음새가 수직으로 겹치지 않도록 엇갈리게 배치합니다 (벽돌 쌓기와 같은 원리).</li>
-      <li>5단마다 잠시 멈추고, 형태와 두께의 균일성을 점검합니다. 너무 빠르게 쌓으면 아랫부분이 무게를 견디지 못합니다.</li>
-      <li>타래 공급이 원활한지 반죽 팀과 수시로 소통합니다. 타래가 너무 굳으면 접합력이 떨어집니다.</li>
-      <li>오늘 목표 높이에 도달하면 윗면을 평평하게 정리하고 비닐로 꼼꼼히 밀봉합니다.</li>
+      <li>팀별로 울림통의 대략적인 형태를 논의합니다.</li>
+      <li>형태가 결정되면, 첫 번째 타래 링이 놓일 자리를 샤모트와 자갈을 깔아 밑그림 그리듯 표시합니다.</li>
+      <li>타래를 샤모트 위에 올려놓으며 첫 줄을 형성합니다. 첫 줄의 타래를 이을 때에는 보이는 부분뿐 아니라 아래쪽도 살짝 들어 이음새를 메꿉니다.</li>
+      <li>타래를 층층이 올리면서 안쪽과 바깥쪽을 모두 손가락으로 꾹꾹 눌러 완전히 접합합니다. 이때 굴곡을 살릴지, 매끄럽게 다듬을지는 팀별 논의로 정합니다.</li>
+      <li>타래가 3단 정도 쌓이면, 사람이 드나들 입구의 위치와 형태를 정하고 해당 부분을 비워둔 채 타래를 이어 쌓습니다.</li>
+      <li>두께의 균일성을 점검하며 타래를 이어 쌓습니다. 가능하면 이음새가 수직으로 겹치지 않도록 엇갈리게 배치합니다.</li>
+      <li>작업 중 타래가 모자랄 경우 반죽작업을 병행하여 지속적으로 공급합니다.</li>
+      <li>작업을 마친 후에는 반드시 비닐을 덮어 보관합니다. 특히 가장 마지막으로 쌓은 타래의 윗면이 마르면 다음 작업을 이어가기 어려우므로, 해당 부분에는 가늘게 자른 비닐을 따로 씌워 수분 증발을 막습니다.</li>
     </ol>
 
-    <div class="feedback-grid" style="margin-top:24px;">
-      <div class="feedback-card">
-        <h4>타래 쌓기 핵심 원칙</h4>
-        <ul>
-          <li>이음새는 반드시 엇갈리게 — 수직으로 겹치면 균열이 생깁니다</li>
-          <li>안쪽 접합을 먼저, 바깥쪽을 나중에 정리합니다</li>
-          <li>5단 이상 한 번에 쌓지 마세요</li>
-          <li>분무기로 수분을 유지하되 과습은 금물</li>
-          <li>작업 중단 전 반드시 비닐로 밀봉</li>
-        </ul>
-      </div>
-      <div class="feedback-card">
-        <h4>협력 작업에서 생기는 일</h4>
-        <ul>
-          <li>내 타래와 옆 사람의 타래가 이어질 때 이음새를 함께 문질러 주세요</li>
-          <li>형태가 예상과 달라지는 것은 자연스럽습니다 — 흙과 대화하는 과정입니다</li>
-          <li>결정이 필요할 때는 멈추고 함께 이야기하세요</li>
-          <li>잘못 쌓인 부분은 바로 뜯어내고 다시 붙일 수 있습니다</li>
-        </ul>
-      </div>
-    </div>
-
     <div class="tip-box">
-      <strong>Tip · 무너짐 방지</strong>
-      타래를 쌓을수록 구조물의 무게가 늘어납니다. 아랫부분이 충분히 굳기 전에 너무 높이 쌓으면 변형이 생깁니다. 오늘은 구조를 안정시키는 데 집중하고, 높이를 쌓는 것은 다음 회차로 이어갑니다.
+      <strong>Tip</strong>
+      샤모트와 자갈은 형태를 표시하는 밑그림의 역할을 하는 동시에, 흙이 마르며 수축할 때 바닥면과 유격을 만들어 갈라짐을 줄이는 완충 역할을 합니다.
     </div>
 
     <div class="warn-box">
-      <strong>주의 · 건조 속도</strong>
-      실내 온도와 환기 상태에 따라 흙이 예상보다 빨리 굳을 수 있습니다. 작업 중 비닐이나 젖은 천으로 작업 중인 부위를 수시로 덮어두세요. 특히 가장자리가 먼저 마릅니다.
+      <strong>주의 · 이음새 두께</strong>
+      타래의 이음새를 메꿀 때 굴곡을 살리려다 보면 이음새가 지나치게 얇아질 수 있습니다. 굴곡은 완만하게 남기고, 접합부의 두께와 내구성을 우선합니다. 표면은 추후 반건조 시점의 다지기 과정에서 한 번 더 정리할 수 있습니다.
     </div>
   </div>
 
   <!-- 오늘의 대화 -->
   <div class="section">
     <p class="section-label">Conversation Prompts</p>
-    <h2 class="section-title">작업 중 나눌 수 있는 이야기</h2>
+    <h2 class="section-title">작업하며 나누는 이야기</h2>
 
-    <div style="display:grid;gap:12px;">
-      <div style="background:var(--bg2);border-radius:8px;padding:16px 20px;">
-        <p style="font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--accent);margin-bottom:6px;">내 타래가 구조물에 닿는 순간</p>
-        <p style="font-size:14px;line-height:1.75;color:var(--text-dim);margin:0;">내가 만든 타래가 다른 사람이 쌓은 위에 올려질 때 어떤 기분인가요? 협력창작이 처음으로 느껴지는 순간입니다.</p>
-      </div>
-      <div style="background:var(--bg2);border-radius:8px;padding:16px 20px;">
-        <p style="font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--accent);margin-bottom:6px;">반죽과 쌓기 — 어느 역할이 더 맞았나요?</p>
-        <p style="font-size:14px;line-height:1.75;color:var(--text-dim);margin:0;">반복적인 반죽과 집중이 필요한 쌓기 — 어느 쪽이 지금의 나에게 더 편안했나요? 이유가 있다면 이야기해보세요.</p>
-      </div>
-      <div style="background:var(--bg2);border-radius:8px;padding:16px 20px;">
-        <p style="font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--accent);margin-bottom:6px;">구조물이 커져가는 것을 보며</p>
-        <p style="font-size:14px;line-height:1.75;color:var(--text-dim);margin:0;">처음 타래 한 줄이 쌓이고, 점점 형태가 생겨날 때 — 지금 이 물건은 어떤 이름을 가지게 될까요?</p>
-      </div>
+    <div style="margin-top:8px;">
+      <blockquote style="margin:0;padding:4px 0;font-size:16px;line-height:1.85;color:var(--text);font-style:italic;">“내 타래가 다른 사람의 타래와 연결될 때 어떤 기분이 드나요?”</blockquote>
+      <blockquote style="margin:0;padding:4px 0;font-size:16px;line-height:1.85;color:var(--text);font-style:italic;">“반죽과 쌓기 모두 반복적이고 집중이 필요한 작업이지만, 나에게 더 편안한 작업이 있을까요? 왜 그럴까요?”</blockquote>
+      <blockquote style="margin:0;padding:4px 0;font-size:16px;line-height:1.85;color:var(--text);font-style:italic;">“처음 타래 한 줄이 쌓인 이후 점점 구조물이 커지면서 형태가 생기기 시작합니다. 작품은 어떤 모습과 이름을 가지게 될까요?”</blockquote>
     </div>
   </div>
 
@@ -1426,49 +1378,10 @@
     <p class="section-label">Reference Videos</p>
     <h2 class="section-title">참고 영상</h2>
     <div class="media-row three">
-
-      <!-- 영상 1: 흙반죽 (꼬막밀기) 2025 -->
       <div class="media-col">
-        <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
-          <img src="https://img.youtube.com/vi/4O1IsdXeIwA/hqdefault.jpg" alt="흙반죽 꼬막밀기 2025" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-          <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(192,56,40,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
-          <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5); z-index:20;">
-            <button onclick="ytPopup(event,'4O1IsdXeIwA')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">▶&ensp;바로 보기</button>
-            <div style="height:1px; background:rgba(255,255,255,0.12);"></div>
-            <button onclick="ytOpenTab(event,'4O1IsdXeIwA')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">↗&ensp;새 탭으로 열기</button>
-          </div>
-        </div>
-        <p class="media-caption">흙반죽 (꼬막밀기) 2025</p>
+        <div style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:var(--bg3); border:1px dashed var(--line);"></div>
+        <p class="media-caption">-----</p>
       </div>
-
-      <!-- 영상 2: 흙반죽 (꼬막밀기) 2024 -->
-      <div class="media-col">
-        <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
-          <img src="https://img.youtube.com/vi/zQOGEoMlknk/hqdefault.jpg" alt="흙반죽 꼬막밀기 2024" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-          <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(192,56,40,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
-          <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5); z-index:20;">
-            <button onclick="ytPopup(event,'zQOGEoMlknk')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">▶&ensp;바로 보기</button>
-            <div style="height:1px; background:rgba(255,255,255,0.12);"></div>
-            <button onclick="ytOpenTab(event,'zQOGEoMlknk')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">↗&ensp;새 탭으로 열기</button>
-          </div>
-        </div>
-        <p class="media-caption">흙반죽 (꼬막밀기) 2024</p>
-      </div>
-
-      <!-- 영상 3: 타래 성형 기초 교육 자료 2020 -->
-      <div class="media-col">
-        <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
-          <img src="https://img.youtube.com/vi/2riTY87rCBQ/hqdefault.jpg" alt="타래 성형 기초 교육 자료 2020" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-          <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(192,56,40,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
-          <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5); z-index:20;">
-            <button onclick="ytPopup(event,'2riTY87rCBQ')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">▶&ensp;바로 보기</button>
-            <div style="height:1px; background:rgba(255,255,255,0.12);"></div>
-            <button onclick="ytOpenTab(event,'2riTY87rCBQ')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">↗&ensp;새 탭으로 열기</button>
-          </div>
-        </div>
-        <p class="media-caption">타래 성형 기초 교육 자료 2020</p>
-      </div>
-
     </div>
   </div>
 
@@ -1477,9 +1390,9 @@
   <div id="tab-5" class="tab-pane">
     <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
 <p class="header-meta">울림통-변주 2026 · 5회 자료</p>
-  <h1 class="header-title">대형 울림통 제작</h1>
+  <h1 class="header-title">대형 울림통 제작 2</h1>
   <p class="header-sub">울림통 기초 제작 — 반죽과 타래 쌓기를 병행하며 형태를 쌓아갑니다</p>
-  <span class="header-date">5. 30. 토 &nbsp;/&nbsp; 5. 31. 일 &nbsp;·&nbsp; 3시간</span>
+  <span class="header-date">6. 6. 토 &nbsp;/&nbsp; 6. 7. 일 &nbsp;·&nbsp; 3시간</span>
     </div></div>
     <div class="pane-body"><div class="content-wrap">
 
@@ -1490,11 +1403,11 @@
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4px;">
       <div class="schedule-card">
         <p class="schedule-time">도입 · 10분</p>
-        <p class="schedule-item">3회 리뷰, 대형 울림통 전체 계획 공유</p>
+        <p class="schedule-item">4회 리뷰, 이어서 작업 준비</p>
       </div>
       <div class="schedule-card" style="grid-column: span 2;">
-        <p class="schedule-time">실습 · 140분</p>
-        <p class="schedule-item">울림통 기초 제작 (바닥 &amp; 하부 타래 쌓기) · 반죽과 쌓기 병행</p>
+        <p class="schedule-time">실습 · 160분</p>
+        <p class="schedule-item">울림통 기초 및 하단부 제작</p>
       </div>
       <div class="schedule-card">
         <p class="schedule-time">마무리 · 10분</p>
@@ -1510,44 +1423,7 @@
     <div class="tool-grid">
       <div class="tool-item"><span class="tool-dot"></span>점토 4종</div>
       <div class="tool-item"><span class="tool-dot"></span>흙자름줄</div>
-      <div class="tool-item"><span class="tool-dot"></span>천 · 나무판</div>
-      <div class="tool-item"><span class="tool-dot"></span>스펀지</div>
-      <div class="tool-item"><span class="tool-dot"></span>분무기</div>
       <div class="tool-item"><span class="tool-dot"></span>비닐</div>
-      <div class="tool-item"><span class="tool-dot"></span>수평계</div>
-      <div class="tool-item"><span class="tool-dot"></span>기본 성형 도구</div>
-    </div>
-  </div>
-
-  <!-- 대형 울림통이란 -->
-  <div class="section">
-    <p class="section-label">About the Large Oolimtong</p>
-    <h2 class="section-title">대형 울림통이란</h2>
-
-    <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
-      개인 모뉴먼트가 각자의 작품이라면, <strong>대형 울림통은 모두가 함께 만드는 하나의 구조물</strong>입니다.<br>
-      각자가 만든 타래가 모여 하나의 큰 그릇을 이루는 과정 — 그 자체가 이 프로젝트의 핵심입니다.
-    </p>
-
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:0;">
-      <div style="background:var(--bg2); padding:26px 24px;">
-        <p style="font-size:13px;font-weight:600;color:var(--accent2);margin-bottom:10px;letter-spacing:0.06em;">형태 원칙</p>
-        <ul style="list-style:none;font-size:14px;color:var(--text-dim);">
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>사람이 들어가거나 가까이 다가설 수 있는 크기</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>내부에 울림이 생기는 공간 구조</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>자연광이 들어오는 개구부 포함</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>타래성형 기법만으로 완성</li>
-        </ul>
-      </div>
-      <div style="background:var(--bg2); padding:26px 24px;">
-        <p style="font-size:13px;font-weight:600;color:var(--accent2);margin-bottom:10px;letter-spacing:0.06em;">오늘의 목표</p>
-        <ul style="list-style:none;font-size:14px;color:var(--text-dim);">
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>바닥판(슬래브 또는 첫 링) 완성</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>하부 타래를 최소 10단 이상 쌓기</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>반죽 팀은 쌓기 팀에 타래를 지속 공급</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>오늘 작업분을 비닐로 밀봉해 보관</li>
-        </ul>
-      </div>
     </div>
   </div>
 
@@ -1557,61 +1433,13 @@
     <h2 class="section-title">반죽 팀 · 쌓기 팀 병행</h2>
 
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:20px;">
-      오늘은 두 팀이 동시에 작업합니다. 역할은 고정이 아니며 중간에 교대할 수 있습니다.
+      반죽 또는 쌓기 작업을 연속해서 진행할 수도 있지만, 팀원을 두 그룹으로 나누어 반죽·타래 제작과 타래 쌓기 역할을 분담할 수 있습니다. 작업 중간에 역할을 교대하면 두 과정을 병행하며 진행할 수 있습니다.
     </p>
 
-    <div class="role-grid">
-      <div class="role-card">
-        <h4>반죽 팀</h4>
-        <p>점토를 혼합·반죽하고 대형 타래를 만들어 쌓기 팀에 지속적으로 공급합니다. 타래가 끊기면 쌓기가 멈추므로, 반죽 팀의 속도가 전체 진행을 결정합니다.</p>
-      </div>
-      <div class="role-card">
-        <h4>쌓기 팀</h4>
-        <p>공급된 타래를 이어가며 구조물을 쌓아올립니다. 한 번에 너무 높이 쌓지 않도록 조절하며, 안쪽과 바깥쪽 접합을 번갈아 마무리합니다.</p>
-      </div>
-      <div class="role-card">
-        <h4>교대 원칙</h4>
-        <p>30~40분마다 교대를 제안합니다. 한 가지 역할만 하기보다 양쪽을 모두 경험하는 것이 전체 작업을 이해하는 데 도움이 됩니다.</p>
-      </div>
-    </div>
   </div>
 
   <!-- 기초 제작 단계 -->
   <div class="section">
-    <p class="section-label">Construction Steps</p>
-    <h2 class="section-title">울림통 기초 제작 순서</h2>
-
-    <ol class="step-list">
-      <li>작업 위치를 정하고, 이동 가능한 나무판이나 천 위에 시작합니다. 구조물은 나중에 위치를 옮길 수 없으므로 처음부터 적절한 자리를 정합니다.</li>
-      <li>바닥면을 먼저 만듭니다. 두꺼운 슬래브(판)를 짜거나, 넓은 타래 링을 여러 겹 겹쳐 바닥을 형성합니다. 수평을 확인하세요.</li>
-      <li>첫 번째 타래 링을 바닥 위에 올립니다. 안쪽과 바깥쪽 모두 손가락으로 꾹꾹 눌러 완전히 접합합니다.</li>
-      <li>타래를 이어 쌓습니다. 이음새가 수직으로 겹치지 않도록 엇갈리게 배치합니다 (벽돌 쌓기와 같은 원리).</li>
-      <li>5단마다 잠시 멈추고, 형태와 두께의 균일성을 점검합니다. 너무 빠르게 쌓으면 아랫부분이 무게를 견디지 못합니다.</li>
-      <li>타래 공급이 원활한지 반죽 팀과 수시로 소통합니다. 타래가 너무 굳으면 접합력이 떨어집니다.</li>
-      <li>오늘 목표 높이에 도달하면 윗면을 평평하게 정리하고 비닐로 꼼꼼히 밀봉합니다.</li>
-    </ol>
-
-    <div class="feedback-grid" style="margin-top:24px;">
-      <div class="feedback-card">
-        <h4>타래 쌓기 핵심 원칙</h4>
-        <ul>
-          <li>이음새는 반드시 엇갈리게 — 수직으로 겹치면 균열이 생깁니다</li>
-          <li>안쪽 접합을 먼저, 바깥쪽을 나중에 정리합니다</li>
-          <li>5단 이상 한 번에 쌓지 마세요</li>
-          <li>분무기로 수분을 유지하되 과습은 금물</li>
-          <li>작업 중단 전 반드시 비닐로 밀봉</li>
-        </ul>
-      </div>
-      <div class="feedback-card">
-        <h4>협력 작업에서 생기는 일</h4>
-        <ul>
-          <li>내 타래와 옆 사람의 타래가 이어질 때 이음새를 함께 문질러 주세요</li>
-          <li>형태가 예상과 달라지는 것은 자연스럽습니다 — 흙과 대화하는 과정입니다</li>
-          <li>결정이 필요할 때는 멈추고 함께 이야기하세요</li>
-          <li>잘못 쌓인 부분은 바로 뜯어내고 다시 붙일 수 있습니다</li>
-        </ul>
-      </div>
-    </div>
 
     <div class="tip-box">
       <strong>Tip · 무너짐 방지</strong>
@@ -1624,75 +1452,15 @@
     </div>
   </div>
 
-  <!-- 오늘의 대화 -->
-  <div class="section">
-    <p class="section-label">Conversation Prompts</p>
-    <h2 class="section-title">작업 중 나눌 수 있는 이야기</h2>
-
-    <div style="display:grid;gap:12px;">
-      <div style="background:var(--bg2);border-radius:8px;padding:16px 20px;">
-        <p style="font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--accent);margin-bottom:6px;">내 타래가 구조물에 닿는 순간</p>
-        <p style="font-size:14px;line-height:1.75;color:var(--text-dim);margin:0;">내가 만든 타래가 다른 사람이 쌓은 위에 올려질 때 어떤 기분인가요? 협력창작이 처음으로 느껴지는 순간입니다.</p>
-      </div>
-      <div style="background:var(--bg2);border-radius:8px;padding:16px 20px;">
-        <p style="font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--accent);margin-bottom:6px;">반죽과 쌓기 — 어느 역할이 더 맞았나요?</p>
-        <p style="font-size:14px;line-height:1.75;color:var(--text-dim);margin:0;">반복적인 반죽과 집중이 필요한 쌓기 — 어느 쪽이 지금의 나에게 더 편안했나요? 이유가 있다면 이야기해보세요.</p>
-      </div>
-      <div style="background:var(--bg2);border-radius:8px;padding:16px 20px;">
-        <p style="font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--accent);margin-bottom:6px;">구조물이 커져가는 것을 보며</p>
-        <p style="font-size:14px;line-height:1.75;color:var(--text-dim);margin:0;">처음 타래 한 줄이 쌓이고, 점점 형태가 생겨날 때 — 지금 이 물건은 어떤 이름을 가지게 될까요?</p>
-      </div>
-    </div>
-  </div>
-
   <!-- 참고 영상 -->
   <div class="section">
     <p class="section-label">Reference Videos</p>
     <h2 class="section-title">참고 영상</h2>
     <div class="media-row three">
-
-      <!-- 영상 1: 흙반죽 (꼬막밀기) 2025 -->
       <div class="media-col">
-        <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
-          <img src="https://img.youtube.com/vi/4O1IsdXeIwA/hqdefault.jpg" alt="흙반죽 꼬막밀기 2025" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-          <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(192,56,40,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
-          <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5); z-index:20;">
-            <button onclick="ytPopup(event,'4O1IsdXeIwA')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">▶&ensp;바로 보기</button>
-            <div style="height:1px; background:rgba(255,255,255,0.12);"></div>
-            <button onclick="ytOpenTab(event,'4O1IsdXeIwA')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">↗&ensp;새 탭으로 열기</button>
-          </div>
-        </div>
-        <p class="media-caption">흙반죽 (꼬막밀기) 2025</p>
+        <div style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:var(--bg3); border:1px dashed var(--line);"></div>
+        <p class="media-caption">-----</p>
       </div>
-
-      <!-- 영상 2: 흙반죽 (꼬막밀기) 2024 -->
-      <div class="media-col">
-        <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
-          <img src="https://img.youtube.com/vi/zQOGEoMlknk/hqdefault.jpg" alt="흙반죽 꼬막밀기 2024" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-          <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(192,56,40,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
-          <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5); z-index:20;">
-            <button onclick="ytPopup(event,'zQOGEoMlknk')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">▶&ensp;바로 보기</button>
-            <div style="height:1px; background:rgba(255,255,255,0.12);"></div>
-            <button onclick="ytOpenTab(event,'zQOGEoMlknk')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">↗&ensp;새 탭으로 열기</button>
-          </div>
-        </div>
-        <p class="media-caption">흙반죽 (꼬막밀기) 2024</p>
-      </div>
-
-      <!-- 영상 3: 타래 성형 기초 교육 자료 2020 -->
-      <div class="media-col">
-        <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
-          <img src="https://img.youtube.com/vi/2riTY87rCBQ/hqdefault.jpg" alt="타래 성형 기초 교육 자료 2020" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-          <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(192,56,40,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
-          <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5); z-index:20;">
-            <button onclick="ytPopup(event,'2riTY87rCBQ')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">▶&ensp;바로 보기</button>
-            <div style="height:1px; background:rgba(255,255,255,0.12);"></div>
-            <button onclick="ytOpenTab(event,'2riTY87rCBQ')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">↗&ensp;새 탭으로 열기</button>
-          </div>
-        </div>
-        <p class="media-caption">타래 성형 기초 교육 자료 2020</p>
-      </div>
-
     </div>
   </div>
 
@@ -1701,9 +1469,9 @@
   <div id="tab-6" class="tab-pane">
     <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
 <p class="header-meta">울림통-변주 2026 · 6회 자료</p>
-  <h1 class="header-title">대형 울림통 제작</h1>
+  <h1 class="header-title">대형 울림통 제작 3</h1>
   <p class="header-sub">반죽·타래 쌓기를 병행하며 자유체험을 시작하고 중간 간담회를 진행합니다</p>
-  <span class="header-date">5. 30. 토 &nbsp;/&nbsp; 5. 31. 일 &nbsp;·&nbsp; 3시간</span>
+  <span class="header-date">6. 13. 토 &nbsp;/&nbsp; 6. 14. 일 &nbsp;·&nbsp; 3시간</span>
     </div></div>
     <div class="pane-body"><div class="content-wrap">
 
@@ -1714,11 +1482,11 @@
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4px;">
       <div class="schedule-card">
         <p class="schedule-time">도입 · 10분</p>
-        <p class="schedule-item">3회 리뷰, 대형 울림통 전체 계획 공유</p>
+        <p class="schedule-item">5회 리뷰, 이어서 작업 준비</p>
       </div>
       <div class="schedule-card" style="grid-column: span 2;">
-        <p class="schedule-time">실습 · 140분</p>
-        <p class="schedule-item">울림통 기초 제작 (바닥 &amp; 하부 타래 쌓기) · 반죽과 쌓기 병행</p>
+        <p class="schedule-time">실습 및 간담회 · 160분</p>
+        <p class="schedule-item">울림통 중반부 제작 및 참여 경험 나누기</p>
       </div>
       <div class="schedule-card">
         <p class="schedule-time">마무리 · 10분</p>
@@ -1734,138 +1502,46 @@
     <div class="tool-grid">
       <div class="tool-item"><span class="tool-dot"></span>점토 4종</div>
       <div class="tool-item"><span class="tool-dot"></span>흙자름줄</div>
-      <div class="tool-item"><span class="tool-dot"></span>천 · 나무판</div>
-      <div class="tool-item"><span class="tool-dot"></span>스펀지</div>
-      <div class="tool-item"><span class="tool-dot"></span>분무기</div>
       <div class="tool-item"><span class="tool-dot"></span>비닐</div>
-      <div class="tool-item"><span class="tool-dot"></span>수평계</div>
-      <div class="tool-item"><span class="tool-dot"></span>기본 성형 도구</div>
     </div>
   </div>
 
-  <!-- 대형 울림통이란 -->
+  <!-- 중반부 제작 팁 -->
   <div class="section">
-    <p class="section-label">About the Large Oolimtong</p>
-    <h2 class="section-title">대형 울림통이란</h2>
-
-    <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
-      개인 모뉴먼트가 각자의 작품이라면, <strong>대형 울림통은 모두가 함께 만드는 하나의 구조물</strong>입니다.<br>
-      각자가 만든 타래가 모여 하나의 큰 그릇을 이루는 과정 — 그 자체가 이 프로젝트의 핵심입니다.
-    </p>
-
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:0;">
-      <div style="background:var(--bg2); padding:26px 24px;">
-        <p style="font-size:13px;font-weight:600;color:var(--accent2);margin-bottom:10px;letter-spacing:0.06em;">형태 원칙</p>
-        <ul style="list-style:none;font-size:14px;color:var(--text-dim);">
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>사람이 들어가거나 가까이 다가설 수 있는 크기</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>내부에 울림이 생기는 공간 구조</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>자연광이 들어오는 개구부 포함</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>타래성형 기법만으로 완성</li>
-        </ul>
-      </div>
-      <div style="background:var(--bg2); padding:26px 24px;">
-        <p style="font-size:13px;font-weight:600;color:var(--accent2);margin-bottom:10px;letter-spacing:0.06em;">오늘의 목표</p>
-        <ul style="list-style:none;font-size:14px;color:var(--text-dim);">
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>바닥판(슬래브 또는 첫 링) 완성</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>하부 타래를 최소 10단 이상 쌓기</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>반죽 팀은 쌓기 팀에 타래를 지속 공급</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>오늘 작업분을 비닐로 밀봉해 보관</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- 역할 분담 -->
-  <div class="section">
-    <p class="section-label">Team Roles</p>
-    <h2 class="section-title">반죽 팀 · 쌓기 팀 병행</h2>
-
-    <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:20px;">
-      오늘은 두 팀이 동시에 작업합니다. 역할은 고정이 아니며 중간에 교대할 수 있습니다.
-    </p>
-
-    <div class="role-grid">
-      <div class="role-card">
-        <h4>반죽 팀</h4>
-        <p>점토를 혼합·반죽하고 대형 타래를 만들어 쌓기 팀에 지속적으로 공급합니다. 타래가 끊기면 쌓기가 멈추므로, 반죽 팀의 속도가 전체 진행을 결정합니다.</p>
-      </div>
-      <div class="role-card">
-        <h4>쌓기 팀</h4>
-        <p>공급된 타래를 이어가며 구조물을 쌓아올립니다. 한 번에 너무 높이 쌓지 않도록 조절하며, 안쪽과 바깥쪽 접합을 번갈아 마무리합니다.</p>
-      </div>
-      <div class="role-card">
-        <h4>교대 원칙</h4>
-        <p>30~40분마다 교대를 제안합니다. 한 가지 역할만 하기보다 양쪽을 모두 경험하는 것이 전체 작업을 이해하는 데 도움이 됩니다.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 기초 제작 단계 -->
-  <div class="section">
-    <p class="section-label">Construction Steps</p>
-    <h2 class="section-title">울림통 기초 제작 순서</h2>
-
-    <ol class="step-list">
-      <li>작업 위치를 정하고, 이동 가능한 나무판이나 천 위에 시작합니다. 구조물은 나중에 위치를 옮길 수 없으므로 처음부터 적절한 자리를 정합니다.</li>
-      <li>바닥면을 먼저 만듭니다. 두꺼운 슬래브(판)를 짜거나, 넓은 타래 링을 여러 겹 겹쳐 바닥을 형성합니다. 수평을 확인하세요.</li>
-      <li>첫 번째 타래 링을 바닥 위에 올립니다. 안쪽과 바깥쪽 모두 손가락으로 꾹꾹 눌러 완전히 접합합니다.</li>
-      <li>타래를 이어 쌓습니다. 이음새가 수직으로 겹치지 않도록 엇갈리게 배치합니다 (벽돌 쌓기와 같은 원리).</li>
-      <li>5단마다 잠시 멈추고, 형태와 두께의 균일성을 점검합니다. 너무 빠르게 쌓으면 아랫부분이 무게를 견디지 못합니다.</li>
-      <li>타래 공급이 원활한지 반죽 팀과 수시로 소통합니다. 타래가 너무 굳으면 접합력이 떨어집니다.</li>
-      <li>오늘 목표 높이에 도달하면 윗면을 평평하게 정리하고 비닐로 꼼꼼히 밀봉합니다.</li>
-    </ol>
-
-    <div class="feedback-grid" style="margin-top:24px;">
-      <div class="feedback-card">
-        <h4>타래 쌓기 핵심 원칙</h4>
-        <ul>
-          <li>이음새는 반드시 엇갈리게 — 수직으로 겹치면 균열이 생깁니다</li>
-          <li>안쪽 접합을 먼저, 바깥쪽을 나중에 정리합니다</li>
-          <li>5단 이상 한 번에 쌓지 마세요</li>
-          <li>분무기로 수분을 유지하되 과습은 금물</li>
-          <li>작업 중단 전 반드시 비닐로 밀봉</li>
-        </ul>
-      </div>
-      <div class="feedback-card">
-        <h4>협력 작업에서 생기는 일</h4>
-        <ul>
-          <li>내 타래와 옆 사람의 타래가 이어질 때 이음새를 함께 문질러 주세요</li>
-          <li>형태가 예상과 달라지는 것은 자연스럽습니다 — 흙과 대화하는 과정입니다</li>
-          <li>결정이 필요할 때는 멈추고 함께 이야기하세요</li>
-          <li>잘못 쌓인 부분은 바로 뜯어내고 다시 붙일 수 있습니다</li>
-        </ul>
-      </div>
-    </div>
-
+    <p class="section-label">Mid-Section Tip</p>
+    <h2 class="section-title">울림통 중반부 제작</h2>
     <div class="tip-box">
-      <strong>Tip · 무너짐 방지</strong>
-      타래를 쌓을수록 구조물의 무게가 늘어납니다. 아랫부분이 충분히 굳기 전에 너무 높이 쌓으면 변형이 생깁니다. 오늘은 구조를 안정시키는 데 집중하고, 높이를 쌓는 것은 다음 회차로 이어갑니다.
+      <strong>Tip · 기울어짐 방지</strong>
+      벽이 높아질수록 무게가 아래로 쏠려 형태가 바깥으로 벌어지거나 한쪽으로 기울기 쉽습니다. 한 번에 높이 올리기보다 아랫부분이 어느 정도 굳은 뒤 이어 쌓고, 수직과 곡률을 수시로 확인하세요. 안쪽으로 모으는 구간에서는 타래를 조금씩만 들이며 이음새를 더 꼼꼼히 접합합니다.
     </div>
 
     <div class="warn-box">
-      <strong>주의 · 건조 속도</strong>
-      실내 온도와 환기 상태에 따라 흙이 예상보다 빨리 굳을 수 있습니다. 작업 중 비닐이나 젖은 천으로 작업 중인 부위를 수시로 덮어두세요. 특히 가장자리가 먼저 마릅니다.
+      <strong>주의 · 이음새 두께</strong>
+      타래의 이음새를 메꿀 때 굴곡을 살리려다 보면 이음새가 지나치게 얇아질 수 있습니다. 굴곡은 완만하게 남기고, 접합부의 두께와 내구성을 우선합니다. 표면은 추후 반건조 시점의 다지기 과정에서 한 번 더 정리할 수 있습니다.
+    </div>
+
+    <div class="warn-box">
+      <strong>하부 벽 다짐</strong>
+      하부가 충분히 건조되면, 상부를 이어 쌓으면서 돌로 표면을 다지는 작업을 병행할 수 있습니다. 단, 여러 사람이 함께 작업하는 경우 동선이 겹치지 않도록 주의합니다.
     </div>
   </div>
 
-  <!-- 오늘의 대화 -->
+  <!-- 중간 간담회 -->
   <div class="section">
-    <p class="section-label">Conversation Prompts</p>
-    <h2 class="section-title">작업 중 나눌 수 있는 이야기</h2>
-
-    <div style="display:grid;gap:12px;">
-      <div style="background:var(--bg2);border-radius:8px;padding:16px 20px;">
-        <p style="font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--accent);margin-bottom:6px;">내 타래가 구조물에 닿는 순간</p>
-        <p style="font-size:14px;line-height:1.75;color:var(--text-dim);margin:0;">내가 만든 타래가 다른 사람이 쌓은 위에 올려질 때 어떤 기분인가요? 협력창작이 처음으로 느껴지는 순간입니다.</p>
-      </div>
-      <div style="background:var(--bg2);border-radius:8px;padding:16px 20px;">
-        <p style="font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--accent);margin-bottom:6px;">반죽과 쌓기 — 어느 역할이 더 맞았나요?</p>
-        <p style="font-size:14px;line-height:1.75;color:var(--text-dim);margin:0;">반복적인 반죽과 집중이 필요한 쌓기 — 어느 쪽이 지금의 나에게 더 편안했나요? 이유가 있다면 이야기해보세요.</p>
-      </div>
-      <div style="background:var(--bg2);border-radius:8px;padding:16px 20px;">
-        <p style="font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--accent);margin-bottom:6px;">구조물이 커져가는 것을 보며</p>
-        <p style="font-size:14px;line-height:1.75;color:var(--text-dim);margin:0;">처음 타래 한 줄이 쌓이고, 점점 형태가 생겨날 때 — 지금 이 물건은 어떤 이름을 가지게 될까요?</p>
-      </div>
+    <p class="section-label">Mid-Program Talk</p>
+    <h2 class="section-title">중간 간담회</h2>
+    <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
+      프로그램 중반 시점, 참여 경험을 되돌아보며 앞으로의 방향을 함께 나눕니다. 떠오르는 생각을 편하게 이야기해보세요.
+    </p>
+    <div style="margin-top:8px;">
+      <blockquote style="margin:0;padding:4px 0;font-size:16px;line-height:1.85;color:var(--text);font-style:italic;">“내 손의 흔적이 남는 것 <span style="color:var(--accent);font-weight:600;">vs</span> 매끄럽게 다듬어진 완성, 어느 쪽이 더 의미 있게 느껴지나요?”</blockquote>
+      <blockquote style="margin:0;padding:4px 0;font-size:16px;line-height:1.85;color:var(--text);font-style:italic;">“작업이 잘 될 때 <span style="color:var(--accent);font-weight:600;">vs</span> 잘 안 될 때, 그 차이는 어디서 오는 것 같나요?”</blockquote>
+      <blockquote style="margin:0;padding:4px 0;font-size:16px;line-height:1.85;color:var(--text);font-style:italic;">“직접 반죽하는 것 <span style="color:var(--accent);font-weight:600;">vs</span> 토련기로 혼합하는 것, 어떻게 생각하세요?”</blockquote>
+      <blockquote style="margin:0;padding:4px 0;font-size:16px;line-height:1.85;color:var(--text);font-style:italic;">“작업 중 서로 영향을 주고받는다고 느낀 순간이 있었나요?”</blockquote>
+      <blockquote style="margin:0;padding:4px 0;font-size:16px;line-height:1.85;color:var(--text);font-style:italic;">“내가 만든 부분이 구분되는 것 <span style="color:var(--accent);font-weight:600;">vs</span> 누가 만들었는지 모르게 섞이는 것, 어느 쪽을 선호하나요?”</blockquote>
+      <blockquote style="margin:0;padding:4px 0;font-size:16px;line-height:1.85;color:var(--text);font-style:italic;">“혼자 만드는 것 <span style="color:var(--accent);font-weight:600;">vs</span> 함께 만드는 것, 무엇이 다르게 느껴지나요?”</blockquote>
+      <blockquote style="margin:0;padding:4px 0;font-size:16px;line-height:1.85;color:var(--text);font-style:italic;">“완성된 울림통이 전시될 때 어떤 감정일 것 같나요?”</blockquote>
+      <blockquote style="margin:0;padding:4px 0;font-size:16px;line-height:1.85;color:var(--text);font-style:italic;">“이 작업을 통해 '나의 것'이 생긴다는 느낌이 드나요?”</blockquote>
     </div>
   </div>
 
@@ -1874,277 +1550,21 @@
     <p class="section-label">Reference Videos</p>
     <h2 class="section-title">참고 영상</h2>
     <div class="media-row three">
-
-      <!-- 영상 1: 흙반죽 (꼬막밀기) 2025 -->
       <div class="media-col">
-        <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
-          <img src="https://img.youtube.com/vi/4O1IsdXeIwA/hqdefault.jpg" alt="흙반죽 꼬막밀기 2025" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-          <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(192,56,40,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
-          <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5); z-index:20;">
-            <button onclick="ytPopup(event,'4O1IsdXeIwA')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">▶&ensp;바로 보기</button>
-            <div style="height:1px; background:rgba(255,255,255,0.12);"></div>
-            <button onclick="ytOpenTab(event,'4O1IsdXeIwA')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">↗&ensp;새 탭으로 열기</button>
-          </div>
-        </div>
-        <p class="media-caption">흙반죽 (꼬막밀기) 2025</p>
+        <div style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:var(--bg3); border:1px dashed var(--line);"></div>
+        <p class="media-caption">-----</p>
       </div>
-
-      <!-- 영상 2: 흙반죽 (꼬막밀기) 2024 -->
-      <div class="media-col">
-        <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
-          <img src="https://img.youtube.com/vi/zQOGEoMlknk/hqdefault.jpg" alt="흙반죽 꼬막밀기 2024" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-          <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(192,56,40,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
-          <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5); z-index:20;">
-            <button onclick="ytPopup(event,'zQOGEoMlknk')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">▶&ensp;바로 보기</button>
-            <div style="height:1px; background:rgba(255,255,255,0.12);"></div>
-            <button onclick="ytOpenTab(event,'zQOGEoMlknk')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">↗&ensp;새 탭으로 열기</button>
-          </div>
-        </div>
-        <p class="media-caption">흙반죽 (꼬막밀기) 2024</p>
-      </div>
-
-      <!-- 영상 3: 타래 성형 기초 교육 자료 2020 -->
-      <div class="media-col">
-        <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
-          <img src="https://img.youtube.com/vi/2riTY87rCBQ/hqdefault.jpg" alt="타래 성형 기초 교육 자료 2020" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-          <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(192,56,40,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
-          <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5); z-index:20;">
-            <button onclick="ytPopup(event,'2riTY87rCBQ')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">▶&ensp;바로 보기</button>
-            <div style="height:1px; background:rgba(255,255,255,0.12);"></div>
-            <button onclick="ytOpenTab(event,'2riTY87rCBQ')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">↗&ensp;새 탭으로 열기</button>
-          </div>
-        </div>
-        <p class="media-caption">타래 성형 기초 교육 자료 2020</p>
-      </div>
-
     </div>
   </div>
 
 </div></div>
   </div>
-  <div id="tab-7" class="tab-pane">
+  <div id="tab-7" class="tab-pane empty">
     <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
-<p class="header-meta">울림통-변주 2026 · 7회 자료</p>
-  <h1 class="header-title">대형 울림통 제작</h1>
-  <p class="header-sub">반죽·타래 쌓기 병행과 함께 사운드 녹음 및 퍼포먼스 녹화를 진행합니다</p>
-  <span class="header-date">5. 30. 토 &nbsp;/&nbsp; 5. 31. 일 &nbsp;·&nbsp; 3시간</span>
+      <p class="header-meta">울림통-변주 2026 · 7회 자료</p>
+      <h1 class="header-title" style="color:var(--text-dim);">7회 — 준비 중</h1>
     </div></div>
-    <div class="pane-body"><div class="content-wrap">
-
-  <!-- 오늘의 흐름 -->
-  <div class="section">
-    <p class="section-label">Today's Schedule</p>
-    <h2 class="section-title">오늘의 흐름</h2>
-    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4px;">
-      <div class="schedule-card">
-        <p class="schedule-time">도입 · 10분</p>
-        <p class="schedule-item">3회 리뷰, 대형 울림통 전체 계획 공유</p>
-      </div>
-      <div class="schedule-card" style="grid-column: span 2;">
-        <p class="schedule-time">실습 · 140분</p>
-        <p class="schedule-item">울림통 기초 제작 (바닥 &amp; 하부 타래 쌓기) · 반죽과 쌓기 병행</p>
-      </div>
-      <div class="schedule-card">
-        <p class="schedule-time">마무리 · 10분</p>
-        <p class="schedule-item">작업 상태 점검 · 보관 · 정리</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 재료와 도구 -->
-  <div class="section">
-    <p class="section-label">Materials &amp; Tools</p>
-    <h2 class="section-title">재료와 도구</h2>
-    <div class="tool-grid">
-      <div class="tool-item"><span class="tool-dot"></span>점토 4종</div>
-      <div class="tool-item"><span class="tool-dot"></span>흙자름줄</div>
-      <div class="tool-item"><span class="tool-dot"></span>천 · 나무판</div>
-      <div class="tool-item"><span class="tool-dot"></span>스펀지</div>
-      <div class="tool-item"><span class="tool-dot"></span>분무기</div>
-      <div class="tool-item"><span class="tool-dot"></span>비닐</div>
-      <div class="tool-item"><span class="tool-dot"></span>수평계</div>
-      <div class="tool-item"><span class="tool-dot"></span>기본 성형 도구</div>
-    </div>
-  </div>
-
-  <!-- 대형 울림통이란 -->
-  <div class="section">
-    <p class="section-label">About the Large Oolimtong</p>
-    <h2 class="section-title">대형 울림통이란</h2>
-
-    <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
-      개인 모뉴먼트가 각자의 작품이라면, <strong>대형 울림통은 모두가 함께 만드는 하나의 구조물</strong>입니다.<br>
-      각자가 만든 타래가 모여 하나의 큰 그릇을 이루는 과정 — 그 자체가 이 프로젝트의 핵심입니다.
-    </p>
-
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:0;">
-      <div style="background:var(--bg2); padding:26px 24px;">
-        <p style="font-size:13px;font-weight:600;color:var(--accent2);margin-bottom:10px;letter-spacing:0.06em;">형태 원칙</p>
-        <ul style="list-style:none;font-size:14px;color:var(--text-dim);">
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>사람이 들어가거나 가까이 다가설 수 있는 크기</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>내부에 울림이 생기는 공간 구조</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>자연광이 들어오는 개구부 포함</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>타래성형 기법만으로 완성</li>
-        </ul>
-      </div>
-      <div style="background:var(--bg2); padding:26px 24px;">
-        <p style="font-size:13px;font-weight:600;color:var(--accent2);margin-bottom:10px;letter-spacing:0.06em;">오늘의 목표</p>
-        <ul style="list-style:none;font-size:14px;color:var(--text-dim);">
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>바닥판(슬래브 또는 첫 링) 완성</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>하부 타래를 최소 10단 이상 쌓기</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>반죽 팀은 쌓기 팀에 타래를 지속 공급</li>
-          <li style="padding:4px 0 4px 12px;position:relative;line-height:1.7;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>오늘 작업분을 비닐로 밀봉해 보관</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- 역할 분담 -->
-  <div class="section">
-    <p class="section-label">Team Roles</p>
-    <h2 class="section-title">반죽 팀 · 쌓기 팀 병행</h2>
-
-    <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:20px;">
-      오늘은 두 팀이 동시에 작업합니다. 역할은 고정이 아니며 중간에 교대할 수 있습니다.
-    </p>
-
-    <div class="role-grid">
-      <div class="role-card">
-        <h4>반죽 팀</h4>
-        <p>점토를 혼합·반죽하고 대형 타래를 만들어 쌓기 팀에 지속적으로 공급합니다. 타래가 끊기면 쌓기가 멈추므로, 반죽 팀의 속도가 전체 진행을 결정합니다.</p>
-      </div>
-      <div class="role-card">
-        <h4>쌓기 팀</h4>
-        <p>공급된 타래를 이어가며 구조물을 쌓아올립니다. 한 번에 너무 높이 쌓지 않도록 조절하며, 안쪽과 바깥쪽 접합을 번갈아 마무리합니다.</p>
-      </div>
-      <div class="role-card">
-        <h4>교대 원칙</h4>
-        <p>30~40분마다 교대를 제안합니다. 한 가지 역할만 하기보다 양쪽을 모두 경험하는 것이 전체 작업을 이해하는 데 도움이 됩니다.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 기초 제작 단계 -->
-  <div class="section">
-    <p class="section-label">Construction Steps</p>
-    <h2 class="section-title">울림통 기초 제작 순서</h2>
-
-    <ol class="step-list">
-      <li>작업 위치를 정하고, 이동 가능한 나무판이나 천 위에 시작합니다. 구조물은 나중에 위치를 옮길 수 없으므로 처음부터 적절한 자리를 정합니다.</li>
-      <li>바닥면을 먼저 만듭니다. 두꺼운 슬래브(판)를 짜거나, 넓은 타래 링을 여러 겹 겹쳐 바닥을 형성합니다. 수평을 확인하세요.</li>
-      <li>첫 번째 타래 링을 바닥 위에 올립니다. 안쪽과 바깥쪽 모두 손가락으로 꾹꾹 눌러 완전히 접합합니다.</li>
-      <li>타래를 이어 쌓습니다. 이음새가 수직으로 겹치지 않도록 엇갈리게 배치합니다 (벽돌 쌓기와 같은 원리).</li>
-      <li>5단마다 잠시 멈추고, 형태와 두께의 균일성을 점검합니다. 너무 빠르게 쌓으면 아랫부분이 무게를 견디지 못합니다.</li>
-      <li>타래 공급이 원활한지 반죽 팀과 수시로 소통합니다. 타래가 너무 굳으면 접합력이 떨어집니다.</li>
-      <li>오늘 목표 높이에 도달하면 윗면을 평평하게 정리하고 비닐로 꼼꼼히 밀봉합니다.</li>
-    </ol>
-
-    <div class="feedback-grid" style="margin-top:24px;">
-      <div class="feedback-card">
-        <h4>타래 쌓기 핵심 원칙</h4>
-        <ul>
-          <li>이음새는 반드시 엇갈리게 — 수직으로 겹치면 균열이 생깁니다</li>
-          <li>안쪽 접합을 먼저, 바깥쪽을 나중에 정리합니다</li>
-          <li>5단 이상 한 번에 쌓지 마세요</li>
-          <li>분무기로 수분을 유지하되 과습은 금물</li>
-          <li>작업 중단 전 반드시 비닐로 밀봉</li>
-        </ul>
-      </div>
-      <div class="feedback-card">
-        <h4>협력 작업에서 생기는 일</h4>
-        <ul>
-          <li>내 타래와 옆 사람의 타래가 이어질 때 이음새를 함께 문질러 주세요</li>
-          <li>형태가 예상과 달라지는 것은 자연스럽습니다 — 흙과 대화하는 과정입니다</li>
-          <li>결정이 필요할 때는 멈추고 함께 이야기하세요</li>
-          <li>잘못 쌓인 부분은 바로 뜯어내고 다시 붙일 수 있습니다</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="tip-box">
-      <strong>Tip · 무너짐 방지</strong>
-      타래를 쌓을수록 구조물의 무게가 늘어납니다. 아랫부분이 충분히 굳기 전에 너무 높이 쌓으면 변형이 생깁니다. 오늘은 구조를 안정시키는 데 집중하고, 높이를 쌓는 것은 다음 회차로 이어갑니다.
-    </div>
-
-    <div class="warn-box">
-      <strong>주의 · 건조 속도</strong>
-      실내 온도와 환기 상태에 따라 흙이 예상보다 빨리 굳을 수 있습니다. 작업 중 비닐이나 젖은 천으로 작업 중인 부위를 수시로 덮어두세요. 특히 가장자리가 먼저 마릅니다.
-    </div>
-  </div>
-
-  <!-- 오늘의 대화 -->
-  <div class="section">
-    <p class="section-label">Conversation Prompts</p>
-    <h2 class="section-title">작업 중 나눌 수 있는 이야기</h2>
-
-    <div style="display:grid;gap:12px;">
-      <div style="background:var(--bg2);border-radius:8px;padding:16px 20px;">
-        <p style="font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--accent);margin-bottom:6px;">내 타래가 구조물에 닿는 순간</p>
-        <p style="font-size:14px;line-height:1.75;color:var(--text-dim);margin:0;">내가 만든 타래가 다른 사람이 쌓은 위에 올려질 때 어떤 기분인가요? 협력창작이 처음으로 느껴지는 순간입니다.</p>
-      </div>
-      <div style="background:var(--bg2);border-radius:8px;padding:16px 20px;">
-        <p style="font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--accent);margin-bottom:6px;">반죽과 쌓기 — 어느 역할이 더 맞았나요?</p>
-        <p style="font-size:14px;line-height:1.75;color:var(--text-dim);margin:0;">반복적인 반죽과 집중이 필요한 쌓기 — 어느 쪽이 지금의 나에게 더 편안했나요? 이유가 있다면 이야기해보세요.</p>
-      </div>
-      <div style="background:var(--bg2);border-radius:8px;padding:16px 20px;">
-        <p style="font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--accent);margin-bottom:6px;">구조물이 커져가는 것을 보며</p>
-        <p style="font-size:14px;line-height:1.75;color:var(--text-dim);margin:0;">처음 타래 한 줄이 쌓이고, 점점 형태가 생겨날 때 — 지금 이 물건은 어떤 이름을 가지게 될까요?</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 참고 영상 -->
-  <div class="section">
-    <p class="section-label">Reference Videos</p>
-    <h2 class="section-title">참고 영상</h2>
-    <div class="media-row three">
-
-      <!-- 영상 1: 흙반죽 (꼬막밀기) 2025 -->
-      <div class="media-col">
-        <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
-          <img src="https://img.youtube.com/vi/4O1IsdXeIwA/hqdefault.jpg" alt="흙반죽 꼬막밀기 2025" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-          <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(192,56,40,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
-          <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5); z-index:20;">
-            <button onclick="ytPopup(event,'4O1IsdXeIwA')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">▶&ensp;바로 보기</button>
-            <div style="height:1px; background:rgba(255,255,255,0.12);"></div>
-            <button onclick="ytOpenTab(event,'4O1IsdXeIwA')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">↗&ensp;새 탭으로 열기</button>
-          </div>
-        </div>
-        <p class="media-caption">흙반죽 (꼬막밀기) 2025</p>
-      </div>
-
-      <!-- 영상 2: 흙반죽 (꼬막밀기) 2024 -->
-      <div class="media-col">
-        <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
-          <img src="https://img.youtube.com/vi/zQOGEoMlknk/hqdefault.jpg" alt="흙반죽 꼬막밀기 2024" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-          <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(192,56,40,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
-          <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5); z-index:20;">
-            <button onclick="ytPopup(event,'zQOGEoMlknk')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">▶&ensp;바로 보기</button>
-            <div style="height:1px; background:rgba(255,255,255,0.12);"></div>
-            <button onclick="ytOpenTab(event,'zQOGEoMlknk')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">↗&ensp;새 탭으로 열기</button>
-          </div>
-        </div>
-        <p class="media-caption">흙반죽 (꼬막밀기) 2024</p>
-      </div>
-
-      <!-- 영상 3: 타래 성형 기초 교육 자료 2020 -->
-      <div class="media-col">
-        <div class="yt-wrap" style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:#000; cursor:pointer;" onclick="ytToggleMenu(event,this)">
-          <img src="https://img.youtube.com/vi/2riTY87rCBQ/hqdefault.jpg" alt="타래 성형 기초 교육 자료 2020" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-          <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:48px; height:48px; background:rgba(192,56,40,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></span>
-          <div class="yt-menu" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; border-radius:4px; overflow:hidden; min-width:148px; box-shadow:0 4px 16px rgba(0,0,0,0.5); z-index:20;">
-            <button onclick="ytPopup(event,'2riTY87rCBQ')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">▶&ensp;바로 보기</button>
-            <div style="height:1px; background:rgba(255,255,255,0.12);"></div>
-            <button onclick="ytOpenTab(event,'2riTY87rCBQ')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">↗&ensp;새 탭으로 열기</button>
-          </div>
-        </div>
-        <p class="media-caption">타래 성형 기초 교육 자료 2020</p>
-      </div>
-
-    </div>
-  </div>
-
-</div></div>
+    <div class="pane-body"><div class="content-wrap"><p style="color:var(--text-dim);font-size:15px;padding:40px 0;">아직 준비 중입니다.</p></div></div>
   </div>
   <div id="tab-8" class="tab-pane empty">
     <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
@@ -2238,4 +1658,4 @@
   }
 </script>
 </body>
-</html>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
