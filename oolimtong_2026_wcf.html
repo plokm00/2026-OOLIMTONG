@@ -147,6 +147,21 @@
     font-weight: 500;
   }
 
+  /* 커버 접이식 공지 */
+  .cover-notice { margin-top:64px; max-width:600px; border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:3px; background:var(--bg2); }
+  .cn-head { width:100%; display:flex; align-items:center; gap:10px; padding:11px 15px; background:none; border:none; cursor:pointer; text-align:left; font-family:inherit; }
+  .cn-head:hover { background:var(--bg3); }
+  .cn-badge { font-size:10.5px; font-weight:700; letter-spacing:0.06em; background:var(--salmon); color:var(--accent2); padding:3px 9px; border-radius:2px; white-space:nowrap; }
+  .cn-title { font-size:13.5px; font-weight:600; color:var(--text); flex:1; }
+  .cn-date { font-size:12px; color:var(--text-dim); white-space:nowrap; }
+  .cn-arrow { font-size:13px; color:var(--text-dim); transition:transform 0.2s; }
+  .cover-notice.open .cn-arrow { transform:rotate(180deg); }
+  .cn-body { display:none; padding:14px 15px; border-top:1px solid var(--line); background:var(--bg); }
+  .cover-notice.open .cn-body { display:block; }
+  .cover-standing { margin-top:14px; max-width:600px; font-size:12.5px; color:var(--text-dim); line-height:1.75; font-weight:700; }
+  .cover-standing a { color:var(--accent); text-decoration:none; border-bottom:1px solid var(--accent); }
+  .cover-standing a:hover { color:var(--accent2); border-color:var(--accent2); }
+
   .cover-divider {
     width: 48px;
     height: 1px;
@@ -170,6 +185,7 @@
   #toc {
     background: var(--bg2);
     justify-content: flex-start;
+    min-height: auto;
   }
 
   #gallery {
@@ -1065,6 +1081,34 @@
         <strong>장소</strong> 니닉크라프트<br>
         <span style="display:block;font-size:12px;color:var(--text-dim);margin-left:4.5em;">(26370) 강원특별자치도 원주시 문막읍 원문로 1734-15</span>
       </div>
+      <div class="cover-notice">
+        <button class="cn-head" onclick="this.parentElement.classList.toggle('open')">
+          <span class="cn-badge">공지</span>
+          <span class="cn-title">팀별 대형 울림통 제작 장소 안내</span>
+          <span class="cn-date">2026.5.29</span>
+          <span class="cn-arrow">▾</span>
+        </button>
+        <div class="cn-body">
+          <p style="font-size:13px;color:var(--text-dim);line-height:1.8;margin:0 0 12px;">대형 울림통 작업 착수에 앞서, 당초 추첨으로 정하려던 제작장소를 팀 구성(이동성·동반 가족 등)과 안전·운영을 고려해 아래와 같이 배정하는 방식으로 변경하였습니다. 조정 필요 시 문의 바랍니다.</p>
+          <ul style="list-style:none;margin:0;padding:0;font-size:13px;color:var(--text-dim);line-height:1.6;">
+            <li style="padding:3px 0;"><strong style="color:var(--accent);">토 오후</strong> · 니닉크라프트 실내<br><span style="font-size:12px;">허양·이재홍·조영범·임계화·신정숙</span></li>
+            <li style="padding:3px 0;"><strong style="color:var(--accent);">일 오전</strong> · 장소 조정형 (확정 전까지 니닉크라프트)<br><span style="font-size:12px;">이채명·박수연·박소연·이안·박진희·이성순</span></li>
+            <li style="padding:3px 0;"><strong style="color:var(--accent);">일 오후</strong> · 하나어린이집 야외 (날씨 따라 진행)<br><span style="font-size:12px;">인동욱·민지현·조영범·김주원·김현국·이새롬·주장석</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="cover-notice" style="margin-top:0;border-top:none;">
+        <button class="cn-head" onclick="this.parentElement.classList.toggle('open')">
+          <span class="cn-badge">공지</span>
+          <span class="cn-title">전시 일정 및 준비 안내</span>
+          <span class="cn-date">예정</span>
+          <span class="cn-arrow">▾</span>
+        </button>
+        <div class="cn-body">
+          <p style="font-size:13px;color:var(--text-dim);line-height:1.8;margin:0;">전시(2026. 11. 21. ~ 12. 13.) 관련 세부 일정과 준비 사항은 추후 공지 예정입니다.</p>
+        </div>
+      </div>
+      <p class="cover-standing">📌 각 팀은 <a href="oolimtong_2026_wcf_book.html">예약 현황</a>을 확인하시고, 자기 팀 작품에 체험 참여가 있을 때 자발적으로 함께해 주세요.</p>
     </div>
   </div>
 </section>
@@ -1657,7 +1701,8 @@
           <p style="font-weight:600;color:var(--text);margin-bottom:6px;">울림통 3기 제작 · 장소 뽑기 진행 예정</p>
           <p style="font-size:14px;color:var(--text-dim);line-height:1.85;">3팀이 구성된 관계로 울림통 3기를 제작하는 방향으로 진행합니다. 장소는 단체 카톡방 뽑기로 결정합니다.<br>
           ① 니닉크라프트 실내 &nbsp; ② 하나어린이집 야외부지 &nbsp; ③ 미정(실내 또는 실외)<br>
-          <span style="color:var(--text-dim);font-size:13px;">※ 추후 단체체험이 잡힐 경우, 시간이 되시는 분에 한해 현장 참여 요청드릴 수 있습니다. 첫 작업 날 다시 안내드리겠습니다.</span></p>
+          <span style="color:var(--text-dim);font-size:13px;">※ 추후 단체체험이 잡힐 경우, 시간이 되시는 분에 한해 현장 참여 요청드릴 수 있습니다. 첫 작업 날 다시 안내드리겠습니다.</span><br>
+          <span style="color:var(--accent2);font-size:13px;font-weight:600;">※ 이후 변경 — 추첨 대신 팀 구성을 고려한 팀별 배정으로 결정. 상단 공지사항 참조.</span></p>
         </div>
       </div>
 
@@ -1748,7 +1793,4 @@
   document.querySelectorAll('#nav-links a').forEach(function(a) {
     a.addEventListener('click', closeNav);
   });
-</script>
-
-</body>
-</html>
+</sc

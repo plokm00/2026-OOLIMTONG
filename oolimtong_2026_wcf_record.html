@@ -81,6 +81,8 @@
   .session-body { display:none; padding:0 24px 20px; border-top:1px solid var(--line); }
   .session-body.open { display:block; background:var(--bg); border-top:2px solid var(--accent); padding-top:18px; }
   .session-toggle.open { transform:rotate(180deg); }
+  /* 자유체험 항목 (정규 회차와 구분) */
+  .session-item.exp .session-badge { background:var(--salmon); color:var(--accent2); }
   .record-grid { display:grid; grid-template-columns:1fr 130px; gap:16px; margin-top:16px; }
   .record-field label { font-size:11px; letter-spacing:0.15em; color:var(--accent2); text-transform:uppercase; font-weight:600; display:block; margin-bottom:6px; }
   .label-hint { font-weight:400; color:var(--text-dim); letter-spacing:0.05em; text-transform:none; }
@@ -273,10 +275,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p></p></div>
-            <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p>조영범 · 임계화 · 신정숙</p></div>
+            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p>남아 있던 타래로 쌓기 작업만 진행했다. 그리고 내부 네 귀퉁이 부분 갈라지는 기미가 있는 곳을 손보고(3곳), 타래와 타래 간 너무 얇게 메꿔진 부분을 보강하였다. 최하단 3줄 정도가 건조가 꽤 진행되어, 돌로 다지는 작업도 시작하였다. 타래는 모두 소진했고, 총 2시간 작업 후 일찍 마무리하였다. 간담회는 모든 인원이 모이는 다음 주에 진행하기로 하였다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -298,7 +299,6 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p></p></div>
             <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
             <div class="record-field full"><label>작업 내용</label><p></p></div>
           </div>
         <div class="photo-block">
@@ -321,7 +321,6 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p></p></div>
             <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
             <div class="record-field full"><label>작업 내용</label><p></p></div>
           </div>
         <div class="photo-block">
@@ -344,7 +343,6 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p></p></div>
             <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
             <div class="record-field full"><label>작업 내용</label><p></p></div>
           </div>
         <div class="photo-block">
@@ -367,7 +365,6 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p></p></div>
             <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
             <div class="record-field full"><label>작업 내용</label><p></p></div>
           </div>
         <div class="photo-block">
@@ -507,7 +504,6 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p></p></div>
             <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
             <div class="record-field full"><label>작업 내용</label><p></p></div>
           </div>
         <div class="photo-block">
@@ -519,6 +515,28 @@
         </div>        </div>
       </div>
 
+
+      <div class="session-item exp">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">6. 14. 일</span>
+          <span class="session-badge">체험</span>
+          <span class="session-title">자유체험</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>체험자 명단</label><p></p></div>
+            <div class="record-field weather"><label>날씨</label><p></p></div>
+            <div class="record-field full"><label>작업 내용</label><p></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
       <div class="session-item">
         <div class="session-header" onclick="toggleSession(this)">
           <span class="session-date">6. 21. 일</span>
@@ -530,7 +548,6 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p></p></div>
             <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
             <div class="record-field full"><label>작업 내용</label><p></p></div>
           </div>
         <div class="photo-block">
@@ -553,7 +570,6 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p></p></div>
             <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
             <div class="record-field full"><label>작업 내용</label><p></p></div>
           </div>
         <div class="photo-block">
@@ -576,7 +592,6 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p></p></div>
             <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
             <div class="record-field full"><label>작업 내용</label><p></p></div>
           </div>
         <div class="photo-block">
@@ -599,7 +614,6 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p></p></div>
             <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
             <div class="record-field full"><label>작업 내용</label><p></p></div>
           </div>
         <div class="photo-block">
@@ -739,7 +753,6 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p></p></div>
             <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
             <div class="record-field full"><label>작업 내용</label><p></p></div>
           </div>
         <div class="photo-block">
@@ -762,7 +775,6 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p></p></div>
             <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
             <div class="record-field full"><label>작업 내용</label><p></p></div>
           </div>
         <div class="photo-block">
@@ -785,7 +797,6 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p></p></div>
             <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
             <div class="record-field full"><label>작업 내용</label><p></p></div>
           </div>
         <div class="photo-block">
@@ -808,7 +819,6 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p></p></div>
             <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
             <div class="record-field full"><label>작업 내용</label><p></p></div>
           </div>
         <div class="photo-block">
@@ -831,7 +841,6 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p></p></div>
             <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field"><label>자유체험 방문 (○ / ✕) <span class="label-hint">— 체험자 명단</span></label><p></p></div>
             <div class="record-field full"><label>작업 내용</label><p></p></div>
           </div>
         <div class="photo-block">
