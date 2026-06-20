@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>울림통-변주 2026 — 시민작가 OT</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="2026 울림통-변주 시민작가 프로젝트">
+<meta property="og:description" content="시민작가 17명과 김아영 작가가 함께하는 협력창작 프로젝트">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2026 울림통-변주 시민작가 프로젝트">
+<meta name="twitter:description" content="시민작가 17명과 김아영 작가가 함께하는 협력창작 프로젝트">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 
@@ -996,7 +1002,7 @@
     /* 작가 */
     .artist-photo { width: 100%; height: 260px; }
     .artist-name { font-size: 28px; }
-    .career-list li { grid-template-columns: 56px 1fr; gap: 12px; }
+    .career-list li { grid-template-columns: minmax(56px, max-content) 1fr; gap: 12px; }
 
     /* 타임라인 */
     .timeline-item { grid-template-columns: 1fr; gap: 20px; padding: 28px 0; }
@@ -1034,6 +1040,9 @@
       -webkit-overflow-scrolling: touch;
     }
     div[style*="repeat(5,1fr)"] { min-width: 300px; }
+
+    /* 인라인 max-width:50% 블록 (현장 사진 갤러리·안내문 등) — 전체 너비 */
+    div[style*="max-width:50%"] { max-width: 100% !important; }
 
     /* 팀원 이름 — 한 줄 하나씩 */
     .member { display: block; line-height: 2.4; }
