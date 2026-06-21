@@ -48,7 +48,7 @@
   .header-inner { max-width:860px; margin:0 auto; padding:0 40px; }
   .header-meta {
     font-size: 11px;
-    letter-spacing: 0.35em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--accent);
     font-weight: 500;
@@ -67,14 +67,12 @@
     color: var(--text-dim);
   }
   .header-date {
-    display: inline-block;
-    margin-top: 18px;
-    padding: 6px 18px;
-    border: 1px solid var(--line);
-    border-radius: 2px;
-    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    border: none;
     color: var(--text-dim);
-    letter-spacing: 0.08em;
+    font-weight: 400;
+    letter-spacing: 0.02em;
   }
 
   /* ── 본문 레이아웃 ── */
@@ -552,12 +550,12 @@
     scroll-margin-top: 70px;
   }
   .pane-header {
-    background: var(--bg2);
+    background: #e7d4c9;
     padding: 24px 0 20px;
     cursor: pointer;
     transition: background 0.15s;
   }
-  .pane-header:hover { background: var(--bg3); }
+  .pane-header:hover { background: #ddc8bc; }
   .tab-pane.empty .pane-header { cursor: default; opacity: 0.55; }
   .tab-pane.empty .pane-header:hover { background: var(--bg2); }
   .pane-header-inner {
@@ -582,12 +580,11 @@
   .pane-header .header-title { font-size: clamp(19px, 2.6vw, 26px); margin-bottom: 6px; padding-right: 44px; }
   .pane-header .header-sub { display: none; }
   .tab-pane.active .pane-header .header-sub { display: block; }
-  .pane-header .header-date { margin-top: 10px; padding: 4px 14px; font-size: 12px; }
+  .pane-header .header-date { font-size: 11px; white-space: nowrap; }
   .pane-body { display: none; }
   .tab-pane.active .pane-body {
     display: block;
     background: var(--bg);
-    border-top: 2px solid var(--accent);
   }
 
   @media (max-width: 900px) {
@@ -605,6 +602,11 @@
     .pane-header-inner::after { right: 16px; }
   }
 
+
+  /* ── 헤더 참고자료 칩 ── */
+  .header-refs { display:flex; flex-wrap:wrap; gap:5px 8px; margin-top:16px; }
+  .ref-chip { font-size:11px; color:var(--accent2); text-decoration:none; border:none; border-radius:2px; padding:3px 9px; background:var(--bg); display:inline-flex; align-items:center; gap:4px; transition:background 0.15s, color 0.15s; letter-spacing:0.02em; white-space:nowrap; }
+  .ref-chip:hover { background:var(--accent); color:var(--white); }
 
 </style>
 </head>
@@ -625,10 +627,9 @@
   <div class="main-content">
   <div id="tab-1" class="tab-pane">
     <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
-<p class="header-meta">울림통-변주 2026 · 1회 자료</p>
+<p class="header-meta">울림통-변주 2026 · 1회 자료 <span class="header-date">｜&nbsp; 5. 9. 토,&nbsp; 5. 10. 일 &nbsp;·&nbsp; 2시간</span></p>
   <h1 class="header-title">재료 이해 · 모뉴먼트 드로잉·모델링</h1>
   <p class="header-sub">흙을 처음 만나는 날 — 상상한 울림을 구체화하기 위하여 예술감각을 이끌어냅니다</p>
-  <span class="header-date">5. 9. 토 &nbsp;/&nbsp; 5. 10. 일 &nbsp;·&nbsp; 2시간</span>
     </div></div>
     <div class="pane-body"><div class="content-wrap">
 
@@ -855,10 +856,14 @@
   </div>
   <div id="tab-2" class="tab-pane">
     <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
-<p class="header-meta">울림통-변주 2026 · 2회 자료</p>
+<p class="header-meta">울림통-변주 2026 · 2회 자료 <span class="header-date">｜&nbsp; 5. 16. 토,&nbsp; 5. 17. 일 &nbsp;·&nbsp; 약 3시간</span></p>
   <h1 class="header-title">모뉴먼트 울림통 제작</h1>
   <p class="header-sub">타래성형 기법의 본격 실습 — 각자의 모뉴먼트를 빚어 냅니다</p>
-  <span class="header-date">5. 16. 토 &nbsp;/&nbsp; 5. 17. 일 &nbsp;·&nbsp; 약 3시간</span>
+  <div class="header-refs">
+    <a href="https://youtu.be/4O1IsdXeIwA" target="_blank" class="ref-chip" onclick="event.stopPropagation()">🔗 흙반죽 (꼬막밀기) 2025</a>
+    <a href="https://youtu.be/zQOGEoMlknk" target="_blank" class="ref-chip" onclick="event.stopPropagation()">🔗 흙반죽 (꼬막밀기) 2024</a>
+    <a href="https://youtu.be/2riTY87rCBQ" target="_blank" class="ref-chip" onclick="event.stopPropagation()">🔗 타래 성형 기초 교육 자료 2020</a>
+  </div>
     </div></div>
     <div class="pane-body"><div class="content-wrap">
 
@@ -1029,10 +1034,13 @@
   </div>
   <div id="tab-3" class="tab-pane">
     <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
-<p class="header-meta">울림통-변주 2026 · 3회 자료</p>
+<p class="header-meta">울림통-변주 2026 · 3회 자료 <span class="header-date">｜&nbsp; 5. 23. 토,&nbsp; 5. 24. 일 &nbsp;·&nbsp; 3시간</span></p>
   <h1 class="header-title">모뉴먼트 마무리 · 타래 만들기</h1>
   <p class="header-sub">모뉴먼트에 NFC 칩을 심고, 대형 울림통을 위한 타래를 대량 제작합니다</p>
-  <span class="header-date">5. 23. 토 &nbsp;/&nbsp; 5. 24. 일 &nbsp;·&nbsp; 3시간</span>
+  <div class="header-refs">
+    <a href="https://youtu.be/4O1IsdXeIwA" target="_blank" class="ref-chip" onclick="event.stopPropagation()">🔗 흙반죽 (꼬막밀기) 2025</a>
+    <a href="https://youtu.be/zQOGEoMlknk" target="_blank" class="ref-chip" onclick="event.stopPropagation()">🔗 흙반죽 (꼬막밀기) 2024</a>
+  </div>
     </div></div>
     <div class="pane-body"><div class="content-wrap">
 
@@ -1239,10 +1247,9 @@
   </div>
   <div id="tab-4" class="tab-pane">
     <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
-<p class="header-meta">울림통-변주 2026 · 4회 자료</p>
+<p class="header-meta">울림통-변주 2026 · 4회 자료 <span class="header-date">｜&nbsp; 5. 30. 토,&nbsp; 5. 31. 일 &nbsp;·&nbsp; 3시간</span></p>
   <h1 class="header-title">대형 울림통 제작 1</h1>
   <p class="header-sub">협력창작의 본격적인 시작 — 반죽과 타래 쌓기를 병행하며 대형 울림통의 기초를 세웁니다</p>
-  <span class="header-date">5. 30. 토 &nbsp;/&nbsp; 5. 31. 일 &nbsp;·&nbsp; 3시간</span>
     </div></div>
     <div class="pane-body"><div class="content-wrap">
 
@@ -1385,7 +1392,7 @@
     <h2 class="section-title">참고 영상</h2>
     <div class="media-row three">
       <div class="media-col">
-        <div style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:var(--bg3); border:1px dashed var(--line);"></div>
+        <div style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:var(--bg3);"></div>
         <p class="media-caption">-----</p>
       </div>
     </div>
@@ -1395,10 +1402,9 @@
   </div>
   <div id="tab-5" class="tab-pane">
     <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
-<p class="header-meta">울림통-변주 2026 · 5회 자료</p>
+<p class="header-meta">울림통-변주 2026 · 5회 자료 <span class="header-date">｜&nbsp; 6. 6. 토,&nbsp; 6. 7. 일 &nbsp;·&nbsp; 3시간</span></p>
   <h1 class="header-title">대형 울림통 제작 2</h1>
   <p class="header-sub">울림통 기초 제작 — 반죽과 타래 쌓기를 병행하며 형태를 쌓아갑니다</p>
-  <span class="header-date">6. 6. 토 &nbsp;/&nbsp; 6. 7. 일 &nbsp;·&nbsp; 3시간</span>
     </div></div>
     <div class="pane-body"><div class="content-wrap">
 
@@ -1464,7 +1470,7 @@
     <h2 class="section-title">참고 영상</h2>
     <div class="media-row three">
       <div class="media-col">
-        <div style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:var(--bg3); border:1px dashed var(--line);"></div>
+        <div style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:var(--bg3);"></div>
         <p class="media-caption">-----</p>
       </div>
     </div>
@@ -1474,10 +1480,9 @@
   </div>
   <div id="tab-6" class="tab-pane">
     <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
-<p class="header-meta">울림통-변주 2026 · 6회 자료</p>
+<p class="header-meta">울림통-변주 2026 · 6회 자료 <span class="header-date">｜&nbsp; 6. 13. 토,&nbsp; 6. 14. 일 &nbsp;·&nbsp; 3시간</span></p>
   <h1 class="header-title">대형 울림통 제작 3</h1>
   <p class="header-sub">반죽·타래 쌓기를 병행하며 자유체험을 시작하고 중간 간담회를 진행합니다</p>
-  <span class="header-date">6. 13. 토 &nbsp;/&nbsp; 6. 14. 일 &nbsp;·&nbsp; 3시간</span>
     </div></div>
     <div class="pane-body"><div class="content-wrap">
 
@@ -1557,7 +1562,7 @@
     <h2 class="section-title">참고 영상</h2>
     <div class="media-row three">
       <div class="media-col">
-        <div style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:var(--bg3); border:1px dashed var(--line);"></div>
+        <div style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:var(--bg3);"></div>
         <p class="media-caption">-----</p>
       </div>
     </div>
@@ -1567,10 +1572,9 @@
   </div>
   <div id="tab-7" class="tab-pane">
     <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
-<p class="header-meta">울림통-변주 2026 · 7회 자료</p>
+<p class="header-meta">울림통-변주 2026 · 7회 자료 <span class="header-date">｜&nbsp; 6. 20. 토,&nbsp; 6. 21. 일 &nbsp;·&nbsp; 3시간</span></p>
   <h1 class="header-title">대형 울림통 제작 4</h1>
   <p class="header-sub">울림통 중반부를 이어 제작하며, 소리·NFC 적용과 마무리 방향을 함께 논의합니다</p>
-  <span class="header-date">6. 20. 토 &nbsp;/&nbsp; 6. 21. 일 &nbsp;·&nbsp; 3시간</span>
     </div></div>
     <div class="pane-body"><div class="content-wrap">
 
@@ -1653,7 +1657,7 @@
     <h2 class="section-title">참고 영상</h2>
     <div class="media-row three">
       <div class="media-col">
-        <div style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:var(--bg3); border:1px dashed var(--line);"></div>
+        <div style="position:relative; padding-bottom:56.25%; overflow:hidden; border-radius:4px; background:var(--bg3);"></div>
         <p class="media-caption">-----</p>
       </div>
     </div>
@@ -1753,4 +1757,4 @@
   }
 </script>
 </body>
-</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
