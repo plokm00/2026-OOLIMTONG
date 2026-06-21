@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
+<html lang="ko"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>작업 기록 — 네모 · 고리 · 미로 | 울림통-변주 2026</title>
@@ -96,6 +95,20 @@
   .record-field.full { grid-column:1/-1; }
   .record-field.weather p { white-space:nowrap; }
 
+  /* ── 편집 모드 ── */
+  #edit-toolbar { position:fixed; right:18px; bottom:18px; z-index:200; display:flex; gap:8px; }
+  #edit-toolbar button { font-family:'Noto Sans KR',sans-serif; font-size:13px; font-weight:600; letter-spacing:0.04em; padding:10px 16px; border-radius:4px; border:1px solid var(--accent); background:var(--bg); color:var(--accent); cursor:pointer; box-shadow:0 2px 8px rgba(38,20,16,0.18); transition:background 0.15s,color 0.15s; }
+  #edit-toolbar button:hover { background:var(--accent); color:var(--white); }
+  #btn-save { display:none; }
+  body.edit-mode #btn-save { display:inline-block; }
+  body.edit-mode #btn-edit { background:var(--accent); color:var(--white); }
+  #edit-hint { position:fixed; right:18px; bottom:66px; z-index:200; font-size:12px; color:var(--text-dim); background:var(--bg2); border:1px solid var(--line); border-radius:4px; padding:7px 11px; display:none; max-width:230px; line-height:1.5; box-shadow:0 2px 8px rgba(38,20,16,0.12); }
+  body.edit-mode #edit-hint { display:block; }
+  body.edit-mode .session-body { display:block !important; background:var(--bg); border-top:2px solid var(--accent); padding-top:18px; }
+  body.edit-mode .record-field p[contenteditable] { background:var(--bg2); border:1px solid var(--accent); border-radius:3px; color:var(--text); cursor:text; padding-left:8px; padding-right:8px; }
+  body.edit-mode .record-field p[contenteditable]:focus { outline:none; border-color:var(--accent2); background:#fff; }
+  body.edit-mode .record-field p[contenteditable]:empty::before { content:attr(data-ph); color:var(--line); }
+
   /* ── 사진 (썸네일 + 드라이브 링크) ── */
   .photo-block { margin-top:16px; }
   .photo-label { font-size:11px; letter-spacing:0.15em; color:var(--accent2); text-transform:uppercase; font-weight:600; margin-bottom:8px; }
@@ -143,7 +156,7 @@
   }
 </style>
 </head>
-<body>
+<body class="">
 
 <div id="nav">
   <div class="nav-left">
@@ -159,40 +172,40 @@
 
 <div class="team-bar">
   <div class="team-tabs">
-    <button class="team-tab active" data-team="nemo" onclick="switchTeam('nemo')">네모</button>
+    <button class="team-tab" data-team="nemo" onclick="switchTeam('nemo')">네모</button>
     <button class="team-tab" data-team="gori" onclick="switchTeam('gori')">고리</button>
-    <button class="team-tab" data-team="miro" onclick="switchTeam('miro')">미로</button>
+    <button class="team-tab active" data-team="miro" onclick="switchTeam('miro')">미로</button>
   </div>
 
-  <div class="team-head active" data-team="nemo">
-    <p class="team-line"><span class="team-when">매주 토요일 14:00 · 니닉크라프트 실내</span>&ensp;·&ensp;허양 · 이재홍 · 조영범 · 임계화 · 신정숙 · <span class="team-artist">김아영</span></p>
+  <div class="team-head" data-team="nemo">
+    <p class="team-line"><span class="team-when">매주 토요일 14:00 · 니닉크라프트 실내</span> · 허양 · 이재홍 · 조영범 · 임계화 · 신정숙 · <span class="team-artist">김아영</span></p>
   </div>
 
   <div class="team-head" data-team="gori">
-    <p class="team-line"><span class="team-when">매주 일요일 10:00 · 니닉크라프트 실내</span>&ensp;·&ensp;이채명 · 박수연 · 박소연 · 이안 · 박진희 · 이성순 · <span class="team-artist">김아영</span></p>
+    <p class="team-line"><span class="team-when">매주 일요일 10:00 · 니닉크라프트 실내</span> · 이채명 · 박수연 · 박소연 · 이안 · 박진희 · 이성순 · <span class="team-artist">김아영</span></p>
   </div>
 
-  <div class="team-head" data-team="miro">
-    <p class="team-line"><span class="team-when">매주 일요일 14:00 · 하나어린이집 야외 부지</span>&ensp;·&ensp;인동욱 · 민지현 · 조영범 · 김주원 · 김현국 · 이새롬 · 주장석 · <span class="team-artist">김아영</span></p>
+  <div class="team-head active" data-team="miro">
+    <p class="team-line"><span class="team-when">매주 일요일 14:00 · 하나어린이집 야외 부지</span> · 인동욱 · 민지현 · 조영범 · 김주원 · 김현국 · 이새롬 · 주장석 · <span class="team-artist">김아영</span></p>
   </div>
 </div>
 
 <!-- ══════════ 네모 ══════════ -->
-<section id="nemo" class="team-pane active" data-team="nemo">
+<section id="nemo" class="team-pane" data-team="nemo">
   <div class="session-list">
 
       <div class="session-item">
-        <div class="session-header" onclick="toggleSession(this)">
+        <div class="session-header open" onclick="toggleSession(this)">
           <span class="session-date">5. 9. 토</span>
           <span class="session-badge">1회</span>
           <span class="session-title">재료 이해 · 모뉴먼트 드로잉·모델링</span>
-          <span class="session-toggle">▾</span>
+          <span class="session-toggle open">▾</span>
         </div>
-        <div class="session-body">
+        <div class="session-body open">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>허양 · 이재홍 · 조영범 · 임계화 · 이정선 · 이미진</p></div>
-            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p>모뉴먼트에 대해 계획을 해보신 분도 계시고, 작업 자체에 낯설어하시는 분들도 계셨다. 작업을 통해 작가가 얻게 되는 것이 무엇인지 등 심도 있는 이야기도 거론되어, 프로젝트를 진행하며 그 의미를 찾아보기로 하였다.</p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="nemo|0|참여 작가" data-ph="입력...">허양 · 이재홍 · 조영범 · 임계화 · 이정선 · 이미진</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="nemo|0|날씨" data-ph="입력...">맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="nemo|0|작업 내용" data-ph="입력...">모뉴먼트에 대해 계획을 해보신 분도 계시고, 작업 자체에 낯설어하시는 분들도 계셨다. 작업을 통해 작가가 얻게 되는 것이 무엇인지 등 심도 있는 이야기도 거론되어, 프로젝트를 진행하며 그 의미를 찾아보기로 하였다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -204,17 +217,17 @@
       </div>
 
       <div class="session-item">
-        <div class="session-header" onclick="toggleSession(this)">
+        <div class="session-header open" onclick="toggleSession(this)">
           <span class="session-date">5. 16. 토</span>
           <span class="session-badge">2회</span>
           <span class="session-title">모뉴먼트 울림통 제작</span>
-          <span class="session-toggle">▾</span>
+          <span class="session-toggle open">▾</span>
         </div>
-        <div class="session-body">
+        <div class="session-body open">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>허양 · 이재홍 · 조영범 · 임계화 · 신정숙 · 이정선</p></div>
-            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="nemo|1|참여 작가" data-ph="입력...">허양 · 이재홍 · 조영범 · 임계화 · 신정숙 · 이정선</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="nemo|1|날씨" data-ph="입력...">맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="nemo|1|작업 내용" data-ph="입력..."><br></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -234,9 +247,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>허양 · 이재홍 · 조영범 · 임계화 · 신정숙</p></div>
-            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="nemo|2|참여 작가" data-ph="입력...">허양 · 이재홍 · 조영범 · 임계화 · 신정숙</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="nemo|2|날씨" data-ph="입력...">맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="nemo|2|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -256,9 +269,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>허양 · 이재홍 · 조영범 · 임계화 · 신정숙</p></div>
-            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p>커리큘럼에 따라 울림통 기초 제작에 돌입. 스피커를 연상시키는 사각 형태로 의견이 모아졌다. 모두가 돌아가며 기름칠하여 팔레트를 준비하고, 그 위에 주황색 자갈과 산호사를 뿌려 밑그림을 그렸다. 타래를 쌓으면서, 안쪽은 굴곡을 유지하고 바깥쪽은 매끈하게 다지기로 결정. 5층까지 쌓았다.</p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="nemo|3|참여 작가" data-ph="입력...">허양 · 이재홍 · 조영범 · 임계화 · 신정숙</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="nemo|3|날씨" data-ph="입력...">맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="nemo|3|작업 내용" data-ph="입력...">커리큘럼에 따라 울림통 기초 제작에 돌입. 스피커를 연상시키는 사각 형태로 의견이 모아졌다. 모두가 돌아가며 기름칠하여 팔레트를 준비하고, 그 위에 주황색 자갈과 산호사를 뿌려 밑그림을 그렸다. 타래를 쌓으면서, 안쪽은 굴곡을 유지하고 바깥쪽은 매끈하게 다지기로 결정. 5층까지 쌓았다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -278,9 +291,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>허양 · 이재홍 · 조영범 · 임계화 · 신정숙</p></div>
-            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p>약 11~12줄 작업. 한쪽 벽면이 살짝 힘을 못 받고 처지는 기미가 보여 탄력바로 감아 놓았다. 입구 형태는 타원형으로 결정.</p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="nemo|4|참여 작가" data-ph="입력...">허양 · 이재홍 · 조영범 · 임계화 · 신정숙</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="nemo|4|날씨" data-ph="입력...">맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="nemo|4|작업 내용" data-ph="입력...">약 11~12줄 작업. 한쪽 벽면이 살짝 힘을 못 받고 처지는 기미가 보여 탄력바로 감아 놓았다. 입구 형태는 타원형으로 결정.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -300,9 +313,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>조영범 · 임계화 · 신정숙</p></div>
-            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p>남아 있던 타래로 쌓기 작업만 진행했다. 그리고 내부 네 귀퉁이 부분 갈라지는 기미가 있는 곳을 손보고(3곳), 타래와 타래 간 너무 얇게 메꿔진 부분을 보강하였다. 최하단 3줄 정도가 건조가 꽤 진행되어, 돌로 다지는 작업도 시작하였다. 타래는 모두 소진했고, 총 2시간 작업 후 일찍 마무리하였다. 간담회는 모든 인원이 모이는 다음 주에 진행하기로 하였다.</p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="nemo|5|참여 작가" data-ph="입력...">조영범 · 임계화 · 신정숙</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="nemo|5|날씨" data-ph="입력...">맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="nemo|5|작업 내용" data-ph="입력...">남아 있던 타래로 쌓기 작업만 진행했다. 그리고 내부 네 귀퉁이 부분 갈라지는 기미가 있는 곳을 손보고(3곳), 타래와 타래 간 너무 얇게 메꿔진 부분을 보강하였다. 최하단 3줄 정도가 건조가 꽤 진행되어, 돌로 다지는 작업도 시작하였다. 타래는 모두 소진했고, 총 2시간 작업 후 일찍 마무리하였다. 간담회는 모든 인원이 모이는 다음 주에 진행하기로 하였다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -314,17 +327,17 @@
       </div>
 
       <div class="session-item">
-        <div class="session-header" onclick="toggleSession(this)">
+        <div class="session-header open" onclick="toggleSession(this)">
           <span class="session-date">6. 20. 토</span>
           <span class="session-badge">7회</span>
           <span class="session-title">대형 울림통 제작 마무리</span>
-          <span class="session-toggle">▾</span>
+          <span class="session-toggle open">▾</span>
         </div>
-        <div class="session-body">
+        <div class="session-body open">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p></p></div>
-            <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="nemo|6|참여 작가" data-ph="입력..."><span style="font-size: 13.5px; font-weight: 600; background-color: rgb(246, 237, 230);">허양 · 이재홍 · 조영범 · 임계화 · 신정숙</span></p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="nemo|6|날씨" data-ph="입력...">비</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="nemo|6|작업 내용" data-ph="입력...">비가 와서 그런지 팀원들이 조금 지치는 모습이 보였다. 일찍 가야 하는 분도 계셔서 최대한 집중해 작업을 했다. 하부에 석회분을 발라 한 번씩 더 다졌고, 내부 벽다짐을 조금 손보려 했는데 거기까지는 시간이 되지 않았다. 10분 정도, 돌로 벽을 다지는 소리를 녹음하였다. 그리고 상부(지붕)를 피라미드처럼 각지고 꼭짓점에서 만나도록 하자는 의견이 모아졌다.&nbsp;</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -344,9 +357,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p></p></div>
-            <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="nemo|7|참여 작가" data-ph="입력..."></p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="nemo|7|날씨" data-ph="입력..."></p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="nemo|7|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -366,9 +379,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p></p></div>
-            <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="nemo|8|참여 작가" data-ph="입력..."></p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="nemo|8|날씨" data-ph="입력..."></p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="nemo|8|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -388,9 +401,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p></p></div>
-            <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="nemo|9|참여 작가" data-ph="입력..."></p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="nemo|9|날씨" data-ph="입력..."></p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="nemo|9|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -417,9 +430,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>이채명 · 박수연 · 박소연 · 이안 · 박진희</p></div>
-            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p>팀원들이 자신의 생각을 즉흥적으로 표현하는 활동에 적극적으로 참여하였다. 각자의 개성이 드러나는 인상적인 드로잉도 볼 수 있었다. 드로잉에 기반하여 마케트도 착실히 제작하였고, 제법 덩치가 큰 모형들도 등장했다.</p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="gori|0|참여 작가" data-ph="입력...">이채명 · 박수연 · 박소연 · 이안 · 박진희</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="gori|0|날씨" data-ph="입력...">맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="gori|0|작업 내용" data-ph="입력...">팀원들이 자신의 생각을 즉흥적으로 표현하는 활동에 적극적으로 참여하였다. 각자의 개성이 드러나는 인상적인 드로잉도 볼 수 있었다. 드로잉에 기반하여 마케트도 착실히 제작하였고, 제법 덩치가 큰 모형들도 등장했다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -439,9 +452,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>이채명 · 박수연 · 박소연 · 이안 · 박진희</p></div>
-            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="gori|1|참여 작가" data-ph="입력...">이채명 · 박수연 · 박소연 · 이안 · 박진희</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="gori|1|날씨" data-ph="입력...">맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="gori|1|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -461,9 +474,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>이채명 · 박수연 · 박소연 · 이안 · 박진희 · 이성순</p></div>
-            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="gori|2|참여 작가" data-ph="입력...">이채명 · 박수연 · 박소연 · 이안 · 박진희 · 이성순</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="gori|2|날씨" data-ph="입력...">맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="gori|2|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -483,9 +496,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>휴강</p></div>
-            <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="gori|3|참여 작가" data-ph="입력...">휴강</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="gori|3|날씨" data-ph="입력..."></p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="gori|3|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -505,9 +518,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>이채명 · 박수연 · 박소연 · 이안 · 박진희 · 이성순</p></div>
-            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p>한 주 늦게 울림통 기초 제작에 들어갔다. 진희와 수연이가 주도하여 종이 팔레트에 기름칠하고, 샤모트를 뿌려 형태를 잡았다. 수연이가 들어갈 수 있는 크기로 제작하기로 결정. 6줄을 쌓았다.</p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="gori|4|참여 작가" data-ph="입력...">이채명 · 박수연 · 박소연 · 이안 · 박진희 · 이성순</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="gori|4|날씨" data-ph="입력...">맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="gori|4|작업 내용" data-ph="입력...">한 주 늦게 울림통 기초 제작에 들어갔다. 진희와 수연이가 주도하여 종이 팔레트에 기름칠하고, 샤모트를 뿌려 형태를 잡았다. 수연이가 들어갈 수 있는 크기로 제작하기로 결정. 6줄을 쌓았다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -527,9 +540,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>이채명 · 박수연 · 박소연 · 이안 · 박진희 · 이성순</p></div>
-            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p>개인 작업을 마무리하는 시간을 짧게 가졌고, 그 후 흙을 소분하여 타래 만들기를 시작했다. 여름이 되어감에 따라 작업실도 예전처럼 서늘한 기운이 많이 사라졌다. 선풍기를 개시했다. 진희와 규태는 흙반죽으로 시작해 오늘도 만들고 싶은 것을 만들며 둘이 신나게 놀았다. 우리 팀은 오늘 반죽 역할과 쌓기 역할을 나누어 진행해보았다. 특히 수연이가 소분하여 흙 샌드위치 만드는 작업을 적극적으로 했다. 그리고 타래 하나 쌓고 타래 만들기 한 번 하고, 이렇게 번갈아가며 작업하는 모습이 인상적이었다. 그리고 동생들과 함께 있을 때 언니로, 누나로, 늘 아이들을 챙기는 모습도 훌륭한 팀원의 역할이라 생각이 들었다. 중간에 규태 외할아버지가 아이스크림과 빵을 사다 주셔서 짧은 쉬는 시간도 가졌다. 수연, 진희, 규태, 세 아이들은 마지막 1시간은 집에 올라가서 함께 노는 시간을 보내기도 했다. 우리 팀은 초등학생인 수연이 몸집에 울림통 크기를 맞추고 있기도 하고, 타래를 꽤 굵직하게 쌓아 올린 덕에 가장 먼저 완성이 될 것이라 예상하고 있다.</p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="gori|5|참여 작가" data-ph="입력...">이채명 · 박수연 · 박소연 · 이안 · 박진희 · 이성순</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="gori|5|날씨" data-ph="입력...">맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="gori|5|작업 내용" data-ph="입력...">개인 작업을 마무리하는 시간을 짧게 가졌고, 그 후 흙을 소분하여 타래 만들기를 시작했다. 여름이 되어감에 따라 작업실도 예전처럼 서늘한 기운이 많이 사라졌다. 선풍기를 개시했다. 진희와 규태는 흙반죽으로 시작해 오늘도 만들고 싶은 것을 만들며 둘이 신나게 놀았다. 우리 팀은 오늘 반죽 역할과 쌓기 역할을 나누어 진행해보았다. 특히 수연이가 소분하여 흙 샌드위치 만드는 작업을 적극적으로 했다. 그리고 타래 하나 쌓고 타래 만들기 한 번 하고, 이렇게 번갈아가며 작업하는 모습이 인상적이었다. 그리고 동생들과 함께 있을 때 언니로, 누나로, 늘 아이들을 챙기는 모습도 훌륭한 팀원의 역할이라 생각이 들었다. 중간에 규태 외할아버지가 아이스크림과 빵을 사다 주셔서 짧은 쉬는 시간도 가졌다. 수연, 진희, 규태, 세 아이들은 마지막 1시간은 집에 올라가서 함께 노는 시간을 보내기도 했다. 우리 팀은 초등학생인 수연이 몸집에 울림통 크기를 맞추고 있기도 하고, 타래를 꽤 굵직하게 쌓아 올린 덕에 가장 먼저 완성이 될 것이라 예상하고 있다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -550,9 +563,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>체험자 명단</label><p></p></div>
-            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p>아이들은 먼저 네 가지 서로 다른 흙에 대하여 설명을 듣고 흙자름줄로 잘라가며 놀이하기 시작했다. 그 사이에 흙은 자연스럽게 섞였지만, 섞은 후 타래를 별도로 만들지는 않고 원하는 대로 만들기를 계속했다. 시간이 지난 후 시민작가들이 만들어 놓은 타래를 '고리' 작품에 올려보고, 안에 들어가 보기도 하면서 1시간 가량 체험을 하였다.</p></div>
+            <div class="record-field"><label>체험자 명단</label><p data-key="gori|6|체험자 명단" data-ph="입력..."></p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="gori|6|날씨" data-ph="입력...">맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="gori|6|작업 내용" data-ph="입력...">아이들은 먼저 네 가지 서로 다른 흙에 대하여 설명을 듣고 흙자름줄로 잘라가며 놀이하기 시작했다. 그 사이에 흙은 자연스럽게 섞였지만, 섞은 후 타래를 별도로 만들지는 않고 원하는 대로 만들기를 계속했다. 시간이 지난 후 시민작가들이 만들어 놓은 타래를 '고리' 작품에 올려보고, 안에 들어가 보기도 하면서 1시간 가량 체험을 하였다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -571,9 +584,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p></p></div>
-            <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="gori|7|참여 작가" data-ph="입력..."><span style="font-size: 13.5px; font-weight: 600; background-color: rgb(246, 237, 230);">이채명 · 박수연 ·이안 · 박진희 · 이성순</span></p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="gori|7|날씨" data-ph="입력...">갬, 흐림</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="gori|7|작업 내용" data-ph="입력...">팀원 일부가 토요일에 작업을 진행하였다. 일요일에는 성형이 꽤 많이 이루어져서 지붕 부분만을 남겨 놓게 되었다. 작품의 양 측면에는 달을 연상하게 하는 모양의 창을 뚫었고, 입구 문턱을 커버할 만큼 지붕을 빼고 문 위에 원형 창문을 내기로 결정하였다. 하단 3줄 정도가 꽤 단단하게 굳어서, 석회분을 발라 돌로 다지는 작업도 진행했다. 외부는 3줄 모두 다졌고, 내부는 다음에 다지기로 하였다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -593,9 +606,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p></p></div>
-            <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="gori|8|참여 작가" data-ph="입력..."></p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="gori|8|날씨" data-ph="입력..."></p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="gori|8|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -615,9 +628,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p></p></div>
-            <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="gori|9|참여 작가" data-ph="입력..."></p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="gori|9|날씨" data-ph="입력..."></p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="gori|9|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -637,9 +650,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p></p></div>
-            <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="gori|10|참여 작가" data-ph="입력..."></p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="gori|10|날씨" data-ph="입력..."></p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="gori|10|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -654,7 +667,7 @@
 </section>
 
 <!-- ══════════ 미로 ══════════ -->
-<section id="miro" class="team-pane" data-team="miro">
+<section id="miro" class="team-pane active" data-team="miro">
   <div class="session-list">
 
       <div class="session-item">
@@ -666,9 +679,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>인동욱 · 조영범 · 김주원 · 김현국 · 이새롬 · 주장석 · 신정숙</p></div>
-            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="miro|0|참여 작가" data-ph="입력...">인동욱 · 조영범 · 김주원 · 김현국 · 이새롬 · 주장석 · 신정숙</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="miro|0|날씨" data-ph="입력...">맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="miro|0|작업 내용" data-ph="입력...">생각을 즉흥적으로 말과 그림으로 표현하는 것에 대해 낯설어하셔서, 조금 다른 방식으로 나의 개성이나 영감을 찾아보는 시간을 가졌다. 각자가 돌아가며 하나씩 규칙을 말하고, 그 규칙대로 그리는 것이다. (예: 지렁이 다섯 마리 그리세요.) 그러고 나서 흙을 접하자, 낯섦은 온데간데없고 모두 훌륭한 모형을 만들었다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -688,9 +701,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>인동욱 · 민지현 · 조영범 · 김주원 · 김현국 · 이새롬 · 이성순</p></div>
-            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="miro|1|참여 작가" data-ph="입력...">인동욱 · 민지현 · 조영범 · 김주원 · 김현국 · 이새롬 · 이성순</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="miro|1|날씨" data-ph="입력...">맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="miro|1|작업 내용" data-ph="입력...">모뉴먼트 울림통을 만들기 시작했다. 만든 모형을 토대로 작업한 분도 계셨고, 아예 새롭게 만드신 분도 계셨다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -710,9 +723,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p></p></div>
-            <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="miro|2|참여 작가" data-ph="입력..."></p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="miro|2|날씨" data-ph="입력..."></p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="miro|2|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -732,9 +745,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>민지현 · 조영범 · 김주원 · 김현국 · 이새롬 · 주장석</p></div>
-            <div class="record-field weather"><label>날씨</label><p>맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="miro|3|참여 작가" data-ph="입력...">민지현 · 조영범 · 김주원 · 김현국 · 이새롬 · 주장석</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="miro|3|날씨" data-ph="입력...">맑음</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="miro|3|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -754,9 +767,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>인동욱 · 조영범 · 김주원 · 김현국 · 이새롬 · 주장석</p></div>
-            <div class="record-field weather"><label>날씨</label><p>흐림</p></div>
-            <div class="record-field full"><label>작업 내용</label><p>갈라짐이 보이는 모뉴먼트 작품을 조금 손 보고, 일반적으로 NFC 칩을 심는 방법이 아닌, 마치 벤딩머신의 동전 주입구처럼 슬롯을 파서 매립하는 방식을 새롭게 시도했다. 우리 팀도 한 주 늦게 울림통 기초 제작에 들어갔다. 먼저 짐을 작가 차에 싣고, 각자의 차량으로 하나어린이집으로 이동했다. 그리고 미리 옮겨두었던 시멘트 블록을 작업 위치에 놓아 초석을 다지고, 그 위에 주원이가 샤모트를 뿌려 미로같이 재미있는 닫힌 도형을 그렸다. 좁은 부분들이 많이 생겨서 작업이 꽤 고난도가 되었다. 입구는 아예 바닥에서부터 터 놓으려고 했는데, 작품의 내구도를 고려해 몇 단 정도 올린 후 반건조 시기에 잘라내기로 했다. 6~7줄 정도 쌓았다. 작업 완료 후 옆에 조립해두었던 조립식 천막을 이동시키고 모기장을 달아서 작품과 재료를 안전하게 보관하였다. 3개의 기둥은 로프로 나무에 연결하여 안전성을 기했다. 추후 물통을 추가할 예정.</p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="miro|4|참여 작가" data-ph="입력...">인동욱 · 조영범 · 김주원 · 김현국 · 이새롬 · 주장석</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="miro|4|날씨" data-ph="입력...">흐림</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="miro|4|작업 내용" data-ph="입력...">갈라짐이 보이는 모뉴먼트 작품을 조금 손 보고, 일반적으로 NFC 칩을 심는 방법이 아닌, 마치 벤딩머신의 동전 주입구처럼 슬롯을 파서 매립하는 방식을 새롭게 시도했다. 우리 팀도 한 주 늦게 울림통 기초 제작에 들어갔다. 먼저 짐을 작가 차에 싣고, 각자의 차량으로 하나어린이집으로 이동했다. 그리고 미리 옮겨두었던 시멘트 블록을 작업 위치에 놓아 초석을 다지고, 그 위에 주원이가 샤모트를 뿌려 미로같이 재미있는 닫힌 도형을 그렸다. 좁은 부분들이 많이 생겨서 작업이 꽤 고난도가 되었다. 입구는 아예 바닥에서부터 터 놓으려고 했는데, 작품의 내구도를 고려해 몇 단 정도 올린 후 반건조 시기에 잘라내기로 했다. 6~7줄 정도 쌓았다. 작업 완료 후 옆에 조립해두었던 조립식 천막을 이동시키고 모기장을 달아서 작품과 재료를 안전하게 보관하였다. 3개의 기둥은 로프로 나무에 연결하여 안전성을 기했다. 추후 물통을 추가할 예정.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -776,9 +789,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p>인동욱 · 민지현 &amp; 하라 · 조영범 · 주장석</p></div>
-            <div class="record-field weather"><label>날씨</label><p>흐림 (처음에 약한 비)</p></div>
-            <div class="record-field full"><label>작업 내용</label><p>개별 작업 마무리 시간을 조금 가졌다. 민지현 작가님의 작품이 규모가 있고 또 단단한 반건조 상태가 되어서, 허락을 구하고 다 함께 작품 겉면을 돌로 두드려보며 미리 다지기를 경험했다. 그 다음 흙 소분, 반죽, 타래 만들기를 하고 4시 경 하나어린이집으로 이동했다. 작품은 적당히 단단해져 있었고 비닐에 물이 많이 맺혀 있었다. 오늘은 각 팀 모두 동일하게, 완만한 굴곡이 형성되도록 이음새를 메꾸는 데 집중했다. 그리고 우리 팀은 미로의 좁은 협곡 부분을 매끈하게 만들고, 너무 좁은 부분을 완만하게 만드는 데 주력했다. 그나저나, 지난 주에도 그렇더니, 오늘도 흐리고 비가 와서 선선하니 작업하기 좋게 도와주고 있다.</p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="miro|5|참여 작가" data-ph="입력...">인동욱 · 민지현 &amp; 하라 · 조영범 · 주장석</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="miro|5|날씨" data-ph="입력...">흐림 (처음에 약한 비)</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="miro|5|작업 내용" data-ph="입력...">개별 작업 마무리 시간을 조금 가졌다. 민지현 작가님의 작품이 규모가 있고 또 단단한 반건조 상태가 되어서, 허락을 구하고 다 함께 작품 겉면을 돌로 두드려보며 미리 다지기를 경험했다. 그 다음 흙 소분, 반죽, 타래 만들기를 하고 4시 경 하나어린이집으로 이동했다. 작품은 적당히 단단해져 있었고 비닐에 물이 많이 맺혀 있었다. 오늘은 각 팀 모두 동일하게, 완만한 굴곡이 형성되도록 이음새를 메꾸는 데 집중했다. 그리고 우리 팀은 미로의 좁은 협곡 부분을 매끈하게 만들고, 너무 좁은 부분을 완만하게 만드는 데 주력했다. 그나저나, 지난 주에도 그렇더니, 오늘도 흐리고 비가 와서 선선하니 작업하기 좋게 도와주고 있다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -798,9 +811,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p></p></div>
-            <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="miro|6|참여 작가" data-ph="입력..."><span style="font-size: 13.5px; font-weight: 600; background-color: rgb(246, 237, 230);">인동욱 · 조영범 · 김주원 · 김현국 · 이새롬 · 주장석</span></p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="miro|6|날씨" data-ph="입력...">갬, 흐림</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="miro|6|작업 내용" data-ph="입력...">오늘은 두 그룹으로 나누어 3명이 먼저 현장에 가서 타래를 쌓고, 나머지 4명이 작업실에서 반죽과 타래 만드는 작업을 하다가 나중에 역할을 바꾸는 방식으로 진행해보았다. 현장에 사람이 붐비지 않아 좀 더 집중하여 작업하게 되는 장점이 있었다. 그러다 결국 마지막에는 모든 팀원이 현장에서 작업하다가 마무리하기는 했다. 임의로 나누기보다, 그날의 팀원들의 분위기나 컨디션에 따라 나누는 것도 괜찮을 것 같다는 생각이 들었다. 세 박스나 있었던 타래가 꽤 빨리 소진되었다. 우리 팀 울림통은 타래가 많이 들고 디자인이 독특하여 시간이 다른 팀에 비해 더 많이 필요할 것 같아, 한 번 정도 추가 작업을 하는 것을 제안하였다. 현재 7월 3일 19시로 시간을 맞추는 중이다. 함께 하는 첫 야간작업이 될 예정이다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -820,9 +833,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p></p></div>
-            <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="miro|7|참여 작가" data-ph="입력..."></p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="miro|7|날씨" data-ph="입력..."></p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="miro|7|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -842,9 +855,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p></p></div>
-            <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="miro|8|참여 작가" data-ph="입력..."></p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="miro|8|날씨" data-ph="입력..."></p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="miro|8|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -864,9 +877,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p></p></div>
-            <div class="record-field weather"><label>날씨</label><p></p></div>
-            <div class="record-field full"><label>작업 내용</label><p></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="miro|9|참여 작가" data-ph="입력..."></p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="miro|9|날씨" data-ph="입력..."></p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="miro|9|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -880,7 +893,72 @@
   </div>
 </section>
 
+
+<div id="edit-toolbar">
+  <button id="btn-edit" onclick="toggleEdit()">✏️ 편집 종료</button>
+  <button id="btn-save" onclick="exportHtml()">💾 완성본 저장</button>
+</div>
+
 <script>
+/* ── 작업기록 직접 편집 기능 ── */
+(function(){
+  var STORE_KEY = 'oolimtong_record_v1';
+  var fields = [];
+  document.querySelectorAll('.team-pane').forEach(function(pane){
+    var team = pane.dataset.team;
+    pane.querySelectorAll('.session-item').forEach(function(item, idx){
+      item.querySelectorAll('.record-field').forEach(function(rf){
+        var label = rf.querySelector('label');
+        var p = rf.querySelector('p');
+        if (!label || !p) return;
+        p.setAttribute('data-key', team + '|' + idx + '|' + label.textContent.trim());
+        p.setAttribute('data-ph', '입력...');
+        fields.push(p);
+      });
+    });
+  });
+
+  function save(){
+    var data = {};
+    fields.forEach(function(p){ data[p.getAttribute('data-key')] = p.innerHTML; });
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch(e){}
+  }
+  function loadSaved(){
+    var data = {};
+    try { data = JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); } catch(e){}
+    fields.forEach(function(p){
+      var v = data[p.getAttribute('data-key')];
+      if (v != null) p.innerHTML = v;
+    });
+  }
+  fields.forEach(function(p){ p.addEventListener('input', save); });
+  loadSaved();
+
+  window.toggleEdit = function(){
+    var on = document.body.classList.toggle('edit-mode');
+    fields.forEach(function(p){
+      if (on) p.setAttribute('contenteditable', 'true');
+      else p.removeAttribute('contenteditable');
+    });
+    document.getElementById('btn-edit').textContent = on ? '✏️ 편집 종료' : '✏️ 편집';
+  };
+
+  window.exportHtml = function(){
+    save();
+    var clone = document.documentElement.cloneNode(true);
+    var b = clone.querySelector('body'); if (b) b.classList.remove('edit-mode');
+    var hint = clone.querySelector('#edit-hint'); if (hint) hint.remove();
+    clone.querySelectorAll('[contenteditable]').forEach(function(el){ el.removeAttribute('contenteditable'); });
+    var html = '<!DOCTYPE html>\n' + clone.outerHTML;
+    var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'oolimtong_2026_wcf_record.html';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ a.remove(); URL.revokeObjectURL(a.href); }, 100);
+  };
+})();
+
 function switchTeam(team) {
   document.querySelectorAll('.team-tab').forEach(function(t){ t.classList.toggle('active', t.dataset.team === team); });
   document.querySelectorAll('.team-head').forEach(function(h){ h.classList.toggle('active', h.dataset.team === team); });
@@ -901,6 +979,6 @@ var hash = window.location.hash.replace('#','');
 if (['nemo','gori','miro'].indexOf(hash) > -1) switchTeam(hash);
 </script>
 
-</body>
-</html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+
+
+</body></html>
