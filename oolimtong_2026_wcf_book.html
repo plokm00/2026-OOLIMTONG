@@ -17,7 +17,7 @@
   html { scroll-behavior:smooth; overflow-y:scroll; scrollbar-gutter:stable; }
   body {
  background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; font-size:15px; line-height:1.75; padding-top:56px; }
-  #nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(246,237,230,0.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; padding:0 max(40px, calc((100% - 860px) / 2)); height:56px; }
+  #nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(246,237,230,0.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; padding:0 max(40px, calc((100% - 1040px) / 2)); height:56px; }
   .nav-left { display:flex; align-items:baseline; gap:14px; min-width:0; }
   .nav-logo { font-size:13px; letter-spacing:0.25em; color:var(--accent); font-weight:500; text-transform:uppercase; white-space:nowrap; }
   .nav-title { font-family:'IBM Plex Sans KR',sans-serif; font-size:16px; font-weight:700; color:var(--text); letter-spacing:0.02em; white-space:nowrap; }
@@ -25,9 +25,9 @@
   .nav-updated { font-size:12px; color:var(--accent2); background:var(--salmon); padding:4px 12px; border-radius:2px; letter-spacing:0.04em; white-space:nowrap; }
   .nav-back { font-size:12px; color:var(--text-dim); text-decoration:none; letter-spacing:0.08em; transition:color 0.2s; white-space:nowrap; }
   .nav-back:hover { color:var(--accent); }
-  section { padding:64px max(40px, calc((100% - 860px) / 2)); border-bottom:1px solid var(--line); }
+  section { padding:64px max(40px, calc((100% - 1040px) / 2)); border-bottom:1px solid var(--line); }
   h2 { font-family:'IBM Plex Sans KR',sans-serif; font-size:clamp(22px,3vw,32px); font-weight:700; color:var(--text); margin-bottom:28px; border-left:3px solid var(--accent); padding-left:18px; }
-  #cover { background:var(--bg); min-height:36vh; display:flex; flex-direction:column; justify-content:center; padding:80px max(40px, calc((100% - 860px) / 2)); }
+  #cover { background:var(--bg); min-height:36vh; display:flex; flex-direction:column; justify-content:center; padding:80px max(40px, calc((100% - 1040px) / 2)); }
   .cover-tag { font-size:11px; letter-spacing:0.4em; color:var(--accent); text-transform:uppercase; font-weight:600; margin-bottom:20px; }
   .cover-title { font-family:'IBM Plex Sans KR',sans-serif; font-size:clamp(36px,5.5vw,68px); font-weight:900; color:var(--text); line-height:1.1; margin-bottom:16px; }
   .cover-divider { width:40px; height:2px; background:var(--accent); margin:24px 0; }
@@ -49,7 +49,7 @@
   /* 예약 현황 */
   .res-summary { font-size:14px; color:var(--text-dim); margin-bottom:22px; }
   .res-summary strong { color:var(--accent); font-size:17px; }
-  .res-list { display:flex; flex-direction:column; gap:8px; max-width:760px; }
+  .res-list { display:flex; flex-direction:column; gap:8px; max-width:1040px; }
   .res-card { position:relative; background:var(--salmon); border-radius:6px; padding:12px 20px; display:grid; grid-template-columns:130px 1fr; gap:18px; align-items:center; }
   .res-when { display:flex; align-items:baseline; gap:8px; }
   /* 종료된 체험 — 채도·명도 낮춤 */
@@ -94,6 +94,10 @@
     .info-time { font-size:15px; }
     .weekend-list li { font-size:15px; }
     .res-done-tag { right:12px; }
+    .res-card.has-roster { padding-right:48px; }
+    .res-card.done.has-roster { padding-right:92px; }
+    .res-card.done .roster-link { right:60px; }
+    .roster-link { font-size:11px; }
   }
 
   /* 예약 달력 */
@@ -115,6 +119,23 @@
   .cal-legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:12px; font-size:11.5px; color:var(--text-dim); }
   .cal-legend span { display:inline-flex; align-items:center; gap:5px; }
   .cal-legend i { width:11px; height:11px; border-radius:2px; display:inline-block; }
+
+  /* 명단 배지 + 팝업 */
+  .roster-link { position:absolute; top:50%; right:16px; transform:translateY(-50%); font-size:12px; color:var(--accent2); cursor:pointer; letter-spacing:0.04em; white-space:nowrap; opacity:0.8; transition:opacity 0.15s; }
+  .roster-link:hover { opacity:1; text-decoration:underline; }
+  .res-card.done .roster-link { right:72px; color:#6f5a52; }
+  .res-card.has-roster { padding-right:58px; }
+  .res-card.done.has-roster { padding-right:112px; }
+  .roster-overlay { display:none; position:fixed; inset:0; z-index:300; background:rgba(38,20,16,0.45); align-items:center; justify-content:center; padding:20px; }
+  .roster-overlay.open { display:flex; }
+  .roster-popup { position:relative; background:var(--bg); border-radius:8px; box-shadow:0 14px 44px rgba(0,0,0,0.32); max-width:360px; width:100%; max-height:80vh; overflow:auto; padding:24px 26px; }
+  .roster-popup h4 { font-family:'IBM Plex Sans KR',sans-serif; font-size:15px; font-weight:700; color:var(--text); margin:0 30px 4px 0; }
+  .roster-popup .rp-sub { font-size:12px; color:var(--text-dim); margin-bottom:16px; }
+  .roster-popup .rp-grid { display:flex; flex-wrap:wrap; gap:7px; }
+  .roster-popup .rp-name { font-size:13px; color:var(--text); background:var(--bg2); border-radius:4px; padding:6px 12px; }
+  .roster-popup .rp-name.teacher { background:var(--salmon); color:var(--accent2); font-weight:600; }
+  .roster-close { position:absolute; top:14px; right:16px; background:none; border:none; font-size:20px; line-height:1; color:var(--text-dim); cursor:pointer; padding:2px 6px; }
+  .roster-close:hover { color:var(--accent); }
 </style>
 </head>
 <body>
@@ -214,7 +235,7 @@
   <p style="font-size:12px;color:var(--text-dim);margin-bottom:10px;">※ 참여 울림통(작품)은 진행 상황에 따라 변경될 수 있습니다.</p>
   <div class="res-list">
 
-    <div class="res-card">
+    <div class="res-card has-roster">
       <div class="res-when">
         <span class="res-date">6/14 (일)</span>
         <span class="res-time">11:00</span>
@@ -225,9 +246,10 @@
         </div>
         <span class="res-people">9세 1명 · 5세 1명 · 보호자 1명 &nbsp;|&nbsp; 총 3명</span>
       </div>
+      <span class="roster-link" onclick="showRoster('0614')">명단</span>
     </div>
 
-    <div class="res-card">
+    <div class="res-card has-roster">
       <div class="res-when">
         <span class="res-date">6/22 (월)</span>
         <span class="res-time">10:30</span>
@@ -238,6 +260,7 @@
         </div>
         <span class="res-people">무실어린이집 14명 · 인솔자 3명 &nbsp;|&nbsp; 총 17명</span>
       </div>
+      <span class="roster-link" onclick="showRoster('0622musil')">명단</span>
     </div>
 
     <div class="res-card">
@@ -364,7 +387,47 @@
       }
     });
   })();
+
+  // 명단 팝업
+  var ROSTERS = {
+    '0614': {
+      title: '6/14 (일) 11:00 · 체험 명단',
+      sub: '총 3명',
+      teachers: [],
+      names: ['박유진', '민이든', '민이서']
+    },
+    '0622musil': {
+      title: '6/22 (월) 10:30 · 무실어린이집 명단',
+      sub: '교사 2명 · 어린이 14명',
+      teachers: ['정지영', '이슬미'],
+      names: ['배서우', '최우인', '김하늘', '이태겸', '장서율', '최하윤', '박미주', '이주원', '김수린', '염라윤', '엄로윤', '문노을', '연세아', '신민서']
+    }
+  };
+  function showRoster(id) {
+    var r = ROSTERS[id];
+    if (!r) return;
+    var overlay = document.getElementById('rosterOverlay');
+    var grid = '';
+    (r.teachers || []).forEach(function (n) { grid += '<span class="rp-name teacher">' + n + ' (교사)</span>'; });
+    (r.names || []).forEach(function (n) { grid += '<span class="rp-name">' + n + '</span>'; });
+    overlay.querySelector('.rp-title').textContent = r.title;
+    overlay.querySelector('.rp-sub').textContent = r.sub || '';
+    overlay.querySelector('.rp-grid').innerHTML = grid;
+    overlay.classList.add('open');
+  }
+  function closeRoster() { document.getElementById('rosterOverlay').classList.remove('open'); }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeRoster(); });
 </script>
 
+<div class="roster-overlay" id="rosterOverlay" onclick="if(event.target===this)closeRoster()">
+  <div class="roster-popup">
+    <button type="button" class="roster-close" onclick="closeRoster()" aria-label="닫기">&times;</button>
+    <h4 class="rp-title"></h4>
+    <p class="rp-sub"></p>
+    <div class="rp-grid"></div>
+  </div>
+</div>
+
+
 </body>
-</html>                                                                                                                                                                    
+</html>
