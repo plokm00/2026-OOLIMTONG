@@ -50,13 +50,15 @@
   .res-summary { font-size:14px; color:var(--text-dim); margin-bottom:22px; }
   .res-summary strong { color:var(--accent); font-size:17px; }
   .res-list { display:flex; flex-direction:column; gap:8px; max-width:1040px; }
-  .res-card { position:relative; background:var(--salmon); border-radius:6px; padding:12px 20px; display:grid; grid-template-columns:130px 1fr; gap:18px; align-items:center; }
+  .res-row { display:flex; align-items:center; gap:14px; }
+  .res-aside { flex:0 0 auto; display:flex; align-items:center; gap:14px; }
+  .res-card { background:var(--salmon); border-radius:6px; padding:12px 20px; display:grid; grid-template-columns:130px 1fr; gap:18px; align-items:center; flex:0 1 760px; min-width:0; }
   .res-when { display:flex; align-items:baseline; gap:8px; }
   /* 종료된 체험 — 채도·명도 낮춤 */
-  .res-card.done { background:#d9cac4; padding-right:64px; }
+  .res-card.done { background:#d9cac4; }
   .res-card.done .res-date, .res-card.done .res-time, .res-card.done .res-body { opacity:0.6; }
   .res-card.done .res-people { background:#ccbeb8; }
-  .res-done-tag { position:absolute; right:16px; top:50%; transform:translateY(-50%); display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; color:#6f5a52; letter-spacing:0.06em; }
+  .res-done-tag { display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; color:#6f5a52; letter-spacing:0.06em; white-space:nowrap; }
   .res-date { font-family:'IBM Plex Sans KR',sans-serif; font-size:16px; font-weight:700; color:var(--text); }
   .res-time { font-size:13px; color:var(--accent2); font-weight:600; }
   .res-body { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
@@ -76,7 +78,8 @@
     .nav-logo, .nav-updated { display:none; }
     .info-cell { grid-template-columns:1fr; gap:14px 0; }
     .info-detail { border-left:none; border-top:1px solid var(--line); padding-left:0; padding-top:14px; align-self:auto; }
-    .res-card { grid-template-columns:1fr; gap:12px; }
+    .res-card { grid-template-columns:1fr; gap:12px; flex:1 1 100%; }
+    .res-row { flex-wrap:wrap; gap:8px 12px; }
     .notice { padding:22px 20px; max-width:100%; } .apply-box { padding:20px 20px; max-width:100%; }
   }
 
@@ -86,17 +89,12 @@
     h2 { font-size:22px; }
     .res-summary strong { font-size:16px; }
     .res-card { padding:11px 14px; gap:12px; }
-    .res-card.done { padding-right:52px; }
     .res-date { font-size:15px; }
     .res-time { font-size:12.5px; }
     .res-line1 { font-size:12px; }
     .res-people { font-size:12.5px; padding:4px 10px; white-space:normal; }
     .info-time { font-size:15px; }
     .weekend-list li { font-size:15px; }
-    .res-done-tag { right:12px; }
-    .res-card.has-roster { padding-right:48px; }
-    .res-card.done.has-roster { padding-right:92px; }
-    .res-card.done .roster-link { right:60px; }
     .roster-link { font-size:11px; }
   }
 
@@ -121,19 +119,16 @@
   .cal-legend i { width:11px; height:11px; border-radius:2px; display:inline-block; }
 
   /* 명단 배지 + 팝업 */
-  .roster-link { position:absolute; top:50%; right:16px; transform:translateY(-50%); font-size:12px; color:var(--accent2); cursor:pointer; letter-spacing:0.04em; white-space:nowrap; opacity:0.8; transition:opacity 0.15s; }
-  .roster-link:hover { opacity:1; text-decoration:underline; }
-  .res-card.done .roster-link { right:72px; color:#6f5a52; }
-  .res-card.has-roster { padding-right:58px; }
-  .res-card.done.has-roster { padding-right:112px; }
+  .roster-link { display:inline-flex; align-items:center; font-size:11px; font-weight:600; color:var(--accent2); cursor:pointer; letter-spacing:0.06em; white-space:nowrap; }
+  .roster-link:hover { text-decoration:underline; }
   .roster-overlay { display:none; position:fixed; inset:0; z-index:300; background:rgba(38,20,16,0.45); align-items:center; justify-content:center; padding:20px; }
   .roster-overlay.open { display:flex; }
   .roster-popup { position:relative; background:var(--bg); border-radius:8px; box-shadow:0 14px 44px rgba(0,0,0,0.32); max-width:360px; width:100%; max-height:80vh; overflow:auto; padding:24px 26px; }
   .roster-popup h4 { font-family:'IBM Plex Sans KR',sans-serif; font-size:15px; font-weight:700; color:var(--text); margin:0 30px 4px 0; }
   .roster-popup .rp-sub { font-size:12px; color:var(--text-dim); margin-bottom:16px; }
-  .roster-popup .rp-grid { display:flex; flex-wrap:wrap; gap:7px; }
-  .roster-popup .rp-name { font-size:13px; color:var(--text); background:var(--bg2); border-radius:4px; padding:6px 12px; }
-  .roster-popup .rp-name.teacher { background:var(--salmon); color:var(--accent2); font-weight:600; }
+  .roster-popup .rp-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:8px 16px; }
+  .roster-popup .rp-name { font-size:13.5px; color:var(--text); line-height:1.5; }
+  .roster-popup .rp-name.teacher { color:var(--text); font-weight:400; }
   .roster-close { position:absolute; top:14px; right:16px; background:none; border:none; font-size:20px; line-height:1; color:var(--text-dim); cursor:pointer; padding:2px 6px; }
   .roster-close:hover { color:var(--accent); }
 </style>
@@ -258,7 +253,7 @@
         <div class="res-line1">
           <span class="res-tag">단체</span> · <span class="res-place">니닉크라프트 실내 · <span class="res-team">고리</span> 작업 참여</span>
         </div>
-        <span class="res-people">무실어린이집 14명 · 인솔자 3명 &nbsp;|&nbsp; 총 17명</span>
+        <span class="res-people">무실어린이집 14명 · 인솔자 2명 &nbsp;|&nbsp; 총 16명</span>
       </div>
       <span class="roster-link" onclick="showRoster('0622musil')">명단</span>
     </div>
@@ -272,7 +267,7 @@
         <div class="res-line1">
           <span class="res-tag">단체</span> · <span class="res-place">니닉크라프트 실내 · <span class="res-team">네모</span> 작업 참여</span>
         </div>
-        <span class="res-people">큰별어린이집 7세(해솔반) · 인원 미정</span>      </div>
+        <span class="res-people">큰별어린이집 7세(해솔반) 13명 · 인솔자 2명 &nbsp;|&nbsp; 총 15명</span>      </div>
     </div>
 
     <div class="res-card">
@@ -366,7 +361,20 @@
 </section>
 
 <script>
-  // 오늘 이전 날짜의 예약 카드를 '종료'로 표시 (연도 2026 기준)
+  // 각 카드를 행으로 감싸고 명단/종료를 박스 오른쪽 바깥(aside)으로 분리
+  (function () {
+    document.querySelectorAll('.res-card').forEach(function (card) {
+      var row = document.createElement('div'); row.className = 'res-row';
+      card.parentNode.insertBefore(row, card);
+      row.appendChild(card);
+      var aside = document.createElement('div'); aside.className = 'res-aside';
+      row.appendChild(aside);
+      var link = card.querySelector('.roster-link');
+      if (link) aside.appendChild(link);
+    });
+  })();
+
+  // 오늘 이전(및 오늘) 날짜의 예약 카드를 '종료'로 표시 (연도 2026 기준)
   (function () {
     var now = new Date();
     var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -376,13 +384,14 @@
       var m = el.textContent.match(/(\d{1,2})\s*\/\s*(\d{1,2})/);
       if (!m) return;
       var d = new Date(2026, parseInt(m[1], 10) - 1, parseInt(m[2], 10));
-      if (d < today) {
+      if (d <= today) {
         card.classList.add('done');
-        if (!card.querySelector('.res-done-tag')) {
+        var aside = card.parentNode.querySelector('.res-aside');
+        if (aside && !aside.querySelector('.res-done-tag')) {
           var tag = document.createElement('span');
           tag.className = 'res-done-tag';
           tag.textContent = '✓ 종료';
-          card.appendChild(tag);
+          aside.insertBefore(tag, aside.firstChild);
         }
       }
     });

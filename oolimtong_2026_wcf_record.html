@@ -88,6 +88,7 @@
   .session-toggle.open { transform:rotate(180deg); }
   /* 자유체험 항목 (정규 회차와 구분) */
   .session-item.exp .session-badge { background:var(--salmon); color:var(--accent2); }
+  .session-item.reinf .session-badge { background:var(--salmon); color:var(--accent2); }
   .record-grid { display:grid; grid-template-columns:1fr 130px; gap:16px; margin-top:16px; }
   .record-field label { font-size:11px; letter-spacing:0.15em; color:var(--accent2); text-transform:uppercase; font-weight:600; display:block; margin-bottom:6px; }
   .label-hint { font-weight:400; color:var(--text-dim); letter-spacing:0.05em; text-transform:none; }
@@ -174,12 +175,12 @@
 
 <div class="team-bar">
   <div class="team-tabs">
-    <button class="team-tab active" data-team="nemo" onclick="switchTeam('nemo')">네모</button>
+    <button class="team-tab" data-team="nemo" onclick="switchTeam('nemo')">네모</button>
     <button class="team-tab" data-team="gori" onclick="switchTeam('gori')">고리</button>
-    <button class="team-tab" data-team="miro" onclick="switchTeam('miro')">미로</button>
+    <button class="team-tab active" data-team="miro" onclick="switchTeam('miro')">미로</button>
   </div>
 
-  <div class="team-head active" data-team="nemo">
+  <div class="team-head" data-team="nemo">
     <p class="team-line"><span class="team-when">매주 토요일 14:00 · 니닉크라프트 실내</span> · 허양 · 이재홍 · 조영범 · 임계화 · 신정숙 · <span class="team-artist">김아영</span></p>
   </div>
 
@@ -187,13 +188,13 @@
     <p class="team-line"><span class="team-when">매주 일요일 10:00 · 니닉크라프트 실내</span> · 이채명 · 박수연 · 박소연 · 이안 · 박진희 · 이성순 · <span class="team-artist">김아영</span></p>
   </div>
 
-  <div class="team-head" data-team="miro">
+  <div class="team-head active" data-team="miro">
     <p class="team-line"><span class="team-when">매주 일요일 14:00 · 하나어린이집 야외 부지</span> · 인동욱 · 민지현 · 조영범 · 김주원 · 김현국 · 이새롬 · 주장석 · <span class="team-artist">김아영</span></p>
   </div>
 </div>
 
 <!-- ══════════ 네모 ══════════ -->
-<section id="nemo" class="team-pane active" data-team="nemo">
+<section id="nemo" class="team-pane" data-team="nemo">
   <div class="session-list">
 
       <div class="session-item" data-skey="nemo|0">
@@ -219,13 +220,13 @@
       </div>
 
       <div class="session-item" data-skey="nemo|1">
-        <div class="session-header open" onclick="toggleSession(this)">
+        <div class="session-header" onclick="toggleSession(this)">
           <span class="session-date">5. 16. 토</span>
           <span class="session-badge">2회</span>
           <span class="session-title">모뉴먼트 울림통 제작</span>
-          <span class="session-toggle open">▾</span>
+          <span class="session-toggle">▾</span>
         </div>
-        <div class="session-body open">
+        <div class="session-body">
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p data-key="nemo|1|참여 작가" data-ph="입력...">허양 · 이재홍 · 조영범 · 임계화 · 신정숙 · 이정선</p></div>
             <div class="record-field weather"><label>날씨</label><p data-key="nemo|1|날씨" data-ph="입력...">맑음</p></div>
@@ -241,13 +242,13 @@
       </div>
 
       <div class="session-item" data-skey="nemo|2">
-        <div class="session-header open" onclick="toggleSession(this)">
+        <div class="session-header" onclick="toggleSession(this)">
           <span class="session-date">5. 23. 토</span>
           <span class="session-badge">3회</span>
           <span class="session-title">모뉴먼트 마무리 · 타래 만들기</span>
-          <span class="session-toggle open">▾</span>
+          <span class="session-toggle">▾</span>
         </div>
-        <div class="session-body open">
+        <div class="session-body">
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p data-key="nemo|2|참여 작가" data-ph="입력...">허양 · 이재홍 · 조영범 · 임계화 · 신정숙</p></div>
             <div class="record-field weather"><label>날씨</label><p data-key="nemo|2|날씨" data-ph="입력...">맑음</p></div>
@@ -263,13 +264,13 @@
       </div>
 
       <div class="session-item" data-skey="nemo|3">
-        <div class="session-header open" onclick="toggleSession(this)">
+        <div class="session-header" onclick="toggleSession(this)">
           <span class="session-date">5. 30. 토</span>
           <span class="session-badge">4회</span>
           <span class="session-title">대형 울림통 제작 1</span>
-          <span class="session-toggle open">▾</span>
+          <span class="session-toggle">▾</span>
         </div>
-        <div class="session-body open">
+        <div class="session-body">
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p data-key="nemo|3|참여 작가" data-ph="입력...">허양 · 이재홍 · 조영범 · 임계화 · 신정숙</p></div>
             <div class="record-field weather"><label>날씨</label><p data-key="nemo|3|날씨" data-ph="입력...">맑음</p></div>
@@ -285,13 +286,13 @@
       </div>
 
       <div class="session-item" data-skey="nemo|4">
-        <div class="session-header open" onclick="toggleSession(this)">
+        <div class="session-header" onclick="toggleSession(this)">
           <span class="session-date">6. 6. 토</span>
           <span class="session-badge">5회</span>
           <span class="session-title">대형 울림통 제작 2</span>
-          <span class="session-toggle open">▾</span>
+          <span class="session-toggle">▾</span>
         </div>
-        <div class="session-body open">
+        <div class="session-body">
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p data-key="nemo|4|참여 작가" data-ph="입력...">허양 · 이재홍 · 조영범 · 임계화 · 신정숙</p></div>
             <div class="record-field weather"><label>날씨</label><p data-key="nemo|4|날씨" data-ph="입력...">맑음</p></div>
@@ -307,13 +308,13 @@
       </div>
 
       <div class="session-item" data-skey="nemo|5">
-        <div class="session-header open" onclick="toggleSession(this)">
+        <div class="session-header" onclick="toggleSession(this)">
           <span class="session-date">6. 13. 토</span>
           <span class="session-badge">6회</span>
           <span class="session-title">대형 울림통 제작 3</span>
-          <span class="session-toggle open">▾</span>
+          <span class="session-toggle">▾</span>
         </div>
-        <div class="session-body open">
+        <div class="session-body">
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p data-key="nemo|5|참여 작가" data-ph="입력...">조영범 · 임계화 · 신정숙</p></div>
             <div class="record-field weather"><label>날씨</label><p data-key="nemo|5|날씨" data-ph="입력...">맑음</p></div>
@@ -329,13 +330,13 @@
       </div>
 
       <div class="session-item" data-skey="nemo|6">
-        <div class="session-header open" onclick="toggleSession(this)">
+        <div class="session-header" onclick="toggleSession(this)">
           <span class="session-date">6. 20. 토</span>
           <span class="session-badge">7회</span>
           <span class="session-title">대형 울림통 제작 마무리</span>
-          <span class="session-toggle open">▾</span>
+          <span class="session-toggle">▾</span>
         </div>
-        <div class="session-body open">
+        <div class="session-body">
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p data-key="nemo|6|참여 작가" data-ph="입력..."><span style="font-size: 13.5px; font-weight: 600; background-color: rgb(246, 237, 230);">허양 · 이재홍 · 조영범 · 임계화 · 신정숙</span></p></div>
             <div class="record-field weather"><label>날씨</label><p data-key="nemo|6|날씨" data-ph="입력...">비</p></div>
@@ -351,13 +352,13 @@
       </div>
 
       <div class="session-item" data-skey="nemo|7">
-        <div class="session-header open" onclick="toggleSession(this)">
+        <div class="session-header" onclick="toggleSession(this)">
           <span class="session-date">6. 27. 토</span>
           <span class="session-badge">8회</span>
           <span class="session-title">개인 모뉴먼트 점검 · 완료</span>
-          <span class="session-toggle open">▾</span>
+          <span class="session-toggle">▾</span>
         </div>
-        <div class="session-body open">
+        <div class="session-body">
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p data-key="nemo|7|참여 작가" data-ph="입력..."></p></div>
             <div class="record-field weather"><label>날씨</label><p data-key="nemo|7|날씨" data-ph="입력..."></p></div>
@@ -690,17 +691,17 @@
 </section>
 
 <!-- ══════════ 미로 ══════════ -->
-<section id="miro" class="team-pane" data-team="miro">
+<section id="miro" class="team-pane active" data-team="miro">
   <div class="session-list">
 
       <div class="session-item" data-skey="miro|0">
-        <div class="session-header" onclick="toggleSession(this)">
+        <div class="session-header open" onclick="toggleSession(this)">
           <span class="session-date">5. 10. 일</span>
           <span class="session-badge">1회</span>
           <span class="session-title">재료 이해 · 모뉴먼트 드로잉·모델링</span>
-          <span class="session-toggle">▾</span>
+          <span class="session-toggle open">▾</span>
         </div>
-        <div class="session-body">
+        <div class="session-body open">
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p data-key="miro|0|참여 작가" data-ph="입력...">인동욱 · 조영범 · 김주원 · 김현국 · 이새롬 · 주장석 · 신정숙</p></div>
             <div class="record-field weather"><label>날씨</label><p data-key="miro|0|날씨" data-ph="입력...">맑음</p></div>
@@ -716,13 +717,13 @@
       </div>
 
       <div class="session-item" data-skey="miro|1">
-        <div class="session-header open" onclick="toggleSession(this)">
+        <div class="session-header" onclick="toggleSession(this)">
           <span class="session-date">5. 17. 일</span>
           <span class="session-badge">2회</span>
           <span class="session-title">모뉴먼트 울림통 제작</span>
-          <span class="session-toggle open">▾</span>
+          <span class="session-toggle">▾</span>
         </div>
-        <div class="session-body open">
+        <div class="session-body">
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p data-key="miro|1|참여 작가" data-ph="입력...">인동욱 · 민지현 · 조영범 · 김주원 · 김현국 · 이새롬 · 이성순</p></div>
             <div class="record-field weather"><label>날씨</label><p data-key="miro|1|날씨" data-ph="입력...">맑음</p></div>
@@ -890,14 +891,14 @@
         </div>        </div>
       </div>
 
-      <div class="session-item" data-skey="miro|9">
-        <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">7. 5. 일</span>
-          <span class="session-badge">9회</span>
-          <span class="session-title">표면 마감 · 이름짓기</span>
-          <span class="session-toggle">▾</span>
+      <div class="session-item reinf" data-skey="miro|9">
+        <div class="session-header open" onclick="toggleSession(this)">
+          <span class="session-date">7. 3. 금</span>
+          <span class="session-badge">보강</span>
+          <span class="session-title">야간작업</span>
+          <span class="session-toggle open">▾</span>
         </div>
-        <div class="session-body">
+        <div class="session-body open">
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p data-key="miro|9|참여 작가" data-ph="입력..."></p></div>
             <div class="record-field weather"><label>날씨</label><p data-key="miro|9|날씨" data-ph="입력..."></p></div>
@@ -914,9 +915,9 @@
 
       <div class="session-item" data-skey="miro|10">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">7. 12. 일</span>
-          <span class="session-badge">10회</span>
-          <span class="session-title">설치 계획 공유 · 리뷰</span>
+          <span class="session-date">7. 5. 일</span>
+          <span class="session-badge">9회</span>
+          <span class="session-title">표면 마감 · 이름짓기</span>
           <span class="session-toggle">▾</span>
         </div>
         <div class="session-body">
@@ -924,6 +925,28 @@
             <div class="record-field"><label>참여 작가</label><p data-key="miro|10|참여 작가" data-ph="입력..."></p></div>
             <div class="record-field weather"><label>날씨</label><p data-key="miro|10|날씨" data-ph="입력..."></p></div>
             <div class="record-field full"><label>작업 내용</label><p data-key="miro|10|작업 내용" data-ph="입력..."></p></div>
+          </div>
+        <div class="photo-block">
+          <p class="photo-label">사진</p>
+          <div class="photo-row">
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>
+          <div class="photo-thumb"><span>＋</span></div>          </div>
+        </div>        </div>
+      </div>
+
+      <div class="session-item" data-skey="miro|11">
+        <div class="session-header" onclick="toggleSession(this)">
+          <span class="session-date">7. 12. 일</span>
+          <span class="session-badge">10회</span>
+          <span class="session-title">설치 계획 공유 · 리뷰</span>
+          <span class="session-toggle">▾</span>
+        </div>
+        <div class="session-body">
+          <div class="record-grid">
+            <div class="record-field"><label>참여 작가</label><p data-key="miro|11|참여 작가" data-ph="입력..."></p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="miro|11|날씨" data-ph="입력..."></p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="miro|11|작업 내용" data-ph="입력..."></p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
