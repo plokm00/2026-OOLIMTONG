@@ -718,9 +718,8 @@
 
   /* ────────── 9. 마무리 ────────── */
   #closing {
-    background: var(--bg);
-    align-items: center;
-    text-align: center;
+    background: var(--accent2);
+    min-height: 50vh;
     position: relative;
     overflow: hidden;
   }
@@ -734,7 +733,7 @@
   .closing-eyebrow {
     font-size: 11px;
     letter-spacing: 0.4em;
-    color: var(--accent);
+    color: rgba(246,237,230,0.6);
     text-transform: uppercase;
     margin-bottom: 28px;
   }
@@ -743,27 +742,48 @@
     font-size: clamp(24px, 3.5vw, 38px);
     font-weight: 700;
     font-family: 'IBM Plex Sans KR', sans-serif;
-    color: var(--text);
+    color: var(--white);
     line-height: 1.55;
     margin-bottom: 32px;
   }
 
   .closing-sub {
-    font-size: 15px;
-    color: var(--text-dim);
-    line-height: 1.9;
+    font-size: 16px;
+    color: rgba(246,237,230,0.85);
+    line-height: 2;
     margin-bottom: 48px;
   }
 
   .closing-signature {
     font-size: 13px;
-    color: var(--text-dim);
+    color: rgba(246,237,230,0.6);
     letter-spacing: 0.2em;
     text-transform: uppercase;
   }
 
   .closing-signature span {
-    color: var(--accent);
+    color: var(--white);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(246,237,230,0.7);
+    text-decoration: none;
+    border: 1px solid rgba(246,237,230,0.3);
+    padding: 10px 24px;
+    border-radius: 2px;
+    letter-spacing: 0.06em;
+    transition: background 0.2s, color 0.2s;
+    align-self: flex-start;
+    margin-top: 32px;
+  }
+
+  .back-link:hover {
+    background: rgba(246,237,230,0.15);
+    color: var(--white);
   }
 
   /* ────────── 고정 네비 ────────── */
@@ -1777,17 +1797,15 @@
 <!-- ── 9. 마무리 ── -->
 <section id="closing">
   <div class="closing-inner">
-    <p class="closing-eyebrow">Closing · 울림통 변주 2026</p>
     <h2 class="closing-quote">
-      여러 삶과 이야기가<br>하나의 울림통 안에서<br>공명하기를
+      여러 삶과 이야기가<br>하나의 울림통 안에서 공명하기를
     </h2>
     <p class="closing-sub">
       여러분의 삶과 이야기는 그 자체로 작품입니다.<br>
       이 모든 것이 함께 모이는 공간이 울림통입니다.
     </p>
-    <p class="closing-signature">
-      <span>ninnik_kraft</span> &nbsp;·&nbsp; @ninnik_kraft
-    </p>
+    <p class="closing-signature">문의 · 김아영 작가 (니닉크라프트) · <a href="https://instagram.com/ninnik_kraft" style="color:rgba(246,237,230,0.7);text-decoration:none;">@ninnik_kraft</a></p>
+    <a href="index.html" class="back-link">← 울림통 아카이브로 돌아가기</a>
   </div>
 </section>
 
@@ -1805,3 +1823,4 @@
 </script>
 </body>
 </html>
+   
