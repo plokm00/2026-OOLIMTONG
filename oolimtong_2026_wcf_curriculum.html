@@ -1785,4 +1785,65 @@
             <button onclick="ytOpenTab(event,'uZEq8I6-TzI')" style="padding:11px 20px; background:#2c0e0a; color:#f6ede6; border:none; font-size:12px; font-family:'Noto Sans KR',sans-serif; font-weight:500; cursor:pointer; letter-spacing:0.08em; white-space:nowrap;" onmouseover="this.style.background='#4a1810'" onmouseout="this.style.background='#2c0e0a'">↗&ensp;새 탭으로 열기</button>
           </div>
         </div>
-        <p class="media
+        <p class="media-caption">2024 울림통 내부 퍼포먼스</p>
+      </div>
+
+    </div>
+  </div>
+
+</div></div>
+  </div>
+  </div>
+</div>
+
+<script>
+  /* 회차(카테고리) 접기·펼치기 */
+  function togglePane(header) {
+    var pane = header.closest('.tab-pane');
+    if (!pane || pane.classList.contains('empty')) return;
+    pane.classList.toggle('active');
+  }
+
+  /* 유튜브 카드 메뉴 */
+  function ytToggleMenu(e, wrap) {
+    var menu = wrap.querySelector('.yt-menu');
+    document.querySelectorAll('.yt-menu').forEach(function(m) {
+      if (m !== menu) m.style.display = 'none';
+    });
+    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+  }
+  function ytPopup(e, id) {
+    e.stopPropagation();
+    var w = 1280, h = 800;
+    var left = Math.round(window.screenX + (window.outerWidth - w) / 2);
+    var top  = Math.round(window.screenY + (window.outerHeight - h) / 2);
+    window.open(
+      'https://www.youtube.com/watch?v=' + id,
+      'yt_' + id,
+      'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top +
+      ',resizable=yes,scrollbars=no,toolbar=no,menubar=no,location=no'
+    );
+    e.target.closest('.yt-wrap').querySelector('.yt-menu').style.display = 'none';
+  }
+  function ytOpenTab(e, id) {
+    e.stopPropagation();
+    window.open('https://youtu.be/' + id, '_blank');
+    e.target.closest('.yt-wrap').querySelector('.yt-menu').style.display = 'none';
+  }
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.yt-wrap')) {
+      document.querySelectorAll('.yt-menu').forEach(function(m) {
+        m.style.display = 'none';
+      });
+    }
+  });
+
+  /* 첫 회차는 펼친 상태로 시작 */
+  document.addEventListener('DOMContentLoaded', function() {
+    var first = document.querySelector('.tab-pane');
+    if (first) first.classList.add('active');
+  });
+</script>
+
+</body>
+</html>
