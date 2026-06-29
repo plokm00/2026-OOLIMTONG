@@ -608,6 +608,59 @@
   .ref-chip { font-size:11px; color:var(--accent2); text-decoration:none; border:none; border-radius:2px; padding:3px 9px; background:var(--bg); display:inline-flex; align-items:center; gap:4px; transition:background 0.15s, color 0.15s; letter-spacing:0.02em; white-space:nowrap; }
   .ref-chip:hover { background:var(--accent); color:var(--white); }
 
+
+  /* ===== v2: 사이드바 레이아웃 ===== */
+  /* 단일 뷰: 선택한 회차만 표시 */
+  .tab-pane { display:none !important; background:transparent !important; border-radius:0 !important; overflow:visible !important; }
+  .tab-pane.active { display:block !important; }
+  .layout { display:flex; align-items:flex-start; max-width:1240px; margin:0 auto; }
+  .sidebar { width:240px; flex-shrink:0; position:sticky; top:56px; height:calc(100vh - 56px); overflow-y:auto; padding:30px 12px 50px 24px; border-right:1px solid var(--line); background:var(--bg); scrollbar-width:thin; scrollbar-color:var(--line) transparent; }
+  .sidebar::-webkit-scrollbar { width:3px; }
+  .sidebar::-webkit-scrollbar-thumb { background:var(--line); border-radius:99px; }
+  .sidebar-heading { font-size:10px; letter-spacing:0.28em; text-transform:uppercase; color:var(--text-dim); font-weight:500; margin:0 0 12px 10px; }
+  .lesson-list { list-style:none; }
+  .lesson-list li { margin-bottom:1px; }
+  .lesson-list a { display:block; cursor:pointer; padding:8px 10px; border-radius:3px; text-decoration:none; transition:background 0.12s; }
+  .lesson-list a .ll-num { font-size:11px; font-weight:700; letter-spacing:0.05em; color:var(--accent2); }
+  .lesson-list a .ll-title { display:block; font-size:12px; color:var(--text-dim); line-height:1.45; margin-top:2px; }
+  .lesson-list a:hover { background:transparent; }
+  .lesson-list a:hover .ll-title { color:var(--text); }
+  .lesson-list a.active { background:transparent; }
+  .lesson-list a.active .ll-num,
+  .lesson-list a.active .ll-title { color:var(--accent); }
+  .lesson-list a.active .ll-title { font-weight:500; }
+  .main-content { flex:1; min-width:0; max-width:none; margin:0; padding:0 0 40px; }
+  /* 회차 헤더: 토글 아님, 본문과 정렬 */
+  .pane-header { cursor:default !important; background:transparent !important; padding:40px 0 0 !important; }
+  .pane-header:hover { background:transparent !important; }
+  .pane-header-inner { max-width:780px; margin:0 auto; padding:0 0 20px !important; border-bottom:2px solid var(--accent); }
+  .pane-header-inner::after { content:'' !important; display:none !important; }
+  .content-wrap { padding:52px 40px 80px !important; }
+  /* 모바일 회차 탭 */
+  .lesson-tabs { display:none; }
+  /* 이전/다음 */
+  .lesson-nav { display:flex; justify-content:space-between; gap:12px; max-width:860px; margin:8px auto 0; padding:18px 40px 0; border-top:1px solid var(--line); }
+  .lesson-nav a { font-size:13px; font-weight:600; color:var(--accent); text-decoration:none; cursor:pointer; }
+  .lesson-nav a:hover { text-decoration:underline; }
+  .lesson-nav a.disabled { visibility:hidden; }
+  @media (max-width:900px) {
+    .layout { display:block; max-width:none; }
+    .sidebar { display:none; }
+    .main-content { padding:0 0 60px; }
+    .pane-header { padding:22px 0 0 !important; }
+    .pane-header-inner { max-width:none; padding:0 24px 16px !important; }
+    .content-wrap { padding:42px 24px 70px !important; }
+    .lesson-nav { padding:18px 24px 0; }
+    .lesson-tabs { display:flex; gap:6px; overflow-x:auto; -webkit-overflow-scrolling:touch; position:sticky; top:56px; z-index:90; background:rgba(246,237,230,0.97); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); padding:8px 14px; scrollbar-width:none; }
+    .lesson-tabs::-webkit-scrollbar { display:none; }
+    .lesson-tabs button { flex:0 0 auto; font-family:inherit; font-size:13px; font-weight:500; white-space:nowrap; padding:6px 9px; border:none; background:transparent; color:var(--text-dim); cursor:pointer; }
+    .lesson-tabs button.active { color:var(--accent); font-weight:700; }
+  }
+  @media (max-width:600px) {
+    .pane-header-inner { padding:0 18px 14px !important; }
+    .content-wrap { padding:36px 18px 60px !important; }
+    .lesson-nav { padding:18px 18px 0; }
+  }
 </style>
 </head>
 <body>
@@ -623,10 +676,40 @@
   </div>
 </div>
 
+<div class="lesson-tabs">
+  <button data-lesson="1" onclick="selectLesson(1)">1회</button>
+  <button data-lesson="2" onclick="selectLesson(2)">2회</button>
+  <button data-lesson="3" onclick="selectLesson(3)">3회</button>
+  <button data-lesson="4" onclick="selectLesson(4)">4회</button>
+  <button data-lesson="5" onclick="selectLesson(5)">5회</button>
+  <button data-lesson="6" onclick="selectLesson(6)">6회</button>
+  <button data-lesson="7" onclick="selectLesson(7)">7회</button>
+  <button data-lesson="8" onclick="selectLesson(8)">8회</button>
+  <button data-lesson="9" onclick="selectLesson(9)">9회</button>
+  <button data-lesson="10" onclick="selectLesson(10)">10회</button>
+  <button data-lesson="11" onclick="selectLesson(11)">11회</button>
+</div>
+
 <div class="layout">
+  <aside class="sidebar">
+    <p class="sidebar-heading">회차</p>
+    <ul class="lesson-list">
+      <li><a data-lesson="1" onclick="selectLesson(1)"><span class="ll-num">1회</span><span class="ll-title">재료 이해 · 모뉴먼트 드로잉·모델링</span></a></li>
+      <li><a data-lesson="2" onclick="selectLesson(2)"><span class="ll-num">2회</span><span class="ll-title">모뉴먼트 울림통 제작</span></a></li>
+      <li><a data-lesson="3" onclick="selectLesson(3)"><span class="ll-num">3회</span><span class="ll-title">모뉴먼트 마무리 · 타래 만들기</span></a></li>
+      <li><a data-lesson="4" onclick="selectLesson(4)"><span class="ll-num">4회</span><span class="ll-title">대형 울림통 제작 1</span></a></li>
+      <li><a data-lesson="5" onclick="selectLesson(5)"><span class="ll-num">5회</span><span class="ll-title">대형 울림통 제작 2</span></a></li>
+      <li><a data-lesson="6" onclick="selectLesson(6)"><span class="ll-num">6회</span><span class="ll-title">대형 울림통 제작 3</span></a></li>
+      <li><a data-lesson="7" onclick="selectLesson(7)"><span class="ll-num">7회</span><span class="ll-title">대형 울림통 제작 4</span></a></li>
+      <li><a data-lesson="8" onclick="selectLesson(8)"><span class="ll-num">8회</span><span class="ll-title">대형 울림통 제작 5 · 예술적 확장</span></a></li>
+      <li><a data-lesson="9" onclick="selectLesson(9)"><span class="ll-num">9회</span><span class="ll-title">대형 울림통 제작 6 · 성형 마무리</span></a></li>
+      <li><a data-lesson="10" onclick="selectLesson(10)"><span class="ll-num">10회</span><span class="ll-title">큰 울림통 완성 및 개인 모뉴먼트 기름 마감</span></a></li>
+      <li><a data-lesson="11" onclick="selectLesson(11)"><span class="ll-num">11회</span><span class="ll-title">프로그램 리뷰 · 설치 계획 · 전시 준비</span></a></li>
+    </ul>
+  </aside>
   <div class="main-content">
   <div id="tab-1" class="tab-pane">
-    <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
+    <div class="pane-header"><div class="pane-header-inner">
 <p class="header-meta">울림통-변주 2026 · 1회 자료 <span class="header-date">｜&nbsp; 5. 9. 토,&nbsp; 5. 10. 일 &nbsp;·&nbsp; 2시간</span></p>
   <h1 class="header-title">재료 이해 · 모뉴먼트 드로잉·모델링</h1>
   <p class="header-sub">흙을 처음 만나는 날 — 상상한 울림을 구체화하기 위하여 예술감각을 이끌어냅니다</p>
@@ -635,7 +718,6 @@
 
   <!-- 오늘의 일정 -->
   <div class="section">
-    <p class="section-label">Today's Schedule</p>
     <h2 class="section-title">오늘의 흐름</h2>
     <div class="schedule-grid">
       <div class="schedule-card">
@@ -659,7 +741,6 @@
 
   <!-- 오늘의 재료와 도구 -->
   <div class="section">
-    <p class="section-label">Materials &amp; Tools</p>
     <h2 class="section-title">재료와 도구</h2>
     <div class="tool-grid">
       <div class="tool-item"><span class="tool-dot"></span>점토</div>
@@ -676,7 +757,6 @@
 
   <!-- 작가가 되어보는 시간 -->
   <div class="section">
-    <p class="section-label">Becoming an Artist</p>
     <h2 class="section-title">작가가 되어보는 시간</h2>
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
       울림통 변주는 하나의 주제 아래 모였지만, 각자가 독립적인 창작자입니다.<br>
@@ -731,7 +811,6 @@
 
   <!-- 재료 이해 -->
   <div class="section">
-    <p class="section-label">Clay Material</p>
     <h2 class="section-title">흙(점토) 탐색</h2>
     <ul style="font-size:15px;line-height:1.85;color:var(--text);list-style:none;margin-bottom:20px;">
       <li style="padding:6px 0 6px 16px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>이번 프로젝트에서는 4가지 점토를 혼합하여 사용합니다. 서로 다른 성질의 흙을 섞으면 강도와 표현력이 높아집니다. 각 흙의 색과 촉감을 살펴보세요.</li>
@@ -777,7 +856,6 @@
 
   <!-- 반죽 & 타래 만들기 -->
   <div class="section">
-    <p class="section-label">Clay Exploration · Coiling Basics</p>
     <h2 class="section-title">흙(점토) 탐색, 타래성형 기초 시연</h2>
     <ul style="font-size:15px;line-height:1.85;color:var(--text);list-style:none;margin-top:8px;">
       <li style="padding:6px 0 6px 16px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>반죽 상태가 이후 모든 단계의 품질을 결정합니다. 처음이라도 천천히, 충분히 치대는 것이 중요합니다.</li>
@@ -797,7 +875,6 @@
 
   <!-- 모뉴먼트 드로잉·모델링 -->
   <div class="section">
-    <p class="section-label">Monument Drawing &amp; Modeling</p>
     <h2 class="section-title">나의 모뉴먼트 드로잉·모델링</h2>
 
     <ul style="font-size:15px;line-height:1.85;color:var(--text);list-style:none;margin-top:8px;">
@@ -855,7 +932,7 @@
 </div></div>
   </div>
   <div id="tab-2" class="tab-pane">
-    <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
+    <div class="pane-header"><div class="pane-header-inner">
 <p class="header-meta">울림통-변주 2026 · 2회 자료 <span class="header-date">｜&nbsp; 5. 16. 토,&nbsp; 5. 17. 일 &nbsp;·&nbsp; 약 3시간</span></p>
   <h1 class="header-title">모뉴먼트 울림통 제작</h1>
   <p class="header-sub">타래성형 기법의 본격 실습 — 각자의 모뉴먼트를 빚어 냅니다</p>
@@ -869,7 +946,6 @@
 
   <!-- 오늘의 일정 -->
   <div class="section">
-    <p class="section-label">Today's Schedule</p>
     <h2 class="section-title">오늘의 흐름</h2>
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4px;">
       <div class="schedule-card">
@@ -889,7 +965,6 @@
 
   <!-- 재료와 도구 -->
   <div class="section">
-    <p class="section-label">Materials &amp; Tools</p>
     <h2 class="section-title">재료와 도구</h2>
     <div class="tool-grid">
       <div class="tool-item"><span class="tool-dot"></span>점토</div>
@@ -905,7 +980,6 @@
 
   <!-- 개인 모뉴먼트 제작 시작 -->
   <div class="section">
-    <p class="section-label">Personal Monument Oolimtong</p>
     <h2 class="section-title">개인 모뉴먼트 울림통 제작</h2>
 
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
@@ -952,7 +1026,6 @@
 
   <!-- 작가와의 개별 피드백 -->
   <div class="section">
-    <p class="section-label">Individual Feedback</p>
     <h2 class="section-title">개별 피드백 진행</h2>
 
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
@@ -978,7 +1051,6 @@
 
   <!-- 참고 영상 -->
   <div class="section">
-    <p class="section-label">Reference Videos</p>
     <h2 class="section-title">참고 영상</h2>
     <div class="media-row three">
 
@@ -1033,7 +1105,7 @@
 </div></div>
   </div>
   <div id="tab-3" class="tab-pane">
-    <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
+    <div class="pane-header"><div class="pane-header-inner">
 <p class="header-meta">울림통-변주 2026 · 3회 자료 <span class="header-date">｜&nbsp; 5. 23. 토,&nbsp; 5. 24. 일 &nbsp;·&nbsp; 3시간</span></p>
   <h1 class="header-title">모뉴먼트 마무리 · 타래 만들기</h1>
   <p class="header-sub">모뉴먼트에 NFC 칩을 심고, 대형 울림통을 위한 타래를 대량 제작합니다</p>
@@ -1046,7 +1118,6 @@
 
   <!-- 오늘의 흐름 -->
   <div class="section">
-    <p class="section-label">Today's Schedule</p>
     <h2 class="section-title">오늘의 흐름</h2>
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4px;">
       <div class="schedule-card">
@@ -1070,7 +1141,6 @@
 
   <!-- 재료와 도구 -->
   <div class="section">
-    <p class="section-label">Materials &amp; Tools</p>
     <h2 class="section-title">재료와 도구</h2>
     <div class="tool-grid">
       <div class="tool-item"><span class="tool-dot"></span>점토 4종</div>
@@ -1086,7 +1156,6 @@
 
   <!-- 모뉴먼트 마무리 -->
   <div class="section">
-    <p class="section-label">Monument Finishing</p>
     <h2 class="section-title">모뉴먼트 마무리</h2>
 
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
@@ -1119,7 +1188,6 @@
 
   <!-- NFC 칩 심기 -->
   <div class="section">
-    <p class="section-label">NFC Chip Embedding</p>
     <h2 class="section-title">모뉴먼트 NFC 칩 심기</h2>
 
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
@@ -1170,7 +1238,6 @@
 
   <!-- 점토 혼합 반죽 -->
   <div class="section">
-    <p class="section-label">Clay Mixing &amp; Coiling Prep</p>
     <h2 class="section-title">점토 혼합 반죽 및 타래 대량 제작</h2>
 
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
@@ -1208,7 +1275,6 @@
 
   <!-- 참고 영상 -->
   <div class="section">
-    <p class="section-label">Reference Videos</p>
     <h2 class="section-title">참고 영상</h2>
     <div class="media-row three">
 
@@ -1246,7 +1312,7 @@
 </div></div>
   </div>
   <div id="tab-4" class="tab-pane">
-    <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
+    <div class="pane-header"><div class="pane-header-inner">
 <p class="header-meta">울림통-변주 2026 · 4회 자료 <span class="header-date">｜&nbsp; 5. 30. 토,&nbsp; 5. 31. 일 &nbsp;·&nbsp; 3시간</span></p>
   <h1 class="header-title">대형 울림통 제작 1</h1>
   <p class="header-sub">협력창작의 본격적인 시작 — 반죽과 타래 쌓기를 병행하며 대형 울림통의 기초를 세웁니다</p>
@@ -1255,7 +1321,6 @@
 
   <!-- 오늘의 흐름 -->
   <div class="section">
-    <p class="section-label">Today's Schedule</p>
     <h2 class="section-title">오늘의 흐름</h2>
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4px;">
       <div class="schedule-card">
@@ -1275,7 +1340,6 @@
 
   <!-- 재료와 도구 -->
   <div class="section">
-    <p class="section-label">Materials &amp; Tools</p>
     <h2 class="section-title">재료와 도구</h2>
     <div class="tool-grid">
       <div class="tool-item"><span class="tool-dot"></span>점토 4종</div>
@@ -1290,7 +1354,6 @@
 
   <!-- 대형 울림통이란 -->
   <div class="section">
-    <p class="section-label">About the Large Oolimtong</p>
     <h2 class="section-title">대형 울림통이란</h2>
 
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
@@ -1321,7 +1384,6 @@
 
   <!-- 설치 현장 및 바닥면 조성 -->
   <div class="section">
-    <p class="section-label">Site &amp; Base</p>
     <h2 class="section-title">울림통 설치 현장 및 바닥면 조성</h2>
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
       울림통은 완성 후 이동이 어려우므로, 설치할 자리를 먼저 정하고 그 자리에서 바닥면부터 조성합니다.<br>현장 조건에 따라 준비가 달라집니다.
@@ -1349,7 +1411,6 @@
 
   <!-- 기초 제작 단계 -->
   <div class="section">
-    <p class="section-label">Construction Steps</p>
     <h2 class="section-title">울림통 기초 제작 순서</h2>
 
     <ol class="step-list">
@@ -1376,7 +1437,6 @@
 
   <!-- 오늘의 대화 -->
   <div class="section">
-    <p class="section-label">Conversation Prompts</p>
     <h2 class="section-title">작업하며 나누는 이야기</h2>
 
     <div style="margin-top:8px;">
@@ -1390,7 +1450,7 @@
 </div></div>
   </div>
   <div id="tab-5" class="tab-pane">
-    <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
+    <div class="pane-header"><div class="pane-header-inner">
 <p class="header-meta">울림통-변주 2026 · 5회 자료 <span class="header-date">｜&nbsp; 6. 6. 토,&nbsp; 6. 7. 일 &nbsp;·&nbsp; 3시간</span></p>
   <h1 class="header-title">대형 울림통 제작 2</h1>
   <p class="header-sub">울림통 기초 제작 — 반죽과 타래 쌓기를 병행하며 형태를 쌓아갑니다</p>
@@ -1399,7 +1459,6 @@
 
   <!-- 오늘의 흐름 -->
   <div class="section">
-    <p class="section-label">Today's Schedule</p>
     <h2 class="section-title">오늘의 흐름</h2>
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4px;">
       <div class="schedule-card">
@@ -1419,7 +1478,6 @@
 
   <!-- 재료와 도구 -->
   <div class="section">
-    <p class="section-label">Materials &amp; Tools</p>
     <h2 class="section-title">재료와 도구</h2>
     <div class="tool-grid">
       <div class="tool-item"><span class="tool-dot"></span>점토 4종</div>
@@ -1430,7 +1488,6 @@
 
   <!-- 역할 분담 -->
   <div class="section">
-    <p class="section-label">Team Roles</p>
     <h2 class="section-title">반죽 팀 · 쌓기 팀 병행</h2>
 
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:20px;">
@@ -1457,7 +1514,7 @@
 </div></div>
   </div>
   <div id="tab-6" class="tab-pane">
-    <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
+    <div class="pane-header"><div class="pane-header-inner">
 <p class="header-meta">울림통-변주 2026 · 6회 자료 <span class="header-date">｜&nbsp; 6. 13. 토,&nbsp; 6. 14. 일 &nbsp;·&nbsp; 3시간</span></p>
   <h1 class="header-title">대형 울림통 제작 3</h1>
   <p class="header-sub">반죽·타래 쌓기를 병행하며 자유체험을 시작하고 중간 간담회를 진행합니다</p>
@@ -1466,7 +1523,6 @@
 
   <!-- 오늘의 흐름 -->
   <div class="section">
-    <p class="section-label">Today's Schedule</p>
     <h2 class="section-title">오늘의 흐름</h2>
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4px;">
       <div class="schedule-card">
@@ -1486,7 +1542,6 @@
 
   <!-- 재료와 도구 -->
   <div class="section">
-    <p class="section-label">Materials &amp; Tools</p>
     <h2 class="section-title">재료와 도구</h2>
     <div class="tool-grid">
       <div class="tool-item"><span class="tool-dot"></span>점토 4종</div>
@@ -1497,7 +1552,6 @@
 
   <!-- 중반부 제작 팁 -->
   <div class="section">
-    <p class="section-label">Mid-Section Tip</p>
     <h2 class="section-title">울림통 중반부 제작</h2>
     <div class="tip-box">
       <strong>Tip · 기울어짐 방지</strong>
@@ -1517,7 +1571,6 @@
 
   <!-- 중간 간담회 -->
   <div class="section">
-    <p class="section-label">Mid-Program Talk</p>
     <h2 class="section-title">중간 간담회</h2>
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:24px;">
       프로그램 중반 시점, 참여 경험을 되돌아보며 앞으로의 방향을 함께 나눕니다. 떠오르는 생각을 편하게 이야기해보세요.
@@ -1538,7 +1591,7 @@
 </div></div>
   </div>
   <div id="tab-7" class="tab-pane">
-    <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
+    <div class="pane-header"><div class="pane-header-inner">
 <p class="header-meta">울림통-변주 2026 · 7회 자료 <span class="header-date">｜&nbsp; 6. 20. 토,&nbsp; 6. 21. 일 &nbsp;·&nbsp; 3시간</span></p>
   <h1 class="header-title">대형 울림통 제작 4</h1>
   <p class="header-sub">울림통 중반부를 이어 제작하며, 소리·NFC 적용과 마무리 방향을 함께 논의합니다</p>
@@ -1550,7 +1603,6 @@
 
   <!-- 오늘의 흐름 -->
   <div class="section">
-    <p class="section-label">Today's Schedule</p>
     <h2 class="section-title">오늘의 흐름</h2>
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4px;">
       <div class="schedule-card">
@@ -1570,7 +1622,6 @@
 
   <!-- 재료와 도구 -->
   <div class="section">
-    <p class="section-label">Materials &amp; Tools</p>
     <h2 class="section-title">재료와 도구</h2>
     <div class="tool-grid">
       <div class="tool-item"><span class="tool-dot"></span>점토 4종</div>
@@ -1584,7 +1635,6 @@
 
   <!-- 중반부 제작 팁 -->
   <div class="section">
-    <p class="section-label">Mid-Section Tip</p>
     <h2 class="section-title">울림통 중반부 제작</h2>
     <div class="tip-box">
       <strong>Tip · 기울어짐 방지</strong>
@@ -1600,7 +1650,6 @@
 
   <!-- 벽 다지기 -->
   <div class="section">
-    <p class="section-label">Wall Compacting</p>
     <h2 class="section-title">벽 다지기</h2>
     <div style="display:flex;flex-direction:column;gap:12px;">
       <div style="font-size:15px;line-height:1.75;color:var(--text);padding-left:18px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>하부의 굳은 부분부터 돌로 다지기를 시작합니다. 가죽처럼 단단한 반건조 상태가 다지기에 적합하며, 너무 무른 흙벽을 다지면 돌에 진흙이 묻어나거나 형태만 바뀌는 결과가 생깁니다.</div>
@@ -1613,7 +1662,6 @@
 
   <!-- 함께 논의하며 작업 -->
   <div class="section">
-    <p class="section-label">Discussion</p>
     <h2 class="section-title">함께 논의하며 작업</h2>
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:20px;">중반부를 쌓아 가며 작품의 마무리 방향을 자연스럽게 이야기 나눕니다.</p>
     <div style="display:flex;flex-direction:column;gap:10px;">
@@ -1625,7 +1673,6 @@
 
   <!-- 참고 영상 -->
   <div class="section">
-    <p class="section-label">Reference Videos</p>
     <h2 class="section-title">참고 영상</h2>
     <div class="media-row three">
 
@@ -1650,7 +1697,7 @@
 </div></div>
   </div>
   <div id="tab-8" class="tab-pane">
-    <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
+    <div class="pane-header"><div class="pane-header-inner">
 <p class="header-meta">울림통-변주 2026 · 8회 자료 <span class="header-date">｜&nbsp; 6. 27. 토,&nbsp; 6. 28. 일 &nbsp;·&nbsp; 3시간</span></p>
   <h1 class="header-title">대형 울림통 제작 5 · 예술적 확장</h1>
   <p class="header-sub">울림통 상부를 이어 제작하고 표면을 마감하며, 작품을 매개로 한 소리 채취와 퍼포먼스 영상 촬영을 함께 시도합니다</p>
@@ -1664,7 +1711,6 @@
 
   <!-- 오늘의 흐름 -->
   <div class="section">
-    <p class="section-label">Today's Schedule</p>
     <h2 class="section-title">오늘의 흐름</h2>
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4px;">
       <div class="schedule-card">
@@ -1684,7 +1730,6 @@
 
   <!-- 재료와 도구 -->
   <div class="section">
-    <p class="section-label">Materials &amp; Tools</p>
     <h2 class="section-title">재료와 도구</h2>
     <div class="tool-grid">
       <div class="tool-item"><span class="tool-dot"></span>점토 4종</div>
@@ -1698,7 +1743,6 @@
 
   <!-- 벽 다지기 -->
   <div class="section">
-    <p class="section-label">Wall Compacting</p>
     <h2 class="section-title">벽 다지기</h2>
     <div style="display:flex;flex-direction:column;gap:12px;">
       <div style="font-size:15px;line-height:1.75;color:var(--text);padding-left:18px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>하부의 굳은 부분부터 돌로 다지기를 시작합니다. 가죽처럼 단단한 반건조 상태가 다지기에 적합하며, 너무 무른 흙벽을 다지면 돌에 진흙이 묻어나거나 형태만 바뀌는 결과가 생깁니다.</div>
@@ -1711,7 +1755,6 @@
 
   <!-- 소리 채취 및 퍼포먼스 영상 촬영 -->
   <div class="section">
-    <p class="section-label">Sound &amp; Performance</p>
     <h2 class="section-title">소리 채취 및 퍼포먼스 영상 촬영</h2>
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:20px;">작품의 완성이 가까워지는 만큼, 작품을 매개로 펼칠 수 있는 또 다른 예술적 표현을 함께 떠올려 보고 직접 실행해 봅니다. 작업의 과정과 순간을 소리와 영상으로 기록해, 완성된 작품에서 그치지 않고 다양한 경험으로 확장하는 것입니다.</p>
     <div style="display:flex;flex-direction:column;gap:18px;">
@@ -1736,7 +1779,6 @@
 
   <!-- 참고 영상 -->
   <div class="section">
-    <p class="section-label">Reference Videos</p>
     <h2 class="section-title">참고 영상</h2>
     <div class="media-row three">
 
@@ -1790,7 +1832,7 @@
 </div></div>
   </div>
   <div id="tab-9" class="tab-pane">
-    <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
+    <div class="pane-header"><div class="pane-header-inner">
 <p class="header-meta">울림통-변주 2026 · 9회 자료 <span class="header-date">｜&nbsp; 7. 4. 토,&nbsp; 7. 5. 일 &nbsp;·&nbsp; 3시간</span></p>
   <h1 class="header-title">대형 울림통 제작 6 · 성형 마무리</h1>
   <p class="header-sub">울림통 상부 제작을 마무리하고 전체 표면을 정리하며, 완성된 작품에 어울리는 이름을 함께 지어 봅니다</p>
@@ -1798,7 +1840,6 @@
     <div class="pane-body"><div class="content-wrap">
 
   <div class="section">
-    <p class="section-label">Today's Schedule</p>
     <h2 class="section-title">오늘의 흐름</h2>
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4px;">
       <div class="schedule-card">
@@ -1817,7 +1858,6 @@
   </div>
 
   <div class="section">
-    <p class="section-label">Materials &amp; Tools</p>
     <h2 class="section-title">재료와 도구</h2>
     <div class="tool-grid">
       <div class="tool-item"><span class="tool-dot"></span>점토 4종</div>
@@ -1830,7 +1870,6 @@
   </div>
 
   <div class="section">
-    <p class="section-label">Forming &amp; Surface Finishing</p>
     <h2 class="section-title">성형 마무리 및 표면 정리</h2>
   <div style="display:flex;flex-direction:column;gap:12px;">
       <div style="font-size:15px;line-height:1.75;color:var(--text);padding-left:18px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>상부(지붕)를 쌓아 마지막 형태를 잡습니다. 안쪽으로 들여 쌓으며 좁혀가야 하므로, 젖은 흙의 무게가 실려 무너지지 않도록 먼저 쌓은 부분을 잘 말려가며 천천히 작업합니다.</div>
@@ -1843,7 +1882,6 @@
   </div>
 
   <div class="section">
-    <p class="section-label">Naming Oolimtong</p>
     <h2 class="section-title">작품 이름짓기</h2>
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);">형태가 거의 완성된 지금, 작품을 바라보며 떠오르는 인상과 이야기를 나누고 작품에 어울리는 이름을 함께 지어 봅니다. 제작 과정에서 느낀 점, 작품이 닮은 것, 담고 싶은 의미 등을 자유롭게 이야기합니다. 지은 이름과 그 의미는 작가 노트와 NFC 콘텐츠로도 이어집니다.</p>
   </div>
@@ -1851,7 +1889,7 @@
 </div></div>
   </div>
   <div id="tab-10" class="tab-pane">
-    <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
+    <div class="pane-header"><div class="pane-header-inner">
 <p class="header-meta">울림통-변주 2026 · 10회 자료 <span class="header-date">｜&nbsp; 7. 11. 토,&nbsp; 7. 12. 일 &nbsp;·&nbsp; 3시간</span></p>
   <h1 class="header-title">큰 울림통 완성 및 개인 모뉴먼트 기름 마감</h1>
   <p class="header-sub">큰 울림통을 완성하고, 개인 모뉴먼트도 표면에 칠을 하여 마감합니다</p>
@@ -1859,7 +1897,6 @@
     <div class="pane-body"><div class="content-wrap">
 
   <div class="section">
-    <p class="section-label">Today's Schedule</p>
     <h2 class="section-title">오늘의 흐름</h2>
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4px;">
       <div class="schedule-card">
@@ -1878,7 +1915,6 @@
   </div>
 
   <div class="section">
-    <p class="section-label">Materials &amp; Tools</p>
     <h2 class="section-title">재료와 도구</h2>
     <div class="tool-grid">
       <div class="tool-item"><span class="tool-dot"></span>수채화 물감</div>
@@ -1891,7 +1927,6 @@
   </div>
 
   <div class="section">
-    <p class="section-label">Surface &amp; Oil Finishing</p>
     <h2 class="section-title">표면 마감 · 기름 마감</h2>
   <div style="display:flex;flex-direction:column;gap:12px;">
       <div style="font-size:15px;line-height:1.75;color:var(--text);padding-left:18px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>작품이 충분히 반건조~건조된 상태에서 내외벽 표면을 마지막으로 정리한 뒤 기름 마감을 시작합니다. 마른 붓으로 먼지나 부스러기를 가볍게 털어 냅니다.</div>
@@ -1902,13 +1937,11 @@
   </div>
 
   <div class="section">
-    <p class="section-label">Coloring (Optional)</p>
     <h2 class="section-title">채색 (선택)</h2>
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:0px;">원하는 경우, 기름 마감 전 단계에서 수채화 물감이나 파스텔로 약간의 발색을 더할 수 있습니다. 흙 본연의 색을 살리는 것을 기본으로 하되, 부분적으로 은은하게 표현합니다.</p>
   </div>
 
   <div class="section">
-    <p class="section-label">Personal Monument</p>
     <h2 class="section-title">개인 모뉴먼트 점검 · 기름 마감</h2>
   <div style="display:flex;flex-direction:column;gap:12px;">
       <div style="font-size:15px;line-height:1.75;color:var(--text);padding-left:18px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">·</span>개인 모뉴먼트의 건조 상태와 균열을 점검하고, 필요한 부분을 보완합니다.</div>
@@ -1924,7 +1957,7 @@
 </div></div>
   </div>
   <div id="tab-11" class="tab-pane">
-    <div class="pane-header" onclick="togglePane(this)"><div class="pane-header-inner">
+    <div class="pane-header"><div class="pane-header-inner">
 <p class="header-meta">울림통-변주 2026 · 11회 자료 <span class="header-date">｜&nbsp; 가을 예정 &nbsp;·&nbsp; 일정 미정</span></p>
   <h1 class="header-title">프로그램 리뷰 · 설치 계획 · 전시 준비</h1>
   <p class="header-sub">손으로 빚는 작업을 마치고, 작품의 의미·설치·전시를 정리하는 이론·논의 중심의 활동을 진행합니다</p>
@@ -1932,7 +1965,6 @@
     <div class="pane-body"><div class="content-wrap">
 
   <div class="section">
-    <p class="section-label">Today's Schedule</p>
     <h2 class="section-title">오늘의 흐름</h2>
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4px;">
       <div class="schedule-card">
@@ -1959,59 +1991,71 @@
   </div>
 
   <div class="section">
-    <p class="section-label">Mid-Program Interview</p>
     <h2 class="section-title">중간 간담회 인터뷰</h2>
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:0px;"><b>사전 작성</b> · 참여하며 느낀 점, 어려웠던 점, 즐거웠던 순간 등을 인터뷰 형식의 질문지에 미리 작성합니다. 당일에는 핵심만 간단히 나누고, 작성한 내용은 작가 노트와 전시 자료로 활용합니다.</p>
   </div>
 
   <div class="section">
-    <p class="section-label">Expansion &amp; Schedule</p>
     <h2 class="section-title">작업 확장 의견 · 팀별 진행 일정</h2>
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:0px;"><b>사전 정리 → 당일 결정</b> · 작품을 매개로 한 추가 작업(사운드·영상·퍼포먼스 등) 아이디어를 각자 미리 정리해 오고, 당일 팀별로 논의하여 추가 작업 방향과 남은 진행 일정을 결정합니다.</p>
   </div>
 
   <div class="section">
-    <p class="section-label">Artist Note</p>
     <h2 class="section-title">작가 노트</h2>
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:0px;"><b>사전 작성</b> · 각자 자신의 모뉴먼트와 팀 울림통에 대한 작가 노트를 미리 작성합니다. 작품의 이름·의미, 제작 과정에서의 이야기 등을 정리하여 전시와 NFC 콘텐츠의 바탕으로 삼습니다.</p>
   </div>
 
   <div class="section">
-    <p class="section-label">Installation Space</p>
     <h2 class="section-title">모뉴먼트 설치 공간 발표</h2>
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:0px;"><b>사전 정함 → 당일 공유</b> · 개인 모뉴먼트를 어디에(집·직장·지역 등) 설치할지 각자 미리 정해 오고, 당일 간단히 공유합니다. 각 설치 지점은 전시장 밖으로 확산되는 분산형 네트워크 전시의 한 점이 됩니다.</p>
   </div>
 
   <div class="section">
-    <p class="section-label">NFC Content</p>
     <h2 class="section-title">NFC 콘텐츠 결정</h2>
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:0px;"><b>사전 정리 → 당일 결정</b> · 칩에 연결할 콘텐츠(사운드·영상·글·링크 등) 후보를 각자 미리 정리해 오고, 당일 팀·개인별로 결정합니다. 방문자가 칩을 통해 니닉의 사운드와 온라인 울림통 네트워크에 연결됩니다.</p>
   </div>
 
   <div class="section">
-    <p class="section-label">Program Review</p>
     <h2 class="section-title">전체 프로그램 리뷰</h2>
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:0px;"><b>사전 정리 → 당일 공유</b> · 제작 경험에서 좋았던 점·아쉬운 점·배운 점을 각자 미리 정리해 오고, 당일 함께 나눕니다.</p>
   </div>
 
   <div class="section">
-    <p class="section-label">Exhibition Preparation</p>
     <h2 class="section-title">전시 준비 안내</h2>
     <p style="font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:0px;"><b>안내</b> · 11월 전시(오픈·운영) 일정과 준비 사항, 작품 이동·설치, 분산형 네트워크 전시 운영 방식 등을 안내합니다.</p>
   </div>
 
 </div></div>
   </div>
+    <div class="lesson-nav">
+      <a id="lesson-prev" onclick="selectLesson(this.getAttribute('data-go'))"></a>
+      <a id="lesson-next" onclick="selectLesson(this.getAttribute('data-go'))"></a>
+    </div>
   </div>
 </div>
 
 <script>
-  /* 회차(카테고리) 접기·펼치기 */
-  function togglePane(header) {
-    var pane = header.closest('.tab-pane');
-    if (!pane || pane.classList.contains('empty')) return;
-    pane.classList.toggle('active');
+  /* ===== 회차 선택 (사이드바 / 모바일 탭 / 이전·다음) ===== */
+  var TOTAL = document.querySelectorAll('.tab-pane').length;
+  function selectLesson(n) {
+    n = parseInt(n, 10);
+    document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
+    var pane = document.getElementById('tab-' + n);
+    if (pane) pane.classList.add('active');
+    document.querySelectorAll('.lesson-list a').forEach(function(a){ a.classList.toggle('active', parseInt(a.getAttribute('data-lesson'),10) === n); });
+    document.querySelectorAll('.lesson-tabs button').forEach(function(b){ b.classList.toggle('active', parseInt(b.getAttribute('data-lesson'),10) === n); });
+    var at = document.querySelector('.lesson-tabs button[data-lesson="' + n + '"]');
+    if (at && at.scrollIntoView) at.scrollIntoView({inline:'center', block:'nearest'});
+    var prev = document.getElementById('lesson-prev'), next = document.getElementById('lesson-next');
+    if (prev) { if (n <= 1) { prev.classList.add('disabled'); prev.textContent=''; } else { prev.classList.remove('disabled'); prev.textContent='← ' + (n-1) + '회'; prev.setAttribute('data-go', n-1); } }
+    if (next) { if (n >= TOTAL) { next.classList.add('disabled'); next.textContent=''; } else { next.classList.remove('disabled'); next.textContent=(n+1) + '회 →'; next.setAttribute('data-go', n+1); } }
+    history.replaceState(null, '', '#tab-' + n);
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }
+  document.addEventListener('DOMContentLoaded', function(){
+    var m = (location.hash.match(/tab-(\d+)/) || [])[1];
+    selectLesson(m ? parseInt(m,10) : 1);
+  });
 
   /* 유튜브 카드 메뉴 */
   function ytToggleMenu(e, wrap) {
@@ -2045,11 +2089,6 @@
         m.style.display = 'none';
       });
     }
-  });
-
-  /* 새로고침 시 모든 회차를 닫은 상태로 시작 */
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
   });
 </script>
 

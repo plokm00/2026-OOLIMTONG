@@ -99,18 +99,6 @@
   .record-field.weather p { white-space:nowrap; }
 
   /* ── 편집 모드 ── */
-  #edit-toolbar { position:fixed; right:18px; bottom:18px; z-index:200; display:flex; gap:8px; }
-  #edit-toolbar button { font-family:'Noto Sans KR',sans-serif; font-size:13px; font-weight:600; letter-spacing:0.04em; padding:10px 16px; border-radius:4px; border:1px solid var(--accent); background:var(--bg); color:var(--accent); cursor:pointer; box-shadow:0 2px 8px rgba(38,20,16,0.18); transition:background 0.15s,color 0.15s; }
-  #edit-toolbar button:hover { background:var(--accent); color:var(--white); }
-  #btn-save { display:none; }
-  body.edit-mode #btn-save { display:inline-block; }
-  body.edit-mode #btn-edit { background:var(--accent); color:var(--white); }
-  #edit-hint { position:fixed; right:18px; bottom:66px; z-index:200; font-size:12px; color:var(--text-dim); background:var(--bg2); border:1px solid var(--line); border-radius:4px; padding:7px 11px; display:none; max-width:230px; line-height:1.5; box-shadow:0 2px 8px rgba(38,20,16,0.12); }
-  body.edit-mode #edit-hint { display:block; }
-  body.edit-mode .session-body { display:block !important; background:var(--bg); border-top:2px solid var(--accent); padding-top:18px; }
-  body.edit-mode .record-field p[contenteditable] { background:var(--bg2); border:1px solid var(--accent); border-radius:3px; color:var(--text); cursor:text; padding-left:8px; padding-right:8px; }
-  body.edit-mode .record-field p[contenteditable]:focus { outline:none; border-color:var(--accent2); background:#fff; }
-  body.edit-mode .record-field p[contenteditable]:empty::before { content:attr(data-ph); color:var(--line); }
 
   /* ── 사진 (썸네일 + 드라이브 링크) ── */
   .photo-block { margin-top:16px; }
@@ -362,7 +350,7 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p data-key="nemo|7|참여 작가" data-ph="입력...">허양 · 이재홍 · 조영범 · 신정숙</p></div>
             <div class="record-field weather"><label>날씨</label><p data-key="nemo|7|날씨" data-ph="입력...">맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p data-key="nemo|7|작업 내용" data-ph="입력...">자유체험 인원이 추가되어, 오늘은 반죽과 쌓기, 두 그룹으로 나누어 진행했다. 벽에 두 개의 창이 완성되었고, 지붕을 닫기 위해 안으로 들여 쌓기를 시작했다. 상부는 피라미드 모양이 될 것이고, 큰 원형 창도 하나 더 낼 예정이다. 외벽 다지기는 흙이 많이 굳은 곳 위주로 간단히 진행했다. 상부가 더 진행되기 전에 내벽 다지기도 서둘러야 한다. 다음 시간에는 모두 한 번씩 울림통 안에 들어가서 다지는 작업을 해보기로 했다. 울림통을 완성하여, 완성하는 과정 혹은 완성 이후에 또 어떤 작업을 연계하여 할 수 있을지, 짧은 회의 시간을 가졌다. 작년에 작업한 니닉 AI 뮤직비디오와 명상 퍼포먼스도 함께 보았다. NFC 칩에 심을 음악이나 동영상에 대한 이야기부터 우리만의 뮤직비디오를 만들자는 의견까지 다양한 생각들이 모였다. <br>- 니닉 노래를 받아들이는 다양한 관점을 통해, 작가의 관점을 유지하는 것과 보편성을 따르는 것에 대해 생각할 수 있었다.<div>- 시대별 큰 뉴스 사운드들을 모두 모아서 울림통에 담는다.</div><div>- 울림통 속에 많은 장르의 음악들을 모두 합쳐 놓았다가, 관객이 원하는 음악을 뽑아서 들을 수 있도록 한다.</div><div>- 울림통과 어울리는 영상을 우리가 직접 제작한다. 악동뮤지션의 신곡 '소문의 언덕'을 참고자료로 보았고, 우리가 장소, 의상, 동작, 음악까지 만들어서 그와 같이 연출하면 좋겠다.</div><div>- 대체로 울림통이 아이들의 눈높이에 맞추어 제작되는 경향이 있으니, 우리 네모 작품은 어른들을 위해 NFC 칩도 높은 곳에 부착하는 등 다르게 접근해도 좋겠다.<br></div></p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="nemo|7|작업 내용" data-ph="입력...">자유체험 인원이 추가되어, 오늘은 반죽과 쌓기, 두 그룹으로 나누어 진행했다. 벽에 두 개의 창이 완성되었고, 지붕을 닫기 위해 안으로 들여 쌓기를 시작했다. 상부는 피라미드 모양이 될 것이고, 큰 원형 창도 하나 더 낼 예정이다. 외벽 다지기는 흙이 많이 굳은 곳 위주로 간단히 진행했다. 상부가 더 진행되기 전에 내벽 다지기도 서둘러야 한다. 다음 시간에는 모두 한 번씩 울림통 안에 들어가서 다지는 작업을 해보기로 했다. 울림통을 완성하여, 완성하는 과정 혹은 완성 이후에 또 어떤 작업을 연계하여 할 수 있을지, 짧은 회의 시간을 가졌다. 작년에 작업한 니닉 AI 뮤직비디오와 명상 퍼포먼스도 함께 보았다. NFC 칩에 심을 음악이나 동영상에 대한 이야기부터 우리만의 뮤직비디오를 만들자는 의견까지 다양한 생각들이 모였다. <br>- 니닉 노래를 받아들이는 다양한 관점을 통해, 작가의 관점을 유지하는 것과 보편성을 따르는 것에 대해 생각할 수 있었다.<br>- 시대별 큰 뉴스 사운드들을 모두 모아서 울림통에 담는다.<br>- 울림통 속에 많은 장르의 음악들을 모두 합쳐 놓았다가, 관객이 원하는 음악을 뽑아서 들을 수 있도록 한다.<br>- 울림통과 어울리는 영상을 우리가 직접 제작한다. 악동뮤지션의 신곡 '소문의 언덕'을 참고자료로 보았고, 우리가 장소, 의상, 동작, 음악까지 만들어서 그와 같이 연출하면 좋겠다.<br>- 대체로 울림통이 아이들의 눈높이에 맞추어 제작되는 경향이 있으니, 우리 네모 작품은 어른들을 위해 NFC 칩도 높은 곳에 부착하는 등 다르게 접근해도 좋겠다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -839,7 +827,7 @@
           <div class="record-grid">
             <div class="record-field"><label>참여 작가</label><p data-key="miro|3|참여 작가" data-ph="입력...">민지현 · 조영범 · 김주원 · 김현국 · 이새롬 · 주장석</p></div>
             <div class="record-field weather"><label>날씨</label><p data-key="miro|3|날씨" data-ph="입력...">맑음</p></div>
-            <div class="record-field full"><label>작업 내용</label><p data-key="miro|3|작업 내용" data-ph="입력...">아직 모뉴먼트 작업이 마무리되지 않아서 개별 작업 시간을 더 가졌다. NFC 칩을 심고,&nbsp;</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="miro|3|작업 내용" data-ph="입력...">아직 모뉴먼트 작업이 마무리되지 않아서 개별 작업 시간을 더 가졌다. NFC 칩을 심고, 반죽과 타래 만들기 작업을 이어갔다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -969,9 +957,9 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>체험자 명단</label><p data-key="miro|9|체험자 명단" data-ph="입력...">6세 1명 · 성인 2명 &nbsp;|&nbsp; 총 3명</p></div>
-            <div class="record-field weather"><label>날씨</label><p data-key="miro|9|날씨" data-ph="입력..."></p></div>
-            <div class="record-field full"><label>작업 내용</label><p data-key="miro|9|작업 내용" data-ph="입력..."></p></div>
+            <div class="record-field"><label>체험자 명단</label><p data-key="miro|9|체험자 명단" data-ph="입력...">김은정, 강신익, 강서하</p></div>
+            <div class="record-field weather"><label>날씨</label><p data-key="miro|9|날씨" data-ph="입력...">맑음, 더움</p></div>
+            <div class="record-field full"><label>작업 내용</label><p data-key="miro|9|작업 내용" data-ph="입력...">6세 아이와 엄마, 아빠가 함께 미로 작업에 참여하였다. 아이는 타래를 하나 꼭꼭 눌러보다가 야외 현장에 나가서는 다른 아이들과 함께 보물찾기, 술래잡기를 하며 놀았다. 아빠는 본의 아니게 아이들을 담당하는 역할을 맡게 되었고, 결과적으로 엄마가 작업에 가장 열심히 참여하였다. 5시에 시민작가들이 돌아간 후에도 작가와 함께 마지막 타래까지 모두 쌓고 6시경 작업 현장을 마무리하였다.</p></div>
           </div>
         <div class="photo-block">
           <p class="photo-label">사진</p>
@@ -1013,7 +1001,7 @@
         </div>
         <div class="session-body">
           <div class="record-grid">
-            <div class="record-field"><label>참여 작가</label><p data-key="miro|11|참여 작가" data-ph="입력..."></p></div>
+            <div class="record-field"><label>참여 작가</label><p data-key="miro|11|참여 작가" data-ph="입력...">인동욱 · 조영범 · 김주원 · 김현국 · 이새롬 · 주장석</p></div>
             <div class="record-field weather"><label>날씨</label><p data-key="miro|11|날씨" data-ph="입력..."></p></div>
             <div class="record-field full"><label>작업 내용</label><p data-key="miro|11|작업 내용" data-ph="입력..."></p></div>
           </div>
@@ -1074,125 +1062,23 @@
 </section>
 
 
-<div id="edit-toolbar">
-  <button id="btn-edit" onclick="toggleEdit()">✏️ 편집</button>
-  <button id="btn-save" onclick="exportHtml()">💾 완성본 저장</button>
-</div>
-
 <script>
-/* ── 작업기록 직접 편집 기능 ── */
-(function(){
-  var STORE_KEY = 'oolimtong_record_v1';
-  var fields = [];
-  document.querySelectorAll('.team-pane').forEach(function(pane){
-    var team = pane.dataset.team;
-    pane.querySelectorAll('.session-item').forEach(function(item, idx){
-      item.setAttribute('data-skey', team + '|' + idx);
-      item.querySelectorAll('.record-field').forEach(function(rf){
-        var label = rf.querySelector('label');
-        var p = rf.querySelector('p');
-        if (!label || !p) return;
-        p.setAttribute('data-key', team + '|' + idx + '|' + label.textContent.trim());
-        p.setAttribute('data-ph', '입력...');
-        fields.push(p);
-      });
-    });
-  });
-
-  function save(){
-    var data = {};
-    fields.forEach(function(p){ data[p.getAttribute('data-key')] = p.innerHTML; });
-    try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch(e){}
-  }
-  function loadSaved(){
-    var data = {};
-    try { data = JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); } catch(e){}
-    fields.forEach(function(p){
-      var v = data[p.getAttribute('data-key')];
-      if (v != null) p.innerHTML = v;
-    });
-  }
-  fields.forEach(function(p){ p.addEventListener('input', save); });
-  fields.forEach(function(p){
-    p.addEventListener('paste', function(e){
-      e.preventDefault();
-      var text = (e.clipboardData || window.clipboardData).getData('text/plain');
-      document.execCommand('insertText', false, text);
-    });
-  });
-  loadSaved();
-
-  var OPEN_KEY = 'oolimtong_open_v1';
-  window.saveOpenState = function(){
-    var data = {};
-    document.querySelectorAll('.session-item').forEach(function(item){
-      var k = item.getAttribute('data-skey'); if (k == null) return;
-      var b = item.querySelector('.session-body');
-      data[k] = !!(b && b.classList.contains('open'));
-    });
-    try { localStorage.setItem(OPEN_KEY, JSON.stringify(data)); } catch(e){}
-  };
-  function loadOpenState(){
-    /* 새로고침 시 항상 모든 세션을 접음 (이전 상태 복원 안 함) */
-    try { localStorage.removeItem(OPEN_KEY); } catch(e){}
-    document.querySelectorAll('.session-item').forEach(function(item){
-      var header = item.querySelector('.session-header');
-      var body = item.querySelector('.session-body');
-      var toggle = item.querySelector('.session-toggle');
-      if (header) header.classList.remove('open');
-      if (body) body.classList.remove('open');
-      if (toggle) toggle.classList.remove('open');
-    });
-  }
-  loadOpenState();
-
-  window.toggleEdit = function(){
-    var on = document.body.classList.toggle('edit-mode');
-    fields.forEach(function(p){
-      if (on) p.setAttribute('contenteditable', 'true');
-      else p.removeAttribute('contenteditable');
-    });
-    document.getElementById('btn-edit').textContent = on ? '✏️ 편집 종료' : '✏️ 편집';
-  };
-
-  window.exportHtml = function(){
-    save();
-    var clone = document.documentElement.cloneNode(true);
-    var b = clone.querySelector('body'); if (b) b.classList.remove('edit-mode');
-    var be = clone.querySelector('#btn-edit'); if (be) be.textContent = '✏️ 편집';
-    var hint = clone.querySelector('#edit-hint'); if (hint) hint.remove();
-    clone.querySelectorAll('[contenteditable]').forEach(function(el){ el.removeAttribute('contenteditable'); });
-    var html = '<!DOCTYPE html>\n' + clone.outerHTML;
-    var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'oolimtong_2026_wcf_record.html';
-    document.body.appendChild(a); a.click();
-    setTimeout(function(){ a.remove(); URL.revokeObjectURL(a.href); }, 100);
-  };
-})();
-
 function switchTeam(team) {
   document.querySelectorAll('.team-tab').forEach(function(t){ t.classList.toggle('active', t.dataset.team === team); });
   document.querySelectorAll('.team-head').forEach(function(h){ h.classList.toggle('active', h.dataset.team === team); });
   document.querySelectorAll('.team-pane').forEach(function(p){ p.classList.toggle('active', p.dataset.team === team); });
   history.replaceState(null, '', '#' + team);
 }
-
 function toggleSession(header) {
   var body = header.nextElementSibling;
   var toggle = header.querySelector('.session-toggle');
-  body.classList.toggle('open');
-  toggle.classList.toggle('open');
+  if (body) body.classList.toggle('open');
+  if (toggle) toggle.classList.toggle('open');
   header.classList.toggle('open');
-  if (window.saveOpenState) window.saveOpenState();
 }
-
-/* 주소에 #nemo / #gori / #miro 가 있으면 해당 팀으로 시작 */
 var hash = window.location.hash.replace('#','');
 if (['nemo','gori','miro'].indexOf(hash) > -1) switchTeam(hash);
 </script>
 
-
-
-</body></html>
+</body>
+</html>
