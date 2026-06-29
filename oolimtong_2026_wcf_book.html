@@ -124,7 +124,7 @@
   .roster-overlay { display:none; position:fixed; inset:0; z-index:300; background:rgba(38,20,16,0.45); align-items:center; justify-content:center; padding:20px; }
   .roster-overlay.open { display:flex; }
   .roster-popup { position:relative; background:var(--bg); border-radius:8px; box-shadow:0 14px 44px rgba(0,0,0,0.32); max-width:360px; width:100%; max-height:80vh; overflow:auto; padding:24px 26px; }
-  .roster-popup h4 { font-family:'IBM Plex Sans KR',sans-serif; font-size:15px; font-weight:700; color:var(--text); margin:0 30px 4px 0; }
+  .roster-popup h4 { font-family:'IBM Plex Sans KR',sans-serif; font-size:14px; font-weight:500; color:var(--text); margin:0 30px 4px 0; }
   .roster-popup .rp-sub { font-size:12px; color:var(--text-dim); margin-bottom:16px; }
   .roster-popup .rp-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:8px 16px; }
   .roster-popup .rp-name { font-size:13.5px; color:var(--text); line-height:1.5; }
@@ -141,7 +141,7 @@
     <span class="nav-title">일반 자유체험 예약 현황</span>
   </span>
   <span class="nav-right">
-    <span class="nav-updated">최종 업데이트 · 2026. 6. 21.</span>
+    <span class="nav-updated">최종 업데이트 · 2026. 6. 30.</span>
     <a href="oolimtong_2026_wcf.html" class="nav-back">← 메인으로</a>
   </span>
 </nav>
@@ -185,7 +185,7 @@
 
 <section id="reservations">
   <h2>예약 현황</h2>
-  <p class="res-summary">현재까지 접수된 예약 <strong>12</strong>건</p>
+  <p class="res-summary">현재까지 접수된 예약 <strong>11</strong>건</p>
   <div class="cal-section">
     <div class="cal-wrap">
       <div class="cal-grid">
@@ -221,7 +221,7 @@
         <div class="cal-cell"><div class="d">6/30</div><div class="cal-chip"><div class="t">10:00</div><div class="w">큰별어린이집</div></div></div>
         <div class="cal-cell"><div class="d">7/1</div></div>
         <div class="cal-cell"><div class="d">7/2</div></div>
-        <div class="cal-cell"><div class="d">7/3</div><div class="cal-chip"><div class="t">10:00</div><div class="w">하나어린이집</div></div><div class="cal-chip"><div class="t">19:00</div><div class="w">개인 (야간)</div></div></div>
+        <div class="cal-cell"><div class="d">7/3</div><div class="cal-chip"><div class="t">10:00</div><div class="w">하나어린이집</div></div></div>
         <div class="cal-cell weekend"><div class="d">7/4</div></div>
         <div class="cal-cell weekend sun"><div class="d">7/5</div><div class="cal-end">종료 예정</div></div>
       </div>
@@ -319,30 +319,32 @@
         <span class="res-people">큰별어린이집 6세(별솔반) · 인원 미정</span>      </div>
     </div>
 
-    <div class="res-card">
+    <div class="res-card has-roster">
       <div class="res-when">
         <span class="res-date">6/27 (토)</span>
         <span class="res-time">15:00</span>
       </div>
       <div class="res-body">
         <div class="res-line1">
-          <span class="res-tag">개인</span> <span class="res-note">(가예약)</span> · <span class="res-place">니닉크라프트 실내 · <span class="res-team">네모</span> 작업 참여</span>
+          <span class="res-tag">개인</span> · <span class="res-place">니닉크라프트 실내 · <span class="res-team">네모</span> 작업 참여</span>
         </div>
         <span class="res-people">초등 2명 · 성인 1명 &nbsp;|&nbsp; 총 3명</span>
       </div>
+      <span class="roster-link" onclick="showRoster('0627')">명단</span>
     </div>
 
-    <div class="res-card">
+    <div class="res-card has-roster">
       <div class="res-when">
         <span class="res-date">6/28 (일)</span>
         <span class="res-time">15:00</span>
       </div>
       <div class="res-body">
         <div class="res-line1">
-          <span class="res-tag">개인</span> <span class="res-note">(가예약)</span> · <span class="res-place">하나어린이집 야외 · <span class="res-team">미로</span> 작업 참여</span>
+          <span class="res-tag">개인</span> · <span class="res-place">하나어린이집 야외 · <span class="res-team">미로</span> 작업 참여</span>
         </div>
         <span class="res-people">6세 1명 · 성인 2명 &nbsp;|&nbsp; 총 3명</span>
       </div>
+      <span class="roster-link" onclick="showRoster('0628')">명단</span>
     </div>
 
     <div class="res-card">
@@ -370,18 +372,7 @@
       </div>
     </div>
 
-    <div class="res-card">
-      <div class="res-when">
-        <span class="res-date">7/3 (금)</span>
-        <span class="res-time">19:00</span>
-      </div>
-      <div class="res-body">
-        <div class="res-line1">
-          <span class="res-tag">개인</span> <span class="res-note">(가예약)</span> · <span class="res-place">하나어린이집 야외 · <span class="res-team">미로</span> 야간작업 참여</span>
-        </div>
-        <span class="res-people">성인 1명</span>
-      </div>
-    </div>
+
 
   </div>
 </section>
@@ -436,6 +427,18 @@
       sub: '교사 2명 · 어린이 14명',
       teachers: ['정지영', '이슬미'],
       names: ['배서우', '최우인', '김하늘', '이태겸', '장서율', '최하윤', '박미주', '이주원', '김수린', '염라윤', '엄로윤', '문노을', '연세아', '신민서']
+    },
+    '0627': {
+      title: '6/27 (토) 15:00 · 체험 명단',
+      sub: '총 3명',
+      teachers: [],
+      names: ['박유정', '이수인', '이강민']
+    },
+    '0628': {
+      title: '6/28 (일) 15:00 · 체험 명단',
+      sub: '총 3명',
+      teachers: [],
+      names: ['김은정', '강신익', '강서하']
     }
   };
   function showRoster(id) {

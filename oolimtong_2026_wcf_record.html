@@ -46,15 +46,15 @@
     font-weight:700;
     line-height:1.3;
     padding:6px 24px;
-    border:2px solid var(--accent);
+    border:none; /* 불필요한 빨간 프레임 완전 제거 */
     border-radius:4px;
-    background:transparent;
-    color:var(--accent);
+    background:var(--bg2); /* 선택 안했을 때 차분한 미색 컬러박스 적용 */
+    color:rgba(122, 76, 60, 0.65); /* 톤 다운하여 배경에 한결 부드럽게 스며드는 색상 */
     cursor:pointer;
     transition:background 0.15s, color 0.15s;
   }
-  .team-tab:hover:not(.active) { background:rgba(192,56,40,0.08); }
-  .team-tab.active { background:var(--accent); color:var(--white) !important; cursor:default; border-color:var(--accent) !important; }
+  .team-tab:hover:not(.active) { background:var(--bg3); color:var(--text); } /* 호버 시 한 톤 어두운 박스로 피드백 */
+  .team-tab.active { background:var(--accent); color:var(--white) !important; cursor:default; }
 
   .team-head { display:none; }
   .team-head.active { display:block; }
@@ -145,6 +145,124 @@
     .session-body { padding:0 14px 16px; }
     .record-field p { font-size:12.5px; }
   }
+
+  /* ── 세련된 아카이브 피드 레이아웃 ── */
+  .team-bar {
+    display: block !important; /* 항상 표시 */
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 20px 0;
+  }
+  
+  section.team-pane {
+    max-width: 800px !important;
+    margin: 0 auto !important;
+    padding: 16px 20px 100px !important;
+    display: none;
+  }
+  section.team-pane.active {
+    display: block;
+  }
+  
+  .session-list.timeline-feed {
+    position: relative;
+    padding-left: 0;
+    margin-top: 32px;
+  }
+  .session-list.timeline-feed::before {
+    display: none !important; /* 긴 세로줄 제거 */
+  }
+  
+  /* 아카이브 기록 카드 (플랫하고 직선적인 모던 디자인) */
+  .session-item {
+    position: relative;
+    margin-bottom: 32px;
+    background: #f4e8df; /* 전체 배경(#f6ede6)보다 아주 미세하게 한 톤만 어두워 고급스럽게 구분되는 크림 베이지 */
+    border-radius: 0px; /* 완전히 직각으로 변경 */
+    border: 1px solid var(--line); /* 카드 전체에 정갈한 아웃라인 적용 */
+    box-shadow: none; /* 입체 섀도우 제거 */
+    overflow: hidden;
+    display: block !important;
+  }
+  .session-item::before {
+    display: none !important; /* 타임라인 점 제거 */
+  }
+  
+  /* 카드 헤더 (날짜, 회차, 제목 한 줄로 흐르게 배치) */
+  .session-header {
+    background: var(--bg3); /* 본문(#f4e8df)과 선명히 구분되는 차분한 황토 토프 브라운 */
+    padding: 14px 20px;
+    border: none; /* 타이틀과 본문 사이의 구분선 및 아웃라인을 완전히 제거 */
+    cursor: default !important;
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap; /* 데스크톱에서는 한 줄로 정렬 */
+    grid-template-columns: none !important; /* 기존 그리드 해제 */
+  }
+  .session-header:hover { background: var(--bg3) !important; }
+  .session-toggle { display: none !important; }
+  
+  .session-header .session-date {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 500;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .session-badge {
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--accent);
+    color: var(--white);
+    padding: 2px 8px;
+    border-radius: 1px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .session-header .session-title {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-top: 0;
+    line-height: 1.4;
+    display: inline-block;
+  }
+  
+  /* 카드 본문 */
+  .session-body {
+    display: block !important;
+    padding: 16px 24px 24px !important; /* 상단 여백만 16px로 줄여 쫀쫀하게 밀착 */
+    background: transparent !important;
+    border-top: none !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+  .session-body .record-grid {
+    margin-top: 0 !important; /* 기존 레거시 마진 16px을 제거하여 이중 여백 현상 해결 */
+  }
+  
+  /* 반응형 모바일 디자인 */
+  @media(max-width: 700px) {
+    .team-bar { padding: 24px 16px 0; }
+    .session-header {
+      flex-wrap: wrap; /* 모바일에서는 줄바꿈 허용 */
+      gap: 8px;
+      padding: 12px 16px;
+    }
+    .session-title {
+      width: 100%;
+      white-space: normal; /* 모바일에서는 제목 전체 표시 */
+      font-size: 14px;
+      margin-top: 2px;
+    }
+    .session-body {
+      padding: 12px 16px 20px !important; /* 모바일에서도 상단 여백을 12px로 단축 */
+    }
+  }
 </style>
 </head>
 <body class="">
@@ -182,12 +300,12 @@
 </div>
 
 <!-- ══════════ 네모 ══════════ -->
-<section id="nemo" class="team-pane" data-team="nemo">
-  <div class="session-list">
+<section id="pane-nemo" class="team-pane" data-team="nemo">
+  <div class="session-list timeline-feed">
 
       <div class="session-item" data-skey="nemo|0">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">5. 9. 토</span>
+          <span class="session-date">05. 09. 토</span>
           <span class="session-badge">1회</span>
           <span class="session-title">재료 이해 · 모뉴먼트 드로잉·모델링</span>
           <span class="session-toggle">▾</span>
@@ -209,7 +327,7 @@
 
       <div class="session-item" data-skey="nemo|1">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">5. 16. 토</span>
+          <span class="session-date">05. 16. 토</span>
           <span class="session-badge">2회</span>
           <span class="session-title">모뉴먼트 울림통 제작</span>
           <span class="session-toggle">▾</span>
@@ -231,7 +349,7 @@
 
       <div class="session-item" data-skey="nemo|2">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">5. 23. 토</span>
+          <span class="session-date">05. 23. 토</span>
           <span class="session-badge">3회</span>
           <span class="session-title">모뉴먼트 마무리 · 타래 만들기</span>
           <span class="session-toggle">▾</span>
@@ -253,7 +371,7 @@
 
       <div class="session-item" data-skey="nemo|3">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">5. 30. 토</span>
+          <span class="session-date">05. 30. 토</span>
           <span class="session-badge">4회</span>
           <span class="session-title">대형 울림통 제작 1</span>
           <span class="session-toggle">▾</span>
@@ -275,7 +393,7 @@
 
       <div class="session-item" data-skey="nemo|4">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 6. 토</span>
+          <span class="session-date">06. 06. 토</span>
           <span class="session-badge">5회</span>
           <span class="session-title">대형 울림통 제작 2</span>
           <span class="session-toggle">▾</span>
@@ -297,7 +415,7 @@
 
       <div class="session-item" data-skey="nemo|5">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 13. 토</span>
+          <span class="session-date">06. 13. 토</span>
           <span class="session-badge">6회</span>
           <span class="session-title">대형 울림통 제작 3</span>
           <span class="session-toggle">▾</span>
@@ -319,7 +437,7 @@
 
       <div class="session-item" data-skey="nemo|6">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 20. 토</span>
+          <span class="session-date">06. 20. 토</span>
           <span class="session-badge">7회</span>
           <span class="session-title">대형 울림통 제작 4</span>
           <span class="session-toggle">▾</span>
@@ -341,7 +459,7 @@
 
       <div class="session-item" data-skey="nemo|7">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 27. 토</span>
+          <span class="session-date">06. 27. 토</span>
           <span class="session-badge">8회</span>
           <span class="session-title">대형 울림통 제작 5 · 예술적 확장</span>
           <span class="session-toggle">▾</span>
@@ -363,7 +481,7 @@
 
       <div class="session-item exp" data-skey="nemo|8">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 27. 토</span>
+          <span class="session-date">06. 27. 토</span>
           <span class="session-badge">체험</span>
           <span class="session-title">자유체험 <span style="font-size:12px; font-weight:400; color:var(--text-dim);">(개인)</span></span>
           <span class="session-toggle">▾</span>
@@ -385,7 +503,7 @@
 
       <div class="session-item" data-skey="nemo|9">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">7. 4. 토</span>
+          <span class="session-date">07. 04. 토</span>
           <span class="session-badge">9회</span>
           <span class="session-title">표면 마감 · 이름짓기</span>
           <span class="session-toggle">▾</span>
@@ -407,7 +525,7 @@
 
       <div class="session-item" data-skey="nemo|10">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">7. 11. 토</span>
+          <span class="session-date">07. 11. 토</span>
           <span class="session-badge">10회</span>
           <span class="session-title">설치 계획 공유 · 리뷰</span>
           <span class="session-toggle">▾</span>
@@ -427,16 +545,17 @@
         </div>        </div>
       </div>
 
-  </div>
-</section>
+      </div>
+    </div>
+  </section>
 
-<!-- ══════════ 고리 ══════════ -->
-<section id="gori" class="team-pane" data-team="gori">
-  <div class="session-list">
+  <!-- ══════════ 고리 ══════════ -->
+  <section id="pane-gori" class="team-pane" data-team="gori">
+    <div class="session-list timeline-feed">
 
       <div class="session-item" data-skey="gori|0">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">5. 10. 일</span>
+          <span class="session-date">05. 10. 일</span>
           <span class="session-badge">1회</span>
           <span class="session-title">재료 이해 · 모뉴먼트 드로잉·모델링</span>
           <span class="session-toggle">▾</span>
@@ -458,7 +577,7 @@
 
       <div class="session-item" data-skey="gori|1">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">5. 17. 일</span>
+          <span class="session-date">05. 17. 일</span>
           <span class="session-badge">2회</span>
           <span class="session-title">모뉴먼트 울림통 제작</span>
           <span class="session-toggle">▾</span>
@@ -480,7 +599,7 @@
 
       <div class="session-item" data-skey="gori|2">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">5. 24. 일</span>
+          <span class="session-date">05. 24. 일</span>
           <span class="session-badge">3회</span>
           <span class="session-title">모뉴먼트 마무리 · 타래 만들기</span>
           <span class="session-toggle">▾</span>
@@ -502,7 +621,7 @@
 
       <div class="session-item" data-skey="gori|3">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">5. 31. 일</span>
+          <span class="session-date">05. 31. 일</span>
           <span class="session-badge">4회</span>
           <span class="session-title">대형 울림통 제작 1</span>
           <span class="session-toggle">▾</span>
@@ -524,7 +643,7 @@
 
       <div class="session-item" data-skey="gori|4">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 7. 일</span>
+          <span class="session-date">06. 07. 일</span>
           <span class="session-badge">5회</span>
           <span class="session-title">대형 울림통 제작 2</span>
           <span class="session-toggle">▾</span>
@@ -546,7 +665,7 @@
 
       <div class="session-item" data-skey="gori|5">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 14. 일</span>
+          <span class="session-date">06. 14. 일</span>
           <span class="session-badge">6회</span>
           <span class="session-title">대형 울림통 제작 3</span>
           <span class="session-toggle">▾</span>
@@ -568,7 +687,7 @@
 
       <div class="session-item exp" data-skey="gori|6">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 14. 일</span>
+          <span class="session-date">06. 14. 일</span>
           <span class="session-badge">체험</span>
           <span class="session-title">자유체험 <span style="font-size:12px; font-weight:400; color:var(--text-dim);">(개인)</span></span>
           <span class="session-toggle">▾</span>
@@ -590,7 +709,7 @@
 
       <div class="session-item" data-skey="gori|7">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 21. 일</span>
+          <span class="session-date">06. 21. 일</span>
           <span class="session-badge">7회</span>
           <span class="session-title">대형 울림통 제작 4</span>
           <span class="session-toggle">▾</span>
@@ -612,7 +731,7 @@
 
       <div class="session-item exp" data-skey="gori|8">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 22. 월</span>
+          <span class="session-date">06. 22. 월</span>
           <span class="session-badge">체험</span>
           <span class="session-title">자유체험 <span style="font-size:12px; font-weight:400; color:var(--text-dim);">(단체 · 무실어린이집)</span></span>
           <span class="session-toggle">▾</span>
@@ -635,7 +754,7 @@
 
       <div class="session-item exp" data-skey="gori|9">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 22. – 30.</span>
+          <span class="session-date">06. 22. – 30.</span>
           <span class="session-badge">체험</span>
           <span class="session-title">자유체험 <span style="font-size:12px; font-weight:400; color:var(--text-dim);">(단체 · 큰별어린이집 4개 반 · 작은 울림통 자체 제작)</span></span>
           <span class="session-toggle">▾</span>
@@ -657,7 +776,7 @@
 
       <div class="session-item exp" data-skey="gori|10">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 24. 수</span>
+          <span class="session-date">06. 24. 수</span>
           <span class="session-badge">체험</span>
           <span class="session-title">자유체험 <span style="font-size:12px; font-weight:400; color:var(--text-dim);">(단체 · 코아루어린이집)</span></span>
           <span class="session-toggle">▾</span>
@@ -679,7 +798,7 @@
 
       <div class="session-item" data-skey="gori|11">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 28. 일</span>
+          <span class="session-date">06. 28. 일</span>
           <span class="session-badge">8회</span>
           <span class="session-title">대형 울림통 제작 5 · 예술적 확장</span>
           <span class="session-toggle">▾</span>
@@ -701,7 +820,7 @@
 
       <div class="session-item" data-skey="gori|12">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">7. 5. 일</span>
+          <span class="session-date">07. 05. 일</span>
           <span class="session-badge">9회</span>
           <span class="session-title">표면 마감 · 이름짓기</span>
           <span class="session-toggle">▾</span>
@@ -723,7 +842,7 @@
 
       <div class="session-item" data-skey="gori|13">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">7. 12. 일</span>
+          <span class="session-date">07. 12. 일</span>
           <span class="session-badge">10회</span>
           <span class="session-title">설치 계획 공유 · 리뷰</span>
           <span class="session-toggle">▾</span>
@@ -743,16 +862,17 @@
         </div>        </div>
       </div>
 
-  </div>
-</section>
+      </div>
+    </div>
+  </section>
 
-<!-- ══════════ 미로 ══════════ -->
-<section id="miro" class="team-pane active" data-team="miro">
-  <div class="session-list">
+  <!-- ══════════ 미로 ══════════ -->
+  <section id="pane-miro" class="team-pane active" data-team="miro">
+    <div class="session-list timeline-feed">
 
       <div class="session-item" data-skey="miro|0">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">5. 10. 일</span>
+          <span class="session-date">05. 10. 일</span>
           <span class="session-badge">1회</span>
           <span class="session-title">재료 이해 · 모뉴먼트 드로잉·모델링</span>
           <span class="session-toggle">▾</span>
@@ -774,7 +894,7 @@
 
       <div class="session-item" data-skey="miro|1">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">5. 17. 일</span>
+          <span class="session-date">05. 17. 일</span>
           <span class="session-badge">2회</span>
           <span class="session-title">모뉴먼트 울림통 제작</span>
           <span class="session-toggle">▾</span>
@@ -796,7 +916,7 @@
 
       <div class="session-item" data-skey="miro|2">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">5. 24. 일</span>
+          <span class="session-date">05. 24. 일</span>
           <span class="session-badge">3회</span>
           <span class="session-title">모뉴먼트 마무리 · 타래 만들기</span>
           <span class="session-toggle">▾</span>
@@ -818,7 +938,7 @@
 
       <div class="session-item" data-skey="miro|3">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">5. 31. 일</span>
+          <span class="session-date">05. 31. 일</span>
           <span class="session-badge">4회</span>
           <span class="session-title">대형 울림통 제작 1</span>
           <span class="session-toggle">▾</span>
@@ -840,7 +960,7 @@
 
       <div class="session-item" data-skey="miro|4">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 7. 일</span>
+          <span class="session-date">06. 07. 일</span>
           <span class="session-badge">5회</span>
           <span class="session-title">대형 울림통 제작 2</span>
           <span class="session-toggle">▾</span>
@@ -862,7 +982,7 @@
 
       <div class="session-item" data-skey="miro|5">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 14. 일</span>
+          <span class="session-date">06. 14. 일</span>
           <span class="session-badge">6회</span>
           <span class="session-title">대형 울림통 제작 3</span>
           <span class="session-toggle">▾</span>
@@ -884,7 +1004,7 @@
 
       <div class="session-item" data-skey="miro|6">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 21. 일</span>
+          <span class="session-date">06. 21. 일</span>
           <span class="session-badge">7회</span>
           <span class="session-title">대형 울림통 제작 4</span>
           <span class="session-toggle">▾</span>
@@ -906,7 +1026,7 @@
 
       <div class="session-item exp" data-skey="miro|7">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 25. 목</span>
+          <span class="session-date">06. 25. 목</span>
           <span class="session-badge">체험</span>
           <span class="session-title">자유체험 <span style="font-size:12px; font-weight:400; color:var(--text-dim);">(단체 · 하나어린이집)</span></span>
           <span class="session-toggle">▾</span>
@@ -928,7 +1048,7 @@
 
       <div class="session-item" data-skey="miro|8">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 28. 일</span>
+          <span class="session-date">06. 28. 일</span>
           <span class="session-badge">8회</span>
           <span class="session-title">대형 울림통 제작 5 · 예술적 확장</span>
           <span class="session-toggle">▾</span>
@@ -950,7 +1070,7 @@
 
       <div class="session-item exp" data-skey="miro|9">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">6. 28. 일</span>
+          <span class="session-date">06. 28. 일</span>
           <span class="session-badge">체험</span>
           <span class="session-title">자유체험 <span style="font-size:12px; font-weight:400; color:var(--text-dim);">(개인)</span></span>
           <span class="session-toggle">▾</span>
@@ -972,7 +1092,7 @@
 
       <div class="session-item exp" data-skey="miro|10">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">7. 3. 금</span>
+          <span class="session-date">07. 03. 금</span>
           <span class="session-badge">체험</span>
           <span class="session-title">자유체험 <span style="font-size:12px; font-weight:400; color:var(--text-dim);">(단체 · 하나어린이집 · 2차)</span></span>
           <span class="session-toggle">▾</span>
@@ -994,7 +1114,7 @@
 
       <div class="session-item reinf" data-skey="miro|11">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">7. 3. 금</span>
+          <span class="session-date">07. 03. 금</span>
           <span class="session-badge">보강</span>
           <span class="session-title">야간작업</span>
           <span class="session-toggle">▾</span>
@@ -1016,7 +1136,7 @@
 
       <div class="session-item" data-skey="miro|12">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">7. 5. 일</span>
+          <span class="session-date">07. 05. 일</span>
           <span class="session-badge">9회</span>
           <span class="session-title">표면 마감 · 이름짓기</span>
           <span class="session-toggle">▾</span>
@@ -1038,7 +1158,7 @@
 
       <div class="session-item" data-skey="miro|13">
         <div class="session-header" onclick="toggleSession(this)">
-          <span class="session-date">7. 12. 일</span>
+          <span class="session-date">07. 12. 일</span>
           <span class="session-badge">10회</span>
           <span class="session-title">설치 계획 공유 · 리뷰</span>
           <span class="session-toggle">▾</span>
@@ -1058,7 +1178,7 @@
         </div>        </div>
       </div>
 
-  </div>
+      </div>
 </section>
 
 
@@ -1069,15 +1189,14 @@ function switchTeam(team) {
   document.querySelectorAll('.team-pane').forEach(function(p){ p.classList.toggle('active', p.dataset.team === team); });
   history.replaceState(null, '', '#' + team);
 }
-function toggleSession(header) {
-  var body = header.nextElementSibling;
-  var toggle = header.querySelector('.session-toggle');
-  if (body) body.classList.toggle('open');
-  if (toggle) toggle.classList.toggle('open');
-  header.classList.toggle('open');
-}
+function toggleSession(header) {}
+
 var hash = window.location.hash.replace('#','');
-if (['nemo','gori','miro'].indexOf(hash) > -1) switchTeam(hash);
+if (['nemo','gori','miro'].indexOf(hash) > -1) {
+  switchTeam(hash);
+} else {
+  switchTeam('miro');
+}
 </script>
 
 </body>
