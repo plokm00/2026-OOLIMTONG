@@ -812,7 +812,7 @@
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 28px;
+    gap: 14px;
   }
 
   .nav-links a {
@@ -989,10 +989,25 @@
     .nav-links > a:last-child { border-bottom: none; }
     .nav-links .nav-manual-btn,
     .nav-links > a.nav-manual-btn {
-      margin: 8px 24px;
-      text-align: center;
-      justify-content: center;
-      border-bottom: none;
+      border: none !important;
+      border-radius: 0;
+      background: transparent !important;
+      color: var(--text-dim) !important;
+      padding: 13px 24px;
+      margin: 0;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: none;
+      border-bottom: 1px solid var(--line) !important;
+      justify-content: flex-start;
+    }
+    .nav-links > a.nav-manual-btn:last-child {
+      border-bottom: none !important;
+    }
+    .nav-links > a.nav-manual-btn:hover {
+      color: var(--accent) !important;
+      background: transparent !important;
     }
     .worklog-dropdown { display: flex; flex-direction: column; }
     .worklog-dropdown > .nav-manual-btn { margin: 8px 24px 4px; }
@@ -1083,10 +1098,8 @@
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="nav-links">
-    <a href="#toc">목차</a>
-    <a href="#curriculum">커리큘럼</a>
+    <a href="oolimtong_2026_wcf_curriculum.html" class="nav-manual-btn">커리큘럼 ↗</a>
     <a href="oolimtong_2026_wcf_record.html" class="nav-manual-btn">작업 기록 ↗</a>
-    <a href="oolimtong_2026_wcf_book.html" class="nav-manual-btn">예약 현황 ↗</a>
     <a href="oolimtong_manual.html" class="nav-manual-btn">울림통 매뉴얼 ↗</a>
     <a href="https://drive.google.com/drive/folders/1oMWrVGzkAMElQyV4Yv1uCNEvCzd90gCz?usp=drive_link" target="_blank" class="nav-manual-btn" style="background:var(--accent);color:var(--white) !important;border-color:var(--accent);" onmouseover="this.style.background='var(--accent2)';this.style.borderColor='var(--accent2)'" onmouseout="this.style.background='var(--accent)';this.style.borderColor='var(--accent)'">사진·영상 올리기 ↗</a>
   </div>
@@ -1593,7 +1606,7 @@
       <tr>
         <td>7. 11. 토 14:00<br>7. 12. 일 10:00 / 14:00</td>
         <td><a href="oolimtong_2026_wcf_curriculum.html#tab-10" class="session-badge badge-work" style="text-decoration:none;display:inline-block;">10회 ↗</a></td>
-        <td>큰 울림통 및 개인 모뉴먼트 완성 <small style="color:var(--text-dim)">(3시간)</small></td>
+        <td>큰 울림통 및 개인 모뉴먼트 완성 <small style="color:var(--text-dim)">(3시간+α)</small></td>
         <td>큰 울림통 완성 / 개인 모뉴먼트 점검 및 기름 마감</td>
       </tr>
       <tr>
