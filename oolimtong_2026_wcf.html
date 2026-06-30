@@ -969,31 +969,35 @@
     .nav-links {
       display: none;
       position: absolute;
-      top: 56px; left: 0; right: 0;
+      top: 56px; right: 0; left: auto;
+      width: 200px;
       flex-direction: column;
       align-items: stretch;
       background: rgba(246,237,230,0.98);
       backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--line);
-      padding: 8px 0;
+      border: 1px solid var(--line);
+      border-top: none;
+      box-shadow: 0 6px 16px rgba(38,20,16,0.12);
+      padding: 6px 0;
       gap: 0;
       max-height: calc(100vh - 56px);
       overflow-y: auto;
     }
     .nav-links.open { display: flex; }
     .nav-links > a {
-      padding: 13px 24px;
-      font-size: 13px;
+      padding: 11px 18px;
+      font-size: 12px;
       border-bottom: 1px solid var(--line);
     }
     .nav-links > a:last-child { border-bottom: none; }
     .nav-links .nav-manual-btn,
     .nav-links > a.nav-manual-btn {
-      margin: 8px 24px;
+      margin: 6px 12px;
       text-align: center;
       justify-content: center;
       border-bottom: none;
     }
+    .nav-links > a.nav-manual-btn:last-child { margin-bottom: 8px; }
     .worklog-dropdown { display: flex; flex-direction: column; }
     .worklog-dropdown > .nav-manual-btn { margin: 8px 24px 4px; }
     .worklog-menu {
