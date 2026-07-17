@@ -8,31 +8,32 @@
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap');
 
   :root {
-    --cream:    #FFF8F2;
-    --cream2:   #FFF2E8;
-    --card:     #FFFDF9;
-    --line:     #F0DDD0;
-    --line2:    #E0C8B8;
-    --peach:    #FF9E7A;
-    --coral:    #E8604A;
-    --green:    #74C59A;
-    --green2:   #A8DEC0;
-    --yellow:   #FFD060;
-    --blue:     #7BBDE8;
-    --purple:   #B89ADA;
-    --pink:     #F0A0C0;
-    --text:     #3A2418;
-    --text-mid: #7A5040;
-    --text-dim: #B09080;
-    --white:    #FFFDF9;
+    --cream:    #EBDFC9;
+    --cream2:   #E1D0AC;
+    --card:     #F6EFDE;
+    --line:     #DDCBA5;
+    --line2:    #CBB489;
+    --peach:    #C1552E;
+    --coral:    #B84A2A;
+    --green:    #3E7A6D;
+    --green2:   #6E9E8E;
+    --yellow:   #D69A3E;
+    --blue:     #3E4F7A;
+    --purple:   #7A5C8E;
+    --pink:     #C77B72;
+    --text:     #2A1F16;
+    --text-mid: #6B5540;
+    --text-dim: #9C8768;
+    --white:    #F6EFDE;
+    --slot-bg:  #1C1712;
 
     /* Per-child colors */
-    --c1: #FFB5B5; /* 소은 - pink */
-    --c2: #B5D8FF; /* 이서 - blue */
-    --c3: #B5FFD4; /* 이준 - green */
-    --c4: #FFE4B5; /* 봄   - yellow */
-    --c5: #D8B5FF; /* 규태 - purple */
-    --c6: #FFB0D8; /* 규리 - pink */
+    --c1: #C1552E; /* 소은 - 테라코타 */
+    --c2: #3E7A6D; /* 이서 - 청록 */
+    --c3: #D69A3E; /* 이준 - 흙빛 오커 */
+    --c4: #7A5C8E; /* 봄   - 자수정 */
+    --c5: #C77B72; /* 규태 - 더스티로즈 */
+    --c6: #3E4F7A; /* 규리 - 인디고 */
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -48,7 +49,7 @@
 
   /* ─── HEADER ─── */
   .site-header {
-    background: linear-gradient(160deg, #FFE8D8 0%, #FFD8EE 40%, #D8EEFF 100%);
+    background: linear-gradient(160deg, #E8D6AE 0%, #DDBE8E 55%, #C98F5E 100%);
     padding: 56px 32px 48px;
     text-align: center;
     position: relative;
@@ -57,11 +58,12 @@
   .site-header .deco-circle {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.25;
+    opacity: 0.35;
+    filter: blur(18px);
   }
-  .site-header .deco-circle.c1 { width:220px; height:220px; background:#FFB5B5; top:-70px; left:-60px; }
-  .site-header .deco-circle.c2 { width:160px; height:160px; background:#B5D8FF; top:20px; right:-40px; }
-  .site-header .deco-circle.c3 { width:120px; height:120px; background:#FFE4B5; bottom:-40px; left:30%; }
+  .site-header .deco-circle.c1 { width:220px; height:220px; background:var(--c1); top:-70px; left:-60px; }
+  .site-header .deco-circle.c2 { width:160px; height:160px; background:var(--blue); top:20px; right:-40px; }
+  .site-header .deco-circle.c3 { width:120px; height:120px; background:var(--c3); bottom:-40px; left:30%; }
 
   .header-icon {
     font-size: 60px;
@@ -106,8 +108,7 @@
     z-index: 1;
   }
   .chip {
-    background: rgba(255,255,255,0.75);
-    border: 1.5px solid rgba(255,255,255,0.9);
+    background: rgba(246,239,222,0.8);
     border-radius: 20px;
     padding: 4px 16px;
     font-size: 12.5px;
@@ -121,40 +122,45 @@
     position: sticky;
     top: 0;
     z-index: 200;
-    background: rgba(255,248,242,0.96);
+    background: rgba(235,223,201,0.96);
     backdrop-filter: blur(10px);
-    border-bottom: 2px solid var(--line);
+    box-shadow: 0 2px 10px rgba(42,31,22,0.06);
+    padding: 10px 0; /* 둥근 알약 버튼들의 위아래 안착을 위한 패딩 추가 */
   }
   .tab-bar-inner {
     max-width: 940px;
-    margin: 0 auto -2px;
+    margin: 0 auto;
     padding: 0 20px;
     display: flex;
-    gap: 0;
+    gap: 8px; /* 알약 형태 탭 사이의 숨통을 틔워주는 간격 지정 */
     overflow-x: auto;
   }
   .tab-btn {
     display: flex;
     align-items: center;
     gap: 7px;
-    padding: 14px 28px;
-    font-size: 14px;
+    padding: 6px 20px; /* 헤더 칩(Chip)의 둥근 모서리 비례와 일치시킨 패딩 */
+    font-size: 13.5px;
     font-weight: 600;
     color: var(--text-mid);
     white-space: nowrap;
     border: none;
     background: none;
     cursor: pointer;
-    border-bottom: 3px solid transparent;
+    border-radius: 20px; /* 칩과 일치하는 둥근 알약형 프레임 */
     transition: all 0.2s;
     letter-spacing: 0.03em;
     font-family: 'Noto Sans KR', sans-serif;
   }
-  .tab-btn:hover { color: var(--coral); }
+  .tab-btn:hover {
+    color: var(--coral);
+    background: rgba(246, 239, 222, 0.5); /* 호버 시 가벼운 피드백 음영 제공 */
+  }
   .tab-btn.active {
     color: var(--coral);
-    border-bottom-color: var(--coral);
-    background: rgba(232,96,74,0.05);
+    border-bottom: none; /* 요청하신 대로 밑줄은 완전히 삭제 */
+    background: rgba(246, 239, 222, 0.95); /* 헤더 칩의 밝은 음영 박스 디자인을 일관되게 이식 */
+    box-shadow: 0 2px 8px rgba(42, 31, 22, 0.06); /* 부드러운 입체감 */
   }
 
   /* ─── TAB PANELS ─── */
@@ -184,18 +190,79 @@
   }
   .section-lead .bar {
     flex: 1;
-    height: 2px;
-    background: linear-gradient(to right, var(--peach), transparent);
-    border-radius: 2px;
+    height: 0;
   }
 
-  /* ─── SESSION CARD ─── */
+  /* ─── FLOATING SCROLL NAV (hover to expand, like a mini outline) ─── */
+  .float-nav {
+    position: fixed;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 300;
+  }
+  .float-nav-track {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    padding: 12px 8px;
+    border-radius: 20px;
+    background: transparent;
+    box-shadow: none;
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+  }
+  .float-nav:hover .float-nav-track,
+  .float-nav:focus-within .float-nav-track {
+    background: rgba(246,239,222,0.95);
+    box-shadow: 0 6px 24px rgba(42,31,22,0.18);
+  }
+  .float-dot {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    text-decoration: none;
+    height: 8px;
+  }
+  .float-dot .fd {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--line2);
+    flex-shrink: 0;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .float-dot.active .fd { background: var(--coral); transform: scale(1.35); }
+  .float-dot .fd-label {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    font-size: 11.5px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    color: var(--text-mid);
+    transition: max-width 0.25s ease, opacity 0.2s ease;
+  }
+  .float-nav:hover .fd-label,
+  .float-nav:focus-within .fd-label {
+    max-width: 140px;
+    opacity: 1;
+  }
+  .float-dot.active .fd-label { color: var(--coral); font-weight: 700; }
+
+  @media (max-width: 720px) {
+    .float-nav { display: none; }
+  }
+
   .session-card {
     background: var(--card);
     border-radius: 22px;
-    overflow: hidden;
+    overflow: visible; /* 자식 요소인 작품 프리뷰 팝업이 카드 밖으로 잘림 없이 보일 수 있도록 변경 */
     margin-bottom: 48px;
-    box-shadow: 0 2px 16px rgba(100,60,30,0.07), 0 0 0 1.5px var(--line);
+    box-shadow: 0 6px 24px rgba(42,31,22,0.12);
+    scroll-margin-top: 76px;
   }
 
   .session-top {
@@ -204,74 +271,14 @@
     align-items: center;
     gap: 18px;
   }
-  .session-num-badge {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    color: white;
-    font-family: 'IBM Plex Sans KR', sans-serif;
-    box-shadow:
-      inset 0 2px 4px rgba(255,255,255,0.5),    /* 윗면 하이라이트 */
-      inset 0 -4px 6px rgba(0,0,0,0.15),         /* 아랫면 음영 */
-      0 3px 7px rgba(0,0,0,0.16);                /* 바닥 그림자 */
-  }
-  .session-num-badge .n-label { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; opacity: 0.9; position: relative; z-index: 1; }
-  .session-num-badge .n-num  { font-size: 23px; font-weight: 700; line-height: 1; position: relative; z-index: 1; text-shadow: 0 1px 2px rgba(0,0,0,0.25); }
 
   .session-participants {
     margin-left: auto;
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    gap: 4px 12px;
-    justify-content: end;
-    justify-items: end;
-    align-content: center;
-  }
-  .session-top-info h3 {
-    font-family: 'IBM Plex Sans KR', sans-serif;
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 2px;
-  }
-  .session-top-info p { font-size: 12.5px; color: var(--text-dim); }
-
-  .session-divider {
-    height: 1.5px;
-    background: var(--line);
-    margin: 0 28px;
-  }
-
-  /* ─── INFO GRID ─── */
-  .info-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    padding: 22px 28px 0;
-  }
-  @media (max-width: 580px) { .info-grid { grid-template-columns: 1fr; } }
-
-  .info-box {
-    background: var(--cream);
-    border-radius: 14px;
-    padding: 16px 18px;
-    border: 1.5px solid var(--line);
-  }
-  .info-box.full { grid-column: 1 / -1; }
-  .info-box.compact { padding: 12px 18px; }
-  .info-box.compact .info-box-label { margin-bottom: 0; }
-  .info-box.tall { min-height: 220px; }
-
-  .participant-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 4px 12px;
+    justify-content: flex-end;
+    align-items: center;
   }
   .participant-chip {
     font-size: 11px;
@@ -289,6 +296,42 @@
     margin-left: 2px;
   }
 
+  .session-top-info h3 {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .session-divider {
+    height: 0;
+    margin: 10px 28px;
+  }
+
+  /* ─── INFO GRID ─── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: minmax(240px, 1fr) minmax(280px, 1.9fr);
+    gap: 32px;
+    padding: 22px 28px 0;
+    align-items: stretch;
+  }
+  @media (max-width: 760px) { .info-grid { grid-template-columns: 1fr; } }
+
+  .info-box {
+    background: var(--cream);
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .info-box.full { grid-column: 1 / -1; }
+  .info-box.compact { padding: 12px 18px; }
+  .info-box.compact .info-box-label { margin-bottom: 0; }
+  .info-box.tall { min-height: 220px; }
+
+  /* 오늘의 책·재료·수업내용 - 박스 없이 배경 위에 바로 */
+  .info-plain { }
+
   .info-box-label {
     font-size: 10.5px;
     font-weight: 700;
@@ -304,7 +347,7 @@
     font-size: 14px;
     color: var(--text);
     line-height: 1.75;
-    font-weight: 500;
+    margin-top: -5px; /* line-height 상단 leading 보정: 왼쪽 책 이미지 박스와 시작 위치 맞춤 */
   }
 
   .placeholder {
@@ -329,25 +372,53 @@
     justify-content: center;
     font-size: 26px;
     flex-shrink: 0;
-    border: 1.5px dashed var(--line2);
     background: var(--cream2);
   }
-  .book-cover-placeholder.sm {
-    width: 30px; height: 30px;
-    font-size: 16px; border-radius: 6px;
-  }
-  .book-row.tight { gap: 10px; }
-  .book-row.tight .book-details { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-  .book-row.tight .book-details .b-author { margin-top: 0; }
   .book-details .b-title { font-weight: 600; font-size: 14px; }
-  .book-details .b-author { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+  .book-details .b-author { font-size: 12px; color: var(--text-dim); margin-top: 3px; }
+  .book-slot {
+    height: 100px; /* 92px 에서 100px 로 확대하여 책커버 크기를 넓고 시원하게 확보 */
+    width: 80px;  /* 가로가 넓은 도서(모두가 빛나요 등)도 축소되어 처지지 않도록 가로 한도를 80px로 확장 */
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start; /* 표지 비율이 달라도 항상 최상단 기준으로 강제 정렬 */
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .book-slot img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain; /* 고정 박스 안에서 잘림 없이 전체 표지가 보이도록 처리 */
+    object-position: left top; /* 좌상단 기준으로 고정: 세로가 좁은 도서도 왼쪽에 바짝 붙어 텍스트와 간격 일정하게 유지 */
+  }
+
+  /* 오늘의 책 & 재료 (통합) */
+  .bm-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .bm-info {
+    flex: 1;
+    min-width: 160px;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.8;
+    text-align: left; /* 칼같은 왼쪽 정렬 강제 */
+  }
+  .bm-info .b-title { font-weight: 600; color: var(--text); }
+  .bm-info .b-author { font-size: 12px; color: var(--text); }
+  .bm-sep { color: var(--text); margin: 0 8px; }
 
   /* 특이사항 */
   .note-text {
     font-size: 14px;
     color: var(--text-mid);
     line-height: 1.75;
-    background: #FFF9F0;
+    background: #E9DEC8;
     padding: 10px 14px;
     border-radius: 10px;
   }
@@ -369,85 +440,254 @@
   /* children row */
   .children-row {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
     margin-bottom: 8px;
   }
   @media (max-width: 560px) { .children-row { grid-template-columns: repeat(3, 1fr); } }
 
-  .child-cell { text-align: center; position: relative; }
+  .child-cell { text-align: center; }
   .child-photo {
-    aspect-ratio: 4/3;
+    aspect-ratio: 1/1; /* 1:1 정사각 썸네일로 변경 */
     border-radius: 14px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    border: 2.5px dashed;
     position: relative;
-    overflow: hidden;
-    background: white;
+    overflow: visible; /* 프리뷰 팝업이 튀어나올 수 있도록 변경 */
+    background: var(--slot-bg);
+    cursor: pointer;
+    box-shadow: inset 0 0 0 2px rgba(246,239,222,0.12);
   }
-  .child-photo img {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
+  /* 둥근 테두리 마스킹 깨짐 문제를 해결하기 위한 내부 래퍼 */
+  .child-photo-inner {
+    position: absolute;
+    inset: 0;
+    overflow: hidden; /* 썸네일 이미지를 둥글게 칼같이 절단 */
+    border-radius: 11px;
+    width: 100%;
+    height: 100%;
+  }
+  .child-photo-inner img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%; /* 인위적 배율 조정을 제거하고 100% 크기로 복구하여 브라우저 안티앨리어싱 보간 필터 정상 작동 유도 */
     object-fit: cover;
     border-radius: 11px;
+    transition: opacity 0.2s ease;
   }
+  .child-photo:hover .child-photo-inner img {
+    opacity: 0.85; /* filter: brightness 대신 opacity 조절로 렌더링 덜컥임/샤픈-블러 현상 완전 해결 */
+  }
+
+  /* ─── MUSIC ALBUM SLOT STYLING ─── */
+  .music-slot-container {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .music-album-card {
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    background: #eae3d2;
+    flex-shrink: 0;
+  }
+  .music-album-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ─── LIGHTBOX MODAL ─── */
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 23, 18, 0.88); /* 기품 있고 차분한 딥초콜릿 무드의 어두운 배경 */
+    backdrop-filter: blur(8px);
+    z-index: 3000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .lightbox-content {
+    width: min(1040px, 96vw); /* 가로 너비를 1040px로 웅장하게 대형화 */
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transform: scale(0.96);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .lightbox-overlay.active .lightbox-content {
+    transform: scale(1);
+  }
+
+  /* 헤더 정보바 (제목 중앙정렬) */
+  .lightbox-header {
+    display: flex;
+    justify-content: center; /* 타이틀을 정중앙 정렬 */
+    align-items: center;
+    color: var(--white);
+    padding: 0 4px;
+    position: relative;
+  }
+  .lightbox-title {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 16px; /* 아까(18px)와 지금(14px)의 황금 비율 중간 크기인 16px로 최적화 */
+    font-weight: 500; /* 살짝 가벼운 서체 굵기 */
+    letter-spacing: 0.03em; /* 자간을 살짝 넓혀 단정한 캡션 무드 조성 */
+    color: rgba(246, 239, 222, 0.85); /* 자극이 덜하고 눈에 부드러운 아이보리 톤 */
+  }
+
+  /* 이미지 뷰어 */
+  .lightbox-viewer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .lightbox-img-wrap {
+    flex: 1;
+    height: min(720px, 78vh); /* 세로 높이를 최대 720px까지 확장하여 블로그처럼 작품을 거대하고 시원하게 감상 */
+    background: var(--slot-bg);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+  }
+  .lightbox-img-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* 크롭(잘림) 없이 원본 그림 전 구도를 통째로 노출 */
+    padding: 24px;
+    border-radius: 12px;
+  }
+
+  /* 내비게이션 화살표 */
+  .lightbox-nav {
+    background: rgba(28, 23, 18, 0.6);
+    border: 2px solid rgba(246, 239, 222, 0.2);
+    color: var(--white);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    backdrop-filter: blur(4px);
+    flex-shrink: 0;
+  }
+  .lightbox-nav:hover {
+    background: var(--coral);
+    border-color: var(--coral);
+    transform: scale(1.08);
+  }
+
+  /* 하단 미니 썸네일 탐색 바 */
+  .lightbox-thumbs-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 8px 0;
+  }
+  .lightbox-thumb {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 3px solid transparent;
+    cursor: pointer;
+    opacity: 0.55;
+    transition: all 0.2s;
+    background: var(--slot-bg);
+    flex-shrink: 0;
+  }
+  .lightbox-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .lightbox-thumb:hover {
+    opacity: 0.9;
+  }
+  .lightbox-thumb.active {
+    opacity: 1;
+    border-color: var(--coral); /* 선택된 아이의 미니 썸네일에 코랄 테두리 지정 */
+    transform: scale(1.05);
+  }
+
   .child-photo .add-hint {
     font-size: 10px;
-    color: var(--text-dim);
+    color: rgba(246,239,222,0.5);
     margin-top: 4px;
+    position: relative;
+    z-index: 2;
   }
   .child-name-label {
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    z-index: 2;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--text-mid);
-    background: rgba(255,255,255,0.88);
-    padding: 2px 8px;
-    border-radius: 8px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 5;
   }
 
   /* group photos */
   .group-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    display: flex; /* grid에서 flex로 전환하여 이미지 고유 비율에 따라 가로 폭이 자연스럽게 확장되게 함 */
+    flex-wrap: wrap;
+    gap: 12px;
   }
-  @media (max-width: 500px) { .group-row { grid-template-columns: 1fr 1fr; } }
-
   .group-photo {
-    aspect-ratio: 4/3;
+    height: 150px; /* 아이들 작품 썸네일 세로 높이인 150px에 완벽하게 일치시킴 */
+    width: auto; /* 이미지 가로비에 맞춰 자동 조절 */
     border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 32px;
-    border: 2.5px dashed var(--line2);
-    background: var(--cream2);
     position: relative;
     overflow: hidden;
   }
+  /* 이미지가 아직 없고 텍스트나 기호(span)만 들어있는 상자일 때의 플레이스홀더 전용 보조 스타일 */
+  .group-photo:has(span) {
+    min-width: 150px;
+    background: var(--slot-bg);
+    border: 2px solid var(--line2);
+  }
   .group-photo img {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    border-radius: 11px;
+    height: 100%; /* 세로는 상자에 꽉 맞춤 */
+    width: auto; /* 가로는 이미지 본래의 종횡비를 그대로 유지 */
+    object-fit: normal; /* 박스 여백이나 찌그러짐 없이 오직 이미지 본연의 가로세로 크기로 렌더링 */
+    border-radius: 14px; /* 이미지 모서리에 직접 단정한 라운딩 적용 */
+  }
+  .group-video video {
+    height: 100%;
+    width: auto;
+    border-radius: 14px;
+    display: block;
+    background: var(--slot-bg);
   }
 
   /* ─── ADD NEXT SESSION ─── */
   .add-session-card {
-    border: 2.5px dashed var(--line2);
+    background: var(--cream2);
     border-radius: 22px;
     padding: 28px;
     text-align: center;
-    color: var(--text-dim);
+    color: var(--text-mid);
     font-size: 14px;
   }
   .add-session-card .plus { font-size: 36px; margin-bottom: 8px; }
@@ -457,21 +697,12 @@
   }
 
   .program-banner {
-    background: linear-gradient(135deg, #FFF0E6 0%, #E8F8EE 50%, #E8F0FF 100%);
+    background: linear-gradient(135deg, #E6CBA8 0%, #DCB89C 45%, #C9A0A0 100%);
     border-radius: 22px;
     padding: 36px;
     margin-bottom: 28px;
-    border: 1.5px solid var(--line);
     position: relative;
     overflow: hidden;
-  }
-  .program-banner::after {
-    content: '🎨';
-    position: absolute;
-    right: 28px;
-    top: 20px;
-    font-size: 80px;
-    opacity: 0.12;
   }
 
   .program-banner h3 {
@@ -486,7 +717,6 @@
     font-size: 14.5px;
     color: var(--text-mid);
     line-height: 1.85;
-    max-width: 680px;
   }
 
   .philosophy-quote {
@@ -512,9 +742,9 @@
 
   .ov-card {
     background: var(--card);
-    border: 1.5px solid var(--line);
     border-radius: 16px;
     padding: 18px 20px;
+    box-shadow: 0 2px 12px rgba(42,31,22,0.06);
   }
   .ov-card h4 {
     font-size: 12px;
@@ -548,15 +778,12 @@
   .rule-box {
     border-radius: 16px;
     padding: 20px;
-    border: 1.5px solid transparent;
   }
   .rule-box.guide {
-    background: #FFF5F0;
-    border-color: #FFD8C8;
+    background: #E9D3BC;
   }
   .rule-box.free {
-    background: #F0FFF6;
-    border-color: #C8F0D8;
+    background: #D6E3DD;
   }
   .rule-box h4 {
     font-size: 13.5px;
@@ -583,10 +810,8 @@
     display: flex;
     gap: 14px;
     padding: 10px 0;
-    border-bottom: 1px solid var(--line);
     align-items: flex-start;
   }
-  .flow-item:last-child { border-bottom: none; }
   .flow-time {
     font-size: 12px;
     color: var(--text-dim);
@@ -629,10 +854,10 @@
   /* Schedule preview */
   .schedule-mini {
     background: var(--card);
-    border: 1.5px solid var(--line);
     border-radius: 16px;
     padding: 18px 20px;
     margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(42,31,22,0.06);
   }
   .schedule-mini h4 {
     font-size: 12px;
@@ -656,7 +881,7 @@
     flex-shrink: 0;
   }
   .dot.done   { background: var(--green); }
-  .dot.coming { background: var(--line2); border: 2px dashed var(--text-dim); }
+  .dot.coming { background: var(--line2); }
 
   /* Events */
   .event-chips {
@@ -666,8 +891,7 @@
     margin-top: 10px;
   }
   .event-chip {
-    background: white;
-    border: 1.5px solid var(--line2);
+    background: var(--card);
     border-radius: 20px;
     padding: 5px 16px;
     font-size: 13px;
@@ -686,28 +910,9 @@
     opacity: 0.5;
   }
 
-  /* ─── BOOK BOX ─── */
-  .book-box { display: flex; flex-direction: column; }
-  .book-box .book-row { flex: 1; align-items: flex-start; }
-  .book-slot {
-    width: 70px;
-    aspect-ratio: 2/3;
-    flex-shrink: 0;
-    border: 2px dashed var(--line2);
-    border-radius: 6px 10px 10px 6px;
-    background: var(--cream2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-
   /* ─── FOOTER ─── */
   .site-footer {
     background: var(--cream2);
-    border-top: 2px solid var(--line);
     text-align: center;
     padding: 32px 20px;
     font-size: 12.5px;
@@ -724,8 +929,8 @@
   <div class="deco-circle c1"></div>
   <div class="deco-circle c2"></div>
   <div class="deco-circle c3"></div>
-  <span class="header-icon">🎨</span>
-  <h1 class="header-title">니닉크라프트 <span>어린이 작업실</span></h1>
+  <span class="header-icon">🖌️</span>
+  <h1 class="header-title">니닉크라프트 <span class="title-multicolor"><span style="color:#8A3A1C;">어</span><span style="color:#C1552E;">린</span><span style="color:#D9805A;">이</span> <span style="color:#5C6FA0;">작</span><span style="color:#3E4F7A;">업</span><span style="color:#2A3555;">실</span></span></h1>
   <div class="header-chips">
     <span class="chip">과정 중심 · 다매체 · 통합 인문예술 교육</span>
     <span class="chip">그림책과 함께</span>
@@ -738,7 +943,7 @@
 <nav class="tab-bar">
   <div class="tab-bar-inner">
     <button class="tab-btn active" onclick="switchTab('records', this)">📋 수업 기록</button>
-    <button class="tab-btn" onclick="switchTab('program', this)">🌱 프로그램 소개</button>
+    <button class="tab-btn" onclick="switchTab('program', this)">✍️ 프로그램 소개</button>
   </div>
 </nav>
 
@@ -753,16 +958,28 @@
     <div class="bar"></div>
   </div>
 
+  <div class="float-nav">
+    <div class="float-nav-track">
+      <a href="#session-1" class="float-dot"><span class="fd"></span><span class="fd-label">2026.05.07 목요일</span></a>
+      <a href="#session-2" class="float-dot"><span class="fd"></span><span class="fd-label">2026.05.14 목요일</span></a>
+      <a href="#session-3" class="float-dot"><span class="fd"></span><span class="fd-label">2026.05.21 목요일</span></a>
+      <a href="#session-4" class="float-dot"><span class="fd"></span><span class="fd-label">2026.06.04 목요일</span></a>
+      <a href="#session-5" class="float-dot"><span class="fd"></span><span class="fd-label">2026.06.05 금요일</span></a>
+      <a href="#session-6" class="float-dot"><span class="fd"></span><span class="fd-label">2026.06.11 목요일</span></a>
+      <a href="#session-7" class="float-dot"><span class="fd"></span><span class="fd-label">2026.06.18 목요일</span></a>
+      <a href="#session-8" class="float-dot"><span class="fd"></span><span class="fd-label">2026.06.25 목요일</span></a>
+      <a href="#session-9" class="float-dot"><span class="fd"></span><span class="fd-label">2026.07.02 목요일</span></a>
+      <a href="#session-10" class="float-dot"><span class="fd"></span><span class="fd-label">2026.07.09 목요일</span></a>
+      <a href="#session-11" class="float-dot"><span class="fd"></span><span class="fd-label">2026.07.16 목요일</span></a>
+      <a href="#session-12" class="float-dot"><span class="fd"></span><span class="fd-label">2026.07.23 목요일</span></a>
+    </div>
+  </div>
+
   <!-- ════════ 1회차 · 5월 7일 ════════ -->
-  <div class="session-card">
-    <div class="session-top" style="background: linear-gradient(120deg, #FFF0E8, #FFE8F8);">
-      <div class="session-num-badge" style="background: linear-gradient(135deg, #FFC2A0, #FF9E7A);">
-        <span class="n-label">NO.</span>
-        <span class="n-num">01</span>
-      </div>
+  <div class="session-card" id="session-1">
+    <div class="session-top">
       <div class="session-top-info">
         <h3>2026년 5월 7일 목요일</h3>
-        <p>🌸 봄 · 평면 조형 &amp; 콜라주 시리즈 첫 번째</p>
       </div>
       <div class="session-participants">
         <span class="participant-chip">김소은<span class="age">6세</span></span>
@@ -770,53 +987,26 @@
         <span class="participant-chip">한이준<span class="age">6세</span></span>
         <span class="participant-chip">신봄<span class="age">7세</span></span>
         <span class="participant-chip">박규태<span class="age">6세</span></span>
-        <span class="participant-chip">박규리<span class="age">5세</span></span>
       </div>
     </div>
     <div class="session-divider"></div>
 
     <!-- Info grid -->
     <div class="info-grid">
-      <!-- 오늘의 책 -->
-      <div class="info-box compact book-box">
-        <div class="info-box-label" style="color: var(--blue);">📖 &nbsp;오늘의 책</div>
-        <div class="book-row tight">
+      <!-- 오늘의 책 & 재료 -->
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 책과 준비물</div>
+        <div class="bm-row">
           <div class="book-slot">
-            <img src="https://contents.kyobobook.co.kr/sih/fit-in/200x0/pdt/9788990364418.jpg" alt="빗자루의 보은" style="width:100%;height:100%;object-fit:cover;border-radius:4px 8px 8px 4px;">
+            <img src="https://contents.kyobobook.co.kr/sih/fit-in/200x0/pdt/9788990364418.jpg" alt="빗자루의 보은">
           </div>
-          <div class="book-details">
-            <div class="b-title">빗자루의 보은</div>
-            <div class="b-author">크리스 반 알스버그</div>
-          </div>
+          <div class="bm-info"><span class="b-title">빗자루의 보은</span> · <span class="b-author">크리스 반 알스버그</span><span class="bm-sep">/</span>연필, 목탄, 콩테, 지우개, 자, 연필깎이, 켄트지</div>
         </div>
-      </div>
-
-      <!-- 재료와 준비과정 -->
-      <div class="info-box compact">
-        <div class="info-box-label" style="color: var(--peach);">🧰 &nbsp;재료</div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-            <!-- <img src="사진경로/재료_1.jpg" alt="재료사진"> -->
-            <span style="font-size: 20px;">🧴</span>
-            <span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span>
-          </div>
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-            <!-- <img src="사진경로/재료_2.jpg" alt="재료사진"> -->
-            <span style="font-size: 20px;">✂️</span>
-            <span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span>
-          </div>
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-            <!-- <img src="사진경로/재료_3.jpg" alt="재료사진"> -->
-            <span style="font-size: 20px;">🖌️</span>
-            <span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span>
-          </div>
-        </div>
-        <div class="info-text" style="font-size: 12.5px; color: var(--text-mid); margin-top: 8px; line-height: 1.7;">연필, 목탄, 콩테, 지우개, 자, 연필깎이, 켄트지</div>
       </div>
 
       <!-- 수업 내용 -->
-      <div class="info-box full tall">
-        <div class="info-box-label" style="color: var(--green);">📝 &nbsp;수업 내용</div>
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 이야기</div>
         <div class="info-text">
           <!-- 재료, 수업 흐름, 특이사항, 오늘의 한마디 등을 자유롭게 기록해 주세요 -->
 검은색 마른 재료로만 그려요. 가지각색의, 색이 넘치는 화려하고 복잡한 세상에서, 무채색의 차분함을 느껴 봅니다. 한 가지 색으로도 얼마든지 무지개를 그릴 수 있어요. 그래도 아이들은 물감을 쓰고 싶다고 해요. 그래서 다음 시간에는 색깔이 있는 무지개를 그려보기로 약속했어요.
@@ -827,77 +1017,62 @@
     <!-- Photos -->
     <div class="session-divider" style="margin-top: 22px;"></div>
     <div class="photo-section">
-      <div class="photo-sub-title">📸 &nbsp;아이별 작업 사진</div>
+      <div class="photo-sub-title">아이들의 작품 사진</div>
       <div class="children-row">
         <!-- 소은 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c1); background: #FFF0F0;">
-            <!-- <img src="사진경로/소은_1회.jpg" alt="김소은"> -->
-            <span>🧡</span>
-            <span class="add-hint">사진 추가</span>
+          <div class="child-photo" style="border-color: var(--c1);" data-preview="cropped/소은_01.png">
+            <div class="child-photo-inner">
+              <img src="cropped/소은_01_thumb.png" alt="김소은">
+            </div>
           </div>
           <div class="child-name-label">김소은</div>
         </div>
         <!-- 이서 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c2); background: #F0F5FF;">
-            <!-- <img src="사진경로/이서_1회.jpg" alt="한이서"> -->
-            <span>💙</span>
-            <span class="add-hint">사진 추가</span>
+          <div class="child-photo" style="border-color: var(--c2);" data-preview="cropped/이서_01.png">
+            <div class="child-photo-inner">
+              <img src="cropped/이서_01_thumb.png" alt="한이서">
+            </div>
           </div>
           <div class="child-name-label">한이서</div>
         </div>
         <!-- 이준 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c3); background: #F0FFF5;">
-            <!-- <img src="사진경로/이준_1회.jpg" alt="한이준"> -->
-            <span>💚</span>
-            <span class="add-hint">사진 추가</span>
+          <div class="child-photo" style="border-color: var(--c3);" data-preview="cropped/이준_01.png">
+            <div class="child-photo-inner">
+              <img src="cropped/이준_01_thumb.png" alt="한이준">
+            </div>
           </div>
           <div class="child-name-label">한이준</div>
         </div>
         <!-- 봄 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c4); background: #FFFDF0;">
-            <!-- <img src="사진경로/봄_1회.jpg" alt="신봄"> -->
-            <span>💛</span>
-            <span class="add-hint">사진 추가</span>
+          <div class="child-photo" style="border-color: var(--c4);" data-preview="cropped/봄_01.png">
+            <div class="child-photo-inner">
+              <img src="cropped/봄_01_thumb.png" alt="신봄">
+            </div>
           </div>
           <div class="child-name-label">신봄</div>
         </div>
         <!-- 규태 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c5); background: #F8F0FF;">
-            <!-- <img src="사진경로/규태_1회.jpg" alt="박규태"> -->
-            <span>💜</span>
-            <span class="add-hint">사진 추가</span>
+          <div class="child-photo" style="border-color: var(--c5);" data-preview="cropped/규태_01.png">
+            <div class="child-photo-inner">
+              <img src="cropped/규태_01_thumb.png" alt="박규태">
+            </div>
           </div>
           <div class="child-name-label">박규태</div>
         </div>
-        <!-- 규리 -->
-        <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c6); background: #FFF0F8;">
-            <!-- <img src="사진경로/규리_1회.jpg" alt="박규리"> -->
-            <span>🩷</span>
-            <span class="add-hint">사진 추가</span>
-          </div>
-          <div class="child-name-label">박규리</div>
-        </div>
       </div>
 
-      <div class="photo-sub-title" style="margin-top: 18px;">📷 &nbsp;전체 · 일반 사진</div>
+      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
         <div class="group-photo" style="border-color: var(--line2);">
-          <!-- <img src="사진경로/전체_1회_1.jpg" alt="전체사진"> -->
-          <span>🌟</span>
+          <img src="cropped/활동_01_1.jpg" alt="1회차 수업 풍경 1">
         </div>
         <div class="group-photo" style="border-color: var(--line2);">
-          <!-- <img src="사진경로/전체_1회_2.jpg" alt="작업사진"> -->
-          <span>🖌️</span>
-        </div>
-        <div class="group-photo" style="border-color: var(--line2);">
-          <!-- <img src="사진경로/전체_1회_3.jpg" alt="결과물"> -->
-          <span>🎨</span>
+          <img src="cropped/활동_01_2.jpg" alt="1회차 수업 풍경 2">
         </div>
       </div>
     </div>
@@ -905,15 +1080,10 @@
 
 
   <!-- ════════ 2회차 · 5월 14일 ════════ -->
-  <div class="session-card">
-    <div class="session-top" style="background: linear-gradient(120deg, #E8F8EE, #E8F4FF);">
-      <div class="session-num-badge" style="background: linear-gradient(135deg, #A6E0C2, #74C59A);">
-        <span class="n-label">NO.</span>
-        <span class="n-num">02</span>
-      </div>
+  <div class="session-card" id="session-2">
+    <div class="session-top">
       <div class="session-top-info">
         <h3>2026년 5월 14일 목요일</h3>
-        <p>🌸 봄 · 평면 조형 &amp; 콜라주 시리즈 두 번째</p>
       </div>
       <div class="session-participants">
         <span class="participant-chip">김소은<span class="age">6세</span></span>
@@ -921,124 +1091,106 @@
         <span class="participant-chip">한이준<span class="age">6세</span></span>
         <span class="participant-chip">신봄<span class="age">7세</span></span>
         <span class="participant-chip">박규태<span class="age">6세</span></span>
-        <span class="participant-chip">박규리<span class="age">5세</span></span>
       </div>
     </div>
     <div class="session-divider"></div>
 
     <div class="info-grid">
-      <div class="info-box compact book-box">
-        <div class="info-box-label" style="color: var(--blue);">📖 &nbsp;오늘의 책</div>
-        <div class="book-row tight">
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 책과 준비물</div>
+        <div class="bm-row">
           <div class="book-slot">
-            <img src="https://contents.kyobobook.co.kr/sih/fit-in/200x0/pdt/9788972590637.jpg" alt="무지개 물고기" style="width:100%;height:100%;object-fit:cover;border-radius:4px 8px 8px 4px;">
+            <img src="https://contents.kyobobook.co.kr/sih/fit-in/200x0/pdt/9788972590637.jpg" alt="무지개 물고기">
           </div>
-          <div class="book-details">
-            <div class="b-title">무지개 물고기</div>
-            <div class="b-author">마르쿠스 피스터</div>
-          </div>
+          <div class="bm-info"><span class="b-title">무지개 물고기</span> · <span class="b-author">마르쿠스 피스터</span><span class="bm-sep">/</span>고체물감, 스폰지, 붓, 켄트지</div>
         </div>
       </div>
 
-      <!-- 재료와 준비과정 -->
-      <div class="info-box compact">
-        <div class="info-box-label" style="color: var(--peach);">🧰 &nbsp;재료</div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-            <!-- <img src="사진경로/재료_1.jpg" alt="재료사진"> -->
-            <span style="font-size: 20px;">🧴</span>
-            <span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span>
-          </div>
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-            <!-- <img src="사진경로/재료_2.jpg" alt="재료사진"> -->
-            <span style="font-size: 20px;">✂️</span>
-            <span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span>
-          </div>
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-            <!-- <img src="사진경로/재료_3.jpg" alt="재료사진"> -->
-            <span style="font-size: 20px;">🖌️</span>
-            <span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span>
-          </div>
-        </div>
-        <div class="info-text" style="font-size: 12.5px; color: var(--text-mid); margin-top: 8px; line-height: 1.7;">고체물감, 스폰지, 붓, 켄트지</div>
-      </div>
-
-      <div class="info-box full tall">
-        <div class="info-box-label" style="color: var(--green);">📝 &nbsp;수업 내용</div>
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 이야기</div>
         <div class="info-text">
           <!-- 재료, 수업 흐름, 특이사항, 오늘의 한마디 등을 자유롭게 기록해 주세요 -->
-약속대로 무지개를 그리는 날. 우선 고체물감에 익숙해지기 위해 색색깔의 스폰지에 고체물감을 묻혀 통통 찍어 보았어요. 무지개만 그리는 섭섭해서, 무지개 물고기를 그려보기로 했어요. 한 명이 한 가지 색의 물감을 골라 물고기 모양 안에 비늘 무늬를 그려요. 이어서 차례로 친구가 그린 무늬에 이어 자기가 고른 색깔로 비늘을 그려 넣으니, 멀리서 보면 비늘 하나하나가 꼭 무지개처럼 보여요. 이 무지개는 '빨주노초파남보'가 아니라 '파빨주보하'네요!
+약속대로 무지개를 그리는 날. 우선 고체물감에 익숙해지기 위해 색색깔의 스폰지에 고체물감을 묻혀 통통 찍어 보았어요. 무지개만 그리기가 왠지 섭섭해서, 무지개 물고기를 그려보기로 했어요. 한 명이 한 가지 색의 물감을 골라 물고기 모양 안에 비늘 무늬를 그려요. 이어서 차례로 친구가 그린 무늬에 이어 자기가 고른 색깔로 비늘을 그려 넣으니, 멀리서 보면 비늘 하나하나가 꼭 무지개처럼 보여요. 이 무지개는 '빨주노초파남보'가 아니라 '파빨주보하'네요!
         </div>
       </div>
     </div>
 
     <div class="session-divider" style="margin-top: 22px;"></div>
     <div class="photo-section">
-      <div class="photo-sub-title">📸 &nbsp;아이별 작업 사진</div>
+      <div class="photo-sub-title">아이들의 작품 사진</div>
       <div class="children-row">
+        <!-- 소은 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c1); background: #FFF0F0;">
-            <!-- <img src="사진경로/소은_2회.jpg" alt="김소은"> -->
-            <span>🧡</span>
-            <span class="add-hint">사진 추가</span>
+          <div class="child-photo" style="border-color: var(--c1);" data-preview="cropped/소은_02.png">
+            <div class="child-photo-inner">
+              <img src="cropped/소은_02_thumb.png" alt="김소은">
+            </div>
           </div>
           <div class="child-name-label">김소은</div>
         </div>
+        <!-- 이서 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c2); background: #F0F5FF;">
-            <!-- <img src="사진경로/이서_2회.jpg" alt="한이서"> -->
-            <span>💙</span>
-            <span class="add-hint">사진 추가</span>
+          <div class="child-photo" style="border-color: var(--c2);" data-preview="cropped/이서_02.png">
+            <div class="child-photo-inner">
+              <img src="cropped/이서_02_thumb.png" alt="한이서">
+            </div>
           </div>
           <div class="child-name-label">한이서</div>
         </div>
+        <!-- 이준 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c3); background: #F0FFF5;">
-            <!-- <img src="사진경로/이준_2회.jpg" alt="한이준"> -->
-            <span>💚</span>
-            <span class="add-hint">사진 추가</span>
+          <div class="child-photo" style="border-color: var(--c3);" data-preview="cropped/이준_02.png">
+            <div class="child-photo-inner">
+              <img src="cropped/이준_02_thumb.png" alt="한이준">
+            </div>
           </div>
           <div class="child-name-label">한이준</div>
         </div>
+        <!-- 봄 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c4); background: #FFFDF0;">
-            <!-- <img src="사진경로/봄_2회.jpg" alt="신봄"> -->
-            <span>💛</span>
-            <span class="add-hint">사진 추가</span>
+          <div class="child-photo" style="border-color: var(--c4);" data-preview="cropped/봄_02.png">
+            <div class="child-photo-inner">
+              <img src="cropped/봄_02_thumb.png" alt="신봄">
+            </div>
           </div>
           <div class="child-name-label">신봄</div>
         </div>
+        <!-- 규태 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c5); background: #F8F0FF;">
-            <!-- <img src="사진경로/규태_2회.jpg" alt="박규태"> -->
-            <span>💜</span>
-            <span class="add-hint">사진 추가</span>
+          <div class="child-photo" style="border-color: var(--c5);" data-preview="cropped/규태_02.png">
+            <div class="child-photo-inner">
+              <img src="cropped/규태_02_thumb.png" alt="박규태">
+            </div>
           </div>
           <div class="child-name-label">박규태</div>
         </div>
+        <!-- 함께 1 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c6); background: #FFF0F8;">
-            <!-- <img src="사진경로/규리_2회.jpg" alt="박규리"> -->
-            <span>🩷</span>
-            <span class="add-hint">사진 추가</span>
+          <div class="child-photo" style="border-color: var(--line2);" data-preview="cropped/함께_02_1.png">
+            <div class="child-photo-inner">
+              <img src="cropped/함께_02_1_thumb.png" alt="함께 1">
+            </div>
           </div>
-          <div class="child-name-label">박규리</div>
+          <div class="child-name-label">함께 - 1</div>
+        </div>
+        <!-- 함께 2 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--line2);" data-preview="cropped/함께_02_2.png">
+            <div class="child-photo-inner">
+              <img src="cropped/함께_02_2_thumb.png" alt="함께 2">
+            </div>
+          </div>
+          <div class="child-name-label">함께 - 2</div>
         </div>
       </div>
 
-      <div class="photo-sub-title" style="margin-top: 18px;">📷 &nbsp;전체 · 일반 사진</div>
+      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
         <div class="group-photo">
-          <!-- <img src="사진경로/전체_2회_1.jpg" alt="전체사진"> -->
-          <span>🌟</span>
+          <img src="cropped/활동_02_1.jpg" alt="2회차 수업 풍경 1">
         </div>
         <div class="group-photo">
-          <!-- <img src="사진경로/전체_2회_2.jpg" alt="작업사진"> -->
-          <span>✂️</span>
-        </div>
-        <div class="group-photo">
-          <!-- <img src="사진경로/전체_2회_3.jpg" alt="결과물"> -->
-          <span>🎨</span>
+          <img src="cropped/활동_02_2.jpg" alt="2회차 수업 풍경 2">
         </div>
       </div>
     </div>
@@ -1046,15 +1198,10 @@
 
 
   <!-- ════════ 3회차 · 5월 21일 ════════ -->
-  <div class="session-card">
-    <div class="session-top" style="background: linear-gradient(120deg, #FFF8E0, #FFF0E8);">
-      <div class="session-num-badge" style="background: linear-gradient(135deg, #FFE070, #FFD060);">
-        <span class="n-label">NO.</span>
-        <span class="n-num">03</span>
-      </div>
+  <div class="session-card" id="session-3">
+    <div class="session-top">
       <div class="session-top-info">
         <h3>2026년 5월 21일 목요일</h3>
-        <p>🌸 봄 · 평면 조형 &amp; 콜라주 시리즈 세 번째</p>
       </div>
       <div class="session-participants">
         <span class="participant-chip">김소은<span class="age">6세</span></span>
@@ -1062,82 +1209,106 @@
         <span class="participant-chip">한이준<span class="age">6세</span></span>
         <span class="participant-chip">신봄<span class="age">7세</span></span>
         <span class="participant-chip">박규태<span class="age">6세</span></span>
-        <span class="participant-chip">박규리<span class="age">5세</span></span>
       </div>
     </div>
     <div class="session-divider"></div>
     <div class="info-grid">
-      <div class="info-box compact book-box">
-        <div class="info-box-label" style="color: var(--blue);">📖 &nbsp;오늘의 책</div>
-        <div class="book-row tight">
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 책과 준비물</div>
+        <div class="bm-row">
           <div class="book-slot">
-            <img src="https://contents.kyobobook.co.kr/sih/fit-in/200x0/pdt/9788901240886.jpg" alt="모두가 빛나요" style="width:100%;height:100%;object-fit:cover;border-radius:4px 8px 8px 4px;">
+            <img src="https://contents.kyobobook.co.kr/sih/fit-in/200x0/pdt/9788901240886.jpg" alt="모두가 빛나요">
           </div>
-          <div class="book-details">
-            <div class="b-title">모두가 빛나요</div>
-            <div class="b-author">에런 베커</div>
-          </div>
+          <div class="bm-info"><span class="b-title">모두가 빛나요</span> · <span class="b-author">에런 베커</span><span class="bm-sep">/</span>파스텔, 팬파스텔, 오일파스텔, 켄트지, 투광기</div>
         </div>
       </div>
-      <div class="info-box compact">
-        <div class="info-box-label" style="color: var(--peach);">🧰 &nbsp;재료</div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-            <!-- <img src="사진경로/재료3_1.jpg" alt="재료사진"> -->
-            <span style="font-size: 20px;">🧴</span>
-            <span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span>
-          </div>
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-            <!-- <img src="사진경로/재료3_2.jpg" alt="재료사진"> -->
-            <span style="font-size: 20px;">✂️</span>
-            <span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span>
-          </div>
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-            <!-- <img src="사진경로/재료3_3.jpg" alt="재료사진"> -->
-            <span style="font-size: 20px;">🖌️</span>
-            <span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span>
-          </div>
-        </div>
-        <div class="info-text" style="font-size: 12.5px; color: var(--text-mid); margin-top: 8px; line-height: 1.7;">파스텔, 팬파스텔, 오일파스텔, 켄트지, 투광기</div>
-      </div>
-      <div class="info-box full tall">
-        <div class="info-box-label" style="color: var(--green);">📝 &nbsp;수업 내용</div>
-        <div class="info-text">반투명한 재질의 색깔 창을 불에 비추어보면 색색깔의 빛이 되어요. 제일 이끌리는 색은 어떤 색인가요? 우리가 사는 아파트의 창문들도 이렇게 알록달록하면 얼마나 멋질까요? 우리가 직접 색색의 창문을 그려볼까요? 여기서, 두 가지 색을 섞어 칠해야 한다는 규칙이 있었어요. 규칙이 마음에 들지 않는 친구들은 구름에 색을 섞어 그리기도 하고, 그냥 제 마음 가는대로 한 가지 색으로 표현하기도 했답니다.
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 이야기</div>
+        <div class="info-text">반투명한 재질의 색깔 창을 불에 비추어보면 색색깔의 빛이 되어요. 제일 이끌리는 색은 어떤 색인가요? 우리가 사는 아파트의 창문들도 이렇게 알록달록하면 얼마나 멋질까요? 우리가 직접 색색의 창문을 그려볼까요? 여기서, 두 가지 색을 섞어 칠해야 한다는 규칙이 있었어요. 규칙이 마음에 들지 않는 친구들은 구름에 색을 섞어 그리기도 하고, 또 무지개를 그리기도 하고, 그냥 마음 가는대로 한 가지 색으로 표현하기도 했답니다.
       </div>
     </div>
     </div>
 
     <div class="session-divider" style="margin-top: 22px;"></div>
     <div class="photo-section">
-      <div class="photo-sub-title">📸 &nbsp;아이별 작업 사진</div>
+      <div class="photo-sub-title">아이들의 작품 사진</div>
       <div class="children-row">
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1); background: #FFF0F0;"><!-- <img src="사진경로/소은_3회.jpg" alt="김소은"> --><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2); background: #F0F5FF;"><!-- <img src="사진경로/이서_3회.jpg" alt="한이서"> --><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3); background: #F0FFF5;"><!-- <img src="사진경로/이준_3회.jpg" alt="한이준"> --><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4); background: #FFFDF0;"><!-- <img src="사진경로/봄_3회.jpg" alt="신봄"> --><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5); background: #F8F0FF;"><!-- <img src="사진경로/규태_3회.jpg" alt="박규태"> --><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6); background: #FFF0F8;"><!-- <img src="사진경로/규리_3회.jpg" alt="박규리"> --><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
+        <!-- 소은 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c1);" data-preview="cropped/소은_03.png">
+            <div class="child-photo-inner">
+              <img src="cropped/소은_03_thumb.png" alt="김소은">
+            </div>
+          </div>
+          <div class="child-name-label">김소은</div>
+        </div>
+        <!-- 이서 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c2);" data-preview="cropped/이서_03.png">
+            <div class="child-photo-inner">
+              <img src="cropped/이서_03_thumb.png" alt="한이서">
+            </div>
+          </div>
+          <div class="child-name-label">한이서</div>
+        </div>
+        <!-- 이준 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c3);" data-preview="cropped/이준_03.png">
+            <div class="child-photo-inner">
+              <img src="cropped/이준_03_thumb.png" alt="한이준">
+            </div>
+          </div>
+          <div class="child-name-label">한이준</div>
+        </div>
+        <!-- 봄 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c4);" data-preview="cropped/봄_03.png">
+            <div class="child-photo-inner">
+              <img src="cropped/봄_03_thumb.png" alt="신봄">
+            </div>
+          </div>
+          <div class="child-name-label">신봄</div>
+        </div>
+        <!-- 규태 1 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c5);" data-preview="cropped/규태_03_1.png">
+            <div class="child-photo-inner">
+              <img src="cropped/규태_03_1_thumb.png" alt="박규태 1">
+            </div>
+          </div>
+          <div class="child-name-label">박규태 - 1</div>
+        </div>
+        <!-- 규태 2 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c5);" data-preview="cropped/규태_03_2.png">
+            <div class="child-photo-inner">
+              <img src="cropped/규태_03_2_thumb.png" alt="박규태 2">
+            </div>
+          </div>
+          <div class="child-name-label">박규태 - 2</div>
+        </div>
       </div>
-      <div class="photo-sub-title" style="margin-top: 18px;">📷 &nbsp;전체 · 일반 사진</div>
+      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo"><span>🌟</span></div>
-        <div class="group-photo"><span>🖌️</span></div>
-        <div class="group-photo"><span>🎨</span></div>
+        <div class="group-photo">
+          <img src="cropped/활동_03_1.jpg" alt="3회차 수업 풍경 1">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/활동_03_2.jpg" alt="3회차 수업 풍경 2">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/활동_03_6.jpg" alt="3회차 수업 풍경 6">
+        </div>
       </div>
     </div>
   </div><!-- /session-card 03 -->
 
 
   <!-- ════════ 4회차 · 6월 4일 ════════ -->
-  <div class="session-card">
-    <div class="session-top" style="background: linear-gradient(120deg, #E8F0FF, #E8EEFF);">
-      <div class="session-num-badge" style="background: linear-gradient(135deg, #85C8F0, #7BBDE8);">
-        <span class="n-label">NO.</span>
-        <span class="n-num">04</span>
-      </div>
+  <div class="session-card" id="session-4">
+    <div class="session-top">
       <div class="session-top-info">
         <h3>2026년 6월 4일 목요일</h3>
-        <p>☀️ 여름 · 공감각 &amp; 도예 시리즈 첫 번째</p>
       </div>
       <div class="session-participants">
         <span class="participant-chip">김소은<span class="age">6세</span></span>
@@ -1150,70 +1321,136 @@
     </div>
     <div class="session-divider"></div>
     <div class="info-grid">
-      <div class="info-box compact book-box">
-        <div class="info-box-label" style="color: var(--blue);">📖 &nbsp;오늘의 책</div>
-        <div class="book-row tight">
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 책과 준비물</div>
+        <div class="bm-row">
           <div class="book-slot">
-            <img src="https://contents.kyobobook.co.kr/sih/fit-in/200x0/pdt/9788950928391.jpg" alt="화가 아이" style="width:100%;height:100%;object-fit:cover;border-radius:4px 8px 8px 4px;">
+            <img src="https://contents.kyobobook.co.kr/sih/fit-in/200x0/pdt/9788950928391.jpg" alt="화가 아이">
           </div>
-          <div class="book-details">
-            <div class="b-title">화가 아이</div>
-            <div class="b-author">강성은 (이주헌의 상상 미술관 전집 중)</div>
-          </div>
+          <div class="bm-info"><span class="b-title">화가 아이</span> · <span class="b-author">강성은 (이주헌의 상상 미술관 전집 중)</span><span class="bm-sep">/</span>나뭇가지, 콩테, 물감 푼 물, 붓, 캔버스천</div>
         </div>
       </div>
-      <div class="info-box compact">
-        <div class="info-box-label" style="color: var(--peach);">🧰 &nbsp;재료</div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;"><span style="font-size: 20px;">🧴</span><span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span></div>
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;"><span style="font-size: 20px;">✂️</span><span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span></div>
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;"><span style="font-size: 20px;">🖌️</span><span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span></div>
-        </div>
-        <div class="info-text" style="font-size: 12.5px; color: var(--text-mid); margin-top: 8px; line-height: 1.7;">나뭇가지, 콩테, 물감 푼 물, 붓, 캔버스천</div>
-      </div>
-      <div class="info-box full tall">
-        <div class="info-box-label" style="color: var(--green);">📝 &nbsp;수업 내용</div>
-        <div class="info-text">가까운 소나무 군락지에서 나뭇가지를 주웠어요. 붓으로 삼으려고요. 가운데에 긴 천을 깔아 놓고, 앞에 있는 친구의 모습을 관찰해서 그려 주었어요. 나뭇가지 그대로 물감을 찍어 그리기도 하고, 가지 끝에 콩테나 붓을 테이프로 감아서 쓰기도 했어요. 머리 모양, 옷의 무늬, 색깔 등등. 그러다가 결국에는 친구들, 선생님의 모습을 그리고 싶은 만큼 그렸답니다.
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 이야기</div>
+        <div class="info-text">가까운 소나무 숲에서 나뭇가지를 주웠어요. 붓으로 삼으려고요. 가운데에 긴 천을 깔아 놓고, 앞에 있는 친구의 모습을 관찰해서 그려 주었어요. 나뭇가지 그대로 물감을 찍어 그리기도 하고, 가지 끝에 콩테나 붓을 테이프로 감아서 쓰기도 했어요. 머리 모양, 옷의 무늬, 색깔 등등. 그러다가 결국에는 친구들, 선생님의 모습을 그리고 싶은 만큼 그렸답니다.
       </div>
     </div>
     </div>
 
     <div class="session-divider" style="margin-top: 22px;"></div>
     <div class="photo-section">
-      <div class="photo-sub-title">📸 &nbsp;아이별 작업 사진</div>
+      <div class="photo-sub-title">아이들의 작품 사진</div>
       <div class="children-row">
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1); background: #FFF0F0;"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2); background: #F0F5FF;"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3); background: #F0FFF5;"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4); background: #FFFDF0;"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5); background: #F8F0FF;"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6); background: #FFF0F8;"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
+        <!-- 소은 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c1);" data-preview="cropped/함께_소은_04.jpg">
+            <div class="child-photo-inner">
+              <img src="cropped/함께_소은_04_thumb.png" alt="김소은">
+            </div>
+          </div>
+          <div class="child-name-label">김소은</div>
+        </div>
+        <!-- 이서 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c2);" data-preview="cropped/함께_이서_04.jpg">
+            <div class="child-photo-inner">
+              <img src="cropped/함께_이서_04_thumb.png" alt="한이서">
+            </div>
+          </div>
+          <div class="child-name-label">한이서</div>
+        </div>
+        <!-- 이준 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c3);" data-preview="cropped/함께_이준_04.jpg">
+            <div class="child-photo-inner">
+              <img src="cropped/함께_이준_04_thumb.png" alt="한이준">
+            </div>
+          </div>
+          <div class="child-name-label">한이준</div>
+        </div>
+        <!-- 봄 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c4);" data-preview="cropped/함께_봄_04.jpg">
+            <div class="child-photo-inner">
+              <img src="cropped/함께_봄_04_thumb.png" alt="신봄">
+            </div>
+          </div>
+          <div class="child-name-label">신봄</div>
+        </div>
+        <!-- 규태 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c5);" data-preview="cropped/함께_규태_04.jpg">
+            <div class="child-photo-inner">
+              <img src="cropped/함께_규태_04_thumb.png" alt="박규태">
+            </div>
+          </div>
+          <div class="child-name-label">박규태</div>
+        </div>
+        <!-- 규리 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c6);" data-preview="cropped/함께_규리_04.jpg">
+            <div class="child-photo-inner">
+              <img src="cropped/함께_규리_04_thumb.png" alt="박규리">
+            </div>
+          </div>
+          <div class="child-name-label">박규리</div>
+        </div>
+        <!-- 함께 1 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--line2);" data-preview="cropped/함께_04.jpg">
+            <div class="child-photo-inner">
+              <img src="cropped/함께_04_thumb.png" alt="함께 1">
+            </div>
+          </div>
+          <div class="child-name-label">함께 - 1</div>
+        </div>
+        <!-- 함께 2 -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--line2);" data-preview="cropped/함께_04_7.jpg">
+            <div class="child-photo-inner">
+              <img src="cropped/함께_04_7_thumb.png" alt="함께 2">
+            </div>
+          </div>
+          <div class="child-name-label">함께 - 2</div>
+        </div>
       </div>
-      <div class="photo-sub-title" style="margin-top: 18px;">📷 &nbsp;전체 · 일반 사진</div>
+
+      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo"><span>🌟</span></div>
-        <div class="group-photo"><span>🖌️</span></div>
-        <div class="group-photo"><span>🎨</span></div>
+        <div class="group-photo">
+          <img src="cropped/활동_04_1.jpg" alt="4회차 수업 풍경 1">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/활동_04_2.jpg" alt="4회차 수업 풍경 2">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/활동_04_3.jpg" alt="4회차 수업 풍경 3">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/활동_04_4.jpg" alt="4회차 수업 풍경 4">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/활동_04_5.jpg" alt="4회차 수업 풍경 5">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/활동_04_6.jpg" alt="4회차 수업 풍경 6">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/활동_04_7.jpg" alt="4회차 수업 풍경 7">
+        </div>
       </div>
     </div>
   </div><!-- /session-card 04 -->
 
 
   <!-- ════════ 5회차 · 6월 5일 ════════ -->
-  <div class="session-card">
-    <div class="session-top" style="background: linear-gradient(120deg, #F0E8FF, #F8E8FF);">
-      <div class="session-num-badge" style="background: linear-gradient(135deg, #C8A8E8, #B89ADA);">
-        <span class="n-label">NO.</span>
-        <span class="n-num">05</span>
-      </div>
+  <div class="session-card" id="session-5">
+    <div class="session-top">
       <div class="session-top-info">
         <h3>2026년 6월 5일 금요일</h3>
-        <p>☀️ 여름 · 공감각 &amp; 도예 시리즈 두 번째</p>
       </div>
       <div class="session-participants">
         <span class="participant-chip">김소은<span class="age">6세</span></span>
-        <span class="participant-chip">한이서<span class="age">6세</span></span>
-        <span class="participant-chip">한이준<span class="age">6세</span></span>
         <span class="participant-chip">신봄<span class="age">7세</span></span>
         <span class="participant-chip">박규태<span class="age">6세</span></span>
         <span class="participant-chip">박규리<span class="age">5세</span></span>
@@ -1221,29 +1458,28 @@
     </div>
     <div class="session-divider"></div>
     <div class="info-grid">
-      <div class="info-box compact book-box">
-        <div class="info-box-label" style="color: var(--blue);">📖 &nbsp;오늘의 책</div>
-        <div class="book-row tight">
-          <div class="book-slot">
-            <img src="움악.png" alt="음악" style="width:100%;height:100%;object-fit:cover;border-radius:4px 8px 8px 4px;">
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 음악과 준비물</div>
+        <div class="bm-row">
+          <div class="music-slot-container">
+            <div class="music-album-card" title="Galop Infernal">
+              <img src="cropped/album_cancan.png" alt="Galop Infernal">
+            </div>
+            <div class="music-album-card" title="옹헤야">
+              <img src="cropped/album_ongheya.png" alt="옹헤야">
+            </div>
+            <div class="music-album-card" title="Hawaiian Roller Coaster Ride">
+              <img src="cropped/album_hawaiian.png" alt="Hawaiian Roller Coaster Ride">
+            </div>
           </div>
-          <div class="book-details">
-            <div class="b-title">🎵 Galop Infernal · 옹헤야 · Hawaiian Roller Coaster Ride</div>
-            <div class="b-author">책 대신 음악으로</div>
+          <div class="bm-info">
+            <span class="b-title">Galop Infernal · 옹헤야 · Hawaiian Roller Coaster Ride</span>
+            <span class="bm-sep">/</span>나뭇가지, 물감 푼 물, 캔버스천
           </div>
         </div>
       </div>
-      <div class="info-box compact">
-        <div class="info-box-label" style="color: var(--peach);">🧰 &nbsp;재료</div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;"><span style="font-size: 20px;">🧴</span><span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span></div>
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;"><span style="font-size: 20px;">✂️</span><span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span></div>
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;"><span style="font-size: 20px;">🖌️</span><span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span></div>
-        </div>
-        <div class="info-text" style="font-size: 12.5px; color: var(--text-mid); margin-top: 8px; line-height: 1.7;">나뭇가지, 물감 푼 물, 캔버스천</div>
-      </div>
-      <div class="info-box full tall">
-        <div class="info-box-label" style="color: var(--green);">📝 &nbsp;수업 내용</div>
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 이야기</div>
         <div class="info-text">오늘은 음악에 맞춰 즉흥 드로잉! 어제 주운 나뭇가지를 한 번 더 사용해요. 신명나는 다양한 장르의 음악을 들으면서 느끼는 대로 천에 표현해보는 거예요. 선생님이 먼저 망가지는 시범을 보였음에도(^^) 음악이 나오자마자 까르르 웃으며 막춤을 추는 친구도 있고, 선뜻 춤을 추지 않는 친구들도 있었어요. 그러다 이제는 물감 물을 천에 붓고 우리의 발자국을 찍어보기도 했지요. 역시나 음악에 맞춘 발구르기의 흔적이었지요. 마지막에는 모두가 물감을 밟으며 기차놀이하듯 움직여보았답니다.
       </div>
     </div>
@@ -1251,35 +1487,36 @@
 
     <div class="session-divider" style="margin-top: 22px;"></div>
     <div class="photo-section">
-      <div class="photo-sub-title">📸 &nbsp;아이별 작업 사진</div>
-      <div class="children-row">
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1); background: #FFF0F0;"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2); background: #F0F5FF;"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3); background: #F0FFF5;"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4); background: #FFFDF0;"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5); background: #F8F0FF;"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6); background: #FFF0F8;"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
-      </div>
-      <div class="photo-sub-title" style="margin-top: 18px;">📷 &nbsp;전체 · 일반 사진</div>
+      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo"><span>🌟</span></div>
-        <div class="group-photo"><span>🖌️</span></div>
-        <div class="group-photo"><span>🎨</span></div>
+        <div class="group-photo">
+          <img src="cropped/함께_05_1.jpg" alt="5회차 수업 풍경 1">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/함께_05_2_wide.jpg" alt="5회차 수업 풍경 2">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/함께_05_3_wide.jpg" alt="5회차 수업 풍경 3">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/함께_05_4_wide.jpg" alt="5회차 수업 풍경 4">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/함께_05_5_wide.jpg" alt="5회차 수업 풍경 5">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/함께_05_6_rot90ccw.jpg" alt="5회차 수업 풍경 6">
+        </div>
       </div>
     </div>
   </div><!-- /session-card 05 -->
 
 
   <!-- ════════ 6회차 · 6월 11일 ════════ -->
-  <div class="session-card">
-    <div class="session-top" style="background: linear-gradient(120deg, #E0FFF0, #E8FFF8);">
-      <div class="session-num-badge" style="background: linear-gradient(135deg, #60D8A0, #48C88A);">
-        <span class="n-label">NO.</span>
-        <span class="n-num">06</span>
-      </div>
+  <div class="session-card" id="session-6">
+    <div class="session-top">
       <div class="session-top-info">
         <h3>2026년 6월 11일 목요일</h3>
-        <p>☀️ 여름 · 공감각 &amp; 도예 시리즈 세 번째</p>
       </div>
       <div class="session-participants">
         <span class="participant-chip">김소은<span class="age">6세</span></span>
@@ -1292,65 +1529,62 @@
     </div>
     <div class="session-divider"></div>
     <div class="info-grid">
-      <div class="info-box compact book-box">
-        <div class="info-box-label" style="color: var(--blue);">📖 &nbsp;오늘의 책</div>
-        <div class="book-row tight">
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 책과 준비물</div>
+        <div class="bm-row">
           <div class="book-slot">
-            <img src="https://contents.kyobobook.co.kr/sih/fit-in/200x0/pdt/9788950928285.jpg" alt="하자 하자 놀자" style="width:100%;height:100%;object-fit:cover;border-radius:4px 8px 8px 4px;">
+            <img src="https://contents.kyobobook.co.kr/sih/fit-in/200x0/pdt/9788950928285.jpg" alt="하자 하자 놀자">
           </div>
-          <div class="book-details">
-            <div class="b-title">하자 하자, 놀자!</div>
-            <div class="b-author">김이진 (이주헌의 상상 미술관 전집 중)</div>
-          </div>
+          <div class="bm-info"><span class="b-title">하자 하자, 놀자!</span> · <span class="b-author">김이진 (이주헌의 상상 미술관 전집 중)</span><span class="bm-sep">/</span>각자 가져온 그림·낙서·책, 가위, 글루, 고체풀, 오일파스텔, 켄트지</div>
         </div>
       </div>
-      <div class="info-box compact">
-        <div class="info-box-label" style="color: var(--peach);">🧰 &nbsp;재료</div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;"><span style="font-size: 20px;">🧴</span><span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span></div>
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;"><span style="font-size: 20px;">✂️</span><span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span></div>
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;"><span style="font-size: 20px;">🖌️</span><span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span></div>
-        </div>
-        <div class="info-text" style="font-size: 12.5px; color: var(--text-mid); margin-top: 8px; line-height: 1.7;">각자 가져온 그림·낙서·책, 가위, 글루, 고체풀, 오일파스텔, 켄트지</div>
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 이야기</div>
+        <div class="info-text">집에 쌓이는 낙서들, 새로운 콜라주 작품으로 환골탈태하기! 아이들의 익숙하고 서슴없는 가위질에 깜짝 놀랐어요. 원하는 모양을 요리조리 오려놓고, 그 다음 큰 종이에 붙였어요. 이때 우리의 약속, 이야기가 있는 작품을 만들기! 완성한 다음 아이들이 잘라낸 그림들 사이에 어떤 이야기가 있는지 들려주는데, 역시 똥이 좋을 나이에요! 너무 웃기고 재미있어서 까르르 까르르, 분위기 좋았답니다.</div>
       </div>
-      <div class="info-box full tall">
-        <div class="info-box-label" style="color: var(--green);">📝 &nbsp;수업 내용</div>
-        <div class="info-text">집에 쌓이는 낙서들, 새로운 콜라주 작품으로 환골탈태하기! 아이들의 익숙하고 서슴없는 가위질에 깜짝 놀랐어요. 원하는 모양을 요리조리 오려놓고, 그 다음 큰 종이에 붙였어요. 이때 우리의 약속, 이야기가 있는 작품을 만들기! 완성한 다음 아이들이 잘라낸 그림들 사이에 어떤 이야기가 있는지 들려주는데, 너무 웃기고 재미있었나봐요. 까르르 까르르, 분위기 좋았답니다.</div>
-      </div>
-    </div>
     </div>
 
     <div class="session-divider" style="margin-top: 22px;"></div>
     <div class="photo-section">
-      <div class="photo-sub-title">📸 &nbsp;아이별 작업 사진</div>
+      <div class="photo-sub-title">아이들의 작품 사진</div>
       <div class="children-row">
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1); background: #FFF0F0;"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2); background: #F0F5FF;"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3); background: #F0FFF5;"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4); background: #FFFDF0;"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5); background: #F8F0FF;"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6); background: #FFF0F8;"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1);"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2);"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3);"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4);"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5);"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6);"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
       </div>
-      <div class="photo-sub-title" style="margin-top: 18px;">📷 &nbsp;전체 · 일반 사진</div>
+      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo"><span>🌟</span></div>
-        <div class="group-photo"><span>🖌️</span></div>
-        <div class="group-photo"><span>🎨</span></div>
+        <div class="group-photo">
+          <img src="cropped/활동_06_.jpg" alt="6회차 수업 풍경 1">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/활동_06_2.jpg" alt="6회차 수업 풍경 2">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/활동_06_3.jpg" alt="6회차 수업 풍경 3">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/활동_06_08.jpg" alt="6회차 수업 풍경 4">
+        </div>
+        <div class="group-photo">
+          <img src="cropped/활동_06_09.jpg" alt="6회차 수업 풍경 5">
+        </div>
+        <div class="group-photo group-video">
+          <video src="cropped/6회차.mp4" controls preload="metadata" playsinline></video>
+        </div>
       </div>
     </div>
   </div><!-- /session-card 06 -->
 
 
   <!-- ════════ 7회차 · 6월 18일 ════════ -->
-  <div class="session-card">
-    <div class="session-top" style="background: linear-gradient(120deg, #FFE8F0, #FFE8E8);">
-      <div class="session-num-badge" style="background: linear-gradient(135deg, #F8B0C8, #F0A0C0);">
-        <span class="n-label">NO.</span>
-        <span class="n-num">07</span>
-      </div>
+  <div class="session-card" id="session-7">
+    <div class="session-top">
       <div class="session-top-info">
         <h3>2026년 6월 18일 목요일</h3>
-        <p>☀️ 여름 · 공감각 &amp; 도예 시리즈 네 번째</p>
       </div>
       <div class="session-participants">
         <span class="participant-chip">김소은<span class="age">6세</span></span>
@@ -1363,46 +1597,34 @@
     </div>
     <div class="session-divider"></div>
     <div class="info-grid">
-      <div class="info-box compact book-box">
-        <div class="info-box-label" style="color: var(--blue);">📖 &nbsp;오늘의 책</div>
-        <div class="book-row tight">
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 책과 준비물</div>
+        <div class="bm-row">
           <div class="book-slot">
-            <img src="이야기 달리기 이미지.png" alt="이야기 달리기" style="width:100%;height:100%;object-fit:cover;object-position:35% center;border-radius:4px 8px 8px 4px;">
+            <img src="cropped/07_book.png" alt="이야기 달리기">
           </div>
-          <div class="book-details">
-            <div class="b-title">이야기 달리기</div>
-            <div class="b-author">릴레이그림책 프로젝트 참가자들 / 김아영 엮음</div>
-          </div>
+          <div class="bm-info"><span class="b-title">이야기 달리기</span> · <span class="b-author">릴레이그림책 프로젝트 참가자들 / 김아영 엮음</span><span class="bm-sep">/</span>오일파스텔, 고체물감 파레트, 붓, 켄트지</div>
         </div>
       </div>
-      <div class="info-box compact">
-        <div class="info-box-label" style="color: var(--peach);">🧰 &nbsp;재료</div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;"><span style="font-size: 20px;">🧴</span><span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span></div>
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;"><span style="font-size: 20px;">✂️</span><span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span></div>
-          <div style="aspect-ratio: 1; border: 2px dashed var(--line2); border-radius: 10px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden;"><span style="font-size: 20px;">🖌️</span><span style="font-size: 10px; color: var(--text-dim); margin-top: 4px;">사진 추가</span></div>
-        </div>
-        <div class="info-text" style="font-size: 12.5px; color: var(--text-mid); margin-top: 8px; line-height: 1.7;">오일파스텔, 고체물감 파레트, 붓, 켄트지</div>
-      </div>
-      <div class="info-box full tall">
-        <div class="info-box-label" style="color: var(--green);">📝 &nbsp;수업 내용</div>
-        <div class="info-text">아직 글을 읽고 쓰지는 못하지만, 그래도 그림책을 만들 수 있어요. 각자 한 문장씩 이야기를 지어서 릴레이 동화책을 만드는 것이죠! 앞 사람이 지은 내용을 존중하면서, 내 문장을 만드는 차례에는 얼마든지 자유롭게 상상을 펼칠 수 있어요. 오늘은 주인공이 코끼리예요. 작업실 천장에도 코끼리 그림이 있지요. 코끼리가 하늘을 날아, 예쁘게 꾸미고 친구의 생일파티에 가서 참치도 먹었고요, 울림통을 만들고도 싶었는데, 돌아오는 길에 사냥꾼을 만났대요. 마지막에 어떻게 되었을까요?^^
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 이야기</div>
+        <div class="info-text">아직 글을 읽고 쓰지는 못하지만, 그림책은 만들 수 있어요! 각자 한 문장씩 이야기를 지어서 릴레이 동화책을 만드는 거예요! 앞 사람이 지은 내용을 기억하고 존중하면서, 내 문장을 만드는 차례에는 얼마든지 자유롭게 상상을 펼칠 수 있어요. 오늘은 주인공이 코끼리예요. 작업실 천장에도 코끼리 그림이 있지요. 코끼리가 하늘을 날아, 예쁘게 꾸미고 친구의 생일파티에 가서 참치도 먹었고요, 울림통을 만들고도 싶었는데, 돌아오는 길에 사냥꾼을 만났대요. 마지막에 어떻게 되었을까요?^^
       </div>
     </div>
     </div>
 
     <div class="session-divider" style="margin-top: 22px;"></div>
     <div class="photo-section">
-      <div class="photo-sub-title">📸 &nbsp;아이별 작업 사진</div>
+      <div class="photo-sub-title">아이들의 작품 사진</div>
       <div class="children-row">
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1); background: #FFF0F0;"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2); background: #F0F5FF;"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3); background: #F0FFF5;"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4); background: #FFFDF0;"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5); background: #F8F0FF;"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6); background: #FFF0F8;"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1);"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2);"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3);"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4);"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5);"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6);"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
       </div>
-      <div class="photo-sub-title" style="margin-top: 18px;">📷 &nbsp;전체 · 일반 사진</div>
+      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
         <div class="group-photo"><span>🌟</span></div>
         <div class="group-photo"><span>🖌️</span></div>
@@ -1412,13 +1634,252 @@
   </div><!-- /session-card 07 -->
 
 
+  <!-- ════════ 8회차 · 6월 25일 ════════ -->
+  <div class="session-card" id="session-8">
+    <div class="session-top">
+      <div class="session-top-info">
+        <h3>2026년 6월 25일 목요일</h3>
+      </div>
+      <div class="session-participants">
+        <span class="participant-chip">김소은<span class="age">6세</span></span>
+        <span class="participant-chip">한이서<span class="age">6세</span></span>
+        <span class="participant-chip">한이준<span class="age">6세</span></span>
+        <span class="participant-chip">신봄<span class="age">7세</span></span>
+        <span class="participant-chip">박규태<span class="age">6세</span></span>
+        <span class="participant-chip">박규리<span class="age">5세</span></span>
+      </div>
+    </div>
+    <div class="session-divider"></div>
+    <div class="info-grid">
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 책과 준비물</div>
+        <p class="placeholder">기록 준비중이에요 🌿</p>
+      </div>
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 이야기</div>
+        <p class="placeholder">수업 후 이야기가 업데이트될 예정입니다.</p>
+      </div>
+    </div>
+
+    <div class="session-divider" style="margin-top: 22px;"></div>
+    <div class="photo-section">
+      <div class="photo-sub-title">아이들의 작품 사진</div>
+      <div class="children-row">
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1);"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2);"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3);"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4);"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5);"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6);"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
+      </div>
+      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
+      <div class="group-row">
+        <div class="group-photo"><span>🌟</span></div>
+        <div class="group-photo"><span>🖌️</span></div>
+        <div class="group-photo"><span>🎨</span></div>
+      </div>
+    </div>
+  </div><!-- /session-card 08 -->
+
+
+  <!-- ════════ 9회차 · 7월 2일 ════════ -->
+  <div class="session-card" id="session-9">
+    <div class="session-top">
+      <div class="session-top-info">
+        <h3>2026년 7월 2일 목요일</h3>
+      </div>
+      <div class="session-participants">
+        <span class="participant-chip">김소은<span class="age">6세</span></span>
+        <span class="participant-chip">한이서<span class="age">6세</span></span>
+        <span class="participant-chip">한이준<span class="age">6세</span></span>
+        <span class="participant-chip">신봄<span class="age">7세</span></span>
+        <span class="participant-chip">박규태<span class="age">6세</span></span>
+        <span class="participant-chip">박규리<span class="age">5세</span></span>
+      </div>
+    </div>
+    <div class="session-divider"></div>
+    <div class="info-grid">
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 책과 준비물</div>
+        <p class="placeholder">기록 준비중이에요 🌿</p>
+      </div>
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 이야기</div>
+        <p class="placeholder">수업 후 이야기가 업데이트될 예정입니다.</p>
+      </div>
+    </div>
+
+    <div class="session-divider" style="margin-top: 22px;"></div>
+    <div class="photo-section">
+      <div class="photo-sub-title">아이들의 작품 사진</div>
+      <div class="children-row">
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1);"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2);"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3);"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4);"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5);"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6);"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
+      </div>
+      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
+      <div class="group-row">
+        <div class="group-photo"><span>🌟</span></div>
+        <div class="group-photo"><span>🖌️</span></div>
+        <div class="group-photo"><span>🎨</span></div>
+      </div>
+    </div>
+  </div><!-- /session-card 09 -->
+
+
+  <!-- ════════ 10회차 · 7월 9일 ════════ -->
+  <div class="session-card" id="session-10">
+    <div class="session-top">
+      <div class="session-top-info">
+        <h3>2026년 7월 9일 목요일</h3>
+      </div>
+      <div class="session-participants">
+        <span class="participant-chip">김소은<span class="age">6세</span></span>
+        <span class="participant-chip">한이서<span class="age">6세</span></span>
+        <span class="participant-chip">한이준<span class="age">6세</span></span>
+        <span class="participant-chip">신봄<span class="age">7세</span></span>
+        <span class="participant-chip">박규태<span class="age">6세</span></span>
+        <span class="participant-chip">박규리<span class="age">5세</span></span>
+      </div>
+    </div>
+    <div class="session-divider"></div>
+    <div class="info-grid">
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 책과 준비물</div>
+        <p class="placeholder">기록 준비중이에요 🌿</p>
+      </div>
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 이야기</div>
+        <p class="placeholder">수업 후 이야기가 업데이트될 예정입니다.</p>
+      </div>
+    </div>
+
+    <div class="session-divider" style="margin-top: 22px;"></div>
+    <div class="photo-section">
+      <div class="photo-sub-title">아이들의 작품 사진</div>
+      <div class="children-row">
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1);"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2);"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3);"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4);"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5);"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6);"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
+      </div>
+      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
+      <div class="group-row">
+        <div class="group-photo"><span>🌟</span></div>
+        <div class="group-photo"><span>🖌️</span></div>
+        <div class="group-photo"><span>🎨</span></div>
+      </div>
+    </div>
+  </div><!-- /session-card 10 -->
+
+
+  <!-- ════════ 11회차 · 7월 16일 ════════ -->
+  <div class="session-card" id="session-11">
+    <div class="session-top">
+      <div class="session-top-info">
+        <h3>2026년 7월 16일 목요일</h3>
+      </div>
+      <div class="session-participants">
+        <span class="participant-chip">김소은<span class="age">6세</span></span>
+        <span class="participant-chip">한이서<span class="age">6세</span></span>
+        <span class="participant-chip">한이준<span class="age">6세</span></span>
+        <span class="participant-chip">신봄<span class="age">7세</span></span>
+        <span class="participant-chip">박규태<span class="age">6세</span></span>
+        <span class="participant-chip">박규리<span class="age">5세</span></span>
+      </div>
+    </div>
+    <div class="session-divider"></div>
+    <div class="info-grid">
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 책과 준비물</div>
+        <p class="placeholder">기록 준비중이에요 🌿</p>
+      </div>
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 이야기</div>
+        <p class="placeholder">수업 후 이야기가 업데이트될 예정입니다.</p>
+      </div>
+    </div>
+
+    <div class="session-divider" style="margin-top: 22px;"></div>
+    <div class="photo-section">
+      <div class="photo-sub-title">아이들의 작품 사진</div>
+      <div class="children-row">
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1);"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2);"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3);"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4);"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5);"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6);"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
+      </div>
+      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
+      <div class="group-row">
+        <div class="group-photo"><span>🌟</span></div>
+        <div class="group-photo"><span>🖌️</span></div>
+        <div class="group-photo"><span>🎨</span></div>
+      </div>
+    </div>
+  </div><!-- /session-card 11 -->
+
+
+  <!-- ════════ 12회차 · 7월 23일 ════════ -->
+  <div class="session-card" id="session-12">
+    <div class="session-top">
+      <div class="session-top-info">
+        <h3>2026년 7월 23일 목요일</h3>
+      </div>
+      <div class="session-participants">
+        <span class="participant-chip">김소은<span class="age">6세</span></span>
+        <span class="participant-chip">한이서<span class="age">6세</span></span>
+        <span class="participant-chip">한이준<span class="age">6세</span></span>
+        <span class="participant-chip">신봄<span class="age">7세</span></span>
+        <span class="participant-chip">박규태<span class="age">6세</span></span>
+        <span class="participant-chip">박규리<span class="age">5세</span></span>
+      </div>
+    </div>
+    <div class="session-divider"></div>
+    <div class="info-grid">
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 책과 준비물</div>
+        <p class="placeholder">기록 준비중이에요 🌿</p>
+      </div>
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 이야기</div>
+        <p class="placeholder">수업 후 이야기가 업데이트될 예정입니다.</p>
+      </div>
+    </div>
+
+    <div class="session-divider" style="margin-top: 22px;"></div>
+    <div class="photo-section">
+      <div class="photo-sub-title">아이들의 작품 사진</div>
+      <div class="children-row">
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1);"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2);"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3);"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4);"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5);"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
+        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6);"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
+      </div>
+      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
+      <div class="group-row">
+        <div class="group-photo"><span>🌟</span></div>
+        <div class="group-photo"><span>🖌️</span></div>
+        <div class="group-photo"><span>🎨</span></div>
+      </div>
+    </div>
+  </div><!-- /session-card 12 -->
+
+
   <!-- ════════ 다음 수업 예고 ════════ -->
   <div class="add-session-card">
     <div class="plus">📅</div>
-    <strong>다음 수업</strong> — 2026년 6월 25일 목요일<br>
+    <strong>다음 수업</strong> — 2026년 7월 30일 목요일<br>
     <span style="font-size: 13px; color: var(--text-dim);">수업 후 기록이 업데이트될 예정입니다 🌿</span>
   </div>
-
 
   </div><!-- /tab-records -->
 
@@ -1426,7 +1887,7 @@
   <div id="tab-program" class="tab-panel">
   <div class="program-wrap">
     <div class="section-lead">
-      <span class="ico">🌱</span>
+      <span class="ico">✍️</span>
       <h2>프로그램 소개</h2>
       <div class="bar"></div>
     </div>
@@ -1444,11 +1905,11 @@
     <!-- Overview -->
     <div class="overview-grid">
       <div class="ov-card">
-        <h4>👧 교육 대상</h4>
+        <h4>교육 대상</h4>
         <p>6–7세<br>소수 정원 · 최대 9명</p>
       </div>
       <div class="ov-card">
-        <h4>⏰ 수업 일정</h4>
+        <h4>수업 일정</h4>
         <p>매주 목요일 16:10 – 17:30 <span style="font-size:12.5px; color: var(--text-dim);">(이른 귀가 시 당일 알려주세요)</span><br>니닉크라프트 실내·외</p>
       </div>
     </div>
@@ -1456,7 +1917,7 @@
     <!-- Rules -->
     <div class="rules-row">
       <div class="rule-box guide">
-        <h4 style="color: var(--coral);"><span style="display:inline-block; filter: hue-rotate(-55deg) saturate(1.5) brightness(1.08);">🌿</span> 꼭 지켜요</h4>
+        <h4 style="color: var(--coral);">꼭 지켜요</h4>
         <ul>
           <li>주제·재료·기법을 알아가기</li>
           <li>친구 작업을 존중하고 협업에 적극 참여하기</li>
@@ -1464,7 +1925,7 @@
         </ul>
       </div>
       <div class="rule-box free">
-        <h4 style="color: var(--green);">🌿 마음껏 해도 돼요</h4>
+        <h4 style="color: var(--green);">마음껏 해도 돼요</h4>
         <ul>
           <li>논의를 통해 변형·응용하기</li>
           <li>내 작업을 스스로 이어가거나 새롭게 바꾸기</li>
@@ -1475,7 +1936,7 @@
 
     <!-- 80분 수업 흐름 -->
     <div class="ov-card" style="margin-bottom: 24px;">
-      <h4>⏱️ 80분 수업 흐름</h4>
+      <h4>80분 수업 흐름</h4>
       <div style="font-size: 13.5px; color: var(--text-mid); line-height: 2;">
         <span style="color: var(--peach); font-size: 4px; vertical-align: 3px;">●</span> <strong style="color: var(--text); font-weight: 500;">열기 (0–15분)</strong> &nbsp;지난 작업 돌아보기, 오늘의 활동과 재료 소개, 무엇을 어떻게 표현할지 이야기 나누기<br>
         <span style="color: var(--peach); font-size: 4px; vertical-align: 3px;">●</span> <strong style="color: var(--text); font-weight: 500;">작업 (15–65분)</strong> &nbsp;개별 또는 공동 작업 (선생님 개입 최소), 그림책 함께 읽기<br>
@@ -1485,7 +1946,7 @@
 
     <!-- 연간 계획 요약 -->
     <div class="ov-card" style="margin-bottom: 24px;">
-      <h4>🗓️ 연간 커리큘럼 흐름</h4>
+      <h4>연간 커리큘럼 흐름</h4>
       <div style="font-size: 13.5px; color: var(--text-mid); line-height: 2;">
         <span style="color: var(--peach); font-size: 4px; vertical-align: 3px;">●</span> <strong style="color: var(--text); font-weight: 500;">봄 (3–5월)</strong> &nbsp;그리기 · 만들기 — 건식/습식 재료 탐색, 콜라주, 평면 조형<br>
         <span style="color: var(--peach); font-size: 4px; vertical-align: 3px;">●</span> <strong style="color: var(--text); font-weight: 500;">여름 (6–7월)</strong> &nbsp;공감각 · 도예 — 즉흥 드로잉, 릴레이 그림책, 흙과 도예 체험<br>
@@ -1502,7 +1963,7 @@
 
     <!-- 교습비 -->
     <div class="ov-card" style="margin-bottom: 14px;">
-      <h4>📌 교습비</h4>
+      <h4>교습비</h4>
       <div style="font-size: 14px; color: var(--text-mid); line-height: 2;">
         월 12만원 / 한 가정에서 2명 이상 등록 시 둘째부터 50% 할인<br>
         <span style="color: var(--text); font-weight: 500;">교습비는 매월 첫 주 내 선납 부탁드립니다.</span><br>
@@ -1512,7 +1973,7 @@
 
     <!-- 준비사항 & 재료 -->
     <div class="ov-card" style="margin-bottom: 14px;">
-      <h4>📌 준비 사항</h4>
+      <h4>준비 사항</h4>
       <ul style="font-size: 13.5px; color: var(--text-mid); list-style: none; line-height: 2;">
         <li>물감 등으로 옷이 더러워질 수 있으니, 앞치마나 활동복을 공방에 두고 사용하셔도 좋습니다.</li>
         <li>기본 재료는 모두 제공되며, 재활용품·콜라주 재료 등을 가져와야 할 수 있습니다.</li>
@@ -1521,7 +1982,7 @@
 
     <!-- 운영 안내 -->
     <div class="ov-card">
-      <h4>📌 운영 안내</h4>
+      <h4>운영 안내</h4>
       <ul style="font-size: 13.5px; color: var(--text-mid); list-style: none; line-height: 2;">
         <li>부모 참여 (예정) — 3월 가족 그리기, 7월 도예작업, 9월 미니 전시, 11월 공연 <span style="font-size: 12.5px; color: var(--text-dim);">(참여 일정은 운영 상황에 따라 변경될 수 있습니다.)</span></li>
         <li>결석 시 보강은 일반 그리기 수업으로 대체될 수 있습니다.</li>
@@ -1544,6 +2005,32 @@
   <span style="font-size: 11.5px;">Thursday 4:10 – 5:30 PM &nbsp;|&nbsp; @ninnik_kraft</span>
 </footer>
 
+<!-- ═══════════════════════════════ LIGHTBOX MODAL ═══════════════════════════════ -->
+<div id="art-lightbox" class="lightbox-overlay" onclick="closeLightbox(event)">
+  <div class="lightbox-content" onclick="event.stopPropagation()">
+    
+    <!-- 상단 캡션 정보 -->
+    <div class="lightbox-header">
+      <span id="lightbox-title" class="lightbox-title">김소은의 작품</span>
+    </div>
+
+    <!-- 메인 대형 이미지 뷰어 -->
+    <div class="lightbox-viewer">
+      <button class="lightbox-nav prev" onclick="navigateLightbox(-1)">◀</button>
+      <div class="lightbox-img-wrap">
+        <img id="lightbox-main-img" src="" alt="작품 대형 미리보기">
+      </div>
+      <button class="lightbox-nav next" onclick="navigateLightbox(1)">▶</button>
+    </div>
+
+    <!-- 하단 미니 썸네일 탐색 바 -->
+    <div id="lightbox-thumbs" class="lightbox-thumbs-bar">
+      <!-- 자바스크립트로 세션 내 참여 아동 썸네일을 동적 랜더링함 -->
+    </div>
+
+  </div>
+</div>
+
 <script>
   function switchTab(tabId, btn) {
     // 모든 패널 숨기기
@@ -1556,6 +2043,142 @@
     // 상단으로 스크롤
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  // 사이드 앵커 메뉴 - 스크롤에 따라 현재 회차 표시
+  (function () {
+    var navLinks = document.querySelectorAll('.float-dot');
+    var sessionCards = document.querySelectorAll('#tab-records .session-card');
+    if (!navLinks.length || !sessionCards.length) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var id = entry.target.getAttribute('id');
+        navLinks.forEach(function (link) {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      });
+    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+    sessionCards.forEach(function (card) { observer.observe(card); });
+  })();
+
+  // 라이트박스 갤러리 제어 로직 (X축 잘림 완벽 보강 및 슬라이더 탑재)
+  let lightboxItems = [];
+  let lightboxIndex = 0;
+
+  function openLightbox(startThumb) {
+    const sessionCard = startThumb.closest(".session-card");
+    if (!sessionCard) return;
+
+    // 해당 세션 카드 내의 모든 작품 썸네일 수집 (자동으로 회차별 그룹핑 수행)
+    const thumbEls = sessionCard.querySelectorAll(".child-photo[data-preview]");
+    lightboxItems = [];
+    lightboxIndex = 0;
+
+    const thumbsBar = document.getElementById("lightbox-thumbs");
+    thumbsBar.innerHTML = ""; // 기존 탐색 썸네일 비우기
+
+    thumbEls.forEach((thumb, idx) => {
+      const imgSrc = thumb.getAttribute("data-preview");
+      const thumbSrc = thumb.querySelector("img") ? thumb.querySelector("img").getAttribute("src") : "";
+      const childCell = thumb.closest(".child-cell");
+      const childName = childCell ? childCell.querySelector(".child-name-label").innerText.trim() : "작품";
+
+      // "이름 - 1" 형식을 "이름의 작품 - 1"로 포맷팅하는 지능형 파싱 로직
+      let formattedTitle = `${childName}의 작품`;
+      const nameMatch = childName.match(/^(.+?)\s*-\s*(\d+)$/);
+      if (nameMatch) {
+        const realName = nameMatch[1].trim();
+        const num = nameMatch[2].trim();
+        if (realName === "함께") {
+          formattedTitle = `함께 그린 작품 - ${num}`; // '함께'인 경우 어감이 더 부드러운 전용 캡션 사용
+        } else {
+          formattedTitle = `${realName}의 작품 - ${num}`;
+        }
+      }
+
+      lightboxItems.push({
+        preview: imgSrc,
+        thumb: thumbSrc,
+        name: childName,
+        title: formattedTitle
+      });
+
+      if (thumb === startThumb) {
+        lightboxIndex = idx;
+      }
+
+      // 하단 미니 썸네일 바의 썸네일 버튼 생성
+      const thumbBtn = document.createElement("div");
+      thumbBtn.className = "lightbox-thumb";
+      thumbBtn.innerHTML = `<img src="${thumbSrc}" alt="${childName}">`;
+      thumbBtn.onclick = function () {
+        setLightboxIndex(idx);
+      };
+      thumbsBar.appendChild(thumbBtn);
+    });
+
+    updateLightbox();
+    document.getElementById("art-lightbox").classList.add("active");
+  }
+
+  function setLightboxIndex(idx) {
+    lightboxIndex = idx;
+    updateLightbox();
+  }
+
+  function updateLightbox() {
+    if (lightboxIndex < 0 || lightboxIndex >= lightboxItems.length) return;
+    const item = lightboxItems[lightboxIndex];
+    
+    document.getElementById("lightbox-main-img").src = item.preview;
+    document.getElementById("lightbox-title").innerText = item.title;
+
+    // 하단 썸네일 활성화 상태 표시 변경
+    const thumbBtns = document.querySelectorAll(".lightbox-thumb");
+    thumbBtns.forEach((btn, idx) => {
+      btn.classList.toggle("active", idx === lightboxIndex);
+    });
+  }
+
+  function navigateLightbox(dir) {
+    lightboxIndex += dir;
+    if (lightboxIndex < 0) {
+      lightboxIndex = lightboxItems.length - 1; // 마지막 사진으로 순환
+    } else if (lightboxIndex >= lightboxItems.length) {
+      lightboxIndex = 0; // 첫 사진으로 순환
+    }
+    updateLightbox();
+  }
+
+  function closeLightbox(e) {
+    document.getElementById("art-lightbox").classList.remove("active");
+  }
+
+  // 썸네일 클릭 시 라이트박스 실행 바인딩
+  document.addEventListener("DOMContentLoaded", function () {
+    const thumbs = document.querySelectorAll(".child-photo[data-preview]");
+    thumbs.forEach(thumb => {
+      thumb.addEventListener("click", function () {
+        openLightbox(this);
+      });
+    });
+  });
+
+  // 키보드 네비게이션 연동 (좌우 화살표로 이전/다음 이동, ESC로 팝업 닫기)
+  document.addEventListener("keydown", function (e) {
+    const lightbox = document.getElementById("art-lightbox");
+    if (!lightbox || !lightbox.classList.contains("active")) return;
+
+    if (e.key === "ArrowLeft") {
+      navigateLightbox(-1);
+    } else if (e.key === "ArrowRight") {
+      navigateLightbox(1);
+    } else if (e.key === "Escape") {
+      closeLightbox();
+    }
+  });
 </script>
 </body>
 </html>
