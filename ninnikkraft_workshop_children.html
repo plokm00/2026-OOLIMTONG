@@ -256,6 +256,21 @@
     .float-nav { display: none; }
   }
 
+  @media (max-width: 560px) {
+    .main-wrap { padding-top: 20px; }
+    .section-lead { margin: 24px 0 16px; }
+    .session-top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .session-participants {
+      margin-left: 0;
+      width: 100%;
+      justify-content: flex-start;
+    }
+  }
+
   .session-card {
     background: var(--card);
     border-radius: 22px;
@@ -511,6 +526,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-y: auto; /* 콘텐츠가 뷰포트보다 클 때 잘리지 않고 스크롤되도록 안전장치 */
+    padding: 12px 0;
   }
   .lightbox-overlay.active {
     opacity: 1;
@@ -523,6 +540,7 @@
     gap: 16px;
     transform: scale(0.96);
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    margin: auto; /* overflow-y:auto 상태에서도 콘텐츠가 짧을 땐 수직 중앙 유지 */
   }
   .lightbox-overlay.active .lightbox-content {
     transform: scale(1);
@@ -627,6 +645,17 @@
     opacity: 1;
     border-color: var(--coral); /* 선택된 아이의 미니 썸네일에 코랄 테두리 지정 */
     transform: scale(1.05);
+  }
+
+  /* 모바일 가로모드 등 세로 공간이 짧은 화면에서 하단 썸네일이 잘리지 않도록 축소 */
+  @media (max-height: 500px) {
+    .lightbox-content { gap: 8px; }
+    .lightbox-img-wrap { height: min(300px, 60vh); }
+    .lightbox-img-wrap img { padding: 10px; }
+    .lightbox-nav { width: 36px; height: 36px; font-size: 11px; }
+    .lightbox-thumb { width: 40px; height: 40px; }
+    .lightbox-thumbs-bar { padding: 4px 0; gap: 6px; }
+    .lightbox-title { font-size: 13px; }
   }
 
   .child-photo .add-hint {
@@ -933,7 +962,6 @@
   <h1 class="header-title">니닉크라프트 <span class="title-multicolor"><span style="color:#8A3A1C;">어</span><span style="color:#C1552E;">린</span><span style="color:#D9805A;">이</span> <span style="color:#5C6FA0;">작</span><span style="color:#3E4F7A;">업</span><span style="color:#2A3555;">실</span></span></h1>
   <div class="header-chips">
     <span class="chip">과정 중심 · 다매체 · 통합 인문예술 교육</span>
-    <span class="chip">그림책과 함께</span>
 
     <span class="chip">전시 · 공연</span>
   </div>
