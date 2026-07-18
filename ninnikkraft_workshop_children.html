@@ -371,7 +371,7 @@
     font-size: 14px;
     color: var(--text);
     line-height: 1.75;
-    margin-top: -5px; /* line-height 상단 leading 보정: 왼쪽 책 이미지 박스와 시작 위치 맞춤 */
+    margin-top: -0.375em; /* line-height 상단 leading을 em 단위로 정확히 보정 (폰트 크기 달라도 항상 일치) */
   }
 
   .placeholder {
@@ -432,6 +432,7 @@
     color: var(--text);
     line-height: 1.8;
     text-align: left; /* 칼같은 왼쪽 정렬 강제 */
+    margin-top: -0.4em; /* line-height 상단 leading을 em 단위로 정확히 보정 (오늘의 이야기와 시작선 일치) */
   }
   .bm-info .b-title { font-weight: 600; color: var(--text); }
   .bm-info .b-author { font-size: 12px; color: var(--text); }
@@ -1701,11 +1702,11 @@
         <div class="photo-sub-title">오늘의 책과 준비물</div>
         <div class="bm-row">
           <div class="book-slot">
-            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--cream); color: var(--text-dim); font-size: 20px;">📖</div>
+            <img src="https://image.yes24.com/goods/110016457/L" alt="누가 누가 살까?">
           </div>
           <div class="bm-info">
-            <span class="b-title">기록 준비중</span> · <span class="b-author">작가</span>
-            <span class="bm-sep">/</span>준비물 준비중
+            <span class="b-title">누가 누가 살까?</span> · <span class="b-author">박영신</span>
+            <span class="bm-sep">/</span>옹기토, 구슬, 조약돌, 조개, 체, 석고
           </div>
         </div>
       </div>
@@ -1757,11 +1758,11 @@
         <div class="photo-sub-title">오늘의 책과 준비물</div>
         <div class="bm-row">
           <div class="book-slot">
-            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--cream); color: var(--text-dim); font-size: 20px;">📖</div>
+            <img src="https://contents.kyobobook.co.kr/sih/fit-in/200x0/pdt/9788958287926.jpg" alt="방긋 아기씨">
           </div>
           <div class="bm-info">
-            <span class="b-title">기록 준비중</span> · <span class="b-author">작가</span>
-            <span class="bm-sep">/</span>준비물 준비중
+            <span class="b-title">방긋 아기씨</span> · <span class="b-author">윤지회</span>
+            <span class="bm-sep">/</span>접이식 종이 상자, 한지 색종이, 아크릴 물감, 붓, 천연 오일
           </div>
         </div>
       </div>
@@ -1810,14 +1811,10 @@
     <div class="session-divider"></div>
     <div class="info-grid">
       <div class="info-plain">
-        <div class="photo-sub-title">오늘의 책과 준비물</div>
+        <div class="photo-sub-title">오늘의 준비물</div>
         <div class="bm-row">
-          <div class="book-slot">
-            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--cream); color: var(--text-dim); font-size: 20px;">📖</div>
-          </div>
           <div class="bm-info">
-            <span class="b-title">기록 준비중</span> · <span class="b-author">작가</span>
-            <span class="bm-sep">/</span>준비물 준비중
+            나뭇가지, 종이 테이프, 끈, 물감, 붓
           </div>
         </div>
       </div>
@@ -1869,11 +1866,11 @@
         <div class="photo-sub-title">오늘의 책과 준비물</div>
         <div class="bm-row">
           <div class="book-slot">
-            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--cream); color: var(--text-dim); font-size: 20px;">📖</div>
+            <img src="https://contents.kyobobook.co.kr/sih/fit-in/200x0/pdt/9788984289499.jpg" alt="뭔가와 땅가">
           </div>
           <div class="bm-info">
-            <span class="b-title">기록 준비중</span> · <span class="b-author">작가</span>
-            <span class="bm-sep">/</span>준비물 준비중
+            <span class="b-title">뭔가와 땅가</span> · <span class="b-author">박영신 글·그림</span>
+            <span class="bm-sep">/</span>옹기토, 나무 헤라
           </div>
         </div>
       </div>
