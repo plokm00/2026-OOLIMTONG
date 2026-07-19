@@ -706,6 +706,14 @@
     background: var(--slot-bg);
     border: 2px solid var(--line2);
   }
+  /* 원본을 라이트박스로 열 수 있는 수업 풍경 썸네일(테스트: 11회차) */
+  .group-photo[data-preview] {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .group-photo[data-preview]:hover {
+    opacity: 0.85;
+  }
   .group-photo img {
     height: 100%; /* 세로는 상자에 꽉 맞춤 */
     width: auto; /* 가로는 이미지 본래의 종횡비를 그대로 유지 */
@@ -1106,11 +1114,11 @@
 
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo" style="border-color: var(--line2);">
-          <img src="cropped/활동_01_1.jpg" alt="1회차 수업 풍경 1">
+        <div class="group-photo" style="border-color: var(--line2);" data-preview="cropped/활동_01_1.jpg">
+          <img src="cropped/활동_01_1_thumb.jpg" alt="1회차 수업 풍경 1">
         </div>
-        <div class="group-photo" style="border-color: var(--line2);">
-          <img src="cropped/활동_01_2.jpg" alt="1회차 수업 풍경 2">
+        <div class="group-photo" style="border-color: var(--line2);" data-preview="cropped/활동_01_2.jpg">
+          <img src="cropped/활동_01_2_thumb.jpg" alt="1회차 수업 풍경 2">
         </div>
       </div>
     </div>
@@ -1224,11 +1232,11 @@
 
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo">
-          <img src="cropped/활동_02_1.jpg" alt="2회차 수업 풍경 1">
+        <div class="group-photo" data-preview="cropped/활동_02_1.jpg">
+          <img src="cropped/활동_02_1_thumb.jpg" alt="2회차 수업 풍경 1">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_02_2.jpg" alt="2회차 수업 풍경 2">
+        <div class="group-photo" data-preview="cropped/활동_02_2.jpg">
+          <img src="cropped/활동_02_2_thumb.jpg" alt="2회차 수업 풍경 2">
         </div>
       </div>
     </div>
@@ -1328,14 +1336,14 @@
       </div>
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo">
-          <img src="cropped/활동_03_1.jpg" alt="3회차 수업 풍경 1">
+        <div class="group-photo" data-preview="cropped/활동_03_1.jpg">
+          <img src="cropped/활동_03_1_thumb.jpg" alt="3회차 수업 풍경 1">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_03_2.jpg" alt="3회차 수업 풍경 2">
+        <div class="group-photo" data-preview="cropped/활동_03_2.jpg">
+          <img src="cropped/활동_03_2_thumb.jpg" alt="3회차 수업 풍경 2">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_03_6.jpg" alt="3회차 수업 풍경 6">
+        <div class="group-photo" data-preview="cropped/활동_03_6.jpg">
+          <img src="cropped/활동_03_6_thumb.jpg" alt="3회차 수업 풍경 6">
         </div>
       </div>
     </div>
@@ -1455,26 +1463,26 @@
 
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo">
-          <img src="cropped/활동_04_1.jpg" alt="4회차 수업 풍경 1">
+        <div class="group-photo" data-preview="cropped/활동_04_1.jpg">
+          <img src="cropped/활동_04_1_thumb.jpg" alt="4회차 수업 풍경 1">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_04_2.jpg" alt="4회차 수업 풍경 2">
+        <div class="group-photo" data-preview="cropped/활동_04_2.jpg">
+          <img src="cropped/활동_04_2_thumb.jpg" alt="4회차 수업 풍경 2">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_04_3.jpg" alt="4회차 수업 풍경 3">
+        <div class="group-photo" data-preview="cropped/활동_04_3.jpg">
+          <img src="cropped/활동_04_3_thumb.jpg" alt="4회차 수업 풍경 3">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_04_4.jpg" alt="4회차 수업 풍경 4">
+        <div class="group-photo" data-preview="cropped/활동_04_4.jpg">
+          <img src="cropped/활동_04_4_thumb.jpg" alt="4회차 수업 풍경 4">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_04_5.jpg" alt="4회차 수업 풍경 5">
+        <div class="group-photo" data-preview="cropped/활동_04_5.jpg">
+          <img src="cropped/활동_04_5_thumb.jpg" alt="4회차 수업 풍경 5">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_04_6.jpg" alt="4회차 수업 풍경 6">
+        <div class="group-photo" data-preview="cropped/활동_04_6.jpg">
+          <img src="cropped/활동_04_6_thumb.jpg" alt="4회차 수업 풍경 6">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_04_7.jpg" alt="4회차 수업 풍경 7">
+        <div class="group-photo" data-preview="cropped/활동_04_7.jpg">
+          <img src="cropped/활동_04_7_thumb.jpg" alt="4회차 수업 풍경 7">
         </div>
       </div>
     </div>
@@ -1527,23 +1535,23 @@
     <div class="photo-section">
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo">
-          <img src="cropped/함께_05_1.jpg" alt="5회차 수업 풍경 1">
+        <div class="group-photo" data-preview="cropped/함께_05_1.jpg">
+          <img src="cropped/함께_05_1_thumb.jpg" alt="5회차 수업 풍경 1">
         </div>
-        <div class="group-photo">
-          <img src="cropped/함께_05_2_wide.jpg" alt="5회차 수업 풍경 2">
+        <div class="group-photo" data-preview="cropped/함께_05_2_wide.jpg">
+          <img src="cropped/함께_05_2_wide_thumb.jpg" alt="5회차 수업 풍경 2">
         </div>
-        <div class="group-photo">
-          <img src="cropped/함께_05_3_wide.jpg" alt="5회차 수업 풍경 3">
+        <div class="group-photo" data-preview="cropped/함께_05_3_wide.jpg">
+          <img src="cropped/함께_05_3_wide_thumb.jpg" alt="5회차 수업 풍경 3">
         </div>
-        <div class="group-photo">
-          <img src="cropped/함께_05_4_wide.jpg" alt="5회차 수업 풍경 4">
+        <div class="group-photo" data-preview="cropped/함께_05_4_wide.jpg">
+          <img src="cropped/함께_05_4_wide_thumb.jpg" alt="5회차 수업 풍경 4">
         </div>
-        <div class="group-photo">
-          <img src="cropped/함께_05_5_wide.jpg" alt="5회차 수업 풍경 5">
+        <div class="group-photo" data-preview="cropped/함께_05_5_wide.jpg">
+          <img src="cropped/함께_05_5_wide_thumb.jpg" alt="5회차 수업 풍경 5">
         </div>
-        <div class="group-photo">
-          <img src="cropped/함께_05_6_rot90ccw.jpg" alt="5회차 수업 풍경 6">
+        <div class="group-photo" data-preview="cropped/함께_05_6_rot90ccw.jpg">
+          <img src="cropped/함께_05_6_rot90ccw_thumb.jpg" alt="5회차 수업 풍경 6">
         </div>
       </div>
     </div>
@@ -1643,20 +1651,20 @@
       </div>
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo">
-          <img src="cropped/활동_06_.jpg" alt="6회차 수업 풍경 1">
+        <div class="group-photo" data-preview="cropped/활동_06_.jpg">
+          <img src="cropped/활동_06__thumb.jpg" alt="6회차 수업 풍경 1">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_06_2.jpg" alt="6회차 수업 풍경 2">
+        <div class="group-photo" data-preview="cropped/활동_06_2.jpg">
+          <img src="cropped/활동_06_2_thumb.jpg" alt="6회차 수업 풍경 2">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_06_3.jpg" alt="6회차 수업 풍경 3">
+        <div class="group-photo" data-preview="cropped/활동_06_3.jpg">
+          <img src="cropped/활동_06_3_thumb.jpg" alt="6회차 수업 풍경 3">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_06_08.jpg" alt="6회차 수업 풍경 4">
+        <div class="group-photo" data-preview="cropped/활동_06_08.jpg">
+          <img src="cropped/활동_06_08_thumb.jpg" alt="6회차 수업 풍경 4">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_06_09.jpg" alt="6회차 수업 풍경 5">
+        <div class="group-photo" data-preview="cropped/활동_06_09.jpg">
+          <img src="cropped/활동_06_09_thumb.jpg" alt="6회차 수업 풍경 5">
         </div>
         <div class="group-photo group-video">
           <video src="cropped/6회차.mp4" controls preload="metadata" playsinline></video>
@@ -1760,17 +1768,17 @@
       </div>
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo">
-          <img src="cropped/활동_07_1.jpg" alt="7회차 수업 풍경 1">
+        <div class="group-photo" data-preview="cropped/활동_07_1.jpg">
+          <img src="cropped/활동_07_1_thumb.jpg" alt="7회차 수업 풍경 1">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_07_3.jpg" alt="7회차 수업 풍경 3">
+        <div class="group-photo" data-preview="cropped/활동_07_3.jpg">
+          <img src="cropped/활동_07_3_thumb.jpg" alt="7회차 수업 풍경 3">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_07_4.jpg" alt="7회차 수업 풍경 4">
+        <div class="group-photo" data-preview="cropped/활동_07_4.jpg">
+          <img src="cropped/활동_07_4_thumb.jpg" alt="7회차 수업 풍경 4">
         </div>
-        <div class="group-photo">
-          <img src="cropped/활동_07_5.jpg" alt="7회차 수업 풍경 5">
+        <div class="group-photo" data-preview="cropped/활동_07_5.jpg">
+          <img src="cropped/활동_07_5_thumb.jpg" alt="7회차 수업 풍경 5">
         </div>
       </div>
     </div>
@@ -1948,7 +1956,6 @@
         <h3>2026년 7월 16일 목요일</h3>
       </div>
       <div class="session-participants">
-        <span class="participant-chip">김소은<span class="age">6세</span></span>
         <span class="participant-chip">한이서<span class="age">6세</span></span>
         <span class="participant-chip">한이준<span class="age">6세</span></span>
         <span class="participant-chip">신봄<span class="age">7세</span></span>
@@ -1978,20 +1985,35 @@
 
     <div class="session-divider" style="margin-top: 22px;"></div>
     <div class="photo-section">
-      <div class="photo-sub-title">아이들의 작품 사진</div>
-      <div class="children-row">
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1);"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2);"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3);"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4);"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5);"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6);"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
-      </div>
-      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
+      <div class="photo-sub-title">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo"><span>🌟</span></div>
-        <div class="group-photo"><span>🖌️</span></div>
-        <div class="group-photo"><span>🎨</span></div>
+        <div class="group-photo" data-preview="cropped/준비_11.jpg">
+          <img src="cropped/준비_11_thumb.jpg" alt="11회차 수업 풍경 - 준비">
+        </div>
+        <div class="group-photo" data-preview="cropped/규리_11.jpg">
+          <img src="cropped/규리_11_thumb.jpg" alt="11회차 수업 풍경 - 규리">
+        </div>
+        <div class="group-photo" data-preview="cropped/이서_11.jpg">
+          <img src="cropped/이서_11_thumb.jpg" alt="11회차 수업 풍경 - 이서">
+        </div>
+        <div class="group-photo" data-preview="cropped/이준_11.jpg">
+          <img src="cropped/이준_11_thumb.jpg" alt="11회차 수업 풍경 - 이준">
+        </div>
+        <div class="group-photo" data-preview="cropped/규태_11.jpg">
+          <img src="cropped/규태_11_thumb.jpg" alt="11회차 수업 풍경 - 규태">
+        </div>
+        <div class="group-photo" data-preview="cropped/봄_11.jpg">
+          <img src="cropped/봄_11_thumb.jpg" alt="11회차 수업 풍경 - 봄">
+        </div>
+        <div class="group-photo" data-preview="cropped/봄_11_1.jpg">
+          <img src="cropped/봄_11_1_thumb.jpg" alt="11회차 수업 풍경 - 봄 1">
+        </div>
+        <div class="group-photo" data-preview="cropped/함께_11_1.jpg">
+          <img src="cropped/함께_11_1_thumb.jpg" alt="11회차 수업 풍경 - 함께 1">
+        </div>
+        <div class="group-photo" data-preview="cropped/함께_11_2.jpg">
+          <img src="cropped/함께_11_2_thumb.jpg" alt="11회차 수업 풍경 - 함께 2">
+        </div>
       </div>
     </div>
   </div><!-- /session-card 11 -->
@@ -2250,8 +2272,10 @@
     const sessionCard = startThumb.closest(".session-card");
     if (!sessionCard) return;
 
-    // 해당 세션 카드 내의 모든 작품 썸네일 수집 (자동으로 회차별 그룹핑 수행)
-    const thumbEls = sessionCard.querySelectorAll(".child-photo[data-preview]");
+    // 해당 세션 카드 내에서, 클릭한 썸네일과 같은 종류(작품 vs 수업 풍경)끼리만 모아 별도 갤러리로 탐색
+    const startIsGroup = startThumb.classList.contains("group-photo");
+    const selector = startIsGroup ? ".group-photo[data-preview]" : ".child-photo[data-preview]";
+    const thumbEls = sessionCard.querySelectorAll(selector);
     lightboxItems = [];
     lightboxIndex = 0;
 
@@ -2262,18 +2286,26 @@
       const imgSrc = thumb.getAttribute("data-preview");
       const thumbSrc = thumb.querySelector("img") ? thumb.querySelector("img").getAttribute("src") : "";
       const childCell = thumb.closest(".child-cell");
-      const childName = childCell ? childCell.querySelector(".child-name-label").innerText.trim() : "작품";
+      const isGroupPhoto = thumb.classList.contains("group-photo");
+      const childName = childCell
+        ? childCell.querySelector(".child-name-label").innerText.trim()
+        : (thumb.querySelector("img") ? thumb.querySelector("img").getAttribute("alt") : "수업 풍경");
 
       // "이름 - 1" 형식을 "이름의 작품 - 1"로 포맷팅하는 지능형 파싱 로직
       let formattedTitle = `${childName}의 작품`;
-      const nameMatch = childName.match(/^(.+?)\s*-\s*(\d+)$/);
-      if (nameMatch) {
-        const realName = nameMatch[1].trim();
-        const num = nameMatch[2].trim();
-        if (realName === "함께") {
-          formattedTitle = `함께 그린 작품 - ${num}`; // '함께'인 경우 어감이 더 부드러운 전용 캡션 사용
-        } else {
-          formattedTitle = `${realName}의 작품 - ${num}`;
+      if (isGroupPhoto) {
+        // 수업 풍경 사진은 "OO의 작품" 문구 없이 alt 텍스트를 그대로 제목으로 사용
+        formattedTitle = childName;
+      } else {
+        const nameMatch = childName.match(/^(.+?)\s*-\s*(\d+)$/);
+        if (nameMatch) {
+          const realName = nameMatch[1].trim();
+          const num = nameMatch[2].trim();
+          if (realName === "함께") {
+            formattedTitle = `함께 그린 작품 - ${num}`; // '함께'인 경우 어감이 더 부드러운 전용 캡션 사용
+          } else {
+            formattedTitle = `${realName}의 작품 - ${num}`;
+          }
         }
       }
 
@@ -2337,7 +2369,7 @@
 
   // 썸네일 클릭 시 라이트박스 실행 바인딩
   document.addEventListener("DOMContentLoaded", function () {
-    const thumbs = document.querySelectorAll(".child-photo[data-preview]");
+    const thumbs = document.querySelectorAll(".child-photo[data-preview], .group-photo[data-preview]");
     thumbs.forEach(thumb => {
       thumb.addEventListener("click", function () {
         openLightbox(this);
