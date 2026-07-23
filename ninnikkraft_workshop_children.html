@@ -65,17 +65,15 @@
   .site-header .deco-circle.c2 { width:160px; height:160px; background:var(--blue); top:20px; right:-40px; }
   .site-header .deco-circle.c3 { width:120px; height:120px; background:var(--c3); bottom:-40px; left:30%; }
 
-  .header-icon {
-    font-size: 60px;
+  .header-loop {
+    width: 92px;
+    height: 92px;
     display: block;
-    margin-bottom: 12px;
+    margin: 0 auto 12px;
     position: relative;
     z-index: 1;
-    animation: float 3s ease-in-out infinite;
-  }
-  @keyframes float {
-    0%,100% { transform: translateY(0) rotate(-3deg); }
-    50%      { transform: translateY(-10px) rotate(3deg); }
+    object-fit: contain;
+    filter: drop-shadow(0 4px 10px rgba(80, 48, 27, 0.22));
   }
 
   .header-title {
@@ -727,6 +725,121 @@
     display: block;
     background: var(--slot-bg);
   }
+  /* 커스텀 영상 컨트롤: 전체화면 없이 재생/음소거 버튼만 작게 제공 */
+  .video-controls {
+    position: absolute;
+    bottom: 6px;
+    left: 6px;
+    display: flex;
+    gap: 5px;
+    z-index: 5;
+  }
+  .vid-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(28, 23, 18, 0.6);
+    color: #fff;
+    font-size: 10px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(2px);
+  }
+  .vid-btn:hover { background: var(--coral); }
+  .vid-play {
+    background: var(--coral);
+    animation: vidPlayPulse 2s ease-in-out infinite;
+  }
+  .vid-play:hover { background: #9a3f22; animation: none; }
+  .vid-play.is-playing { animation: none; }
+  .vid-mute {
+    background: rgba(38, 70, 83, 0.72);
+  }
+  .vid-mute:hover { background: rgba(38, 70, 83, 0.9); }
+  @keyframes vidPlayPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(184, 74, 42, 0.55); }
+    50% { box-shadow: 0 0 0 6px rgba(184, 74, 42, 0); }
+  }
+
+  /* ─── 수업 기록 비밀번호 게이트 ─── */
+  .records-gate {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(80, 48, 27, 0.15);
+    margin-bottom: 20px;
+  }
+  .records-gate-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+  .records-gate::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(42, 31, 22, 0.35) 0%, rgba(42, 31, 22, 0.72) 100%);
+    z-index: 1;
+  }
+  .records-gate-box {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 32px 24px;
+    max-width: 340px;
+  }
+  .records-gate-msg {
+    color: #F6EFDE;
+    font-size: 14.5px;
+    line-height: 1.7;
+    margin-bottom: 18px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  }
+  .records-gate-form {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+  }
+  .records-gate-input {
+    width: 140px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: none;
+    font-size: 14px;
+    text-align: center;
+    background: rgba(246, 239, 222, 0.94);
+    color: var(--text);
+  }
+  .records-gate-input:focus {
+    outline: 2px solid var(--coral);
+  }
+  .records-gate-btn {
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: none;
+    background: var(--coral);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .records-gate-btn:hover { background: #9a3f22; }
+  .records-gate-error {
+    color: #FFD3C4;
+    font-size: 12.5px;
+    margin-top: 12px;
+  }
 
   /* ─── ADD NEXT SESSION ─── */
   .add-session-card {
@@ -736,6 +849,10 @@
     text-align: center;
     color: var(--text-mid);
     font-size: 14px;
+    margin-bottom: 48px;
+  }
+  .add-session-card:last-of-type {
+    margin-bottom: 0;
   }
   .add-session-card .plus { font-size: 36px; margin-bottom: 8px; }
 
@@ -976,7 +1093,7 @@
   <div class="deco-circle c1"></div>
   <div class="deco-circle c2"></div>
   <div class="deco-circle c3"></div>
-  <span class="header-icon">🖌️</span>
+  <img class="header-loop" src="cropped/ck_logo_transparent.png" alt="니닉크라프트 어린이 작업실 로고 (나뭇가지와 조개, 유리구슬로 만든 삼각형 모티프)">
   <h1 class="header-title">니닉크라프트 <span class="title-multicolor"><span style="color:#8A3A1C;">어</span><span style="color:#C1552E;">린</span><span style="color:#D9805A;">이</span> <span style="color:#5C6FA0;">작</span><span style="color:#3E4F7A;">업</span><span style="color:#2A3555;">실</span></span></h1>
   <div class="header-chips">
     <span class="chip">과정 중심 · 다매체 · 통합 인문예술 교육</span>
@@ -998,6 +1115,20 @@
 
   <!-- ══════════ TAB: 수업 기록 ══════════ -->
   <div id="tab-records" class="tab-panel active">
+
+  <div id="records-gate" class="records-gate">
+    <video class="records-gate-video" src="cropped/records_teaser.mp4" autoplay muted loop playsinline></video>
+    <div class="records-gate-box">
+      <p class="records-gate-msg">수강생 학부모님만 확인하실 수 있는 페이지입니다.<br>안내받은 비밀번호를 입력해주세요.</p>
+      <div class="records-gate-form">
+        <input type="password" id="records-pw" class="records-gate-input" placeholder="비밀번호" inputmode="numeric" maxlength="10">
+        <button type="button" class="records-gate-btn" onclick="checkRecordsPassword()">확인</button>
+      </div>
+      <p id="records-pw-error" class="records-gate-error" style="display:none;">비밀번호가 올바르지 않습니다.</p>
+    </div>
+  </div>
+
+  <div id="records-content" style="display:none;">
   <div class="section-lead">
     <span class="ico">📋</span>
     <h2>수업 기록</h2>
@@ -1005,19 +1136,9 @@
   </div>
 
   <div class="float-nav">
-    <div class="float-nav-track">
-      <a href="#session-1" class="float-dot"><span class="fd"></span><span class="fd-label">2026.05.07 목요일</span></a>
-      <a href="#session-2" class="float-dot"><span class="fd"></span><span class="fd-label">2026.05.14 목요일</span></a>
-      <a href="#session-3" class="float-dot"><span class="fd"></span><span class="fd-label">2026.05.21 목요일</span></a>
-      <a href="#session-4" class="float-dot"><span class="fd"></span><span class="fd-label">2026.06.04 목요일</span></a>
-      <a href="#session-5" class="float-dot"><span class="fd"></span><span class="fd-label">2026.06.05 금요일</span></a>
-      <a href="#session-6" class="float-dot"><span class="fd"></span><span class="fd-label">2026.06.11 목요일</span></a>
-      <a href="#session-7" class="float-dot"><span class="fd"></span><span class="fd-label">2026.06.18 목요일</span></a>
-      <a href="#session-8" class="float-dot"><span class="fd"></span><span class="fd-label">2026.06.25 목요일</span></a>
-      <a href="#session-9" class="float-dot"><span class="fd"></span><span class="fd-label">2026.07.02 목요일</span></a>
-      <a href="#session-10" class="float-dot"><span class="fd"></span><span class="fd-label">2026.07.09 목요일</span></a>
-      <a href="#session-11" class="float-dot"><span class="fd"></span><span class="fd-label">2026.07.16 목요일</span></a>
-      <a href="#session-12" class="float-dot"><span class="fd"></span><span class="fd-label">2026.07.23 목요일</span></a>
+    <div class="float-nav-track" id="float-nav-track">
+      <!-- 이 목록은 자바스크립트가 실제 존재하는 .session-card를 스캔해 자동으로 채웁니다.
+           새 회차(session-card)가 추가되면 여기에 수동으로 날짜를 추가할 필요 없이 자동 등록됩니다. -->
     </div>
   </div>
 
@@ -1055,7 +1176,7 @@
         <div class="photo-sub-title">오늘의 이야기</div>
         <div class="info-text">
           <!-- 재료, 수업 흐름, 특이사항, 오늘의 한마디 등을 자유롭게 기록해 주세요 -->
-검은색 마른 재료로만 그려요. 가지각색의, 색이 넘치는 화려하고 복잡한 세상에서, 무채색의 차분함을 느껴 봅니다. 한 가지 색으로도 얼마든지 무지개를 그릴 수 있어요. 그래도 아이들은 물감을 쓰고 싶다고 해요. 그래서 다음 시간에는 색깔이 있는 무지개를 그려보기로 약속했어요.
+검은색의 마른 재료만으로 그림을 그려봅니다. 가지각색의 색이 넘쳐나는 화려하고 복잡한 세상에서 잠시 벗어나, 무채색이 주는 차분함을 느껴보는 시간이에요. 한 가지 색만으로도 얼마든지 무지개를 그릴 수 있답니다. 그래도 아이들은 물감을 쓰고 싶다고 해요. 그래서 다음 시간에는 색깔이 있는 무지개를 그려보기로 약속했습니다.
         </div>
       </div>
     </div>
@@ -1156,7 +1277,7 @@
         <div class="photo-sub-title">오늘의 이야기</div>
         <div class="info-text">
           <!-- 재료, 수업 흐름, 특이사항, 오늘의 한마디 등을 자유롭게 기록해 주세요 -->
-약속대로 무지개를 그리는 날. 우선 고체물감에 익숙해지기 위해 색색깔의 스폰지에 고체물감을 묻혀 통통 찍어 보았어요. 무지개만 그리기가 왠지 섭섭해서, 무지개 물고기를 그려보기로 했어요. 한 명이 한 가지 색의 물감을 골라 물고기 모양 안에 비늘 무늬를 그려요. 이어서 차례로 친구가 그린 무늬에 이어 자기가 고른 색깔로 비늘을 그려 넣으니, 멀리서 보면 비늘 하나하나가 꼭 무지개처럼 보여요. 이 무지개는 '빨주노초파남보'가 아니라 '파빨주보하'네요!
+약속대로 무지개를 그리는 날이에요. 먼저 고체물감에 익숙해질 수 있도록 색색의 스펀지에 물감을 묻혀 통통 찍어보았습니다. 무지개만 그리기에는 왠지 섭섭해서, 무지개 물고기도 함께 그려보기로 했어요. 한 명씩 자신이 원하는 색을 골라 물고기 모양 안에 비늘 무늬를 그립니다. 앞서 친구가 그린 무늬에 이어 자신이 고른 색으로 비늘을 채워나가니, 멀리서 보았을 때 비늘 하나하나가 꼭 무지개처럼 보여요. 이 무지개는 '빨주노초파남보'가 아니라 '파빨주보하'네요!
         </div>
       </div>
     </div>
@@ -1270,7 +1391,7 @@
       </div>
       <div class="info-plain">
         <div class="photo-sub-title">오늘의 이야기</div>
-        <div class="info-text">반투명한 재질의 색깔 창을 불에 비추어보면 색색깔의 빛이 되어요. 제일 이끌리는 색은 어떤 색인가요? 우리가 사는 아파트의 창문들도 이렇게 알록달록하면 얼마나 멋질까요? 우리가 직접 색색의 창문을 그려볼까요? 여기서, 두 가지 색을 섞어 칠해야 한다는 규칙이 있었어요. 규칙이 마음에 들지 않는 친구들은 구름에 색을 섞어 그리기도 하고, 또 무지개를 그리기도 하고, 그냥 마음 가는대로 한 가지 색으로 표현하기도 했답니다.
+        <div class="info-text">반투명한 색깔 창을 빛에 비추어보면 알록달록한 색의 빛이 생겨나요. 그중에서 가장 마음이 이끌리는 색은 무엇인가요? 우리가 사는 아파트의 창문도 이렇게 알록달록하다면 얼마나 멋질까요? 이번에는 우리가 직접 색색의 창문을 그려보기로 했어요. 창문 안에는 두 가지 색을 섞어 칠한다는 규칙도 정했습니다. 하지만 규칙이 마음에 들지 않는 친구들은 구름에 색을 섞어 칠하기도 하고, 무지개를 그리기도 하고, 마음이 가는 대로 한 가지 색만 사용하기도 했답니다.
       </div>
     </div>
     </div>
@@ -1343,7 +1464,7 @@
           <img src="cropped/활동_03_2_thumb.jpg" alt="3회차 수업 풍경 2">
         </div>
         <div class="group-photo" data-preview="cropped/활동_03_6.jpg">
-          <img src="cropped/활동_03_6_thumb.jpg" alt="3회차 수업 풍경 6">
+          <img src="cropped/활동_03_6_thumb.jpg" alt="3회차 수업 풍경 3">
         </div>
       </div>
     </div>
@@ -1378,7 +1499,7 @@
       </div>
       <div class="info-plain">
         <div class="photo-sub-title">오늘의 이야기</div>
-        <div class="info-text">가까운 소나무 숲에서 나뭇가지를 주웠어요. 붓으로 삼으려고요. 가운데에 긴 천을 깔아 놓고, 앞에 있는 친구의 모습을 관찰해서 그려 주었어요. 나뭇가지 그대로 물감을 찍어 그리기도 하고, 가지 끝에 콩테나 붓을 테이프로 감아서 쓰기도 했어요. 머리 모양, 옷의 무늬, 색깔 등등. 그러다가 결국에는 친구들, 선생님의 모습을 그리고 싶은 만큼 그렸답니다.
+        <div class="info-text">가까운 소나무 숲에서 나뭇가지를 주웠어요. 오늘은 이 나뭇가지가 우리의 붓이 됩니다. 가운데에 긴 천을 펼쳐놓고, 맞은편에 앉은 친구의 모습을 자세히 관찰하며 그려주었어요. 나뭇가지에 직접 물감을 묻혀 그리기도 하고, 가지 끝에 콩테나 붓을 테이프로 감아 쓰기도 했습니다. 머리 모양과 옷의 무늬, 좋아하는 색깔까지 하나씩 살펴보며 그렸어요. 그러다 보니 어느새 친구들과 선생님의 모습을 그리고 싶은 만큼 자유롭게 그리고 있었답니다.
       </div>
     </div>
     </div>
@@ -1526,7 +1647,7 @@
       </div>
       <div class="info-plain">
         <div class="photo-sub-title">오늘의 이야기</div>
-        <div class="info-text">오늘은 음악에 맞춰 즉흥 드로잉! 어제 주운 나뭇가지를 한 번 더 사용해요. 신명나는 다양한 장르의 음악을 들으면서 느끼는 대로 천에 표현해보는 거예요. 선생님이 먼저 망가지는 시범을 보였음에도(^^) 음악이 나오자마자 까르르 웃으며 막춤을 추는 친구도 있고, 선뜻 춤을 추지 않는 친구들도 있었어요. 그러다 이제는 물감 물을 천에 붓고 우리의 발자국을 찍어보기도 했지요. 역시나 음악에 맞춘 발구르기의 흔적이었지요. 마지막에는 모두가 물감을 밟으며 기차놀이하듯 움직여보았답니다.
+        <div class="info-text">오늘은 음악에 맞추어 즉흥 드로잉을 합니다. 어제 주운 나뭇가지를 한 번 더 사용해보았어요. 신명나는 여러 장르의 음악을 들으며, 몸과 마음이 느끼는 대로 커다란 천 위에 표현하는 시간입니다. 선생님이 먼저 음악의 리듬에 맞춰 막춤 시범을 보이자, 큰 음악 소리에 까르르 웃으며 따라 추는 친구도 있고 선뜻 몸을 움직이지 않는 친구도 있었어요. 이어 물감물을 천 위에 붓고, 그 위에 우리의 발자국도 남겨보았습니다. 음악에 맞추어 발을 구르며 만든 흔적이지요. 마지막에는 모두 함께 물감을 밟으며 기차놀이를 하듯 줄지어 움직여보았답니다.
       </div>
     </div>
     </div>
@@ -1586,7 +1707,7 @@
       </div>
       <div class="info-plain">
         <div class="photo-sub-title">오늘의 이야기</div>
-        <div class="info-text">집에 쌓이는 낙서들, 새로운 콜라주 작품으로 환골탈태하기! 아이들의 익숙하고 서슴없는 가위질에 깜짝 놀랐어요. 원하는 모양을 요리조리 오려놓고, 그 다음 큰 종이에 붙였어요. 이때 우리의 약속, 이야기가 있는 작품을 만들기! 완성한 다음 아이들이 잘라낸 그림들 사이에 어떤 이야기가 있는지 들려주는데, 역시 똥이 좋을 나이에요! 너무 웃기고 재미있어서 까르르 까르르, 분위기 좋았답니다.</div>
+        <div class="info-text">집에 차곡차곡 쌓이는 낙서들을 새로운 콜라주 작품으로 환골탈태시켜봅니다. 아이들의 익숙하고 거침없는 가위질에 선생님도 깜짝 놀랐어요. 원하는 모양을 요리조리 오린 다음, 커다란 종이 위에 자유롭게 붙였습니다. 이때 우리가 정한 약속은 '이야기가 있는 작품 만들기'였어요. 작품을 완성한 뒤, 아이들은 잘라 붙인 그림들 사이에 어떤 이야기가 숨어 있는지 들려주었습니다. 역시 똥 이야기가 가장 재미있는 나이인가 봐요! 엉뚱하고 유쾌한 이야기에 모두 까르르 웃으며 즐거운 시간을 보냈답니다.</div>
       </div>
     </div>
 
@@ -1667,7 +1788,11 @@
           <img src="cropped/활동_06_09_thumb.jpg" alt="6회차 수업 풍경 5">
         </div>
         <div class="group-photo group-video">
-          <video src="cropped/6회차.mp4" controls preload="metadata" playsinline></video>
+          <video src="cropped/활동_06_0.mp4" preload="metadata" playsinline muted></video>
+          <div class="video-controls">
+            <button class="vid-btn vid-play" aria-label="재생">▶</button>
+            <button class="vid-btn vid-mute" aria-label="음소거 해제">🔇</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1702,7 +1827,7 @@
       </div>
       <div class="info-plain">
         <div class="photo-sub-title">오늘의 이야기</div>
-        <div class="info-text">아직 글을 읽고 쓰지는 못하지만, 그림책은 만들 수 있어요! 각자 한 문장씩 이야기를 지어서 릴레이 동화책을 만드는 거예요! 앞 사람이 지은 내용을 기억하고 존중하면서, 내 문장을 만드는 차례에는 얼마든지 자유롭게 상상을 펼칠 수 있어요. 오늘은 주인공이 코끼리예요. 작업실 천장에도 코끼리 그림이 있지요. 코끼리가 하늘을 날아, 예쁘게 꾸미고 친구의 생일파티에 가서 참치도 먹었고요, 울림통을 만들고도 싶었는데, 돌아오는 길에 사냥꾼을 만났대요. 마지막에 어떻게 되었을까요?^^
+        <div class="info-text">아직 글을 읽거나 쓰지는 못해도 그림책은 만들 수 있어요. 한 사람씩 한 문장을 지어 이어가는 릴레이 동화책을 만들어봅니다. 앞사람이 만든 이야기를 기억하고 존중하면서도, 내 차례에는 얼마든지 자유롭게 상상할 수 있어요. 오늘 이야기의 주인공은 코끼리입니다. 그러고보니 작업실 천장에도 코끼리 그림이 있지요. 이야기 속 코끼리는 하늘을 날아 예쁘게 꾸민 뒤 친구의 생일파티에 갔고, 그곳에서 참치도 먹었어요. 울림통도 만들고 싶었지만, 집으로 돌아오는 길에 사냥꾼을 만나고 말았대요. 과연 마지막에는 어떻게 되었을까요?
       </div>
     </div>
     </div>
@@ -1772,13 +1897,13 @@
           <img src="cropped/활동_07_1_thumb.jpg" alt="7회차 수업 풍경 1">
         </div>
         <div class="group-photo" data-preview="cropped/활동_07_3.jpg">
-          <img src="cropped/활동_07_3_thumb.jpg" alt="7회차 수업 풍경 3">
+          <img src="cropped/활동_07_3_thumb.jpg" alt="7회차 수업 풍경 2">
         </div>
         <div class="group-photo" data-preview="cropped/활동_07_4.jpg">
-          <img src="cropped/활동_07_4_thumb.jpg" alt="7회차 수업 풍경 4">
+          <img src="cropped/활동_07_4_thumb.jpg" alt="7회차 수업 풍경 3">
         </div>
         <div class="group-photo" data-preview="cropped/활동_07_5.jpg">
-          <img src="cropped/활동_07_5_thumb.jpg" alt="7회차 수업 풍경 5">
+          <img src="cropped/활동_07_5_thumb.jpg" alt="7회차 수업 풍경 4">
         </div>
       </div>
     </div>
@@ -1816,26 +1941,74 @@
       </div>
       <div class="info-plain">
         <div class="photo-sub-title">오늘의 이야기</div>
-        <div class="info-text">수업 후 이야기가 업데이트될 예정입니다.</div>
+        <div class="info-text">이 세상에는 우리가 직접 찾아 나서지 않으면 만나기 어려운 수많은 생명체가 존재합니다. 모두 지구가 품고 있는 소중한 보물이지요. 오늘은 땅과 바다를 닮은 커다란 흙덩어리를 파헤치며, 그 안에 숨겨진 구슬과 조약돌을 찾아보는 모험을 했어요. 손가락 끝까지 힘을 주어 흙에 구멍을 내고, 도구로 표면을 긁어내자 여기저기에서 "찾았다!"라는 외침이 들려옵니다. 보물찾기가 끝난 뒤에는 각자 발견한 보물을 깨끗이 씻어 말렸어요. 그리고 사용했던 흙으로 움푹한 틀을 만들었습니다. 석고가루를 물에 풀어 틀 안에 붓고, 찾아낸 보물 몇 개를 토핑처럼 올려주었어요. 여기에 시원한 바다를 떠올리게 하는 조개껍데기도 함께 사용했습니다. 석고가 완전히 굳은 뒤 틀에서 꺼내면 완성이에요. 과연 어떤 모습의 작품이 나타날까요?</div>
       </div>
     </div>
 
     <div class="session-divider" style="margin-top: 22px;"></div>
     <div class="photo-section">
-      <div class="photo-sub-title">아이들의 작품 사진</div>
-      <div class="children-row">
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1);"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2);"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3);"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4);"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5);"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6);"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
-      </div>
-      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
+      <div class="photo-sub-title">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo"><span>🌟</span></div>
-        <div class="group-photo"><span>🖌️</span></div>
-        <div class="group-photo"><span>🎨</span></div>
+        <div class="group-photo" data-preview="cropped/활동_08_1.jpg">
+          <img src="cropped/활동_08_1_thumb.jpg" alt="8회차 수업 풍경 1">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_08_2.jpg">
+          <img src="cropped/활동_08_2_thumb.jpg" alt="8회차 수업 풍경 2">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_08_3.jpg">
+          <img src="cropped/활동_08_3_thumb.jpg" alt="8회차 수업 풍경 3">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_08_5.jpg">
+          <img src="cropped/활동_08_5_thumb.jpg" alt="8회차 수업 풍경 4">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_08_6.jpg">
+          <img src="cropped/활동_08_6_thumb.jpg" alt="8회차 수업 풍경 5">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_08_8.jpg">
+          <img src="cropped/활동_08_8_thumb.jpg" alt="8회차 수업 풍경 6">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_08_9.jpg">
+          <img src="cropped/활동_08_9_thumb.jpg" alt="8회차 수업 풍경 7">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_08_14.jpg">
+          <img src="cropped/활동_08_14_thumb.jpg" alt="8회차 수업 풍경 8">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_08_10.jpg">
+          <img src="cropped/활동_08_10_thumb.jpg" alt="8회차 수업 풍경 9">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_08_12.jpg">
+          <img src="cropped/활동_08_12_thumb.jpg" alt="8회차 수업 풍경 10">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_08_15.jpg">
+          <img src="cropped/활동_08_15_thumb.jpg" alt="8회차 수업 풍경 11">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_08_18.jpg">
+          <img src="cropped/활동_08_18_thumb.jpg" alt="8회차 수업 풍경 12">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_08_19.jpg">
+          <img src="cropped/활동_08_19_thumb.jpg" alt="8회차 수업 풍경 13">
+        </div>
+        <div class="group-photo group-video">
+          <video src="cropped/활동_8_a.mp4" preload="metadata" playsinline muted></video>
+          <div class="video-controls">
+            <button class="vid-btn vid-play" aria-label="재생">▶</button>
+            <button class="vid-btn vid-mute" aria-label="음소거 해제">🔇</button>
+          </div>
+        </div>
+        <div class="group-photo group-video">
+          <video src="cropped/활동_8_b1.mp4" preload="metadata" playsinline muted></video>
+          <div class="video-controls">
+            <button class="vid-btn vid-play" aria-label="재생">▶</button>
+            <button class="vid-btn vid-mute" aria-label="음소거 해제">🔇</button>
+          </div>
+        </div>
+        <div class="group-photo group-video">
+          <video src="cropped/활동_8_b2.mp4" preload="metadata" playsinline muted></video>
+          <div class="video-controls">
+            <button class="vid-btn vid-play" aria-label="재생">▶</button>
+            <button class="vid-btn vid-mute" aria-label="음소거 해제">🔇</button>
+          </div>
+        </div>
       </div>
     </div>
   </div><!-- /session-card 08 -->
@@ -1851,7 +2024,6 @@
         <span class="participant-chip">김소은<span class="age">6세</span></span>
         <span class="participant-chip">한이서<span class="age">6세</span></span>
         <span class="participant-chip">한이준<span class="age">6세</span></span>
-        <span class="participant-chip">신봄<span class="age">7세</span></span>
         <span class="participant-chip">박규태<span class="age">6세</span></span>
         <span class="participant-chip">박규리<span class="age">5세</span></span>
       </div>
@@ -1872,7 +2044,7 @@
       </div>
       <div class="info-plain">
         <div class="photo-sub-title">오늘의 이야기</div>
-        <div class="info-text">수업 후 이야기가 업데이트될 예정입니다.</div>
+        <div class="info-text">누군가의 웃는 모습은 주변 사람들까지 행복하게 합니다. 우리가 사랑하는 사람을 웃게 만드는 수많은 방법 가운데, 오늘은 정성껏 만든 작품을 선물해보기로 했어요. 먼저 접이식 상자를 펼쳐 파란색과 하얀색 물감으로 바다를 그렸습니다. 바다는 정해진 모습이 없지요. 아이들이 그린 그림은 바다 같기도 하고 하늘 같기도 했어요. 물감이 마르는 동안에는 상자 안에 넣을 종이 완충제를 만들었습니다. 한지 색종이를 가위로 가늘게 자른 뒤, 그것을 구겨 부피를 키워 상자 안을 채웠어요. 이서는 길다란 종이로 오징어를 즉흥적으로 만들기도 했지요. 상자를 조립하고, 지난 시간에 만든 석고 작품에 천연 오일을 몇 방울 떨어뜨린 후 조심스럽게 상자 안에 담았습니다. 뚜껑을 닫으면 석고 방향제가 든 선물 상자 완성! 누구에게 선물하고 싶은지 묻자 엄마, 친구, 그리고 자기 자신까지, 모두 다른 답을 들려주었답니다.</div>
       </div>
     </div>
 
@@ -1880,18 +2052,87 @@
     <div class="photo-section">
       <div class="photo-sub-title">아이들의 작품 사진</div>
       <div class="children-row">
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1);"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2);"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3);"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4);"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5);"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6);"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c1);" data-preview="cropped/소은_09.jpg">
+            <div class="child-photo-inner">
+              <img src="cropped/소은_09_thumb.jpg" alt="김소은">
+            </div>
+          </div>
+          <div class="child-name-label">김소은</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c2);" data-preview="cropped/이서_09.jpg">
+            <div class="child-photo-inner">
+              <img src="cropped/이서_09_thumb.jpg" alt="한이서">
+            </div>
+          </div>
+          <div class="child-name-label">한이서</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c3);" data-preview="cropped/이준_09.jpg">
+            <div class="child-photo-inner">
+              <img src="cropped/이준_09_thumb.jpg" alt="한이준">
+            </div>
+          </div>
+          <div class="child-name-label">한이준</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c4);" data-preview="cropped/봄_09.jpg">
+            <div class="child-photo-inner">
+              <img src="cropped/봄_09_thumb.jpg" alt="신봄">
+            </div>
+          </div>
+          <div class="child-name-label">신봄</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c5);" data-preview="cropped/규태_09.jpg">
+            <div class="child-photo-inner">
+              <img src="cropped/규태_09_thumb.jpg" alt="박규태">
+            </div>
+          </div>
+          <div class="child-name-label">박규태</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--c6);" data-preview="cropped/규리_09.jpg">
+            <div class="child-photo-inner">
+              <img src="cropped/규리_09_thumb.jpg" alt="박규리">
+            </div>
+          </div>
+          <div class="child-name-label">박규리</div>
+        </div>
       </div>
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo"><span>🌟</span></div>
-        <div class="group-photo"><span>🖌️</span></div>
-        <div class="group-photo"><span>🎨</span></div>
+        <div class="group-photo" data-preview="cropped/활동_09_0.jpg">
+          <img src="cropped/활동_09_0_thumb.jpg" alt="9회차 수업 풍경 1">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_09_1.jpg">
+          <img src="cropped/활동_09_1_thumb.jpg" alt="9회차 수업 풍경 2">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_09_3.jpg">
+          <img src="cropped/활동_09_3_thumb.jpg" alt="9회차 수업 풍경 3">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_09_6.jpg">
+          <img src="cropped/활동_09_6_thumb.jpg" alt="9회차 수업 풍경 4">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_09_5.jpg">
+          <img src="cropped/활동_09_5_thumb.jpg" alt="9회차 수업 풍경 5">
+        </div>
+        <div class="group-photo" data-preview="cropped/소은_09_1.png">
+          <img src="cropped/소은_09_1_thumb.png" alt="9회차 수업 풍경 6">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_09_7.jpg">
+          <img src="cropped/활동_09_7_thumb.jpg" alt="9회차 수업 풍경 7">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_09_8.jpg">
+          <img src="cropped/활동_09_8_thumb.jpg" alt="9회차 수업 풍경 8">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_09_9.jpg">
+          <img src="cropped/활동_09_9_thumb.jpg" alt="9회차 수업 풍경 9">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_09_11.jpg">
+          <img src="cropped/활동_09_11_thumb.jpg" alt="9회차 수업 풍경 10">
+        </div>
       </div>
     </div>
   </div><!-- /session-card 09 -->
@@ -1918,32 +2159,56 @@
         <div class="photo-sub-title">오늘의 준비물</div>
         <div class="bm-row">
           <div class="bm-info">
-            나뭇가지, 종이 테이프, 끈, 물감, 붓
+            나뭇가지, 종이 테이프, 끈, 물감, 붓 (오늘은 책을 쉬어 갑니다)
           </div>
         </div>
       </div>
       <div class="info-plain">
         <div class="photo-sub-title">오늘의 이야기</div>
-        <div class="info-text">수업 후 이야기가 업데이트될 예정입니다.</div>
+        <div class="info-text">지난 시간에 규태가 "내가 선생님 하고 싶다"고 말하기에, 친구들과 무엇을 만들고 싶은지 생각해오라고 했어요. 규태는 나뭇가지로 낚싯대를 만들고 싶다고 했습니다. 선생님은 낚싯대와 함께 줄에 걸린 물고기도 만들어보자고 제안하고, 필요한 재료와 도구를 준비해주었어요. 규태가 친구들 앞에 나서서 "이렇게 해보세요" 하며 만드는 방법을 보여주자, 친구들도 무척 집중하며 함께 만들었습니다. 다 만든 뒤에는 물고기를 낚는 시늉을 하며 놀아보았어요. 마침 비가 내려 작업실 앞 도랑에 물이 흐르고 있었기에, 밖으로 나가 물을 구경하고 낚싯대를 드리워보기도 했답니다.</div>
       </div>
     </div>
 
     <div class="session-divider" style="margin-top: 22px;"></div>
     <div class="photo-section">
-      <div class="photo-sub-title">아이들의 작품 사진</div>
-      <div class="children-row">
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1);"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2);"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3);"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4);"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5);"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6);"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
-      </div>
-      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
+      <div class="photo-sub-title">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo"><span>🌟</span></div>
-        <div class="group-photo"><span>🖌️</span></div>
-        <div class="group-photo"><span>🎨</span></div>
+        <div class="group-photo" data-preview="cropped/활동_10_10.jpg">
+          <img src="cropped/활동_10_10_thumb.jpg" alt="10회차 수업 풍경 1">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_10_9.jpg">
+          <img src="cropped/활동_10_9_thumb.jpg" alt="10회차 수업 풍경 2">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_10_8.jpg">
+          <img src="cropped/활동_10_8_thumb.jpg" alt="10회차 수업 풍경 3">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_10_7.jpg">
+          <img src="cropped/활동_10_7_thumb.jpg" alt="10회차 수업 풍경 4">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_10_6.jpg">
+          <img src="cropped/활동_10_6_thumb.jpg" alt="10회차 수업 풍경 5">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_10_0.jpg">
+          <img src="cropped/활동_10_0_thumb.jpg" alt="10회차 수업 풍경 6">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_10_0_0.jpg">
+          <img src="cropped/활동_10_0_0_thumb.jpg" alt="10회차 수업 풍경 7">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_10_4.jpg">
+          <img src="cropped/활동_10_4_thumb.jpg" alt="10회차 수업 풍경 8">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_10_2.jpg">
+          <img src="cropped/활동_10_2_thumb.jpg" alt="10회차 수업 풍경 9">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_10_3.jpg">
+          <img src="cropped/활동_10_3_thumb.jpg" alt="10회차 수업 풍경 10">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_10_1.jpg">
+          <img src="cropped/활동_10_1_thumb.jpg" alt="10회차 수업 풍경 11">
+        </div>
+        <div class="group-photo" data-preview="cropped/활동_10_1_1.jpg">
+          <img src="cropped/활동_10_1_1_thumb.jpg" alt="10회차 수업 풍경 12">
+        </div>
       </div>
     </div>
   </div><!-- /session-card 10 -->
@@ -1979,7 +2244,7 @@
       </div>
       <div class="info-plain">
         <div class="photo-sub-title">오늘의 이야기</div>
-        <div class="info-text">수업 후 이야기가 업데이트될 예정입니다.</div>
+        <div class="info-text">오늘은 책을 먼저 읽고, 이 세상이 만들어지는 동안 수많은 '뭔가'들이 생겨났다는 이야기를 들었습니다. 우리도 우리만의 작은 세상을 만들고, 그 안을 직접 만든 창조물로 가득 채워보기로 했어요. 흙으로 만든 서로 다른 조각을 붙일 때에는 이음새가 떨어지지 않도록 꼼꼼하게 메워야 한다는 것도 배웠습니다. 무지개 뭔가, 케이크 뭔가, 나무 뭔가, 사람 뭔가, 달팽이 뭔가, 우주선 뭔가, 그리고 마지막에는 다슬기 뭔가까지. 우리가 만든 이름 모를 창조물들이 작은 세상의 강을 가득 채웠답니다.</div>
       </div>
     </div>
 
@@ -2019,68 +2284,32 @@
   </div><!-- /session-card 11 -->
 
 
-  <!-- ════════ 12회차 · 7월 23일 ════════ -->
-  <div class="session-card" id="session-12">
-    <div class="session-top">
-      <div class="session-top-info">
-        <h3>2026년 7월 23일 목요일</h3>
-      </div>
-      <div class="session-participants">
-        <span class="participant-chip">김소은<span class="age">6세</span></span>
-        <span class="participant-chip">한이서<span class="age">6세</span></span>
-        <span class="participant-chip">한이준<span class="age">6세</span></span>
-        <span class="participant-chip">신봄<span class="age">7세</span></span>
-        <span class="participant-chip">박규태<span class="age">6세</span></span>
-        <span class="participant-chip">박규리<span class="age">5세</span></span>
-      </div>
-    </div>
-    <div class="session-divider"></div>
-    <div class="info-grid">
-      <div class="info-plain">
-        <div class="photo-sub-title">오늘의 책과 준비물</div>
-        <div class="bm-row">
-          <div class="book-slot">
-            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--cream); color: var(--text-dim); font-size: 20px;">📖</div>
-          </div>
-          <div class="bm-info">
-            <span class="b-title">기록 준비중</span> · <span class="b-author">작가</span>
-            <span class="bm-sep">/</span>준비물 준비중
-          </div>
-        </div>
-      </div>
-      <div class="info-plain">
-        <div class="photo-sub-title">오늘의 이야기</div>
-        <div class="info-text">수업 후 이야기가 업데이트될 예정입니다.</div>
-      </div>
-    </div>
-
-    <div class="session-divider" style="margin-top: 22px;"></div>
-    <div class="photo-section">
-      <div class="photo-sub-title">아이들의 작품 사진</div>
-      <div class="children-row">
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c1);"><span>🧡</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">김소은</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c2);"><span>💙</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이서</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c3);"><span>💚</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">한이준</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c4);"><span>💛</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">신봄</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c5);"><span>💜</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규태</div></div>
-        <div class="child-cell"><div class="child-photo" style="border-color: var(--c6);"><span>🩷</span><span class="add-hint">사진 추가</span></div><div class="child-name-label">박규리</div></div>
-      </div>
-      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
-      <div class="group-row">
-        <div class="group-photo"><span>🌟</span></div>
-        <div class="group-photo"><span>🖌️</span></div>
-        <div class="group-photo"><span>🎨</span></div>
-      </div>
-    </div>
-  </div><!-- /session-card 12 -->
-
+  <!-- ════════ 다음 수업 예고 ════════ -->
+  <div class="add-session-card">
+    <div class="plus">📅</div>
+    <strong>다음 수업</strong> — 2026년 7월 23일 목요일
+  </div>
 
   <!-- ════════ 다음 수업 예고 ════════ -->
   <div class="add-session-card">
     <div class="plus">📅</div>
-    <strong>다음 수업</strong> — 2026년 7월 30일 목요일<br>
-    <span style="font-size: 13px; color: var(--text-dim);">수업 후 기록이 업데이트될 예정입니다 🌿</span>
+    <strong>다음 수업</strong> — 2026년 7월 30일 목요일
   </div>
+
+  <!-- ════════ 다음 수업 예고 ════════ -->
+  <div class="add-session-card">
+    <div class="plus">📅</div>
+    <strong>다음 수업</strong> — 2026년 8월 6일 목요일<br>
+    <span style="font-size: 13px; color: var(--text-dim);">부모참여 특강 예정 🌿</span>
+  </div>
+
+  <!-- ════════ 다음 수업 예고 ════════ -->
+  <div class="add-session-card">
+    <div class="plus">📅</div>
+    <strong>다음 수업</strong> — 2026년 8월 13일 목요일
+  </div>
+
+  </div><!-- /records-content -->
 
   </div><!-- /tab-records -->
 
@@ -2155,8 +2384,8 @@
         <span style="color: var(--peach); font-size: 4px; vertical-align: 3px;">●</span> <strong style="color: var(--text); font-weight: 500;">겨울 (12–1월)</strong> &nbsp;디지털 · 콘텐츠 — 사진, 포토샵 체험, 스톱모션 애니메이션<br>
       </div>
       <div class="event-chips">
-        <span class="event-chip">🎪 9월 미니 전시</span>
-        <span class="event-chip">🎭 11월 가족 공연</span>
+        <span class="event-chip">9월 전시</span>
+        <span class="event-chip">11월 공연</span>
         <span class="event-chip">💻 온라인 아카이브</span>
         <span class="event-chip">📅 연말 달력 제작</span>
       </div>
@@ -2176,8 +2405,8 @@
     <div class="ov-card" style="margin-bottom: 14px;">
       <h4>준비 사항</h4>
       <ul style="font-size: 13.5px; color: var(--text-mid); list-style: none; line-height: 2;">
-        <li>물감 등으로 옷이 더러워질 수 있으니, 앞치마나 활동복을 공방에 두고 사용하셔도 좋습니다.</li>
         <li>기본 재료는 모두 제공되며, 재활용품·콜라주 재료 등을 가져와야 할 수 있습니다.</li>
+        <li>물감 등으로 옷이 더러워질 수 있으니, 앞치마나 활동복을 공방에 두고 사용하셔도 좋습니다.</li>
       </ul>
     </div>
 
@@ -2208,7 +2437,7 @@
 
 <!-- ═══════════════════════════════ LIGHTBOX MODAL ═══════════════════════════════ -->
 <div id="art-lightbox" class="lightbox-overlay" onclick="closeLightbox(event)">
-  <div class="lightbox-content" onclick="event.stopPropagation()">
+  <div class="lightbox-content">
     
     <!-- 상단 캡션 정보 -->
     <div class="lightbox-header">
@@ -2233,6 +2462,36 @@
 </div>
 
 <script>
+  // 수업 기록 비밀번호 게이트
+  var RECORDS_PASSWORD = "2026";
+  function unlockRecords() {
+    var gate = document.getElementById('records-gate');
+    var content = document.getElementById('records-content');
+    if (gate) gate.style.display = 'none';
+    if (content) content.style.display = '';
+  }
+  function checkRecordsPassword() {
+    var input = document.getElementById('records-pw');
+    var errorEl = document.getElementById('records-pw-error');
+    if (input && input.value === RECORDS_PASSWORD) {
+      try { localStorage.setItem('ninnik_records_unlocked', '1'); } catch (e) {}
+      unlockRecords();
+    } else if (errorEl) {
+      errorEl.style.display = 'block';
+    }
+  }
+  (function () {
+    var alreadyUnlocked = false;
+    try { alreadyUnlocked = localStorage.getItem('ninnik_records_unlocked') === '1'; } catch (e) {}
+    if (alreadyUnlocked) unlockRecords();
+    var pwInput = document.getElementById('records-pw');
+    if (pwInput) {
+      pwInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') checkRecordsPassword();
+      });
+    }
+  })();
+
   function switchTab(tabId, btn) {
     // 모든 패널 숨기기
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -2245,11 +2504,35 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // 사이드 앵커 메뉴 - 스크롤에 따라 현재 회차 표시
+  // 사이드 앵커 메뉴 - 실제 존재하는 회차(session-card)를 스캔해 자동으로 목록 생성
+  // (session-card가 추가/삭제되면 여기 목록도 새로고침 시 자동으로 맞춰집니다. 수동으로 날짜를 추가할 필요 없음)
   (function () {
-    var navLinks = document.querySelectorAll('.float-dot');
+    var track = document.getElementById('float-nav-track');
     var sessionCards = document.querySelectorAll('#tab-records .session-card');
-    if (!navLinks.length || !sessionCards.length) return;
+    if (!track || !sessionCards.length) return;
+
+    var pad = function (n) { return String(n).padStart(2, '0'); };
+
+    sessionCards.forEach(function (card) {
+      var id = card.getAttribute('id');
+      var h3 = card.querySelector('.session-top-info h3');
+      if (!id || !h3) return;
+
+      // "2026년 5월 7일 목요일" → "2026.05.07 목요일"
+      var m = h3.textContent.match(/(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일\s*(\S+)/);
+      var label = m
+        ? (m[1] + '.' + pad(m[2]) + '.' + pad(m[3]) + ' ' + m[4])
+        : h3.textContent.trim();
+
+      var a = document.createElement('a');
+      a.href = '#' + id;
+      a.className = 'float-dot';
+      a.innerHTML = '<span class="fd"></span><span class="fd-label">' + label + '</span>';
+      track.appendChild(a);
+    });
+
+    var navLinks = track.querySelectorAll('.float-dot');
+    if (!navLinks.length) return;
 
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -2364,6 +2647,10 @@
   }
 
   function closeLightbox(e) {
+    // 그림(대형 이미지), 썸네일, 좌우 화살표 버튼을 클릭한 경우에는 닫지 않음
+    if (e && e.target.closest(".lightbox-img-wrap img, .lightbox-nav, .lightbox-thumb")) {
+      return;
+    }
     document.getElementById("art-lightbox").classList.remove("active");
   }
 
@@ -2390,6 +2677,49 @@
       closeLightbox();
     }
   });
+
+  // 수업 풍경 영상용 커스텀 컨트롤 (전체화면 없이 재생/음소거 버튼만 제공)
+  document.addEventListener("click", function (e) {
+    const playBtn = e.target.closest(".vid-play");
+    const muteBtn = e.target.closest(".vid-mute");
+    if (!playBtn && !muteBtn) return;
+
+    e.stopPropagation();
+    const container = e.target.closest(".group-video");
+    const video = container ? container.querySelector("video") : null;
+    if (!video) return;
+
+    if (playBtn) {
+      if (video.paused) {
+        video.play();
+        playBtn.textContent = "⏸";
+        playBtn.classList.add("is-playing");
+      } else {
+        video.pause();
+        playBtn.textContent = "▶";
+        playBtn.classList.remove("is-playing");
+      }
+    }
+    if (muteBtn) {
+      video.muted = !video.muted;
+      muteBtn.textContent = video.muted ? "🔇" : "🔊";
+    }
+  });
+
+  // 영상이 끝까지 재생되면 재생 버튼 아이콘을 다시 ▶로 되돌림
+  document.addEventListener(
+    "ended",
+    function (e) {
+      const container = e.target.closest ? e.target.closest(".group-video") : null;
+      if (!container) return;
+      const playBtn = container.querySelector(".vid-play");
+      if (playBtn) {
+        playBtn.textContent = "▶";
+        playBtn.classList.remove("is-playing");
+      }
+    },
+    true
+  );
 </script>
 </body>
 </html>

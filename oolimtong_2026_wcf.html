@@ -1828,6 +1828,14 @@
   document.querySelectorAll('#nav-links a').forEach(function(a) {
     a.addEventListener('click', closeNav);
   });
+  /* 배경(메뉴 바깥) 클릭 시 패널 닫기 */
+  document.addEventListener('click', function(e) {
+    var navLinks = document.getElementById('nav-links');
+    var hamburger = document.querySelector('.nav-hamburger');
+    if (navLinks.classList.contains('open') && !navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+      closeNav();
+    }
+  });
 </script>
 </body>
 </html>
