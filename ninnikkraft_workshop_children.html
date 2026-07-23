@@ -86,7 +86,6 @@
   }
   @media (max-width: 560px) {
     .header-title { font-size: clamp(32px, 10vw, 44px); line-height: 1.05; margin-bottom: 16px; }
-    .header-title .title-brand { top: 0; margin-bottom: 10px; }
   }
   .header-title span { color: var(--coral); }
   .header-title { word-break: keep-all; }
@@ -105,6 +104,9 @@
     margin-bottom: 0;
     position: relative;
     top: 6px;
+  }
+  @media (max-width: 560px) {
+    .header-title .title-brand { top: 0; margin-bottom: 10px; }
   }
 
   .header-sub {
