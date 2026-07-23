@@ -88,6 +88,8 @@
     .header-title { font-size: clamp(32px, 10vw, 44px); }
   }
   .header-title span { color: var(--coral); }
+  .header-title { word-break: keep-all; }
+  .header-title .title-multicolor { white-space: nowrap; }
 
   .header-sub {
     font-size: 13px;
@@ -806,6 +808,11 @@
     word-break: keep-all;
     overflow-wrap: break-word;
   }
+  .records-gate-msg .no-wrap-line {
+    display: block;
+    white-space: nowrap;
+    font-size: clamp(11px, 3.6vw, 14.5px);
+  }
   .records-gate-form {
     display: flex;
     gap: 8px;
@@ -1093,7 +1100,7 @@
   <div class="deco-circle c1"></div>
   <div class="deco-circle c2"></div>
   <div class="deco-circle c3"></div>
-  <img class="header-loop" src="cropped/ck_logo.png" alt="니닉크라프트 어린이 작업실 로고 (나뭇가지와 조개, 유리구슬로 만든 삼각형 모티프)">
+  <img class="header-loop" src="cropped/ck_logo_small.png" alt="니닉크라프트 어린이 작업실 로고 (나뭇가지와 조개, 유리구슬로 만든 삼각형 모티프)">
   <h1 class="header-title">니닉크라프트 <span class="title-multicolor"><span style="color:#8A3A1C;">어</span><span style="color:#C1552E;">린</span><span style="color:#D9805A;">이</span> <span style="color:#5C6FA0;">작</span><span style="color:#3E4F7A;">업</span><span style="color:#2A3555;">실</span></span></h1>
   <div class="header-chips">
     <span class="chip">과정 중심 · 다매체 · 통합 인문예술 교육</span>
@@ -1119,7 +1126,7 @@
   <div id="records-gate" class="records-gate">
     <video class="records-gate-video" src="cropped/records_teaser.mp4" autoplay muted loop playsinline></video>
     <div class="records-gate-box">
-      <p class="records-gate-msg">수강생 학부모님만 확인하실 수 있는 페이지입니다.<br>안내받은 비밀번호를 입력해주세요.</p>
+      <p class="records-gate-msg"><span class="no-wrap-line">수강생 학부모님만 확인하실 수 있는 페이지입니다.</span>안내받은 비밀번호를 입력해주세요.</p>
       <div class="records-gate-form">
         <input type="password" id="records-pw" class="records-gate-input" placeholder="비밀번호" inputmode="numeric" maxlength="10">
         <button type="button" class="records-gate-btn" onclick="checkRecordsPassword()">확인</button>
@@ -2384,8 +2391,8 @@
         <span style="color: var(--peach); font-size: 4px; vertical-align: 3px;">●</span> <strong style="color: var(--text); font-weight: 500;">겨울 (12–1월)</strong> &nbsp;디지털 · 콘텐츠 — 사진, 포토샵 체험, 스톱모션 애니메이션<br>
       </div>
       <div class="event-chips">
-        <span class="event-chip">9월 전시</span>
-        <span class="event-chip">11월 공연</span>
+        <span class="event-chip">🖼️ 9월 전시</span>
+        <span class="event-chip">🎭 11월 공연</span>
         <span class="event-chip">💻 온라인 아카이브</span>
         <span class="event-chip">📅 연말 달력 제작</span>
       </div>
@@ -2474,7 +2481,7 @@
     var input = document.getElementById('records-pw');
     var errorEl = document.getElementById('records-pw-error');
     if (input && input.value === RECORDS_PASSWORD) {
-      try { localStorage.setItem('ninnik_records_unlocked', '1'); } catch (e) {}
+      try { localStorage.setItem('ninnik_records_unlocked_pw', RECORDS_PASSWORD); } catch (e) {}
       unlockRecords();
     } else if (errorEl) {
       errorEl.style.display = 'block';
@@ -2482,7 +2489,7 @@
   }
   (function () {
     var alreadyUnlocked = false;
-    try { alreadyUnlocked = localStorage.getItem('ninnik_records_unlocked') === '1'; } catch (e) {}
+    try { alreadyUnlocked = localStorage.getItem('ninnik_records_unlocked_pw') === RECORDS_PASSWORD; } catch (e) {}
     if (alreadyUnlocked) unlockRecords();
     var pwInput = document.getElementById('records-pw');
     if (pwInput) {
