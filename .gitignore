@@ -1,0 +1,10 @@
+node_modules/
+.next/
+.vercel/
+.tmp/
+media-source/
+*.log
+*.docx
+*.pdf
+*.txt
+.DS_Store

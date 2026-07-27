@@ -1,0 +1,11 @@
+.agents/
+.tmp/
+media-source/
+tools/
+*.docx
+*.pdf
+*.txt
+firebase.json
+firestore.rules
+FIREBASE_SETUP.md
+서버시작.bat
