@@ -8,3 +8,4 @@ media-source/
 *.pdf
 *.txt
 .DS_Store
+.env*
