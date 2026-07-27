@@ -173,52 +173,54 @@ a {
 }
 
 .language-switch {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
   align-items: center;
-  gap: 0;
+  gap: 12px;
   flex: 0 0 auto;
-  width: 88px;
-  height: 24px;
+  width: auto;
+  min-width: 0;
+  height: auto;
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
   border: 0;
-  border-radius: 999px;
-  background: #241310;
-  color: var(--orange-bright);
+  border-radius: 0;
+  background: transparent;
+  color: var(--terracotta-muted);
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
 }
 
 .language-switch a {
-  display: grid;
-  height: 100%;
+  display: inline-block;
+  min-width: 0;
+  height: auto;
   padding: 0;
-  place-items: center;
-  border-radius: 0;
-  color: var(--orange-bright);
+  color: var(--terracotta-muted);
   line-height: 1.2;
   text-align: center;
+  text-indent: 0;
   text-decoration: none;
-  transition: color 180ms ease, background-color 180ms ease;
+  white-space: nowrap;
+  transition: color 180ms ease, text-shadow 180ms ease;
 }
 
 .language-switch a:not([aria-current="page"]):hover,
 .language-switch a:not([aria-current="page"]):focus-visible {
-  background: rgba(254, 72, 50, 0.1);
   color: var(--orange-bright);
+  text-shadow: 0 0 16px rgba(254, 72, 50, 0.38);
 }
 
 .language-switch a[aria-current="page"] {
-  background: var(--orange-bright);
-  color: var(--space);
+  color: var(--orange-bright);
+  font-weight: 600;
 }
 
 .language-switch a[aria-current="page"]:hover,
 .language-switch a[aria-current="page"]:focus-visible {
-  color: var(--space);
+  color: var(--orange-bright);
+  text-shadow: 0 0 16px rgba(254, 72, 50, 0.38);
 }
 
 .menu {
@@ -311,6 +313,48 @@ a {
   opacity: 0;
 }
 
+.archive-cover {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  background: var(--orange);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 360ms ease;
+}
+
+.archive-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(1) contrast(1.18) brightness(1.05);
+  mix-blend-mode: multiply;
+  opacity: 0.86;
+  transform: scale(1.02);
+  transition: transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.archive-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(3, 10, 12, 0.06), rgba(3, 10, 12, 0.58));
+}
+
+.menu-card.archive:hover .archive-cover,
+.menu-card.archive:focus-visible .archive-cover {
+  opacity: 1;
+}
+
+.menu-card.archive:hover .archive-cover img,
+.menu-card.archive:focus-visible .archive-cover img {
+  transform: scale(1.07);
+}
+
 .menu-card.children {
   background:
     radial-gradient(circle at 82% 20%, rgba(255, 250, 232, 0.82), transparent 32%),
@@ -336,18 +380,18 @@ a {
 .children-cover {
   position: absolute;
   z-index: 1;
-  top: auto;
-  right: auto;
-  bottom: calc(100% + clamp(14px, 1.6vw, 22px));
-  left: 0;
-  width: clamp(60px, 6vw, 86px);
-  max-width: none;
-  aspect-ratio: 1;
+  top: 48%;
+  right: 5%;
+  width: clamp(190px, 22vw, 320px);
+  aspect-ratio: 300 / 269;
   pointer-events: none;
   opacity: 0;
   background: transparent;
-  transform: none;
-  transition: opacity 220ms ease-in-out;
+  transform: translateY(-46%) scale(0.92);
+  transform-origin: center;
+  transition:
+    opacity 280ms ease-in-out,
+    transform 680ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .children-cover img {
@@ -355,34 +399,13 @@ a {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter:
-    brightness(0)
-    saturate(100%)
-    invert(18%)
-    sepia(30%)
-    saturate(2345%)
-    hue-rotate(330deg)
-    brightness(88%)
-    contrast(91%)
-    drop-shadow(0 10px 16px rgba(111, 45, 31, 0.12));
-}
-
-.children-cover::after {
-  content: "";
-  position: absolute;
-  left: 53%;
-  top: 60%;
-  width: 10%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: linear-gradient(145deg, #efd7ae, #ddbd8d);
-  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 6px 10px rgba(111, 45, 31, 0.14));
 }
 
 .children:hover .children-cover,
 .children:focus-visible .children-cover {
-  opacity: 0.96;
-  transform: translateY(5px);
+  opacity: 0.72;
+  transform: translateY(-50%) scale(1);
 }
 
 .menu-card.network {
@@ -785,10 +808,6 @@ html[lang="en"] .about-copy {
     width: auto;
     justify-content: flex-start;
     gap: 8px 16px;
-  }
-
-  .language-switch {
-    width: max-content;
   }
 
   .menu {
