@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/ninnikkraft_workshop_children",
+      "destination": "/children_workshop",
+      "permanent": true
+    }
+  ]
+}

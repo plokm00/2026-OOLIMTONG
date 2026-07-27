@@ -38,7 +38,7 @@ npm run dev
 ## 주요 경로
 
 - `/` — 울림통 아카이브
-- `/oolimtong_2026_wcf.html` — 울림통-변주 2026
-- `/oolimtong_2026_ipo.html` — 이포중학교 협력창작 프로젝트
-- `/ninnikkraft_workshop_children.html` — 니닉크라프트 어린이 작업실
+- `/oolimtong_2026_wcf` — 울림통-변주 2026
+- `/oolimtong_2026_ipo` — 이포중학교 협력창작 프로젝트
+- `/children_workshop` — 니닉크라프트 어린이 작업실
 - `/framework-status` — Next.js 실행 상태 확인용 페이지

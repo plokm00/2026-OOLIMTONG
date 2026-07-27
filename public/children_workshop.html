@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHILDREN'S WORKSHOP at NINNIK KRAFT</title>
+<meta name="description" content="니닉크라프트 어린이 작업실의 수업 기록과 프로그램 소개">
+<link rel="canonical" href="https://ninnikkraft.vercel.app/children_workshop">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap');
 
@@ -235,13 +237,53 @@
     background: rgba(246,239,222,0.95);
     box-shadow: 0 6px 24px rgba(42,31,22,0.18);
   }
-  .float-dot {
+  .float-dot,
+  .float-jump {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 8px;
     text-decoration: none;
+  }
+  .float-dot {
     height: 8px;
+  }
+  .float-jump {
+    width: 100%;
+    max-height: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--text-mid);
+    font: inherit;
+    cursor: pointer;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    visibility: hidden;
+    transition: max-height 0.2s ease, opacity 0.15s ease;
+  }
+  .float-nav:hover .float-jump,
+  .float-nav:focus-within .float-jump {
+    max-height: 16px;
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+  .float-jump-icon {
+    width: 12px;
+    flex-shrink: 0;
+    color: var(--text-mid);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+    transition: color 0.2s, transform 0.2s;
+  }
+  .float-jump:hover .float-jump-icon,
+  .float-jump:focus-visible .float-jump-icon {
+    color: var(--coral);
+    transform: scale(1.15);
   }
   .float-dot .fd {
     width: 7px;
@@ -252,7 +294,8 @@
     transition: background 0.2s, transform 0.2s;
   }
   .float-dot.active .fd { background: var(--coral); transform: scale(1.35); }
-  .float-dot .fd-label {
+  .float-dot .fd-label,
+  .float-jump .fd-label {
     max-width: 0;
     overflow: hidden;
     white-space: nowrap;
@@ -671,6 +714,30 @@
     opacity: 1;
     border-color: var(--coral); /* 선택된 아이의 미니 썸네일에 코랄 테두리 지정 */
     transform: scale(1.05);
+  }
+
+  @media (max-width: 600px) {
+    .lightbox-content { gap: 10px; }
+    .lightbox-viewer { gap: 6px; }
+    .lightbox-img-wrap {
+      height: min(560px, 72vh);
+      border-radius: 12px;
+    }
+    .lightbox-img-wrap img { padding: 10px; }
+    .lightbox-nav {
+      width: 32px;
+      height: 32px;
+      border-width: 1px;
+      font-size: 10px;
+    }
+    .lightbox-thumb {
+      width: 48px;
+      height: 48px;
+    }
+    .lightbox-thumbs-bar {
+      gap: 6px;
+      padding: 4px 0;
+    }
   }
 
   /* 모바일 가로모드 등 세로 공간이 짧은 화면에서 하단 썸네일이 잘리지 않도록 축소 */
@@ -1168,8 +1235,14 @@
 
   <div class="float-nav">
     <div class="float-nav-track" id="float-nav-track">
+      <button type="button" class="float-jump" onclick="jumpToPageEdge('top')" aria-label="페이지 맨 위로 이동" title="페이지 맨 위로">
+        <span class="fd-label">TOP</span><span class="float-jump-icon" aria-hidden="true">↑</span>
+      </button>
       <!-- 이 목록은 자바스크립트가 실제 존재하는 .session-card를 스캔해 자동으로 채웁니다.
            새 회차(session-card)가 추가되면 여기에 수동으로 날짜를 추가할 필요 없이 자동 등록됩니다. -->
+      <button type="button" class="float-jump" id="float-nav-bottom" onclick="jumpToPageEdge('bottom')" aria-label="페이지 맨 아래로 이동" title="페이지 맨 아래로">
+        <span class="fd-label">BOTTOM</span><span class="float-jump-icon" aria-hidden="true">↓</span>
+      </button>
     </div>
   </div>
 
@@ -1219,7 +1292,7 @@
       <div class="children-row">
         <!-- 소은 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c1);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%86%8C%EC%9D%80_01.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c1);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%86%8C%EC%9D%80_01.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%86%8C%EC%9D%80_01_thumb.png?alt=media" alt="김소은" loading="lazy" decoding="async">
             </div>
@@ -1228,7 +1301,7 @@
         </div>
         <!-- 이서 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c2);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%84%9C_01.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c2);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%9D%B4%EC%84%9C_01.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%84%9C_01_thumb.png?alt=media" alt="한이서" loading="lazy" decoding="async">
             </div>
@@ -1237,7 +1310,7 @@
         </div>
         <!-- 이준 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c3);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%A4%80_01.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c3);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%9D%B4%EC%A4%80_01.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%A4%80_01_thumb.png?alt=media" alt="한이준" loading="lazy" decoding="async">
             </div>
@@ -1246,7 +1319,7 @@
         </div>
         <!-- 봄 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c4);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_01.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c4);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EB%B4%84_01.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_01_thumb.png?alt=media" alt="신봄" loading="lazy" decoding="async">
             </div>
@@ -1255,7 +1328,7 @@
         </div>
         <!-- 규태 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_01.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EA%B7%9C%ED%83%9C_01.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_01_thumb.png?alt=media" alt="박규태" loading="lazy" decoding="async">
             </div>
@@ -1266,10 +1339,10 @@
 
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo" style="border-color: var(--line2);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_01_1.jpg?alt=media">
+        <div class="group-photo" style="border-color: var(--line2);" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_01_1.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_01_1_thumb.jpg?alt=media" alt="1회차 수업 풍경 1" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" style="border-color: var(--line2);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_01_2.jpg?alt=media">
+        <div class="group-photo" style="border-color: var(--line2);" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_01_2.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_01_2_thumb.jpg?alt=media" alt="1회차 수업 풍경 2" loading="lazy" decoding="async">
         </div>
       </div>
@@ -1319,7 +1392,7 @@
       <div class="children-row">
         <!-- 소은 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c1);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%86%8C%EC%9D%80_02.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c1);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%86%8C%EC%9D%80_02.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%86%8C%EC%9D%80_02_thumb.png?alt=media" alt="김소은" loading="lazy" decoding="async">
             </div>
@@ -1328,7 +1401,7 @@
         </div>
         <!-- 이서 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c2);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%84%9C_02.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c2);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%9D%B4%EC%84%9C_02.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%84%9C_02_thumb.png?alt=media" alt="한이서" loading="lazy" decoding="async">
             </div>
@@ -1337,7 +1410,7 @@
         </div>
         <!-- 이준 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c3);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%A4%80_02.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c3);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%9D%B4%EC%A4%80_02.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%A4%80_02_thumb.png?alt=media" alt="한이준" loading="lazy" decoding="async">
             </div>
@@ -1346,7 +1419,7 @@
         </div>
         <!-- 봄 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c4);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_02.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c4);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EB%B4%84_02.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_02_thumb.png?alt=media" alt="신봄" loading="lazy" decoding="async">
             </div>
@@ -1355,7 +1428,7 @@
         </div>
         <!-- 규태 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_02.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EA%B7%9C%ED%83%9C_02.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_02_thumb.png?alt=media" alt="박규태" loading="lazy" decoding="async">
             </div>
@@ -1364,7 +1437,7 @@
         </div>
         <!-- 함께 1 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--line2);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_02_1.png?alt=media">
+          <div class="child-photo" style="border-color: var(--line2);" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_02_1.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_02_1_thumb.png?alt=media" alt="함께 1" loading="lazy" decoding="async">
             </div>
@@ -1373,7 +1446,7 @@
         </div>
         <!-- 함께 2 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--line2);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_02_2.png?alt=media">
+          <div class="child-photo" style="border-color: var(--line2);" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_02_2.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_02_2_thumb.png?alt=media" alt="함께 2" loading="lazy" decoding="async">
             </div>
@@ -1384,10 +1457,10 @@
 
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_02_1.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_02_1.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_02_1_thumb.jpg?alt=media" alt="2회차 수업 풍경 1" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_02_2.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_02_2.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_02_2_thumb.jpg?alt=media" alt="2회차 수업 풍경 2" loading="lazy" decoding="async">
         </div>
       </div>
@@ -1433,7 +1506,7 @@
       <div class="children-row">
         <!-- 소은 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c1);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%86%8C%EC%9D%80_03.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c1);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%86%8C%EC%9D%80_03.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%86%8C%EC%9D%80_03_thumb.png?alt=media" alt="김소은" loading="lazy" decoding="async">
             </div>
@@ -1442,7 +1515,7 @@
         </div>
         <!-- 이서 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c2);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%84%9C_03.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c2);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%9D%B4%EC%84%9C_03.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%84%9C_03_thumb.png?alt=media" alt="한이서" loading="lazy" decoding="async">
             </div>
@@ -1451,7 +1524,7 @@
         </div>
         <!-- 이준 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c3);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%A4%80_03.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c3);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%9D%B4%EC%A4%80_03.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%A4%80_03_thumb.png?alt=media" alt="한이준" loading="lazy" decoding="async">
             </div>
@@ -1460,7 +1533,7 @@
         </div>
         <!-- 봄 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c4);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_03.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c4);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EB%B4%84_03.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_03_thumb.png?alt=media" alt="신봄" loading="lazy" decoding="async">
             </div>
@@ -1469,7 +1542,7 @@
         </div>
         <!-- 규태 1 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_03_1.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EA%B7%9C%ED%83%9C_03_1.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_03_1_thumb.png?alt=media" alt="박규태 1" loading="lazy" decoding="async">
             </div>
@@ -1478,7 +1551,7 @@
         </div>
         <!-- 규태 2 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_03_2.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EA%B7%9C%ED%83%9C_03_2.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_03_2_thumb.png?alt=media" alt="박규태 2" loading="lazy" decoding="async">
             </div>
@@ -1488,13 +1561,13 @@
       </div>
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_03_1.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_03_1.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_03_1_thumb.jpg?alt=media" alt="3회차 수업 풍경 1" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_03_2.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_03_2.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_03_2_thumb.jpg?alt=media" alt="3회차 수업 풍경 2" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_03_6.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_03_6.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_03_6_thumb.jpg?alt=media" alt="3회차 수업 풍경 3" loading="lazy" decoding="async">
         </div>
       </div>
@@ -1541,7 +1614,7 @@
       <div class="children-row">
         <!-- 소은 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c1);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_%EC%86%8C%EC%9D%80_04.jpg?alt=media">
+          <div class="child-photo" style="border-color: var(--c1);" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_%EC%86%8C%EC%9D%80_04.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_%EC%86%8C%EC%9D%80_04_thumb.png?alt=media" alt="김소은" loading="lazy" decoding="async">
             </div>
@@ -1550,7 +1623,7 @@
         </div>
         <!-- 이서 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c2);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_%EC%9D%B4%EC%84%9C_04.jpg?alt=media">
+          <div class="child-photo" style="border-color: var(--c2);" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_%EC%9D%B4%EC%84%9C_04.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_%EC%9D%B4%EC%84%9C_04_thumb.png?alt=media" alt="한이서" loading="lazy" decoding="async">
             </div>
@@ -1559,7 +1632,7 @@
         </div>
         <!-- 이준 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c3);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_%EC%9D%B4%EC%A4%80_04.jpg?alt=media">
+          <div class="child-photo" style="border-color: var(--c3);" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_%EC%9D%B4%EC%A4%80_04.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_%EC%9D%B4%EC%A4%80_04_thumb.png?alt=media" alt="한이준" loading="lazy" decoding="async">
             </div>
@@ -1568,7 +1641,7 @@
         </div>
         <!-- 봄 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c4);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_%EB%B4%84_04.jpg?alt=media">
+          <div class="child-photo" style="border-color: var(--c4);" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_%EB%B4%84_04.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_%EB%B4%84_04_thumb.png?alt=media" alt="신봄" loading="lazy" decoding="async">
             </div>
@@ -1577,7 +1650,7 @@
         </div>
         <!-- 규태 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_%EA%B7%9C%ED%83%9C_04.jpg?alt=media">
+          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_%EA%B7%9C%ED%83%9C_04.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_%EA%B7%9C%ED%83%9C_04_thumb.png?alt=media" alt="박규태" loading="lazy" decoding="async">
             </div>
@@ -1586,7 +1659,7 @@
         </div>
         <!-- 규리 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c6);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_%EA%B7%9C%EB%A6%AC_04.jpg?alt=media">
+          <div class="child-photo" style="border-color: var(--c6);" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_%EA%B7%9C%EB%A6%AC_04.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_%EA%B7%9C%EB%A6%AC_04_thumb.png?alt=media" alt="박규리" loading="lazy" decoding="async">
             </div>
@@ -1595,7 +1668,7 @@
         </div>
         <!-- 함께 1 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--line2);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_04.jpg?alt=media">
+          <div class="child-photo" style="border-color: var(--line2);" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_04.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_04_thumb.png?alt=media" alt="함께 1" loading="lazy" decoding="async">
             </div>
@@ -1604,7 +1677,7 @@
         </div>
         <!-- 함께 2 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--line2);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_04_7.jpg?alt=media">
+          <div class="child-photo" style="border-color: var(--line2);" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_04_7.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_04_7_thumb.png?alt=media" alt="함께 2" loading="lazy" decoding="async">
             </div>
@@ -1615,25 +1688,25 @@
 
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_04_1.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_04_1.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_04_1_thumb.jpg?alt=media" alt="4회차 수업 풍경 1" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_04_2.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_04_2.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_04_2_thumb.jpg?alt=media" alt="4회차 수업 풍경 2" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_04_3.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_04_3.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_04_3_thumb.jpg?alt=media" alt="4회차 수업 풍경 3" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_04_4.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_04_4.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_04_4_thumb.jpg?alt=media" alt="4회차 수업 풍경 4" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_04_5.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_04_5.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_04_5_thumb.jpg?alt=media" alt="4회차 수업 풍경 5" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_04_6.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_04_6.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_04_6_thumb.jpg?alt=media" alt="4회차 수업 풍경 6" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_04_7.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_04_7.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_04_7_thumb.jpg?alt=media" alt="4회차 수업 풍경 7" loading="lazy" decoding="async">
         </div>
       </div>
@@ -1687,22 +1760,22 @@
     <div class="photo-section">
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_05_1.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_05_1.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_05_1_thumb.jpg?alt=media" alt="5회차 수업 풍경 1" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_05_2_wide.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_05_2_wide.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_05_2_wide_thumb.jpg?alt=media" alt="5회차 수업 풍경 2" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_05_3_wide.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_05_3_wide.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_05_3_wide_thumb.jpg?alt=media" alt="5회차 수업 풍경 3" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_05_4_wide.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_05_4_wide.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_05_4_wide_thumb.jpg?alt=media" alt="5회차 수업 풍경 4" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_05_5_wide.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_05_5_wide.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_05_5_wide_thumb.jpg?alt=media" alt="5회차 수업 풍경 5" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_05_6_rot90ccw.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_05_6_rot90ccw.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_05_6_rot90ccw_thumb.jpg?alt=media" alt="5회차 수업 풍경 6" loading="lazy" decoding="async">
         </div>
       </div>
@@ -1748,7 +1821,7 @@
       <div class="children-row">
         <!-- 소은 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c1);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%86%8C%EC%9D%80_06.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c1);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%86%8C%EC%9D%80_06.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%86%8C%EC%9D%80_06_thumb.png?alt=media" alt="김소은" loading="lazy" decoding="async">
             </div>
@@ -1757,7 +1830,7 @@
         </div>
         <!-- 이서 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c2);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%84%9C_06.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c2);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%9D%B4%EC%84%9C_06.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%84%9C_06_thumb.png?alt=media" alt="한이서" loading="lazy" decoding="async">
             </div>
@@ -1766,7 +1839,7 @@
         </div>
         <!-- 이준 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c3);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%A4%80_06.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c3);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%9D%B4%EC%A4%80_06.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%A4%80_06_thumb.png?alt=media" alt="한이준" loading="lazy" decoding="async">
             </div>
@@ -1775,7 +1848,7 @@
         </div>
         <!-- 봄 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c4);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_06.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c4);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EB%B4%84_06.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_06_thumb.png?alt=media" alt="신봄" loading="lazy" decoding="async">
             </div>
@@ -1784,7 +1857,7 @@
         </div>
         <!-- 규태 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_06.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EA%B7%9C%ED%83%9C_06.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_06_thumb.png?alt=media" alt="박규태" loading="lazy" decoding="async">
             </div>
@@ -1793,7 +1866,7 @@
         </div>
         <!-- 규리 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c6);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%EB%A6%AC_06.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c6);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EA%B7%9C%EB%A6%AC_06.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%EB%A6%AC_06_thumb.png?alt=media" alt="박규리" loading="lazy" decoding="async">
             </div>
@@ -1803,19 +1876,19 @@
       </div>
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_06_.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_06_.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_06__thumb.jpg?alt=media" alt="6회차 수업 풍경 1" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_06_2.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_06_2.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_06_2_thumb.jpg?alt=media" alt="6회차 수업 풍경 2" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_06_3.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_06_3.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_06_3_thumb.jpg?alt=media" alt="6회차 수업 풍경 3" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_06_08.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_06_08.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_06_08_thumb.jpg?alt=media" alt="6회차 수업 풍경 4" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_06_09.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_06_09.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_06_09_thumb.jpg?alt=media" alt="6회차 수업 풍경 5" loading="lazy" decoding="async">
         </div>
         <div class="group-photo group-video">
@@ -1869,7 +1942,7 @@
       <div class="children-row">
         <!-- 소은 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c1);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%86%8C%EC%9D%80_07.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c1);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%86%8C%EC%9D%80_07.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%86%8C%EC%9D%80_07_thumb.png?alt=media" alt="김소은" loading="lazy" decoding="async">
             </div>
@@ -1878,7 +1951,7 @@
         </div>
         <!-- 이서 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c2);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%84%9C_07.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c2);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%9D%B4%EC%84%9C_07.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%84%9C_07_thumb.png?alt=media" alt="한이서" loading="lazy" decoding="async">
             </div>
@@ -1887,7 +1960,7 @@
         </div>
         <!-- 이준 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c3);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%A4%80_07.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c3);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%9D%B4%EC%A4%80_07.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%A4%80_07_thumb.png?alt=media" alt="한이준" loading="lazy" decoding="async">
             </div>
@@ -1896,7 +1969,7 @@
         </div>
         <!-- 봄 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c4);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_07.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c4);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EB%B4%84_07.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_07_thumb.png?alt=media" alt="신봄" loading="lazy" decoding="async">
             </div>
@@ -1905,7 +1978,7 @@
         </div>
         <!-- 규태 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_07.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EA%B7%9C%ED%83%9C_07.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_07_thumb.png?alt=media" alt="박규태" loading="lazy" decoding="async">
             </div>
@@ -1914,7 +1987,7 @@
         </div>
         <!-- 규리 -->
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c6);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%EB%A6%AC_07.png?alt=media">
+          <div class="child-photo" style="border-color: var(--c6);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EA%B7%9C%EB%A6%AC_07.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%EB%A6%AC_07_thumb.png?alt=media" alt="박규리" loading="lazy" decoding="async">
             </div>
@@ -1924,16 +1997,16 @@
       </div>
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_07_1.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_07_1.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_07_1_thumb.jpg?alt=media" alt="7회차 수업 풍경 1" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_07_3.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_07_3.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_07_3_thumb.jpg?alt=media" alt="7회차 수업 풍경 2" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_07_4.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_07_4.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_07_4_thumb.jpg?alt=media" alt="7회차 수업 풍경 3" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_07_5.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_07_5.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_07_5_thumb.jpg?alt=media" alt="7회차 수업 풍경 4" loading="lazy" decoding="async">
         </div>
       </div>
@@ -1980,43 +2053,43 @@
     <div class="photo-section">
       <div class="photo-sub-title">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_1.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_08_1.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_1_thumb.jpg?alt=media" alt="8회차 수업 풍경 1" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_2.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_08_2.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_2_thumb.jpg?alt=media" alt="8회차 수업 풍경 2" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_3.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_08_3.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_3_thumb.jpg?alt=media" alt="8회차 수업 풍경 3" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_5.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_08_5.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_5_thumb.jpg?alt=media" alt="8회차 수업 풍경 4" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_6.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_08_6.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_6_thumb.jpg?alt=media" alt="8회차 수업 풍경 5" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_8.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_08_8.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_8_thumb.jpg?alt=media" alt="8회차 수업 풍경 6" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_9.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_08_9.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_9_thumb.jpg?alt=media" alt="8회차 수업 풍경 7" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_14.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_08_14.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_14_thumb.jpg?alt=media" alt="8회차 수업 풍경 8" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_10.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_08_10.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_10_thumb.jpg?alt=media" alt="8회차 수업 풍경 9" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_12.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_08_12.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_12_thumb.jpg?alt=media" alt="8회차 수업 풍경 10" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_15.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_08_15.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_15_thumb.jpg?alt=media" alt="8회차 수업 풍경 11" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_18.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_08_18.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_18_thumb.jpg?alt=media" alt="8회차 수업 풍경 12" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_19.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_08_19.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_08_19_thumb.jpg?alt=media" alt="8회차 수업 풍경 13" loading="lazy" decoding="async">
         </div>
         <div class="group-photo group-video">
@@ -2084,7 +2157,7 @@
       <div class="photo-sub-title">아이들의 작품 사진</div>
       <div class="children-row">
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c1);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%86%8C%EC%9D%80_09.jpg?alt=media">
+          <div class="child-photo" style="border-color: var(--c1);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%86%8C%EC%9D%80_09.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%86%8C%EC%9D%80_09_thumb.jpg?alt=media" alt="김소은" loading="lazy" decoding="async">
             </div>
@@ -2092,7 +2165,7 @@
           <div class="child-name-label">김소은</div>
         </div>
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c2);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%84%9C_09.jpg?alt=media">
+          <div class="child-photo" style="border-color: var(--c2);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%9D%B4%EC%84%9C_09.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%84%9C_09_thumb.jpg?alt=media" alt="한이서" loading="lazy" decoding="async">
             </div>
@@ -2100,7 +2173,7 @@
           <div class="child-name-label">한이서</div>
         </div>
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c3);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%A4%80_09.jpg?alt=media">
+          <div class="child-photo" style="border-color: var(--c3);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%9D%B4%EC%A4%80_09.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%A4%80_09_thumb.jpg?alt=media" alt="한이준" loading="lazy" decoding="async">
             </div>
@@ -2108,7 +2181,7 @@
           <div class="child-name-label">한이준</div>
         </div>
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c4);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_09.jpg?alt=media">
+          <div class="child-photo" style="border-color: var(--c4);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EB%B4%84_09.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_09_thumb.jpg?alt=media" alt="신봄" loading="lazy" decoding="async">
             </div>
@@ -2116,7 +2189,7 @@
           <div class="child-name-label">신봄</div>
         </div>
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_09.jpg?alt=media">
+          <div class="child-photo" style="border-color: var(--c5);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EA%B7%9C%ED%83%9C_09.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_09_thumb.jpg?alt=media" alt="박규태" loading="lazy" decoding="async">
             </div>
@@ -2124,7 +2197,7 @@
           <div class="child-name-label">박규태</div>
         </div>
         <div class="child-cell">
-          <div class="child-photo" style="border-color: var(--c6);" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%EB%A6%AC_09.jpg?alt=media">
+          <div class="child-photo" style="border-color: var(--c6);" data-preview="https://ninnikkraft.vercel.app/lightbox/%EA%B7%9C%EB%A6%AC_09.webp?v=20260727-2">
             <div class="child-photo-inner">
               <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%EB%A6%AC_09_thumb.jpg?alt=media" alt="박규리" loading="lazy" decoding="async">
             </div>
@@ -2134,34 +2207,34 @@
       </div>
       <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_0.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_09_0.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_0_thumb.jpg?alt=media" alt="9회차 수업 풍경 1" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_1.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_09_1.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_1_thumb.jpg?alt=media" alt="9회차 수업 풍경 2" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_3.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_09_3.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_3_thumb.jpg?alt=media" alt="9회차 수업 풍경 3" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_6.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_09_6.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_6_thumb.jpg?alt=media" alt="9회차 수업 풍경 4" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_5.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_09_5.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_5_thumb.jpg?alt=media" alt="9회차 수업 풍경 5" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%86%8C%EC%9D%80_09_1.png?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%86%8C%EC%9D%80_09_1.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%86%8C%EC%9D%80_09_1_thumb.png?alt=media" alt="9회차 수업 풍경 6" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_7.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_09_7.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_7_thumb.jpg?alt=media" alt="9회차 수업 풍경 7" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_8.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_09_8.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_8_thumb.jpg?alt=media" alt="9회차 수업 풍경 8" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_9.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_09_9.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_9_thumb.jpg?alt=media" alt="9회차 수업 풍경 9" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_11.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_09_11.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_09_11_thumb.jpg?alt=media" alt="9회차 수업 풍경 10" loading="lazy" decoding="async">
         </div>
       </div>
@@ -2204,40 +2277,40 @@
     <div class="photo-section">
       <div class="photo-sub-title">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_10.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_10_10.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_10_thumb.jpg?alt=media" alt="10회차 수업 풍경 1" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_9.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_10_9.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_9_thumb.jpg?alt=media" alt="10회차 수업 풍경 2" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_8.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_10_8.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_8_thumb.jpg?alt=media" alt="10회차 수업 풍경 3" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_7.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_10_7.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_7_thumb.jpg?alt=media" alt="10회차 수업 풍경 4" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_6.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_10_6.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_6_thumb.jpg?alt=media" alt="10회차 수업 풍경 5" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_0.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_10_0.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_0_thumb.jpg?alt=media" alt="10회차 수업 풍경 6" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_0_0.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_10_0_0.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_0_0_thumb.jpg?alt=media" alt="10회차 수업 풍경 7" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_4.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_10_4.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_4_thumb.jpg?alt=media" alt="10회차 수업 풍경 8" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_2.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_10_2.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_2_thumb.jpg?alt=media" alt="10회차 수업 풍경 9" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_3.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_10_3.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_3_thumb.jpg?alt=media" alt="10회차 수업 풍경 10" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_1.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_10_1.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_1_thumb.jpg?alt=media" alt="10회차 수업 풍경 11" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_1_1.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%99%9C%EB%8F%99_10_1_1.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%99%9C%EB%8F%99_10_1_1_thumb.jpg?alt=media" alt="10회차 수업 풍경 12" loading="lazy" decoding="async">
         </div>
       </div>
@@ -2283,31 +2356,31 @@
     <div class="photo-section">
       <div class="photo-sub-title">수업 풍경</div>
       <div class="group-row">
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%A4%80%EB%B9%84_11.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%A4%80%EB%B9%84_11.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%A4%80%EB%B9%84_11_thumb.jpg?alt=media" alt="11회차 수업 풍경 - 준비" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%EB%A6%AC_11.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%EA%B7%9C%EB%A6%AC_11.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%EB%A6%AC_11_thumb.jpg?alt=media" alt="11회차 수업 풍경 - 규리" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%84%9C_11.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%9D%B4%EC%84%9C_11.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%84%9C_11_thumb.jpg?alt=media" alt="11회차 수업 풍경 - 이서" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%A4%80_11.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%9D%B4%EC%A4%80_11.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EC%9D%B4%EC%A4%80_11_thumb.jpg?alt=media" alt="11회차 수업 풍경 - 이준" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_11.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%EA%B7%9C%ED%83%9C_11.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EA%B7%9C%ED%83%9C_11_thumb.jpg?alt=media" alt="11회차 수업 풍경 - 규태" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_11.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%EB%B4%84_11.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_11_thumb.jpg?alt=media" alt="11회차 수업 풍경 - 봄" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_11_1.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%EB%B4%84_11_1.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%EB%B4%84_11_1_thumb.jpg?alt=media" alt="11회차 수업 풍경 - 봄 1" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_11_1.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_11_1.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_11_1_thumb.jpg?alt=media" alt="11회차 수업 풍경 - 함께 1" loading="lazy" decoding="async">
         </div>
-        <div class="group-photo" data-preview="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_11_2.jpg?alt=media">
+        <div class="group-photo" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_11_2.webp?v=20260727-2">
           <img src="https://firebasestorage.googleapis.com/v0/b/oolimtong-archive.firebasestorage.app/o/site-media%2Fcropped%2F%ED%95%A8%EA%BB%98_11_2_thumb.jpg?alt=media" alt="11회차 수업 풍경 - 함께 2" loading="lazy" decoding="async">
         </div>
       </div>
@@ -2464,7 +2537,7 @@
   <strong>CHILDREN'S WORKSHOP at NINNIK KRAFT</strong><br>
   process-oriented, multimedia, integrated &amp; liberal art<br>
   <span style="font-size: 11.5px;">Thursday 4:10 – 5:30 PM &nbsp;|&nbsp; @ninnik_kraft</span><br>
-  <a href="index.html" style="display:inline-block; margin-top:14px; color:var(--text-mid); font-size:12px; text-decoration:none;">니닉크라프트로 돌아가기 ↑</a>
+  <a href="/" style="display:inline-block; margin-top:14px; color:var(--text-mid); font-size:12px; text-decoration:none;">니닉크라프트로 돌아가기 ↑</a>
 </footer>
 
 <!-- ═══════════════════════════════ LIGHTBOX MODAL ═══════════════════════════════ -->
@@ -2536,10 +2609,25 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  function jumpToPageEdge(edge) {
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    if (edge === 'bottom') {
+      window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+      window.setTimeout(function () {
+        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+      }, 700);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
   // 사이드 앵커 메뉴 - 실제 존재하는 회차(session-card)를 스캔해 자동으로 목록 생성
   // (session-card가 추가/삭제되면 여기 목록도 새로고침 시 자동으로 맞춰집니다. 수동으로 날짜를 추가할 필요 없음)
   (function () {
     var track = document.getElementById('float-nav-track');
+    var bottomButton = document.getElementById('float-nav-bottom');
     var sessionCards = document.querySelectorAll('#tab-records .session-card');
     if (!track || !sessionCards.length) return;
 
@@ -2560,7 +2648,7 @@
       a.href = '#' + id;
       a.className = 'float-dot';
       a.innerHTML = '<span class="fd"></span><span class="fd-label">' + label + '</span>';
-      track.appendChild(a);
+      track.insertBefore(a, bottomButton);
     });
 
     var navLinks = track.querySelectorAll('.float-dot');
