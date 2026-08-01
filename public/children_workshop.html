@@ -587,7 +587,7 @@
     position: fixed;
     inset: 0;
     background: rgba(28, 23, 18, 0.88); /* 기품 있고 차분한 딥초콜릿 무드의 어두운 배경 */
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(4px);
     z-index: 3000;
     opacity: 0;
     pointer-events: none;
@@ -641,6 +641,7 @@
     gap: 16px;
   }
   .lightbox-img-wrap {
+    position: relative;
     flex: 1;
     height: min(720px, 78vh); /* 세로 높이를 최대 720px까지 확장하여 블로그처럼 작품을 거대하고 시원하게 감상 */
     background: var(--slot-bg);
@@ -652,11 +653,35 @@
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
   }
   .lightbox-img-wrap img {
+    display: block;
     max-width: 100%;
     max-height: 100%;
     object-fit: contain; /* 크롭(잘림) 없이 원본 그림 전 구도를 통째로 노출 */
     padding: 24px;
     border-radius: 12px;
+    opacity: 1;
+    transition: opacity 0.16s ease;
+  }
+  .lightbox-img-wrap img.is-loading {
+    opacity: 0;
+  }
+  .lightbox-img-wrap::after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(246, 239, 222, 0.18);
+    border-top-color: rgba(246, 239, 222, 0.72);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .lightbox-img-wrap.is-loading::after {
+    opacity: 1;
+    animation: lightbox-loading 0.8s linear infinite;
+  }
+  @keyframes lightbox-loading {
+    to { transform: rotate(360deg); }
   }
 
   /* 내비게이션 화살표 */
@@ -789,6 +814,28 @@
     background: var(--slot-bg);
     border: 2px solid var(--line2);
   }
+  /* ─── 아직 사진이 들어오지 않은 빈 슬롯 (내용 입력 대기 중인 회차) ─── */
+  /* 어린이 작품칸은 인라인 border-color가 그대로 살아나 아이별 색 점선 테두리가 됩니다 */
+  .child-photo.is-empty,
+  .group-photo.is-empty,
+  .book-slot.is-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--slot-bg);
+    border: 2px dashed var(--line2);
+    color: rgba(246, 239, 222, 0.38);
+    cursor: default;
+  }
+  .child-photo.is-empty { box-shadow: none; }
+  .group-photo.is-empty { min-width: 150px; }
+  .book-slot.is-empty { border-radius: 8px; }
+  .is-empty .empty-mark {
+    font-size: 18px;
+    line-height: 1;
+    opacity: 0.75;
+  }
+
   /* 원본을 라이트박스로 열 수 있는 수업 풍경 썸네일(테스트: 11회차) */
   .group-photo[data-preview] {
     cursor: pointer;
@@ -844,9 +891,35 @@
   .vid-play {
     background: var(--coral);
     animation: vidPlayPulse 2s ease-in-out infinite;
+    font-size: 0;
+    overflow: hidden;
+  }
+  .vid-play::before {
+    content: "";
+    width: 0;
+    height: 0;
+    margin-left: 1px;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 6px solid currentColor;
   }
   .vid-play:hover { background: #9a3f22; animation: none; }
-  .vid-play.is-playing { animation: none; }
+  .vid-play.is-playing {
+    background: rgba(28, 23, 18, 0.72);
+    animation: none;
+  }
+  .vid-play.is-playing::before {
+    width: 7px;
+    height: 9px;
+    margin-left: 0;
+    border: 0;
+    background: linear-gradient(
+      90deg,
+      currentColor 0 2px,
+      transparent 2px 5px,
+      currentColor 5px 7px
+    );
+  }
   .vid-mute {
     background: rgba(38, 70, 83, 0.72);
   }
@@ -2388,29 +2461,194 @@
   </div><!-- /session-card 11 -->
 
 
+  <!-- ════════════════════════════════════════════════════════════════
+       12회차 · 7월 23일 [내용 입력 대기 — 빈칸 상태로 공개 중]
+
+       ▶ 채우는 방법
+         · 텍스트 : class="placeholder"가 붙은 줄을 실제 내용으로 바꾸고
+                    placeholder 클래스를 지웁니다.
+         · 사진   : is-empty 슬롯을 아래 "채워진 예시" 주석 형태로 교체합니다.
+
+       ▶ 사진 파일 이름 규칙
+         라이트박스(큰 사진) : /lightbox/{이름}_12.webp
+         썸네일(작은 사진)   : Firebase site-media/cropped/{이름}_12_thumb.jpg
+         수업 풍경           : 활동_12_0, 활동_12_1 … 순서대로
+
+       ▶ 채워진 예시 (어린이 작품칸 · 소은 기준)
+         div class="child-photo" style="border-color: var(--c1);"
+              data-preview="https://ninnikkraft.vercel.app/lightbox/%EC%86%8C%EC%9D%80_12.webp?v=20260727-2"
+           div class="child-photo-inner"
+             img src="…site-media%2Fcropped%2F%EC%86%8C%EC%9D%80_12_thumb.jpg?alt=media"
+                 alt="김소은" loading="lazy" decoding="async"
+         (data-preview가 있어야 클릭 시 큰 사진이 열립니다. 9회차 카드를 그대로 복사해 써도 됩니다.)
+       ════════════════════════════════════════════════════════════════ -->
+  <div class="session-card" id="session-12">
+    <div class="session-top">
+      <div class="session-top-info">
+        <h3>2026년 7월 23일 목요일</h3>
+      </div>
+      <div class="session-participants">
+        <!-- 결석한 어린이는 해당 줄을 지웁니다 -->
+        <span class="participant-chip">김소은<span class="age">6세</span></span>
+        <span class="participant-chip">한이서<span class="age">6세</span></span>
+        <span class="participant-chip">한이준<span class="age">6세</span></span>
+        <span class="participant-chip">신봄<span class="age">7세</span></span>
+        <span class="participant-chip">박규태<span class="age">6세</span></span>
+        <span class="participant-chip">박규리<span class="age">5세</span></span>
+      </div>
+    </div>
+    <div class="session-divider"></div>
+    <div class="info-grid">
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 책과 준비물</div>
+        <div class="bm-row">
+          <!-- 책을 쉬어 가는 회차라면 book-slot을 지우고 제목을 "오늘의 준비물"로 바꿉니다 (10회차 참고) -->
+          <div class="book-slot is-empty"><span class="empty-mark" aria-hidden="true">📖</span></div>
+          <div class="bm-info">
+            <span class="placeholder">오늘의 책과 준비물은 정리되는 대로 올려 드립니다.</span>
+          </div>
+        </div>
+      </div>
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 이야기</div>
+        <div class="info-text placeholder">수업 이야기는 정리되는 대로 올려 드립니다.</div>
+      </div>
+    </div>
+
+    <div class="session-divider" style="margin-top: 22px;"></div>
+    <div class="photo-section">
+      <!-- 작품 사진이 없는 회차라면 photo-sub-title과 children-row를 통째로 지웁니다 -->
+      <div class="photo-sub-title">아이들의 작품 사진</div>
+      <div class="children-row">
+        <div class="child-cell">
+          <div class="child-photo is-empty" style="border-color: var(--c1);"><span class="empty-mark" aria-hidden="true">＋</span></div>
+          <div class="child-name-label">김소은</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo is-empty" style="border-color: var(--c2);"><span class="empty-mark" aria-hidden="true">＋</span></div>
+          <div class="child-name-label">한이서</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo is-empty" style="border-color: var(--c3);"><span class="empty-mark" aria-hidden="true">＋</span></div>
+          <div class="child-name-label">한이준</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo is-empty" style="border-color: var(--c4);"><span class="empty-mark" aria-hidden="true">＋</span></div>
+          <div class="child-name-label">신봄</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo is-empty" style="border-color: var(--c5);"><span class="empty-mark" aria-hidden="true">＋</span></div>
+          <div class="child-name-label">박규태</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo is-empty" style="border-color: var(--c6);"><span class="empty-mark" aria-hidden="true">＋</span></div>
+          <div class="child-name-label">박규리</div>
+        </div>
+      </div>
+
+      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
+      <div class="group-row">
+        <!-- 사진 수만큼 슬롯을 늘리거나 줄입니다 -->
+        <div class="group-photo is-empty"><span class="empty-mark" aria-hidden="true">📷</span></div>
+        <div class="group-photo is-empty"><span class="empty-mark" aria-hidden="true">📷</span></div>
+        <div class="group-photo is-empty"><span class="empty-mark" aria-hidden="true">📷</span></div>
+        <div class="group-photo is-empty"><span class="empty-mark" aria-hidden="true">📷</span></div>
+      </div>
+    </div>
+  </div><!-- /session-card 12 -->
+
+
+  <!-- ════════════════════════════════════════════════════════════════
+       13회차 · 7월 30일 [내용 입력 대기 — 빈칸 상태로 공개 중]
+       채우는 방법과 파일 이름 규칙은 위 12회차 안내와 같습니다.
+       (사진 이름의 12 자리를 13으로 바꿔서 올리면 됩니다.)
+       ════════════════════════════════════════════════════════════════ -->
+  <div class="session-card" id="session-13">
+    <div class="session-top">
+      <div class="session-top-info">
+        <h3>2026년 7월 30일 목요일</h3>
+      </div>
+      <div class="session-participants">
+        <!-- 결석한 어린이는 해당 줄을 지웁니다 -->
+        <span class="participant-chip">김소은<span class="age">6세</span></span>
+        <span class="participant-chip">한이서<span class="age">6세</span></span>
+        <span class="participant-chip">한이준<span class="age">6세</span></span>
+        <span class="participant-chip">신봄<span class="age">7세</span></span>
+        <span class="participant-chip">박규태<span class="age">6세</span></span>
+        <span class="participant-chip">박규리<span class="age">5세</span></span>
+      </div>
+    </div>
+    <div class="session-divider"></div>
+    <div class="info-grid">
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 책과 준비물</div>
+        <div class="bm-row">
+          <!-- 책을 쉬어 가는 회차라면 book-slot을 지우고 제목을 "오늘의 준비물"로 바꿉니다 (10회차 참고) -->
+          <div class="book-slot is-empty"><span class="empty-mark" aria-hidden="true">📖</span></div>
+          <div class="bm-info">
+            <span class="placeholder">오늘의 책과 준비물은 정리되는 대로 올려 드립니다.</span>
+          </div>
+        </div>
+      </div>
+      <div class="info-plain">
+        <div class="photo-sub-title">오늘의 이야기</div>
+        <div class="info-text placeholder">수업 이야기는 정리되는 대로 올려 드립니다.</div>
+      </div>
+    </div>
+
+    <div class="session-divider" style="margin-top: 22px;"></div>
+    <div class="photo-section">
+      <!-- 작품 사진이 없는 회차라면 photo-sub-title과 children-row를 통째로 지웁니다 -->
+      <div class="photo-sub-title">아이들의 작품 사진</div>
+      <div class="children-row">
+        <div class="child-cell">
+          <div class="child-photo is-empty" style="border-color: var(--c1);"><span class="empty-mark" aria-hidden="true">＋</span></div>
+          <div class="child-name-label">김소은</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo is-empty" style="border-color: var(--c2);"><span class="empty-mark" aria-hidden="true">＋</span></div>
+          <div class="child-name-label">한이서</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo is-empty" style="border-color: var(--c3);"><span class="empty-mark" aria-hidden="true">＋</span></div>
+          <div class="child-name-label">한이준</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo is-empty" style="border-color: var(--c4);"><span class="empty-mark" aria-hidden="true">＋</span></div>
+          <div class="child-name-label">신봄</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo is-empty" style="border-color: var(--c5);"><span class="empty-mark" aria-hidden="true">＋</span></div>
+          <div class="child-name-label">박규태</div>
+        </div>
+        <div class="child-cell">
+          <div class="child-photo is-empty" style="border-color: var(--c6);"><span class="empty-mark" aria-hidden="true">＋</span></div>
+          <div class="child-name-label">박규리</div>
+        </div>
+      </div>
+
+      <div class="photo-sub-title" style="margin-top: 18px;">수업 풍경</div>
+      <div class="group-row">
+        <!-- 사진 수만큼 슬롯을 늘리거나 줄입니다 -->
+        <div class="group-photo is-empty"><span class="empty-mark" aria-hidden="true">📷</span></div>
+        <div class="group-photo is-empty"><span class="empty-mark" aria-hidden="true">📷</span></div>
+        <div class="group-photo is-empty"><span class="empty-mark" aria-hidden="true">📷</span></div>
+        <div class="group-photo is-empty"><span class="empty-mark" aria-hidden="true">📷</span></div>
+      </div>
+    </div>
+  </div><!-- /session-card 13 -->
+
   <!-- ════════ 다음 수업 예고 ════════ -->
   <div class="add-session-card">
     <div class="plus">📅</div>
-    <strong>다음 수업</strong> — 2026년 7월 23일 목요일
+    <strong>다음 수업</strong> — 2026년 8월 6일 목요일
   </div>
 
   <!-- ════════ 다음 수업 예고 ════════ -->
   <div class="add-session-card">
     <div class="plus">📅</div>
-    <strong>다음 수업</strong> — 2026년 7월 30일 목요일
-  </div>
-
-  <!-- ════════ 다음 수업 예고 ════════ -->
-  <div class="add-session-card">
-    <div class="plus">📅</div>
-    <strong>다음 수업</strong> — 2026년 8월 6일 목요일<br>
-    <span style="font-size: 13px; color: var(--text-dim);">부모참여 특강 예정 🌿</span>
-  </div>
-
-  <!-- ════════ 다음 수업 예고 ════════ -->
-  <div class="add-session-card">
-    <div class="plus">📅</div>
-    <strong>다음 수업</strong> — 2026년 8월 13일 목요일
+    <strong>다음 수업</strong> — 2026년 8월 13일 목요일<br>
+    <span style="font-size: 13px; color: var(--text-dim);">부모 참여 특강 · 초청 강사 방승연 🌿</span>
   </div>
 
   </div><!-- /records-content -->
@@ -2553,7 +2791,7 @@
     <div class="lightbox-viewer">
       <button class="lightbox-nav prev" onclick="navigateLightbox(-1)">◀</button>
       <div class="lightbox-img-wrap">
-        <img id="lightbox-main-img" src="" alt="작품 대형 미리보기">
+        <img id="lightbox-main-img" src="" alt="작품 대형 미리보기" decoding="async" fetchpriority="high">
       </div>
       <button class="lightbox-nav next" onclick="navigateLightbox(1)">▶</button>
     </div>
@@ -2670,10 +2908,20 @@
   // 라이트박스 갤러리 제어 로직 (X축 잘림 완벽 보강 및 슬라이더 탑재)
   let lightboxItems = [];
   let lightboxIndex = 0;
+  let lightboxLoadToken = 0;
+  const lightboxPreloaded = new Set();
 
   function openLightbox(startThumb) {
     const sessionCard = startThumb.closest(".session-card");
     if (!sessionCard) return;
+
+    const lightbox = document.getElementById("art-lightbox");
+    const mainImg = document.getElementById("lightbox-main-img");
+    const imageWrap = mainImg.closest(".lightbox-img-wrap");
+    lightboxLoadToken += 1;
+    mainImg.classList.add("is-loading");
+    mainImg.removeAttribute("src");
+    imageWrap.classList.add("is-loading");
 
     // 해당 세션 카드 내에서, 클릭한 썸네일과 같은 종류(작품 vs 수업 풍경)끼리만 모아 별도 갤러리로 탐색
     const startIsGroup = startThumb.classList.contains("group-photo");
@@ -2726,15 +2974,21 @@
       // 하단 미니 썸네일 바의 썸네일 버튼 생성
       const thumbBtn = document.createElement("div");
       thumbBtn.className = "lightbox-thumb";
-      thumbBtn.innerHTML = `<img src="${thumbSrc}" alt="${childName}">`;
+      const thumbImg = document.createElement("img");
+      thumbImg.src = thumbSrc;
+      thumbImg.alt = childName;
+      thumbImg.loading = "lazy";
+      thumbImg.decoding = "async";
+      thumbImg.fetchPriority = "low";
+      thumbBtn.appendChild(thumbImg);
       thumbBtn.onclick = function () {
         setLightboxIndex(idx);
       };
       thumbsBar.appendChild(thumbBtn);
     });
 
+    lightbox.classList.add("active");
     updateLightbox();
-    document.getElementById("art-lightbox").classList.add("active");
   }
 
   function setLightboxIndex(idx) {
@@ -2742,17 +2996,80 @@
     updateLightbox();
   }
 
-  function updateLightbox() {
+  async function updateLightbox() {
     if (lightboxIndex < 0 || lightboxIndex >= lightboxItems.length) return;
     const item = lightboxItems[lightboxIndex];
-    
-    document.getElementById("lightbox-main-img").src = item.preview;
+    const requestedIndex = lightboxIndex;
+    const requestToken = ++lightboxLoadToken;
+    const mainImg = document.getElementById("lightbox-main-img");
+    const imageWrap = mainImg.closest(".lightbox-img-wrap");
+
+    mainImg.classList.add("is-loading");
+    mainImg.removeAttribute("src");
+    imageWrap.classList.add("is-loading");
     document.getElementById("lightbox-title").innerText = item.title;
 
     // 하단 썸네일 활성화 상태 표시 변경
     const thumbBtns = document.querySelectorAll(".lightbox-thumb");
     thumbBtns.forEach((btn, idx) => {
       btn.classList.toggle("active", idx === lightboxIndex);
+    });
+
+    const loader = new Image();
+    loader.decoding = "async";
+    loader.fetchPriority = "high";
+
+    try {
+      await new Promise((resolve, reject) => {
+        loader.onload = resolve;
+        loader.onerror = reject;
+        loader.src = item.preview;
+      });
+      if (typeof loader.decode === "function") {
+        await loader.decode().catch(() => {});
+      }
+    } catch (error) {
+      if (requestToken === lightboxLoadToken) {
+        imageWrap.classList.remove("is-loading");
+      }
+      return;
+    }
+
+    if (
+      requestToken !== lightboxLoadToken ||
+      requestedIndex !== lightboxIndex ||
+      !document.getElementById("art-lightbox").classList.contains("active")
+    ) {
+      return;
+    }
+
+    mainImg.src = item.preview;
+    mainImg.alt = item.title;
+    lightboxPreloaded.add(item.preview);
+    requestAnimationFrame(() => {
+      mainImg.classList.remove("is-loading");
+      imageWrap.classList.remove("is-loading");
+    });
+    preloadLightboxNeighbors();
+  }
+
+  function preloadLightboxNeighbors() {
+    if (lightboxItems.length < 2) return;
+
+    const neighborIndexes = [
+      (lightboxIndex - 1 + lightboxItems.length) % lightboxItems.length,
+      (lightboxIndex + 1) % lightboxItems.length
+    ];
+
+    neighborIndexes.forEach((idx) => {
+      const src = lightboxItems[idx] && lightboxItems[idx].preview;
+      if (!src || lightboxPreloaded.has(src)) return;
+
+      lightboxPreloaded.add(src);
+      const preloadImg = new Image();
+      preloadImg.decoding = "async";
+      preloadImg.fetchPriority = "low";
+      preloadImg.src = src;
     });
   }
 
@@ -2771,7 +3088,19 @@
     if (e && e.target.closest(".lightbox-img-wrap img, .lightbox-nav, .lightbox-thumb")) {
       return;
     }
-    document.getElementById("art-lightbox").classList.remove("active");
+    const lightbox = document.getElementById("art-lightbox");
+    const mainImg = document.getElementById("lightbox-main-img");
+    const imageWrap = mainImg.closest(".lightbox-img-wrap");
+
+    lightbox.classList.remove("active");
+    lightboxLoadToken += 1;
+    lightboxItems = [];
+    lightboxIndex = 0;
+    mainImg.classList.add("is-loading");
+    mainImg.removeAttribute("src");
+    mainImg.alt = "";
+    imageWrap.classList.remove("is-loading");
+    document.getElementById("lightbox-thumbs").innerHTML = "";
   }
 
   // 썸네일 클릭 시 라이트박스 실행 바인딩
@@ -2812,12 +3141,12 @@
     if (playBtn) {
       if (video.paused) {
         video.play();
-        playBtn.textContent = "⏸";
         playBtn.classList.add("is-playing");
+        playBtn.setAttribute("aria-label", "일시정지");
       } else {
         video.pause();
-        playBtn.textContent = "▶";
         playBtn.classList.remove("is-playing");
+        playBtn.setAttribute("aria-label", "재생");
       }
     }
     if (muteBtn) {
@@ -2834,8 +3163,8 @@
       if (!container) return;
       const playBtn = container.querySelector(".vid-play");
       if (playBtn) {
-        playBtn.textContent = "▶";
         playBtn.classList.remove("is-playing");
+        playBtn.setAttribute("aria-label", "재생");
       }
     },
     true

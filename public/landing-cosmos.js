@@ -27,6 +27,8 @@
   };
 
   const populateNetworkSpace = () => {
+    const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
     document.querySelectorAll(".network-space").forEach((space) => {
       const card = space.closest(".network");
       const starfield = document.createElement("canvas");
@@ -153,7 +155,18 @@
       };
 
       renderNetworkField();
-      card?.addEventListener("mouseenter", renderNetworkField);
+      if (canHover) {
+        card?.addEventListener("mouseenter", renderNetworkField);
+      }
+      card?.addEventListener(
+        "pointerdown",
+        (event) => {
+          if (event.pointerType !== "mouse") {
+            renderNetworkField();
+          }
+        },
+        { passive: true },
+      );
     });
   };
 
@@ -366,8 +379,94 @@
     });
   };
 
+  const enableTouchCardPreviews = () => {
+    const cards = [...document.querySelectorAll(".menu-card")];
+    const clearPreviews = () => {
+      cards.forEach((card) => card.classList.remove("is-touch-preview"));
+    };
+
+    cards.forEach((card) => {
+      let longPressTimer = 0;
+      let suppressClick = false;
+      let touchInteraction = false;
+      let allowTouchNavigation = false;
+
+      card.addEventListener(
+        "pointerdown",
+        (event) => {
+          if (event.pointerType === "mouse") return;
+
+          touchInteraction = true;
+          allowTouchNavigation = card.classList.contains("is-touch-preview");
+          clearPreviews();
+          card.classList.add("is-touch-preview");
+          suppressClick = false;
+          window.clearTimeout(longPressTimer);
+          longPressTimer = window.setTimeout(() => {
+            suppressClick = true;
+          }, 450);
+        },
+        { passive: true },
+      );
+
+      card.addEventListener(
+        "pointerup",
+        () => {
+          window.clearTimeout(longPressTimer);
+        },
+        { passive: true },
+      );
+
+      card.addEventListener(
+        "pointercancel",
+        () => {
+          window.clearTimeout(longPressTimer);
+          touchInteraction = false;
+          allowTouchNavigation = false;
+        },
+        { passive: true },
+      );
+
+      card.addEventListener("contextmenu", (event) => {
+        if (window.matchMedia("(pointer: coarse)").matches) {
+          event.preventDefault();
+        }
+      });
+
+      if (card.matches("a[href]")) {
+        card.addEventListener(
+          "click",
+          (event) => {
+            if (!touchInteraction) return;
+
+            const shouldBlockNavigation = suppressClick || !allowTouchNavigation;
+            touchInteraction = false;
+            allowTouchNavigation = false;
+            suppressClick = false;
+
+            if (shouldBlockNavigation) {
+              event.preventDefault();
+            }
+          },
+          true,
+        );
+      }
+    });
+
+    document.addEventListener(
+      "pointerdown",
+      (event) => {
+        if (!event.target.closest(".menu-card")) {
+          clearPreviews();
+        }
+      },
+      { passive: true },
+    );
+  };
+
   enableSelectableCardLinks();
   populateNetworkSpace();
+  enableTouchCardPreviews();
   createField();
   draw();
   window.addEventListener("resize", resize, { passive: true });
