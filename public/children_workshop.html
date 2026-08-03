@@ -2605,7 +2605,7 @@
       </div>
       <div class="info-plain">
         <div class="photo-sub-title">오늘의 이야기</div>
-        <div class="info-text">갓 구운 빵 냄새를 싫어할 사람이 있을까요? 오늘은 빵이 나오는 그림책을 함께 읽고, 우리도 우리만의 빵을 그려보기로 했어요. 엄청나게 긴 빵을요! 혼자 길게 그리는 대신, 선생님을 포함한 다섯 사람이 천을 이어 하나의 빵을 함께 그렸습니다. 각자 자기만의 스타일로 표현한 빵이 구워집니다. 무지개 빵, 계란잼이 든 빵, 분홍 하트 초콜릿을 올린 빵, 초를 꽂은 빵도 있네요. 빵인 줄 알았더니 사실은 삐죽삐죽한 배였던 그림도 등장했습니다. 서로 다른 재료와 맛이 하나둘 더해져, 세상에서 하나뿐인 긴 빵이 완성되었습니다. 이제 빵의 맛을 상상해볼 차례입니다.</div>
+        <div class="info-text">갓 구운 빵 냄새를 싫어할 사람이 있을까요? 오늘은 빵이 나오는 그림책을 함께 읽고, 우리도 우리만의 빵을 그려보기로 했어요. 엄청나게 긴 빵을요! 혼자 길게 그리는 대신, 선생님을 포함한 다섯 사람이 천을 이어 하나의 빵을 함께 그렸습니다. 각자 자기만의 스타일로 표현한 빵이 구워집니다. 무지개 빵, 계란잼이 든 빵, 분홍 하트 초콜릿을 올린 빵, 초를 꽂은 빵도 있네요. 빵인 줄 알았더니 사실은 삐죽삐죽한 배였던 그림도 등장했습니다. 서로 다른 재료와 맛이 하나둘 더해져, 세상에서 하나뿐인 긴 빵이 완성되었습니다. 그 맛은 어떨지, 한 번 먹어볼까요?</div>
       </div>
     </div>
 
@@ -2645,6 +2645,15 @@
             </div>
           </div>
           <div class="child-name-label">박규리</div>
+        </div>
+        <!-- 다섯 사람의 천을 이어 붙인 완성작 (2회차의 '함께' 방식) -->
+        <div class="child-cell">
+          <div class="child-photo" style="border-color: var(--line2);" data-preview="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_13.webp?v=20260803">
+            <div class="child-photo-inner">
+              <img src="https://ninnikkraft.vercel.app/lightbox/%ED%95%A8%EA%BB%98_13_thumb.webp?v=20260803" alt="함께" loading="lazy" decoding="async">
+            </div>
+          </div>
+          <div class="child-name-label">함께</div>
         </div>
       </div>
 
@@ -2996,6 +3005,9 @@
       if (isGroupPhoto) {
         // 수업 풍경 사진은 "OO의 작품" 문구 없이 alt 텍스트를 그대로 제목으로 사용
         formattedTitle = childName;
+      } else if (childName === "함께") {
+        // 함께 그린 작품이 번호 없이 한 점만 걸린 경우 (13회차)
+        formattedTitle = "함께 그린 작품";
       } else {
         const nameMatch = childName.match(/^(.+?)\s*-\s*(\d+)$/);
         if (nameMatch) {
