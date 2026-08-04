@@ -342,9 +342,12 @@
     gap: 8px;
     margin-bottom: 6px;
   }
-  .notice-date {
-    font-size: 11.5px;
+  /* 게시일은 행사 날짜로 오해되지 않도록 맨 아래에 작게 둡니다 */
+  .notice-meta {
+    margin-top: 12px;
+    font-size: 11px;
     color: var(--text-dim);
+    text-align: right;
     letter-spacing: 0.2px;
   }
   .notice-tag {
@@ -1367,7 +1370,12 @@
 
        ▶ 새 공지를 올리는 방법
          아래 notice 블록을 통째로 복사해서 목록 맨 위에 붙여넣고,
-         날짜 · 분류 · 제목 · 내용만 바꾸면 됩니다. 최신 공지가 위로 갑니다.
+         분류 · 제목 · 내용 · 게시일만 바꾸면 됩니다. 최신 공지가 위로 갑니다.
+
+       ▶ 날짜 표기
+         행사 날짜는 제목에 적습니다 (예: 8월 13일 목요일 · 부모 참여 특강 안내).
+         맨 아래 notice-meta의 날짜는 공지를 올린 날이며, 행사일로 오해되지
+         않도록 작게 오른쪽 아래에 둡니다.
 
        ▶ 꼭 봐야 하는 공지
          class="notice" 를 class="notice is-pinned" 로 바꾸면
@@ -1387,21 +1395,22 @@
 
     <article class="notice is-pinned">
       <div class="notice-head">
-        <span class="notice-date">2026.08.03</span>
         <span class="notice-tag">일정</span>
       </div>
-      <div class="notice-title">8월 13일 부모 참여 특강 안내</div>
+      <div class="notice-title">8월 13일 목요일 · 부모 참여 특강 안내</div>
       <div class="notice-body">8월 13일 목요일 수업은 <strong>부모 참여 특강</strong>으로 진행됩니다. 초청 강사로 방승연 선생님을 모십니다. 자세한 시간과 준비물은 별도로 안내드리겠습니다.</div>
+      <div class="notice-meta">2026.08.03 게시</div>
     </article>
 
     <!-- 새 공지는 위에 붙여넣으세요. 아래는 복사해서 쓰시는 견본입니다.
+         행사 날짜는 제목에 적고, 맨 아래 notice-meta에는 공지를 올린 날짜를 적습니다.
     <article class="notice">
       <div class="notice-head">
-        <span class="notice-date">2026.08.20</span>
         <span class="notice-tag">휴강</span>
       </div>
       <div class="notice-title">공지 제목</div>
       <div class="notice-body">공지 내용을 적습니다.</div>
+      <div class="notice-meta">2026.08.20 게시</div>
     </article>
     -->
 
