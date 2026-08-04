@@ -318,7 +318,59 @@
     .float-nav { display: none; }
   }
 
+  /* 공지사항 탭의 잠금 화면 (영상 없이 단색 — 불필요한 미디어 요청을 만들지 않음) */
+  .records-gate.is-plain {
+    background: var(--slot-bg);
+    min-height: 280px;
+  }
+
   /* ─── 공지사항 ─── */
+  /* 수업 기록 탭 맨 위에 뜨는 최신 공지 한 줄 */
+  .notice-strip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin: 28px 0 0;
+    padding: 13px 20px;
+    background: #F8F2E4;
+    border: none;
+    border-left: 3px solid var(--coral);
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(42, 31, 22, 0.08);
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: background 0.2s ease;
+  }
+  .notice-strip:hover { background: var(--card); }
+  .notice-strip .ns-tag {
+    flex-shrink: 0;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--white);
+    background: var(--coral);
+    border-radius: 20px;
+    padding: 2px 9px;
+    line-height: 1.5;
+  }
+  .notice-strip .ns-title {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .notice-strip .ns-go {
+    flex-shrink: 0;
+    font-size: 11.5px;
+    color: var(--text-dim);
+  }
+  @media (max-width: 560px) {
+    .notice-strip { padding: 12px 14px; gap: 8px; flex-wrap: wrap; }
+    .notice-strip .ns-title { font-size: 13.5px; flex-basis: 100%; order: 3; }
+  }
+
   .notice-list {
     display: grid;
     gap: 12px;
@@ -1341,6 +1393,7 @@
 <nav class="tab-bar">
   <div class="tab-bar-inner">
     <button class="tab-btn active" onclick="switchTab('records', this)">📋 수업 기록</button>
+    <button class="tab-btn" id="tab-btn-notices" onclick="switchTab('notices', this)">📣 공지사항</button>
     <button class="tab-btn" onclick="switchTab('program', this)">✍️ 프로그램 소개</button>
   </div>
 </nav>
@@ -1365,56 +1418,9 @@
 
   <div id="records-content" style="display:none;">
 
-  <!-- ════════════════════════════════════════════════════════════════
-       공지사항
-
-       ▶ 새 공지를 올리는 방법
-         아래 notice 블록을 통째로 복사해서 목록 맨 위에 붙여넣고,
-         분류 · 제목 · 내용 · 게시일만 바꾸면 됩니다. 최신 공지가 위로 갑니다.
-
-       ▶ 날짜 표기
-         행사 날짜는 제목에 적습니다 (예: 8월 13일 목요일 · 부모 참여 특강 안내).
-         맨 아래 notice-meta의 날짜는 공지를 올린 날이며, 행사일로 오해되지
-         않도록 작게 오른쪽 아래에 둡니다.
-
-       ▶ 꼭 봐야 하는 공지
-         class="notice" 를 class="notice is-pinned" 로 바꾸면
-         왼쪽에 주황 선이 붙고 배경이 살짝 밝아집니다.
-
-       ▶ 분류(notice-tag)는 자유롭게 쓰시면 됩니다. 예: 일정 · 휴강 · 준비물 · 결제
-
-       ▶ 올릴 공지가 없을 때는 section-lead와 notice-list를 통째로 지우거나,
-         <div class="notice-list"> 안의 공지들만 지우면 됩니다.
-       ════════════════════════════════════════════════════════════════ -->
-  <div class="section-lead">
-    <span class="ico">📣</span>
-    <h2>공지사항</h2>
-    <div class="bar"></div>
-  </div>
-  <div class="notice-list">
-
-    <article class="notice is-pinned">
-      <div class="notice-head">
-        <span class="notice-tag">일정</span>
-      </div>
-      <div class="notice-title">8월 13일 목요일 · 부모 참여 특강 안내</div>
-      <div class="notice-body">8월 13일 목요일 수업은 <strong>부모 참여 특강</strong>으로 진행됩니다. 초청 강사로 방승연 선생님을 모십니다. 자세한 시간과 준비물은 별도로 안내드리겠습니다.</div>
-      <div class="notice-meta">2026.08.03 게시</div>
-    </article>
-
-    <!-- 새 공지는 위에 붙여넣으세요. 아래는 복사해서 쓰시는 견본입니다.
-         행사 날짜는 제목에 적고, 맨 아래 notice-meta에는 공지를 올린 날짜를 적습니다.
-    <article class="notice">
-      <div class="notice-head">
-        <span class="notice-tag">휴강</span>
-      </div>
-      <div class="notice-title">공지 제목</div>
-      <div class="notice-body">공지 내용을 적습니다.</div>
-      <div class="notice-meta">2026.08.20 게시</div>
-    </article>
-    -->
-
-  </div>
+  <!-- 최신 공지 한 줄 요약. 내용은 공지사항 탭 한 곳에서만 관리하고,
+       여기에는 자바스크립트가 첫 번째 공지의 분류와 제목을 그대로 옮겨 옵니다. -->
+  <button type="button" id="latest-notice-strip" class="notice-strip" style="display:none;" onclick="goToNoticesTab()"></button>
 
   <div class="section-lead">
     <span class="ico">📋</span>
@@ -2829,6 +2835,77 @@
 
   </div><!-- /tab-records -->
 
+  <!-- ══════════ TAB: 공지사항 ══════════ -->
+  <div id="tab-notices" class="tab-panel">
+
+  <div id="notices-gate" class="records-gate is-plain">
+    <div class="records-gate-box">
+      <p class="records-gate-msg"><span class="no-wrap-line">수강생 학부모님만 확인하실 수 있는 페이지입니다.</span>안내받은 비밀번호를 입력해주세요.</p>
+      <div class="records-gate-form">
+        <input type="password" id="notices-pw" class="records-gate-input" placeholder="비밀번호" inputmode="numeric" maxlength="10">
+        <button type="button" class="records-gate-btn" onclick="checkRecordsPassword('notices-pw')">확인</button>
+      </div>
+      <p id="notices-pw-error" class="records-gate-error" style="display:none;">비밀번호가 올바르지 않습니다.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       공지사항
+
+       ▶ 새 공지를 올리는 방법
+         아래 notice 블록을 통째로 복사해서 목록 맨 위에 붙여넣고,
+         분류 · 제목 · 내용 · 게시일만 바꾸면 됩니다. 최신 공지가 위로 갑니다.
+         맨 위 공지는 수업 기록 탭 상단에도 한 줄로 자동 노출되므로,
+         여기만 고치면 두 곳이 함께 바뀝니다.
+
+       ▶ 날짜 표기
+         행사 날짜는 제목에 적습니다 (예: 8월 13일 목요일 · 부모 참여 특강 안내).
+         맨 아래 notice-meta의 날짜는 공지를 올린 날이며, 행사일로 오해되지
+         않도록 작게 오른쪽 아래에 둡니다.
+
+       ▶ 꼭 봐야 하는 공지
+         class="notice" 를 class="notice is-pinned" 로 바꾸면
+         왼쪽에 주황 선이 붙고 배경이 살짝 밝아집니다.
+
+       ▶ 분류(notice-tag)는 자유롭게 쓰시면 됩니다. 예: 일정 · 휴강 · 준비물 · 결제
+
+       ▶ 올릴 공지가 없을 때는 notice-list 안의 공지들만 지우면 됩니다.
+         그러면 수업 기록 탭 위의 한 줄 요약도 함께 사라집니다.
+       ════════════════════════════════════════════════════════════════ -->
+  <div id="notices-content" style="display:none;">
+  <div class="section-lead">
+    <span class="ico">📣</span>
+    <h2>공지사항</h2>
+    <div class="bar"></div>
+  </div>
+  <div class="notice-list">
+
+    <article class="notice is-pinned">
+      <div class="notice-head">
+        <span class="notice-tag">일정</span>
+      </div>
+      <div class="notice-title">8월 13일 목요일 · 부모 참여 특강 안내</div>
+      <div class="notice-body">8월 13일 목요일 수업은 <strong>부모 참여 특강</strong>으로 진행됩니다. 초청 강사로 방승연 선생님을 모십니다. 자세한 시간과 준비물은 별도로 안내드리겠습니다.</div>
+      <div class="notice-meta">2026.08.03 게시</div>
+    </article>
+
+    <!-- 새 공지는 위에 붙여넣으세요. 아래는 복사해서 쓰시는 견본입니다.
+         행사 날짜는 제목에 적고, 맨 아래 notice-meta에는 공지를 올린 날짜를 적습니다.
+    <article class="notice">
+      <div class="notice-head">
+        <span class="notice-tag">휴강</span>
+      </div>
+      <div class="notice-title">공지 제목</div>
+      <div class="notice-body">공지 내용을 적습니다.</div>
+      <div class="notice-meta">2026.08.20 게시</div>
+    </article>
+    -->
+
+  </div>
+  </div><!-- /notices-content -->
+
+  </div><!-- /tab-notices -->
+
   <!-- ══════════ TAB: 프로그램 소개 ══════════ -->
   <div id="tab-program" class="tab-panel">
   <div class="program-wrap">
@@ -2981,15 +3058,20 @@
 <script>
   // 수업 기록 비밀번호 게이트
   var RECORDS_PASSWORD = "2026";
+  // 수업 기록과 공지사항은 같은 비밀번호를 쓰며, 한 번 풀면 두 탭이 함께 열립니다.
+  var GATED_TABS = ['records', 'notices'];
   function unlockRecords() {
-    var gate = document.getElementById('records-gate');
-    var content = document.getElementById('records-content');
-    if (gate) gate.style.display = 'none';
-    if (content) content.style.display = '';
+    GATED_TABS.forEach(function (key) {
+      var gate = document.getElementById(key + '-gate');
+      var content = document.getElementById(key + '-content');
+      if (gate) gate.style.display = 'none';
+      if (content) content.style.display = '';
+    });
   }
-  function checkRecordsPassword() {
-    var input = document.getElementById('records-pw');
-    var errorEl = document.getElementById('records-pw-error');
+  function checkRecordsPassword(inputId) {
+    var id = inputId || 'records-pw';
+    var input = document.getElementById(id);
+    var errorEl = document.getElementById(id + '-error');
     if (input && input.value === RECORDS_PASSWORD) {
       try { localStorage.setItem('ninnik_records_unlocked_pw', RECORDS_PASSWORD); } catch (e) {}
       unlockRecords();
@@ -3001,12 +3083,44 @@
     var alreadyUnlocked = false;
     try { alreadyUnlocked = localStorage.getItem('ninnik_records_unlocked_pw') === RECORDS_PASSWORD; } catch (e) {}
     if (alreadyUnlocked) unlockRecords();
-    var pwInput = document.getElementById('records-pw');
-    if (pwInput) {
+    GATED_TABS.forEach(function (key) {
+      var pwInput = document.getElementById(key + '-pw');
+      if (!pwInput) return;
       pwInput.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') checkRecordsPassword();
+        if (e.key === 'Enter') checkRecordsPassword(key + '-pw');
       });
-    }
+    });
+  })();
+
+  function goToNoticesTab() {
+    var btn = document.getElementById('tab-btn-notices');
+    if (btn) switchTab('notices', btn);
+  }
+
+  // 공지사항 탭의 첫 공지를 수업 기록 탭 맨 위에 한 줄로 옮겨 적습니다.
+  // 공지가 하나도 없으면 이 줄은 나타나지 않습니다.
+  (function () {
+    var strip = document.getElementById('latest-notice-strip');
+    var first = document.querySelector('#notices-content .notice');
+    if (!strip || !first) return;
+    var title = first.querySelector('.notice-title');
+    if (!title) return;
+    var tag = first.querySelector('.notice-tag');
+
+    var tagEl = document.createElement('span');
+    tagEl.className = 'ns-tag';
+    tagEl.textContent = tag ? tag.textContent.trim() : '공지';
+    var titleEl = document.createElement('span');
+    titleEl.className = 'ns-title';
+    titleEl.textContent = title.textContent.trim();
+    var goEl = document.createElement('span');
+    goEl.className = 'ns-go';
+    goEl.textContent = '공지사항에서 보기 →';
+
+    strip.appendChild(tagEl);
+    strip.appendChild(titleEl);
+    strip.appendChild(goEl);
+    strip.style.display = 'flex';
   })();
 
   function switchTab(tabId, btn) {
