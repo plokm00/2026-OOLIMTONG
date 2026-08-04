@@ -118,12 +118,15 @@
   .float-dot:hover .fd { background:var(--text-dim); }
   .float-dot.active .fd { background:var(--accent); transform:scale(1.35); }
   .float-dot .fd-label, .float-jump .fd-label {
+    width:88px; /* 날짜 길이가 달라도 시작 위치가 흔들리지 않도록 폭을 고정 */
     max-width:0; overflow:hidden; white-space:nowrap; opacity:0;
     font-size:11.5px; font-weight:600; font-variant-numeric:tabular-nums;
     text-align:right; color:var(--text-dim);
     transition:max-width 0.25s ease, opacity 0.2s ease;
   }
-  .float-nav:hover .fd-label, .float-nav:focus-within .fd-label { max-width:150px; opacity:1; }
+  /* 날짜는 앞자리부터 훑어 읽으므로 왼쪽 정렬. TOP·BOTTOM은 화살표에 붙도록 오른쪽 정렬 유지 */
+  .float-dot .fd-label { text-align:left; }
+  .float-nav:hover .fd-label, .float-nav:focus-within .fd-label { max-width:88px; opacity:1; }
   .float-dot.active .fd-label { color:var(--accent); font-weight:700; }
   .float-dot .fd-round { color:var(--text-dim); font-weight:400; opacity:0.75; margin-left:4px; }
   .float-dot.active .fd-round { color:var(--accent); opacity:0.9; }
