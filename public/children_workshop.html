@@ -318,6 +318,67 @@
     .float-nav { display: none; }
   }
 
+  /* ─── 공지사항 ─── */
+  .notice-list {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .notice {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 18px 24px;
+    box-shadow: 0 4px 16px rgba(42, 31, 22, 0.08);
+    border-left: 3px solid transparent;
+  }
+  /* 꼭 봐야 하는 공지에는 class="notice is-pinned" 를 붙입니다 */
+  .notice.is-pinned {
+    border-left-color: var(--coral);
+    background: #F8F2E4;
+  }
+  .notice-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .notice-date {
+    font-size: 11.5px;
+    color: var(--text-dim);
+    letter-spacing: 0.2px;
+  }
+  .notice-tag {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--text-mid);
+    background: var(--cream2);
+    border-radius: 20px;
+    padding: 2px 9px;
+    line-height: 1.5;
+  }
+  .notice.is-pinned .notice-tag {
+    background: var(--coral);
+    color: var(--white);
+  }
+  .notice-title {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+  .notice-body {
+    font-size: 13.5px;
+    color: var(--text);
+    line-height: 1.75;
+  }
+  .notice-body strong { font-weight: 600; }
+  @media (max-width: 560px) {
+    .notice { padding: 16px 18px; border-radius: 16px; }
+    .notice-title { font-size: 15px; }
+  }
+
   .session-card {
     background: var(--card);
     border-radius: 22px;
@@ -1300,6 +1361,52 @@
   </div>
 
   <div id="records-content" style="display:none;">
+
+  <!-- ════════════════════════════════════════════════════════════════
+       공지사항
+
+       ▶ 새 공지를 올리는 방법
+         아래 notice 블록을 통째로 복사해서 목록 맨 위에 붙여넣고,
+         날짜 · 분류 · 제목 · 내용만 바꾸면 됩니다. 최신 공지가 위로 갑니다.
+
+       ▶ 꼭 봐야 하는 공지
+         class="notice" 를 class="notice is-pinned" 로 바꾸면
+         왼쪽에 주황 선이 붙고 배경이 살짝 밝아집니다.
+
+       ▶ 분류(notice-tag)는 자유롭게 쓰시면 됩니다. 예: 일정 · 휴강 · 준비물 · 결제
+
+       ▶ 올릴 공지가 없을 때는 section-lead와 notice-list를 통째로 지우거나,
+         <div class="notice-list"> 안의 공지들만 지우면 됩니다.
+       ════════════════════════════════════════════════════════════════ -->
+  <div class="section-lead">
+    <span class="ico">📣</span>
+    <h2>공지사항</h2>
+    <div class="bar"></div>
+  </div>
+  <div class="notice-list">
+
+    <article class="notice is-pinned">
+      <div class="notice-head">
+        <span class="notice-date">2026.08.03</span>
+        <span class="notice-tag">일정</span>
+      </div>
+      <div class="notice-title">8월 13일 부모 참여 특강 안내</div>
+      <div class="notice-body">8월 13일 목요일 수업은 <strong>부모 참여 특강</strong>으로 진행됩니다. 초청 강사로 방승연 선생님을 모십니다. 자세한 시간과 준비물은 별도로 안내드리겠습니다.</div>
+    </article>
+
+    <!-- 새 공지는 위에 붙여넣으세요. 아래는 복사해서 쓰시는 견본입니다.
+    <article class="notice">
+      <div class="notice-head">
+        <span class="notice-date">2026.08.20</span>
+        <span class="notice-tag">휴강</span>
+      </div>
+      <div class="notice-title">공지 제목</div>
+      <div class="notice-body">공지 내용을 적습니다.</div>
+    </article>
+    -->
+
+  </div>
+
   <div class="section-lead">
     <span class="ico">📋</span>
     <h2>수업 기록</h2>
