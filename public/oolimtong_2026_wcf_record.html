@@ -72,6 +72,69 @@
   .team-pane { display:none; }
   .team-pane.active { display:block; }
 
+  /* ── 오른쪽 날짜 내비 (마우스를 올리면 날짜가 펼쳐집니다) ── */
+  /* 선택된 팀의 회차만 표시하며, 팀을 바꾸면 목록도 다시 그려집니다. */
+  .float-nav { position:fixed; right:8px; top:50%; transform:translateY(-50%); z-index:90; }
+  .float-nav-track {
+    display:flex; flex-direction:column; gap:9px;
+    padding:12px 8px; border-radius:4px;
+    background:transparent; box-shadow:none;
+    transition:background 0.25s ease, box-shadow 0.25s ease;
+  }
+  .float-nav:hover .float-nav-track,
+  .float-nav:focus-within .float-nav-track {
+    background:rgba(246,237,230,0.96);
+    border:1px solid var(--line);
+    box-shadow:0 6px 24px rgba(38,20,16,0.16);
+  }
+  .float-dot, .float-jump {
+    display:flex; align-items:center; justify-content:flex-end;
+    gap:8px; text-decoration:none;
+  }
+  .float-dot { height:8px; cursor:pointer; background:none; border:0; padding:0; font:inherit; }
+  .float-jump {
+    width:100%; max-height:0; padding:0; border:0; background:transparent;
+    color:var(--text-dim); font:inherit; cursor:pointer;
+    opacity:0; overflow:hidden; pointer-events:none; visibility:hidden;
+    transition:max-height 0.2s ease, opacity 0.15s ease;
+  }
+  .float-nav:hover .float-jump,
+  .float-nav:focus-within .float-jump {
+    max-height:16px; opacity:1; pointer-events:auto; visibility:visible;
+  }
+  .float-jump-icon {
+    width:12px; flex-shrink:0; color:var(--text-dim);
+    font-size:13px; font-weight:800; line-height:1; text-align:center;
+    transition:color 0.2s, transform 0.2s;
+  }
+  .float-jump:hover .float-jump-icon, .float-jump:focus-visible .float-jump-icon {
+    color:var(--accent); transform:scale(1.15);
+  }
+  .float-dot .fd {
+    width:7px; height:7px; border-radius:50%;
+    background:var(--line); flex-shrink:0;
+    transition:background 0.2s, transform 0.2s;
+  }
+  .float-dot:hover .fd { background:var(--text-dim); }
+  .float-dot.active .fd { background:var(--accent); transform:scale(1.35); }
+  .float-dot .fd-label, .float-jump .fd-label {
+    max-width:0; overflow:hidden; white-space:nowrap; opacity:0;
+    font-size:11.5px; font-weight:600; font-variant-numeric:tabular-nums;
+    text-align:right; color:var(--text-dim);
+    transition:max-width 0.25s ease, opacity 0.2s ease;
+  }
+  .float-nav:hover .fd-label, .float-nav:focus-within .fd-label { max-width:150px; opacity:1; }
+  .float-dot.active .fd-label { color:var(--accent); font-weight:700; }
+  .float-dot .fd-round { color:var(--text-dim); font-weight:400; opacity:0.75; margin-left:4px; }
+  .float-dot.active .fd-round { color:var(--accent); opacity:0.9; }
+
+  /* 고정 헤더(56px)에 카드 상단이 가리지 않도록 */
+  .session-item { scroll-margin-top:72px; }
+
+  @media (max-width:900px) {
+    .float-nav { display:none; }
+  }
+
   /* ── 작업 기록 ── */
   .session-list { display:flex; flex-direction:column; gap:2px; }
   .session-item { background:var(--bg2); }
@@ -295,6 +358,20 @@
 
   <div class="team-head active" data-team="miro">
     <p class="team-line"><span class="team-when">매주 일요일 14:00 · 하나어린이집 야외 부지</span> · 인동욱 · 민지현 · 조영범 · 김주원 · 김현국 · 이새롬 · 주장석 · <span class="team-artist">김아영</span></p>
+  </div>
+</div>
+
+<!-- ══════════ 오른쪽 날짜 내비 ══════════ -->
+<!-- 목록은 선택된 팀의 .session-item을 훑어 자바스크립트가 자동으로 채웁니다.
+     회차를 추가·삭제해도 여기를 손댈 필요가 없습니다. -->
+<div class="float-nav" id="float-nav">
+  <div class="float-nav-track" id="float-nav-track">
+    <button type="button" class="float-jump" onclick="jumpToPageEdge('top')" aria-label="페이지 맨 위로 이동" title="페이지 맨 위로">
+      <span class="fd-label">TOP</span><span class="float-jump-icon" aria-hidden="true">↑</span>
+    </button>
+    <button type="button" class="float-jump" id="float-nav-bottom" onclick="jumpToPageEdge('bottom')" aria-label="페이지 맨 아래로 이동" title="페이지 맨 아래로">
+      <span class="fd-label">BOTTOM</span><span class="float-jump-icon" aria-hidden="true">↓</span>
+    </button>
   </div>
 </div>
 
@@ -1341,8 +1418,88 @@ function switchTeam(team) {
   document.querySelectorAll('.team-head').forEach(function(h){ h.classList.toggle('active', h.dataset.team === team); });
   document.querySelectorAll('.team-pane').forEach(function(p){ p.classList.toggle('active', p.dataset.team === team); });
   history.replaceState(null, '', '#' + team);
+  if (window.rebuildFloatNav) window.rebuildFloatNav(team);
 }
 function toggleSession(header) {}
+
+// ── 오른쪽 날짜 내비 ──
+// 선택된 팀의 회차를 훑어 목록을 만들고, 스크롤 위치에 따라 현재 회차를 표시합니다.
+(function () {
+  var nav = document.getElementById('float-nav');
+  var track = document.getElementById('float-nav-track');
+  var bottomBtn = document.getElementById('float-nav-bottom');
+  var observer = null;
+  if (!nav || !track) return;
+
+  window.jumpToPageEdge = function (edge) {
+    window.scrollTo({
+      top: edge === 'top' ? 0 : document.documentElement.scrollHeight,
+      behavior: 'smooth'
+    });
+  };
+
+  // "05. 09. 토" → "05.09 토"
+  function tidyDate(text) {
+    var raw = (text || '').replace(/\s+/g, ' ').trim();
+    var m = raw.match(/(\d{1,2})\s*\.\s*(\d{1,2})\s*\.\s*(\S+)/);
+    return m ? (m[1] + '.' + m[2] + ' ' + m[3]) : raw;
+  }
+
+  window.rebuildFloatNav = function (team) {
+    if (observer) { observer.disconnect(); observer = null; }
+    track.querySelectorAll('.float-dot').forEach(function (d) { d.remove(); });
+
+    var pane = document.getElementById('pane-' + team);
+    var items = pane ? pane.querySelectorAll('.session-item') : [];
+    if (!items.length) { nav.style.display = 'none'; return; }
+    nav.style.display = '';
+
+    var links = [];
+    items.forEach(function (item) {
+      var dateEl = item.querySelector('.session-date');
+      if (!dateEl) return;
+      var roundEl = item.querySelector('.session-badge');
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'float-dot';
+
+      var dot = document.createElement('span');
+      dot.className = 'fd';
+      var label = document.createElement('span');
+      label.className = 'fd-label';
+      label.textContent = tidyDate(dateEl.textContent);
+      if (roundEl) {
+        var round = document.createElement('span');
+        round.className = 'fd-round';
+        round.textContent = roundEl.textContent.trim();
+        label.appendChild(round);
+      }
+      btn.appendChild(dot);
+      btn.appendChild(label);
+      btn.setAttribute('aria-label', label.textContent + ' 회차로 이동');
+      btn.addEventListener('click', function () {
+        item.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      track.insertBefore(btn, bottomBtn);
+      links.push({ btn: btn, item: item });
+    });
+
+    if (!links.length) return;
+
+    observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        links.forEach(function (l) {
+          l.btn.classList.toggle('active', l.item === entry.target);
+        });
+      });
+    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+    links.forEach(function (l) { observer.observe(l.item); });
+  };
+})();
 
 var hash = window.location.hash.replace('#','');
 if (['nemo','gori','miro'].indexOf(hash) > -1) {
