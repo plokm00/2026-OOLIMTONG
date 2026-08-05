@@ -1392,9 +1392,9 @@
 <!-- ═══════════════════════════════ TAB BAR ═══════════════════════════════ -->
 <nav class="tab-bar">
   <div class="tab-bar-inner">
-    <button class="tab-btn active" onclick="switchTab('records', this)">📋 수업 기록</button>
-    <button class="tab-btn" id="tab-btn-notices" onclick="switchTab('notices', this)">📣 공지사항</button>
-    <button class="tab-btn" onclick="switchTab('program', this)">✍️ 프로그램 소개</button>
+    <button class="tab-btn active" data-tab="records" onclick="switchTab('records', this)">📋 수업 기록</button>
+    <button class="tab-btn" data-tab="notices" id="tab-btn-notices" onclick="switchTab('notices', this)">📣 공지사항</button>
+    <button class="tab-btn" data-tab="program" onclick="switchTab('program', this)">✍️ 프로그램 소개</button>
   </div>
 </nav>
 
@@ -3123,21 +3123,57 @@
     strip.style.display = 'flex';
   })();
 
-  function switchTab(tabId, btn) {
+  // ── 탭 주소 ──
+  // #record · #notice · #program 으로 탭이 기억되고, 링크로 바로 열 수 있습니다.
+  // 회차 앵커(#session-12)는 수업 기록 탭을 뜻하므로 그대로 살려 둡니다.
+  var TAB_BY_SLUG = { record: 'records', notice: 'notices', program: 'program' };
+  var SLUG_BY_TAB = { records: 'record', notices: 'notice', program: 'program' };
+
+  function currentHash() { return (window.location.hash || '').replace('#', ''); }
+
+  function switchTab(tabId, btn, fromHash) {
     // 모든 패널 숨기기
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     // 모든 버튼 비활성화
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     // 선택한 탭 활성화
-    document.getElementById('tab-' + tabId).classList.add('active');
-    btn.classList.add('active');
+    var panel = document.getElementById('tab-' + tabId);
+    if (panel) panel.classList.add('active');
+    var button = btn || document.querySelector('.tab-btn[data-tab="' + tabId + '"]');
+    if (button) button.classList.add('active');
+
+    if (fromHash) return; // 주소를 보고 연 경우에는 주소를 다시 쓰거나 스크롤하지 않습니다
+
+    var slug = SLUG_BY_TAB[tabId];
+    if (slug && currentHash() !== slug) window.location.hash = slug;
     // 상단으로 스크롤
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // 주소에 적힌 탭(또는 회차)을 화면에 반영합니다.
+  function applyHash() {
+    var h = currentHash();
+    if (!h) return;
+    var isSession = /^session-/.test(h);
+    var tabId = isSession ? 'records' : TAB_BY_SLUG[h];
+    if (!tabId) return;
+    switchTab(tabId, null, true);
+    if (isSession) {
+      // 수업 기록은 잠금이 풀린 뒤에야 보이므로 여기서 직접 맞춰 줍니다
+      var el = document.getElementById(h);
+      if (el && el.offsetParent !== null) el.scrollIntoView({ block: 'start' });
+    }
+  }
+
+  applyHash();
+  window.addEventListener('hashchange', applyHash);
+
   function jumpToPageEdge(edge) {
-    if (window.location.hash) {
-      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    // 회차 앵커만 지우고, 지금 보고 있는 탭 주소는 남겨 둡니다
+    var activeTab = document.querySelector('.tab-panel.active');
+    var slug = activeTab ? SLUG_BY_TAB[activeTab.id.replace('tab-', '')] : null;
+    if (window.location.hash && currentHash() !== slug) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search + (slug ? '#' + slug : ''));
     }
     if (edge === 'bottom') {
       window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
