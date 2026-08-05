@@ -1480,12 +1480,100 @@ function toggleSession(header) {}
     return m ? (m[1] + '.' + m[2] + ' ' + m[3]) : raw;
   }
 
-  // 사이드바에서 작품을 바꾸면 그 작품의 처음부터 보도록 맨 위로 올려줍니다.
-  // (스크롤 위치를 그대로 두면 회차 수가 다른 작품에서는 엉뚱한 곳에 떨어집니다)
+  var YEAR = 2026; // 기록 연도 (날짜 표기에 연도가 없어 비교할 때만 사용)
+
+  // "05. 09. 토" → Date, "미정"처럼 날짜가 없으면 null
+  function parseDate(text) {
+    var m = (text || '').replace(/\s+/g, ' ').match(/(\d{1,2})\s*\.\s*(\d{1,2})/);
+    return m ? new Date(YEAR, parseInt(m[1], 10) - 1, parseInt(m[2], 10)) : null;
+  }
+
+  function sessionMeta(item) {
+    var d = item.querySelector('.session-date');
+    var b = item.querySelector('.session-badge');
+    return {
+      badge: b ? b.textContent.trim() : '',
+      date: parseDate(d ? d.textContent : '')
+    };
+  }
+
+  // 지금 화면에서 보고 있는 회차 (헤더 바로 아래에 가장 가까운 카드)
+  function currentItem(team) {
+    var pane = document.getElementById('pane-' + team);
+    if (!pane) return null;
+    var items = [].slice.call(pane.querySelectorAll('.session-item'));
+    var best = null, bestDist = Infinity;
+    items.forEach(function (it) {
+      var dist = Math.abs(it.getBoundingClientRect().top - 72);
+      if (dist < bestDist) { bestDist = dist; best = it; }
+    });
+    return best;
+  }
+
+  // 그 날짜가 속한 주의 월요일 (같은 주인지 판단하는 기준)
+  function weekStart(d) {
+    var x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    x.setDate(x.getDate() - ((x.getDay() + 6) % 7));
+    return x.getTime();
+  }
+
+  // 작품을 바꿔도 보던 자리를 이어받도록 짝이 되는 회차를 찾습니다.
+  //  1) 회차 번호가 같은 것 (고리 6회 → 네모 6회)
+  //  2) 번호가 없으면(체험·보강) 같은 주의 회차, 그 주에 정규 회차가 있으면 그쪽을 우선
+  //  3) 같은 주에 아무것도 없으면 날짜가 가장 가까운 회차
+  //  4) 날짜를 못 읽으면 같은 순서의 회차
+  function findCounterpart(fromTeam, toTeam) {
+    var cur = currentItem(fromTeam);
+    var toPane = document.getElementById('pane-' + toTeam);
+    if (!cur || !toPane) return null;
+    var items = [].slice.call(toPane.querySelectorAll('.session-item'));
+    if (!items.length) return null;
+    var c = sessionMeta(cur);
+    var isRound = function (badge) { return /^\d+\s*회$/.test(badge); };
+
+    if (isRound(c.badge)) {
+      var sameRound = items.filter(function (it) { return sessionMeta(it).badge === c.badge; })[0];
+      if (sameRound) return sameRound;
+    }
+
+    if (c.date) {
+      var curWeek = weekStart(c.date);
+      var inWeek = items.filter(function (it) {
+        var d = sessionMeta(it).date;
+        return d && weekStart(d) === curWeek;
+      });
+      if (inWeek.length) {
+        var regular = inWeek.filter(function (it) { return isRound(sessionMeta(it).badge); })[0];
+        return regular || inWeek[0];
+      }
+
+      var best = null, bestDiff = Infinity;
+      items.forEach(function (it) {
+        var d = sessionMeta(it).date;
+        if (!d) return;
+        var diff = Math.abs(d.getTime() - c.date.getTime());
+        if (diff < bestDiff) { bestDiff = diff; best = it; }
+      });
+      if (best) return best;
+    }
+
+    var idx = [].indexOf.call(cur.parentNode.children, cur);
+    return items[Math.min(idx, items.length - 1)] || items[0];
+  }
+
   window.switchTeamFromNav = function (team) {
-    if (document.querySelector('.float-team.active[data-team="' + team + '"]')) return;
+    var activeBtn = document.querySelector('.float-team.active');
+    var fromTeam = activeBtn ? activeBtn.dataset.team : null;
+    if (fromTeam === team) return;
+
+    // 패널을 바꾸기 전에, 아직 보이는 상태에서 짝이 되는 회차를 찾아둡니다
+    var atTop = window.scrollY < 120;
+    var target = (!atTop && fromTeam) ? findCounterpart(fromTeam, team) : null;
+
     switchTeam(team);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // 부드러운 스크롤은 화면이 크게 말려 올라가 흐름을 끊으므로 바로 이동합니다
+    if (target) target.scrollIntoView({ behavior: 'auto', block: 'start' });
   };
 
   window.rebuildFloatNav = function (team) {
