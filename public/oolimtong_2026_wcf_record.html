@@ -87,7 +87,7 @@
     border:1px solid var(--line);
     box-shadow:0 6px 24px rgba(38,20,16,0.16);
   }
-  /* 작품(팀) 선택 — 접혀 있을 때는 첫 글자만, 펼치면 이름 전체 */
+  /* 작품(팀) 선택 — 접혀 있어도 이름 전체가 보입니다 */
   .float-teams {
     display:flex; flex-direction:column; align-items:flex-end; gap:3px;
     padding-bottom:9px; margin-bottom:3px;
@@ -107,13 +107,6 @@
   }
   .float-team:hover:not(.active) { color:var(--text); background:var(--bg3); }
   .float-team.active { color:var(--white); background:var(--accent); cursor:default; }
-  .float-team .ft-rest {
-    max-width:0; overflow:hidden; opacity:0;
-    transition:max-width 0.25s ease, opacity 0.2s ease;
-  }
-  .float-nav:hover .float-team .ft-rest,
-  .float-nav:focus-within .float-team .ft-rest { max-width:2em; opacity:1; }
-
   .float-dot, .float-jump {
     display:flex; align-items:center; justify-content:flex-end;
     gap:8px; text-decoration:none;
@@ -397,9 +390,9 @@
 <div class="float-nav" id="float-nav">
   <div class="float-nav-track" id="float-nav-track">
     <div class="float-teams" id="float-teams" role="group" aria-label="작품 선택">
-      <button type="button" class="float-team" data-team="nemo" onclick="switchTeamFromNav('nemo')" title="네모">네<span class="ft-rest">모</span></button>
-      <button type="button" class="float-team" data-team="gori" onclick="switchTeamFromNav('gori')" title="고리">고<span class="ft-rest">리</span></button>
-      <button type="button" class="float-team" data-team="miro" onclick="switchTeamFromNav('miro')" title="미로">미<span class="ft-rest">로</span></button>
+      <button type="button" class="float-team" data-team="nemo" onclick="switchTeamFromNav('nemo')">네모</button>
+      <button type="button" class="float-team" data-team="gori" onclick="switchTeamFromNav('gori')">고리</button>
+      <button type="button" class="float-team" data-team="miro" onclick="switchTeamFromNav('miro')">미로</button>
     </div>
     <button type="button" class="float-jump" onclick="jumpToPageEdge('top')" aria-label="페이지 맨 위로 이동" title="페이지 맨 위로">
       <span class="fd-label">TOP</span><span class="float-jump-icon" aria-hidden="true">↑</span>
@@ -1522,8 +1515,7 @@ function toggleSession(header) {}
   //  2) 번호가 없으면(체험·보강) 같은 주의 회차, 그 주에 정규 회차가 있으면 그쪽을 우선
   //  3) 같은 주에 아무것도 없으면 날짜가 가장 가까운 회차
   //  4) 날짜를 못 읽으면 같은 순서의 회차
-  function findCounterpart(fromTeam, toTeam) {
-    var cur = currentItem(fromTeam);
+  function findCounterpart(cur, toTeam) {
     var toPane = document.getElementById('pane-' + toTeam);
     if (!cur || !toPane) return null;
     var items = [].slice.call(toPane.querySelectorAll('.session-item'));
@@ -1566,14 +1558,20 @@ function toggleSession(header) {}
     var fromTeam = activeBtn ? activeBtn.dataset.team : null;
     if (fromTeam === team) return;
 
-    // 패널을 바꾸기 전에, 아직 보이는 상태에서 짝이 되는 회차를 찾아둡니다
+    // 패널을 바꾸기 전에, 아직 보이는 상태에서 짝이 되는 회차와 그 화면 높이를 재둡니다
     var atTop = window.scrollY < 120;
-    var target = (!atTop && fromTeam) ? findCounterpart(fromTeam, team) : null;
+    var cur = (!atTop && fromTeam) ? currentItem(fromTeam) : null;
+    var target = cur ? findCounterpart(cur, team) : null;
+    var srcTop = cur ? cur.getBoundingClientRect().top : 0;
 
     switchTeam(team);
 
-    // 부드러운 스크롤은 화면이 크게 말려 올라가 흐름을 끊으므로 바로 이동합니다
-    if (target) target.scrollIntoView({ behavior: 'auto', block: 'start' });
+    // 짝이 되는 회차를 보던 카드와 똑같은 화면 높이에 놓습니다.
+    // 상단에 맞춰 붙이면 카드 중간을 보고 있었을 때 그만큼 튀어 보입니다.
+    if (target) {
+      var y = target.getBoundingClientRect().top + window.scrollY - srcTop;
+      window.scrollTo(0, Math.max(0, Math.round(y)));
+    }
   };
 
   window.rebuildFloatNav = function (team) {
