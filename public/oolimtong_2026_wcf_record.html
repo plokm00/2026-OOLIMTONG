@@ -87,6 +87,33 @@
     border:1px solid var(--line);
     box-shadow:0 6px 24px rgba(38,20,16,0.16);
   }
+  /* 작품(팀) 선택 — 접혀 있을 때는 첫 글자만, 펼치면 이름 전체 */
+  .float-teams {
+    display:flex; flex-direction:column; align-items:flex-end; gap:3px;
+    padding-bottom:9px; margin-bottom:3px;
+    border-bottom:1px solid transparent;
+    transition:border-color 0.25s ease;
+  }
+  .float-nav:hover .float-teams,
+  .float-nav:focus-within .float-teams { border-bottom-color:var(--line); }
+  .float-team {
+    display:flex; align-items:center; justify-content:flex-end;
+    border:0; background:transparent; cursor:pointer;
+    font-family:'IBM Plex Sans KR',sans-serif;
+    font-size:12px; font-weight:700; line-height:1.5;
+    color:var(--text-dim); padding:1px 4px; border-radius:2px;
+    white-space:nowrap;
+    transition:color 0.2s, background 0.2s;
+  }
+  .float-team:hover:not(.active) { color:var(--text); background:var(--bg3); }
+  .float-team.active { color:var(--white); background:var(--accent); cursor:default; }
+  .float-team .ft-rest {
+    max-width:0; overflow:hidden; opacity:0;
+    transition:max-width 0.25s ease, opacity 0.2s ease;
+  }
+  .float-nav:hover .float-team .ft-rest,
+  .float-nav:focus-within .float-team .ft-rest { max-width:2em; opacity:1; }
+
   .float-dot, .float-jump {
     display:flex; align-items:center; justify-content:flex-end;
     gap:8px; text-decoration:none;
@@ -369,6 +396,11 @@
      회차를 추가·삭제해도 여기를 손댈 필요가 없습니다. -->
 <div class="float-nav" id="float-nav">
   <div class="float-nav-track" id="float-nav-track">
+    <div class="float-teams" id="float-teams" role="group" aria-label="작품 선택">
+      <button type="button" class="float-team" data-team="nemo" onclick="switchTeamFromNav('nemo')" title="네모">네<span class="ft-rest">모</span></button>
+      <button type="button" class="float-team" data-team="gori" onclick="switchTeamFromNav('gori')" title="고리">고<span class="ft-rest">리</span></button>
+      <button type="button" class="float-team" data-team="miro" onclick="switchTeamFromNav('miro')" title="미로">미<span class="ft-rest">로</span></button>
+    </div>
     <button type="button" class="float-jump" onclick="jumpToPageEdge('top')" aria-label="페이지 맨 위로 이동" title="페이지 맨 위로">
       <span class="fd-label">TOP</span><span class="float-jump-icon" aria-hidden="true">↑</span>
     </button>
@@ -1448,14 +1480,27 @@ function toggleSession(header) {}
     return m ? (m[1] + '.' + m[2] + ' ' + m[3]) : raw;
   }
 
+  // 사이드바에서 작품을 바꾸면 그 작품의 처음부터 보도록 맨 위로 올려줍니다.
+  // (스크롤 위치를 그대로 두면 회차 수가 다른 작품에서는 엉뚱한 곳에 떨어집니다)
+  window.switchTeamFromNav = function (team) {
+    if (document.querySelector('.float-team.active[data-team="' + team + '"]')) return;
+    switchTeam(team);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   window.rebuildFloatNav = function (team) {
     if (observer) { observer.disconnect(); observer = null; }
     track.querySelectorAll('.float-dot').forEach(function (d) { d.remove(); });
 
+    document.querySelectorAll('.float-team').forEach(function (b) {
+      var on = b.dataset.team === team;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-current', on ? 'true' : 'false');
+    });
+
     var pane = document.getElementById('pane-' + team);
     var items = pane ? pane.querySelectorAll('.session-item') : [];
-    if (!items.length) { nav.style.display = 'none'; return; }
-    nav.style.display = '';
+    if (!items.length) return;
 
     var links = [];
     items.forEach(function (item) {
