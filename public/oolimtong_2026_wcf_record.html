@@ -109,7 +109,7 @@
   .float-team.active { color:var(--white); background:var(--accent); cursor:default; }
   .float-dot, .float-jump {
     display:flex; align-items:center; justify-content:flex-end;
-    gap:8px; text-decoration:none;
+    gap:6px; text-decoration:none;
   }
   .float-dot { height:8px; cursor:pointer; background:none; border:0; padding:0; font:inherit; }
   .float-jump {
@@ -137,8 +137,10 @@
   }
   .float-dot:hover .fd { background:var(--text-dim); }
   .float-dot.active .fd { background:var(--accent); transform:scale(1.35); }
+  /* 폭은 실제로 가장 긴 날짜에 맞춰 자바스크립트가 --fd-label-w 로 정합니다.
+     고정값을 크게 잡으면 짧은 날짜 오른쪽에 빈 공간이 남습니다. */
   .float-dot .fd-label, .float-jump .fd-label {
-    width:88px; /* 날짜 길이가 달라도 시작 위치가 흔들리지 않도록 폭을 고정 */
+    width:var(--fd-label-w, 86px); /* 날짜 길이가 달라도 시작 위치가 흔들리지 않도록 폭을 고정 */
     max-width:0; overflow:hidden; white-space:nowrap; opacity:0;
     font-size:11.5px; font-weight:600; font-variant-numeric:tabular-nums;
     text-align:right; color:var(--text-dim);
@@ -146,7 +148,7 @@
   }
   /* 날짜는 앞자리부터 훑어 읽으므로 왼쪽 정렬. TOP·BOTTOM은 화살표에 붙도록 오른쪽 정렬 유지 */
   .float-dot .fd-label { text-align:left; }
-  .float-nav:hover .fd-label, .float-nav:focus-within .fd-label { max-width:88px; opacity:1; }
+  .float-nav:hover .fd-label, .float-nav:focus-within .fd-label { max-width:var(--fd-label-w, 86px); opacity:1; }
   .float-dot.active .fd-label { color:var(--accent); font-weight:700; }
   .float-dot .fd-round { color:var(--text-dim); font-weight:400; opacity:0.75; margin-left:4px; }
   .float-dot.active .fd-round { color:var(--accent); opacity:0.9; }
@@ -1621,6 +1623,15 @@ function toggleSession(header) {}
     });
 
     if (!links.length) return;
+
+    // 라벨 칸 폭을 실제 가장 긴 날짜에 맞춥니다.
+    // (접혀 있어도 scrollWidth 는 잘리기 전 본래 글자 폭을 알려줍니다)
+    var widest = 0;
+    links.forEach(function (l) {
+      var label = l.btn.querySelector('.fd-label');
+      if (label) widest = Math.max(widest, label.scrollWidth);
+    });
+    if (widest) nav.style.setProperty('--fd-label-w', (widest + 1) + 'px');
 
     observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
