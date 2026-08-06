@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-sky="kraft">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="landing.css">
+<link rel="stylesheet" href="landing-kraft.css">
+<script>
+  (() => {
+    let stored = null;
+    try {
+      stored = localStorage.getItem("ninnik-sky");
+    } catch (error) {
+      stored = null;
+    }
+    document.documentElement.dataset.sky = stored === "teal" || stored === "blue" ? stored : "kraft";
+  })();
+</script>
 </head>
 <body>
 <canvas id="cosmos" class="cosmos" aria-hidden="true"></canvas>
@@ -18,6 +29,7 @@
   <header class="masthead">
     <div class="title-wrap">
       <h1 class="visually-hidden">니닉크라프트</h1>
+      <span class="brand-void" aria-hidden="true"><canvas class="brand-void-sky"></canvas></span>
       <img class="brand-logo" src="ninnik-kraft-logo.svg" alt="니닉크라프트 NINNIK KRAFT">
       <span class="brand-credit">© 가야 김아영</span>
     </div>
@@ -31,6 +43,18 @@
         <a href="/en" lang="en">EN</a>
       </nav>
     </div>
+
+    <span class="sky-nodes" role="group" aria-label="우주 배경 바꾸기">
+      <button class="sky-node sky-node--kraft" type="button" data-sky-pick="kraft" aria-pressed="true" aria-label="크라프트 별밭">
+        <span class="sky-node-caption" aria-hidden="true">크라프트 별밭</span>
+      </button>
+      <button class="sky-node sky-node--blue" type="button" data-sky-pick="blue" aria-pressed="false" aria-label="매직아워 별밭">
+        <span class="sky-node-caption" aria-hidden="true">매직아워 별밭</span>
+      </button>
+      <button class="sky-node sky-node--teal" type="button" data-sky-pick="teal" aria-pressed="false" aria-label="청록 별밭">
+        <span class="sky-node-caption" aria-hidden="true">청록 별밭</span>
+      </button>
+    </span>
   </header>
 
   <nav class="menu" aria-label="니닉크라프트 프로젝트">
@@ -87,6 +111,6 @@
   </section>
 
 </main>
-<script src="landing-cosmos.js"></script>
+<script src="landing-cosmos-kraft.js"></script>
 </body>
 </html>

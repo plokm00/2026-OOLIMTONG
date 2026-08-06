@@ -52,7 +52,10 @@
   let morphStars = [];
   let reservedZones = [];
   let animationFrame = 0;
-  let seed = 94731;
+  // 한 번 열린 화면 안에서는 리사이즈·배경 변경에도 별자리를 유지하되,
+  // 새로고침할 때는 매번 새로운 별자리를 뽑습니다.
+  const pageSeed = 1 + Math.floor(Math.random() * 2147483646);
+  let seed = pageSeed;
 
   const random = () => {
     seed = (seed * 16807) % 2147483647;
@@ -207,9 +210,17 @@
   };
 
   const collectReservedZones = () => {
-    // 예전에는 워드마크 자리를 비워뒀습니다. 이제 그 자리는 자기 우주를
-    // 가지므로, 바깥 별이 글자에 바짝 붙어야 안팎이 어긋나 보입니다.
-    reservedZones = [];
+    // 네 개의 헤더 링크 뒤에는 별을 아주 드물고 어둡게만 남깁니다.
+    // 완전히 비우지 않아 우주가 끊겨 보이지 않으면서도 글자 획은 고르게 보입니다.
+    reservedZones = [...document.querySelectorAll(".header-tools")].map((element) => {
+      const box = element.getBoundingClientRect();
+      return {
+        left: Math.max(0, box.left - 22),
+        right: Math.min(width, box.right + 22),
+        top: Math.max(0, box.top - 16),
+        bottom: Math.min(height, box.bottom + 16),
+      };
+    });
   };
 
   // 글자 안쪽 하늘. 바깥과 같은 색을 쓰되 배치를 따로 뽑아서, 경계에서
@@ -264,7 +275,7 @@
         y < zone.bottom + extraPadding,
     );
 
-  const findOpenPoint = (extraPadding = 0, galaxyBias = false) => {
+  const findOpenPoint = (extraPadding = 0, galaxyBias = false, quietDensity = 0.1) => {
     const createPoint = () => {
       if (!galaxyBias) {
         return { x: random() * width, y: random() * height };
@@ -280,7 +291,11 @@
     };
 
     let point = createPoint();
-    for (let attempt = 0; attempt < 24 && isReserved(point.x, point.y, extraPadding); attempt += 1) {
+    for (
+      let attempt = 0;
+      attempt < 32 && isReserved(point.x, point.y, extraPadding) && random() > quietDensity;
+      attempt += 1
+    ) {
       point = createPoint();
     }
 
@@ -315,7 +330,7 @@
   };
 
   const createField = () => {
-    seed = 94731;
+    seed = pageSeed;
     ratio = Math.min(window.devicePixelRatio || 1, 2);
     // 창이 아직 안 펼쳐졌을 때 0 이 넘어오면 아래 drawImage 가 예외를 던지고,
     // 그러면 스크립트가 통째로 죽어서 리사이즈 리스너조차 안 붙습니다.
@@ -338,16 +353,21 @@
 
     const makeStar = (twinkles) => {
       const grade = random();
+      const point = findOpenPoint(4, random() < 0.52);
+      const isHeaderStar = isReserved(point.x, point.y);
+      const radius =
+        grade < 0.74
+          ? 0.2 + random() * 0.55
+          : grade < 0.96
+            ? 0.7 + random() * 0.9
+            : 1.5 + random() * 1.5;
+      const alpha = (twinkles ? 0.28 : 0.12) + random() * 0.62;
+
       return {
-        ...findOpenPoint(4, random() < 0.52),
-        radius:
-          grade < 0.74
-            ? 0.2 + random() * 0.55
-            : grade < 0.96
-              ? 0.7 + random() * 0.9
-              : 1.5 + random() * 1.5,
-        alpha: (twinkles ? 0.28 : 0.12) + random() * 0.62,
-        halo: grade > 0.9,
+        ...point,
+        radius: radius * (isHeaderStar ? 0.62 : 1),
+        alpha: alpha * (isHeaderStar ? 0.28 : 1),
+        halo: !isHeaderStar && grade > 0.9,
         phase: random() * Math.PI * 2,
         speed: 0.00035 + random() * 0.0011,
         color: colors[Math.floor(random() * colors.length)],
@@ -358,7 +378,7 @@
     bakeStarLayer(Array.from({ length: bakedCount }, () => makeStar(false)));
 
     morphStars = Array.from({ length: 7 }, (_, index) => {
-      const point = findOpenPoint(82);
+      const point = findOpenPoint(82, false, 0);
       const lobeCount = 6 + Math.floor(random() * 3);
       return {
         x: point.x,

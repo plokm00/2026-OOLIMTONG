@@ -110,11 +110,32 @@ a {
   width: min(720px, 67vw);
 }
 
+.brand-credit,
+.header-links a,
+.language-switch a {
+  background-image: var(--header-void);
+  background-position: 0 0, 21px 9px, center;
+  background-size: 73px 31px, 107px 43px, 100% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-links a,
+.language-switch a {
+  background-image: none;
+  color: var(--orange);
+  filter: none;
+  text-shadow: none;
+  -webkit-text-stroke: 0.32px currentColor;
+  -webkit-text-fill-color: var(--orange);
+}
+
 .brand-credit {
   display: block;
   margin-top: 9px;
   /* 로고와 한 몸입니다. 같이 잠기고 같이 올라오고, 하늘도 따라갑니다. */
-  color: var(--credit-sunk);
+  color: var(--header-sunk);
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 12px;
   font-weight: 500;
@@ -122,18 +143,24 @@ a {
   letter-spacing: 0.11em;
   text-align: right;
   white-space: nowrap;
-  transition: color 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    color 1200ms cubic-bezier(0.22, 1, 0.36, 1),
+    -webkit-text-fill-color 1200ms cubic-bezier(0.22, 1, 0.36, 1),
+    text-shadow 1200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .title-wrap:hover .brand-credit {
-    color: var(--credit-lit);
+    color: var(--orange);
+    -webkit-text-fill-color: var(--orange);
+    text-shadow: 0 0 16px rgba(254, 72, 50, 0.38);
   }
 }
 
 @media (hover: none), (pointer: coarse) {
   .brand-credit {
-    color: var(--credit-lit);
+    color: var(--orange);
+    -webkit-text-fill-color: var(--orange);
   }
 }
 
@@ -144,25 +171,76 @@ a {
 
 /* ── 하늘 세 벌 ─────────────────────────────────────────────────────
    로고 옆 노드 세 개로 갈아끼웁니다. 바뀌는 것은 별배경과 로고 안쪽
-   하늘뿐이고, 카드도 본문도 엠블럼도 어느 하늘에서나 그대로입니다.
+   하늘, 배너 표면의 반사광입니다. 카드 고유색과 엠블럼은 그대로입니다.
    별 색은 landing-cosmos-kraft.js 의 skies 에 같은 이름으로 있습니다. */
 
 html[data-sky="kraft"] {
   --space: #16110a;
-  --credit-sunk: #43341f;
-  --credit-lit: #a4623c;
+  --panel: rgba(30, 22, 13, 0.74);
+  --deep-shade: rgba(14, 9, 4, 0.5);
+  --header-sunk: #43341f;
+  --sky-reflection-strong: rgba(201, 162, 39, 0.26);
+  --sky-reflection: rgba(201, 162, 39, 0.2);
+  --sky-reflection-surface: rgba(201, 162, 39, 0.13);
+  --sky-reflection-soft: rgba(201, 162, 39, 0.08);
+  --sky-reflection-faint: rgba(201, 162, 39, 0.04);
+  --sky-highlight: rgba(255, 236, 200, 0.045);
+  --sky-highlight-hover: rgba(255, 236, 200, 0.07);
+  --sky-hover-glow: rgba(201, 162, 39, 0.14);
+  --sky-focus-ring: rgba(217, 180, 90, 0.34);
+  --sky-focus-glow: rgba(217, 180, 90, 0.24);
+  --about-panel: rgba(18, 13, 7, 0.56);
+  --about-line: rgba(255, 236, 200, 0.02);
+  --header-void:
+    radial-gradient(circle at 18% 36%, rgba(244, 238, 222, 0.42) 0 0.7px, transparent 1.3px),
+    radial-gradient(circle at 72% 68%, rgba(214, 175, 60, 0.38) 0 0.8px, transparent 1.5px),
+    linear-gradient(122deg, #171008 0%, #392a12 48%, #130d07 100%);
 }
 
 html[data-sky="teal"] {
   --space: #01080a;
-  --credit-sunk: #1d3234;
-  --credit-lit: #6e9f99;
+  --panel: rgba(4, 17, 20, 0.74);
+  --deep-shade: rgba(0, 5, 6, 0.54);
+  --header-sunk: #1d3234;
+  --sky-reflection-strong: rgba(86, 160, 164, 0.27);
+  --sky-reflection: rgba(72, 150, 156, 0.2);
+  --sky-reflection-surface: rgba(72, 150, 156, 0.13);
+  --sky-reflection-soft: rgba(72, 150, 156, 0.09);
+  --sky-reflection-faint: rgba(72, 150, 156, 0.045);
+  --sky-highlight: rgba(195, 232, 230, 0.045);
+  --sky-highlight-hover: rgba(195, 232, 230, 0.07);
+  --sky-hover-glow: rgba(86, 160, 164, 0.16);
+  --sky-focus-ring: rgba(110, 180, 186, 0.32);
+  --sky-focus-glow: rgba(110, 180, 186, 0.22);
+  --about-panel: rgba(3, 12, 14, 0.58);
+  --about-line: rgba(195, 232, 230, 0.022);
+  --header-void:
+    radial-gradient(circle at 18% 36%, rgba(205, 222, 220, 0.38) 0 0.7px, transparent 1.3px),
+    radial-gradient(circle at 72% 68%, rgba(110, 180, 186, 0.34) 0 0.8px, transparent 1.5px),
+    linear-gradient(122deg, #010708 0%, #092226 48%, #02090a 100%);
 }
 
 html[data-sky="blue"] {
   --space: #01060e;
-  --credit-sunk: #222e4c;
-  --credit-lit: #7089bf;
+  --panel: rgba(6, 12, 28, 0.75);
+  --deep-shade: rgba(0, 3, 10, 0.56);
+  --header-sunk: #222e4c;
+  --sky-reflection-strong: rgba(77, 147, 255, 0.28);
+  --sky-reflection: rgba(77, 147, 255, 0.2);
+  --sky-reflection-surface: rgba(77, 147, 255, 0.13);
+  --sky-reflection-soft: rgba(77, 147, 255, 0.09);
+  --sky-reflection-faint: rgba(77, 147, 255, 0.045);
+  --sky-highlight: rgba(205, 220, 245, 0.045);
+  --sky-highlight-hover: rgba(205, 220, 245, 0.07);
+  --sky-hover-glow: rgba(70, 120, 220, 0.16);
+  --sky-focus-ring: rgba(124, 170, 240, 0.32);
+  --sky-focus-glow: rgba(124, 170, 240, 0.22);
+  --about-panel: rgba(4, 9, 22, 0.58);
+  --about-line: rgba(205, 220, 245, 0.022);
+  --header-void:
+    radial-gradient(circle at 18% 36%, rgba(205, 220, 245, 0.4) 0 0.7px, transparent 1.3px),
+    radial-gradient(circle at 72% 68%, rgba(124, 170, 240, 0.36) 0 0.8px, transparent 1.5px),
+    linear-gradient(122deg, #01050f 0%, #0b1b3a 48%, #020713 100%);
 }
 
 /* 크라프트지를 태운 바탕 위로 오커 성운이 대각선으로 지나갑니다.
@@ -250,21 +328,73 @@ html[data-sky="blue"] .brand-void {
   animation: sky-node-breathe var(--node-beat) ease-in-out var(--node-offset) infinite;
 }
 
-/* 가끔 한 번씩 고요하게 퍼지는 파문. 17초 가운데 마지막 3초에만
-   보이고, 세 개가 서로 다른 시점에 터지도록 시작을 어긋냈습니다. */
+.sky-node-caption {
+  position: absolute;
+  z-index: 3;
+  /* 셋 다 점 위, 가운데 정렬로 통일합니다. 아래에 두면 화살표 커서의
+     몸통이 그대로 덮어버립니다. 커서는 찍은 점에서 오른쪽 아래로
+     뻗으니 위쪽이 유일하게 항상 비어 있는 방향입니다. */
+  left: 50%;
+  bottom: calc(100% + 5px);
+  display: grid;
+  gap: 1px;
+  width: max-content;
+  color: var(--orange);
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.22;
+  letter-spacing: 0.035em;
+  text-align: center;
+  text-transform: none;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, 4px);
+  transition:
+    opacity 220ms ease,
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 320ms;
+  -webkit-text-stroke: 0.16px currentColor;
+  text-shadow: 0 0 12px rgba(254, 72, 50, 0.26);
+}
+
+.sky-node:hover,
+.sky-node:focus-visible {
+  animation: none;
+  opacity: 1;
+}
+
+.sky-node:hover .sky-node-caption,
+.sky-node:focus-visible .sky-node-caption {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+  transition-delay: 0s;
+}
+
+/* 선명한 동심원 대신, 중심에서 살짝 비껴난 두 겹의 타원이 아주 천천히
+   늘어나고 비틀립니다. 소나그램이 번지듯 주변 공간만 희미하게 흔들립니다. */
 .sky-node::after {
   content: "";
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 9px;
-  height: 9px;
-  border: 1px solid var(--node-tint);
-  border-radius: 50%;
-  opacity: 0;
+  width: 42px;
+  height: 38px;
+  border: 0;
+  border-radius: 46% 54% 58% 42% / 55% 42% 58% 45%;
+  background:
+    radial-gradient(ellipse 72% 44% at 47% 51%, transparent 40%, var(--node-wave) 50%, transparent 62%),
+    radial-gradient(ellipse 42% 70% at 54% 47%, transparent 43%, var(--node-wave) 54%, transparent 68%);
+  filter: blur(1.4px);
+  mix-blend-mode: screen;
+  opacity: 0.08;
   pointer-events: none;
-  transform: translate(-50%, -50%) scale(1);
-  animation: sky-node-ripple 17s ease-out var(--node-ripple) infinite;
+  transform: translate(-50%, -50%) rotate(-5deg) scale(0.82);
+  animation: sky-node-lensing var(--node-lens) ease-in-out var(--node-ripple) infinite;
+  will-change: border-radius, opacity, transform;
 }
 
 @keyframes sky-node-breathe {
@@ -278,21 +408,24 @@ html[data-sky="blue"] .brand-void {
   }
 }
 
-@keyframes sky-node-ripple {
+@keyframes sky-node-lensing {
   0%,
-  82% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9);
-  }
-
-  85% {
-    opacity: 0.5;
-    transform: translate(-50%, -50%) scale(1.15);
-  }
-
   100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(3.6);
+    border-radius: 46% 54% 58% 42% / 55% 42% 58% 45%;
+    opacity: 0.07;
+    transform: translate(-50%, -50%) rotate(-7deg) scale(0.8, 0.92);
+  }
+
+  42% {
+    border-radius: 59% 41% 47% 53% / 42% 61% 39% 58%;
+    opacity: 0.22;
+    transform: translate(-50%, -50%) rotate(8deg) scale(1.08, 0.96);
+  }
+
+  72% {
+    border-radius: 39% 61% 55% 45% / 62% 45% 55% 38%;
+    opacity: 0.12;
+    transform: translate(-50%, -50%) rotate(15deg) scale(0.94, 1.12);
   }
 }
 
@@ -303,16 +436,34 @@ html[data-sky="blue"] .brand-void {
   top: 50%;
   width: 7px;
   height: 7px;
-  border-radius: 50%;
+  border-radius: 46% 54% 43% 57% / 58% 39% 61% 42%;
   background: var(--node-tint);
   box-shadow: 0 0 8px 1px var(--node-halo);
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) rotate(-7deg);
   transition: width 320ms ease, height 320ms ease, box-shadow 320ms ease;
+  animation: sky-node-morph var(--node-morph) ease-in-out var(--node-offset) infinite;
+  will-change: border-radius, opacity, transform;
 }
 
-.sky-node:hover,
-.sky-node:focus-visible {
-  animation-name: none;
+@keyframes sky-node-morph {
+  0%,
+  100% {
+    border-radius: 46% 54% 43% 57% / 58% 39% 61% 42%;
+    opacity: 0.9;
+    transform: translate(-50%, -50%) rotate(-7deg) scale(0.88, 1.06);
+  }
+
+  34% {
+    border-radius: 61% 39% 55% 45% / 36% 63% 37% 64%;
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(11deg) scale(1.16, 0.9);
+  }
+
+  68% {
+    border-radius: 38% 62% 47% 53% / 64% 44% 56% 36%;
+    opacity: 0.94;
+    transform: translate(-50%, -50%) rotate(22deg) scale(0.94, 1.14);
+  }
 }
 
 .sky-node:hover::before,
@@ -337,30 +488,39 @@ html[data-sky="blue"] .brand-void {
   left: 6%;
   top: 68%;
   --node-beat: 4.6s;
+  --node-morph: 5.8s;
+  --node-lens: 10.8s;
   --node-offset: -1.2s;
   --node-ripple: -3s;
   --node-tint: #f2cd6b;
   --node-halo: rgba(217, 168, 60, 0.75);
+  --node-wave: rgba(242, 205, 107, 0.2);
 }
 
 .sky-node--blue {
   left: 48%;
   top: 22%;
   --node-beat: 5.9s;
+  --node-morph: 7.1s;
+  --node-lens: 13.2s;
   --node-offset: -3.4s;
   --node-ripple: -9.5s;
   --node-tint: #8fb6ff;
   --node-halo: rgba(92, 141, 255, 0.7);
+  --node-wave: rgba(143, 182, 255, 0.18);
 }
 
 .sky-node--teal {
   left: 86%;
   top: 78%;
   --node-beat: 5.2s;
+  --node-morph: 6.4s;
+  --node-lens: 11.9s;
   --node-offset: -2.1s;
   --node-ripple: -14.5s;
   --node-tint: #d8f77a;
   --node-halo: rgba(190, 240, 70, 0.66);
+  --node-wave: rgba(216, 247, 122, 0.18);
 }
 
 
@@ -508,23 +668,29 @@ html[data-sky="blue"] .network-space {
   gap: 12px;
   width: 272px;
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 1000;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .header-links a {
-  color: var(--brand);
+  color: var(--orange);
   text-decoration: none;
   white-space: nowrap;
-  transition: color 180ms ease, text-shadow 180ms ease;
+  transition:
+    color 1200ms cubic-bezier(0.22, 1, 0.36, 1),
+    -webkit-text-fill-color 1200ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1200ms cubic-bezier(0.22, 1, 0.36, 1),
+    text-shadow 1200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .header-links a:hover,
 .header-links a:focus-visible {
-  color: var(--brand);
-  text-shadow: 0 0 16px rgba(217, 180, 90, 0.45);
+  color: var(--orange);
+  -webkit-text-fill-color: var(--orange);
+  filter: none;
+  text-shadow: 0 0 16px rgba(254, 72, 50, 0.38);
 }
 
 .language-switch {
@@ -540,10 +706,10 @@ html[data-sky="blue"] .network-space {
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: var(--clay-muted);
+  color: var(--header-sunk);
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 1000;
   letter-spacing: 0.1em;
 }
 
@@ -552,30 +718,61 @@ html[data-sky="blue"] .network-space {
   min-width: 0;
   height: auto;
   padding: 0;
-  color: var(--clay-muted);
+  color: var(--orange);
   line-height: 1.2;
   text-align: center;
   text-indent: 0;
   text-decoration: none;
   white-space: nowrap;
-  transition: color 180ms ease, text-shadow 180ms ease;
+  transition:
+    color 1200ms cubic-bezier(0.22, 1, 0.36, 1),
+    -webkit-text-fill-color 1200ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1200ms cubic-bezier(0.22, 1, 0.36, 1),
+    text-shadow 1200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.language-switch a:not([aria-current="page"]):hover,
-.language-switch a:not([aria-current="page"]):focus-visible {
-  color: var(--brand);
-  text-shadow: 0 0 16px rgba(217, 180, 90, 0.45);
+.language-switch a:hover,
+.language-switch a:focus-visible {
+  color: var(--orange);
+  -webkit-text-fill-color: var(--orange);
+  filter: none;
+  text-shadow: 0 0 16px rgba(254, 72, 50, 0.38);
 }
 
 .language-switch a[aria-current="page"] {
-  color: var(--brand);
-  font-weight: 600;
+  color: var(--orange);
+  font-weight: 1000;
 }
 
 .language-switch a[aria-current="page"]:hover,
 .language-switch a[aria-current="page"]:focus-visible {
-  color: var(--brand);
-  text-shadow: 0 0 16px rgba(217, 180, 90, 0.45);
+  color: var(--orange);
+  -webkit-text-fill-color: var(--orange);
+  filter: none;
+  text-shadow: 0 0 16px rgba(254, 72, 50, 0.38);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .header-links a,
+  .language-switch a,
+  .language-switch a[aria-current="page"] {
+    color: var(--orange);
+    -webkit-text-fill-color: var(--orange);
+    filter: none;
+  }
+}
+
+.language-switch a:not([aria-current="page"]) {
+  color: rgba(254, 72, 50, 0.5);
+  opacity: 0.78;
+  -webkit-text-fill-color: rgba(254, 72, 50, 0.5);
+}
+
+.language-switch a:not([aria-current="page"]):hover,
+.language-switch a:not([aria-current="page"]):focus-visible {
+  color: var(--orange);
+  opacity: 1;
+  -webkit-text-fill-color: var(--orange);
 }
 
 .menu {
@@ -597,10 +794,13 @@ html[data-sky="blue"] .network-space {
   border-radius: 0;
   background: var(--panel);
   box-shadow:
-    inset 0 1px 0 rgba(255, 236, 200, 0.045),
+    inset 0 1px 0 var(--sky-highlight),
     0 24px 70px var(--deep-shade);
   text-decoration: none;
   backdrop-filter: blur(12px);
+  transition:
+    background-color 520ms ease,
+    box-shadow 520ms ease;
 }
 
 .menu-card[href] {
@@ -629,7 +829,7 @@ html[data-sky="blue"] .network-space {
   inset: 0;
   background:
     linear-gradient(118deg, rgba(255, 255, 255, 0.055), transparent 38%),
-    radial-gradient(circle at 82% 18%, rgba(254, 72, 50, 0.2), transparent 28%);
+    radial-gradient(circle at 82% 18%, var(--sky-reflection), transparent 28%);
   opacity: 0.72;
   transition: opacity 360ms ease, transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -644,10 +844,10 @@ html[data-sky="blue"] .network-space {
   right: -8%;
   border: 0;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(254, 72, 50, 0.055), transparent 67%);
+  background: radial-gradient(circle, var(--sky-reflection-faint), transparent 67%);
   box-shadow:
-    0 0 42px rgba(254, 72, 50, 0.08),
-    inset 0 0 44px rgba(254, 72, 50, 0.035);
+    0 0 42px var(--sky-reflection-soft),
+    inset 0 0 44px var(--sky-reflection-faint);
   opacity: 0.7;
   transition: transform 720ms cubic-bezier(0.16, 1, 0.3, 1), opacity 360ms ease;
 }
@@ -655,7 +855,7 @@ html[data-sky="blue"] .network-space {
 .menu-card.archive {
   background:
     linear-gradient(145deg, rgba(254, 72, 50, 0.38), rgba(38, 27, 14, 0.72) 64%),
-    radial-gradient(ellipse 72% 82% at 100% 100%, rgba(201, 162, 39, 0.26), transparent 62%),
+    radial-gradient(ellipse 72% 82% at 100% 100%, var(--sky-reflection-strong), transparent 62%),
     var(--panel);
 }
 
@@ -728,14 +928,14 @@ html[data-sky="blue"] .network-space {
 .menu-card.children::before {
   background:
     linear-gradient(118deg, rgba(255, 255, 255, 0.32), transparent 42%),
-    radial-gradient(circle at 82% 18%, rgba(254, 72, 50, 0.13), transparent 30%);
+    radial-gradient(circle at 82% 18%, var(--sky-reflection-surface), transparent 30%);
 }
 
 .menu-card.children::after {
-  background: radial-gradient(circle, rgba(254, 72, 50, 0.09), transparent 67%);
+  background: radial-gradient(circle, var(--sky-reflection-soft), transparent 67%);
   box-shadow:
-    0 0 42px rgba(254, 72, 50, 0.08),
-    inset 0 0 44px rgba(254, 72, 50, 0.045);
+    0 0 42px var(--sky-reflection-soft),
+    inset 0 0 44px var(--sky-reflection-faint);
 }
 
 .children-rainbow-cover {
@@ -865,7 +1065,7 @@ html[data-sky="blue"] .network-space {
     circle,
     rgba(204, 255, 0, 0.13) 0%,
     rgba(168, 218, 86, 0.075) 28%,
-    rgba(196, 150, 60, 0.025) 62%,
+    var(--sky-reflection-faint) 62%,
     transparent 100%
   );
   opacity: 0.3;
@@ -965,16 +1165,16 @@ html[data-sky="blue"] .network-space {
 .menu-card:hover,
 .menu-card:focus-visible {
   box-shadow:
-    inset 0 1px 0 rgba(255, 236, 200, 0.07),
-    0 0 42px rgba(201, 162, 39, 0.14),
-    0 30px 80px rgba(12, 7, 3, 0.54);
+    inset 0 1px 0 var(--sky-highlight-hover),
+    0 0 42px var(--sky-hover-glow),
+    0 30px 80px var(--deep-shade);
 }
 
 .menu-card.archive:hover {
   box-shadow:
-    inset 0 1px 0 rgba(255, 236, 200, 0.07),
+    inset 0 1px 0 var(--sky-highlight-hover),
     0 0 42px rgba(254, 72, 50, 0.17),
-    0 30px 80px rgba(12, 7, 3, 0.54);
+    0 30px 80px var(--deep-shade);
 }
 
 .menu-card.children:hover {
@@ -982,14 +1182,14 @@ html[data-sky="blue"] .network-space {
     inset 0 1px 0 rgba(255, 255, 255, 0.5),
     inset 0 -34px 62px -34px rgba(96, 54, 26, 0.36),
     0 0 42px rgba(215, 182, 129, 0.2),
-    0 30px 80px rgba(12, 7, 3, 0.54);
+    0 30px 80px var(--deep-shade);
 }
 
 .menu-card.network:hover {
   box-shadow:
-    inset 0 1px 0 rgba(255, 236, 200, 0.07),
+    inset 0 1px 0 var(--sky-highlight-hover),
     0 0 42px rgba(204, 255, 0, 0.18),
-    0 30px 80px rgba(12, 7, 3, 0.54);
+    0 30px 80px var(--deep-shade);
 }
 
 .menu-card:hover::before,
@@ -1007,9 +1207,9 @@ html[data-sky="blue"] .network-space {
 .menu-card:focus-visible {
   outline: 0;
   box-shadow:
-    0 0 0 4px rgba(217, 180, 90, 0.34),
-    0 0 42px rgba(217, 180, 90, 0.24),
-    0 30px 80px rgba(12, 7, 3, 0.54);
+    0 0 0 4px var(--sky-focus-ring),
+    0 0 42px var(--sky-focus-glow),
+    0 30px 80px var(--deep-shade);
 }
 
 .menu-top {
@@ -1057,7 +1257,7 @@ html[data-sky="blue"] .network-space {
   letter-spacing: -0.045em;
   line-height: 1.08;
   white-space: nowrap;
-  text-shadow: 0 0 28px rgba(201, 162, 39, 0.14);
+  text-shadow: 0 0 28px var(--sky-hover-glow);
   transition: color 260ms ease, text-shadow 260ms ease;
 }
 
@@ -1127,9 +1327,12 @@ html[lang="ko"] .archive .menu-desc {
   gap: 0;
   padding: clamp(28px, 3vw, 44px);
   border: 0;
-  background: rgba(18, 13, 7, 0.56);
-  box-shadow: inset 0 1px 0 rgba(255, 236, 200, 0.02);
+  background: var(--about-panel);
+  box-shadow: inset 0 1px 0 var(--about-line);
   backdrop-filter: blur(9px);
+  transition:
+    background-color 520ms ease,
+    box-shadow 520ms ease;
 }
 
 .site-emblem {
@@ -1142,17 +1345,11 @@ html[lang="ko"] .archive .menu-desc {
   height: auto;
   pointer-events: none;
   user-select: none;
-  /* 주황을 골드로 갈아끼웁니다. 채도는 거의 그대로 두고(0.82) 밝기를
-     1 위로 올려서(1.12) 탁해지지 않게 했습니다. 그림 전체 평균이
-     rgb(221,179,87) 밝은 금색으로 가고, 어두워지는 픽셀은 하나도
-     없습니다. 밝기를 더 올리면 하이라이트가 흰색으로 날아갑니다. */
   opacity: 0.82;
   filter:
-    hue-rotate(31deg)
-    saturate(0.82)
-    brightness(1.12)
-    drop-shadow(0 0 14px rgba(232, 190, 100, 0.24))
-    drop-shadow(0 10px 22px rgba(10, 6, 2, 0.42));
+    saturate(0.96)
+    drop-shadow(0 0 12px rgba(254, 72, 50, 0.22))
+    drop-shadow(0 10px 22px rgba(0, 0, 0, 0.3));
   backface-visibility: hidden;
   will-change: opacity;
 }
@@ -1184,7 +1381,7 @@ html[lang="ko"] .archive .menu-desc {
 
 .about-title {
   margin-bottom: 16px;
-  color: #a8873f;
+  color: var(--orange-bright);
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: clamp(15px, 1.55vw, 23px);
   font-weight: 500;
@@ -1232,13 +1429,31 @@ html[lang="en"] .about-copy {
     width: min(100%, 560px);
   }
 
-  /* 좁은 화면에서는 마스트헤드 안이 꽉 차서, 헤더 링크 아래 띠로 내립니다. */
+  /* 좁은 화면에서는 마스트헤드 안이 꽉 차서 헤더 링크 아래 띠로 내립니다.
+     캡션이 점 위에 뜨므로 그만큼 자리를 벌려주고, 세 점의 높낮이 차도
+     줄여서 캡션이 링크를 밟지 않게 합니다. */
+  .masthead {
+    margin-bottom: clamp(26px, 7vw, 40px);
+  }
+
   .sky-nodes {
     right: 0;
-    top: 100%;
+    top: calc(100% + 20px);
     bottom: auto;
     width: 58%;
-    height: 30px;
+    height: 34px;
+  }
+
+  .sky-node--kraft {
+    top: 70%;
+  }
+
+  .sky-node--blue {
+    top: 58%;
+  }
+
+  .sky-node--teal {
+    top: 76%;
   }
 
   .header-tools {
@@ -1369,11 +1584,15 @@ html[lang="en"] .about-copy {
 @media (prefers-reduced-motion: reduce) {
   .brand-logo,
   .brand-void,
-  .brand-credit {
+  .brand-credit,
+  .header-links a,
+  .language-switch a,
+  .sky-node-caption {
     transition: none;
   }
 
   .sky-node,
+  .sky-node::before,
   .sky-node::after {
     animation: none;
   }
