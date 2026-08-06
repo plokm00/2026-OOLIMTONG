@@ -4,14 +4,45 @@
 
   const context = canvas.getContext("2d");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  // 그림에서 뽑은 별빛. 종이 크림, 오커, 주홍, 연기 회색, 옅은 탄색.
-  const colors = [
-    [244, 238, 222],
-    [214, 175, 60],
-    [224, 69, 43],
-    [168, 182, 180],
-    [214, 190, 154],
-  ];
+  // 하늘 세 벌. 이름은 landing-kraft.css 의 html[data-sky="..."] 와 같습니다.
+  // stars 는 작은 별들, blobs 는 크게 번지는 덩어리 별 색입니다.
+  const skies = {
+    // 그림에서 뽑은 별빛. 종이 크림, 오커, 주홍, 연기 회색, 옅은 탄색.
+    kraft: {
+      stars: [
+        [244, 238, 222],
+        [214, 175, 60],
+        [224, 69, 43],
+        [168, 182, 180],
+        [214, 190, 154],
+      ],
+      blobs: [[226, 88, 52], [204, 255, 0], [95, 120, 215]],
+    },
+    // 지금 운영 중인 페이지에 가장 가까운 하늘. 거의 검정인데 청록이 돕니다.
+    teal: {
+      stars: [
+        [244, 240, 231],
+        [255, 138, 92],
+        [224, 110, 80],
+        [110, 180, 186],
+        [205, 222, 220],
+      ],
+      blobs: [[232, 110, 74], [204, 255, 0], [110, 180, 186]],
+    },
+    blue: {
+      stars: [
+        [244, 240, 231],
+        [255, 138, 92],
+        [254, 72, 50],
+        [124, 170, 240],
+        [205, 220, 245],
+      ],
+      blobs: [[254, 91, 57], [204, 255, 0], [120, 170, 235]],
+    },
+  };
+
+  let activeSky = skies[document.documentElement.dataset.sky] ? document.documentElement.dataset.sky : "kraft";
+  let colors = skies[activeSky].stars;
 
   let width = 0;
   let height = 0;
@@ -330,8 +361,7 @@
         baseRadius: 2.8 + random() * 4.2,
         phase: random() * Math.PI * 2,
         speed: 0.0003 + random() * 0.00024,
-        color:
-          index < 5 ? [226, 88, 52] : index === 5 ? [204, 255, 0] : [95, 120, 215],
+        color: skies[activeSky].blobs[index < 5 ? 0 : index === 5 ? 1 : 2],
         lobes: Array.from({ length: lobeCount }, () => ({
           amplitude: 0.12 + random() * 0.24,
           phase: random() * Math.PI * 2,
@@ -547,6 +577,35 @@
     );
   };
 
+  // 하늘 갈아끼우기. 별과 로고 안쪽 하늘만 다시 그리고 나머지는 그대로 둡니다.
+  const applySky = (name) => {
+    if (!skies[name]) return;
+
+    activeSky = name;
+    colors = skies[name].stars;
+    document.documentElement.dataset.sky = name;
+
+    try {
+      localStorage.setItem("ninnik-sky", name);
+    } catch (error) {
+      // 저장이 막혀 있어도 이번 방문 동안에는 그대로 적용됩니다.
+    }
+
+    document.querySelectorAll("[data-sky-pick]").forEach((node) => {
+      node.setAttribute("aria-pressed", String(node.dataset.skyPick === name));
+    });
+
+    resize();
+  };
+
+  const enableSkyNodes = () => {
+    document.querySelectorAll("[data-sky-pick]").forEach((node) => {
+      node.setAttribute("aria-pressed", String(node.dataset.skyPick === activeSky));
+      node.addEventListener("click", () => applySky(node.dataset.skyPick));
+    });
+  };
+
+  enableSkyNodes();
   enableSelectableCardLinks();
   populateNetworkSpace();
   enableTouchCardPreviews();

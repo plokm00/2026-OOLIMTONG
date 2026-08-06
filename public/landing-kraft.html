@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-sky="kraft">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="landing-kraft.css">
+<script>
+  // 고른 하늘을 첫 페인트 전에 붙여둡니다. 안 그러면 새로고침마다 한 번 깜빡입니다.
+  (() => {
+    let stored = null;
+    try {
+      stored = localStorage.getItem("ninnik-sky");
+    } catch (error) {
+      stored = null;
+    }
+    document.documentElement.dataset.sky = stored === "teal" || stored === "blue" ? stored : "kraft";
+  })();
+</script>
 </head>
 <body>
 <canvas id="cosmos" class="cosmos" aria-hidden="true"></canvas>
@@ -20,6 +32,17 @@
       <span class="brand-void" aria-hidden="true"><canvas class="brand-void-sky"></canvas></span>
       <img class="brand-logo" src="ninnik-kraft-logo.svg" alt="니닉크라프트 NINNIK KRAFT">
       <span class="brand-credit">© 가야 김아영</span>
+      <span class="sky-nodes" role="group" aria-label="우주 배경 바꾸기">
+        <button class="sky-node sky-node--kraft" type="button" data-sky-pick="kraft" aria-pressed="true" title="크라프트 하늘">
+          <span class="visually-hidden">크라프트 하늘</span>
+        </button>
+        <button class="sky-node sky-node--blue" type="button" data-sky-pick="blue" aria-pressed="false" title="푸른 하늘">
+          <span class="visually-hidden">푸른 하늘</span>
+        </button>
+        <button class="sky-node sky-node--teal" type="button" data-sky-pick="teal" aria-pressed="false" title="청록 하늘">
+          <span class="visually-hidden">청록 하늘</span>
+        </button>
+      </span>
     </div>
     <div class="header-tools">
       <nav class="header-links" aria-label="니닉크라프트 외부 링크">
