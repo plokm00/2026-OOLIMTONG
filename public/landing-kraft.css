@@ -54,6 +54,10 @@ body {
     radial-gradient(ellipse 70% 32% at 26% 30%, rgba(201, 162, 39, 0.13), transparent 70%),
     radial-gradient(ellipse 66% 30% at 74% 64%, rgba(176, 122, 46, 0.12), transparent 72%),
     linear-gradient(135deg, #241a0d 0%, #17110a 48%, #35270f 100%);
+  /* 하늘은 화면에 붙어 있고 카드만 그 위를 지나갑니다. 이게 없으면
+     그라데이션이 스크롤을 따라와서 배경과 배너가 한 장으로 붙어 보입니다.
+     별을 그리는 캔버스는 원래부터 fixed라 이제 둘이 같은 층에 있습니다. */
+  background-attachment: fixed;
   color: var(--text);
   font-family: "Noto Sans KR", sans-serif;
   overflow-x: hidden;
@@ -162,10 +166,9 @@ a {
   height: auto;
   opacity: 0.95;
   filter:
-    brightness(0.11)
-    saturate(0.8)
-    drop-shadow(0 0 4px rgba(255, 172, 116, 0.2))
-    drop-shadow(0 0 34px rgba(254, 96, 52, 0.12));
+    brightness(0.19)
+    saturate(0.7)
+    drop-shadow(0 0 44px rgba(254, 96, 52, 0.04));
   transition:
     filter 1200ms cubic-bezier(0.22, 1, 0.36, 1),
     opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -176,9 +179,8 @@ a {
     opacity: 1;
     filter:
       brightness(1)
-      saturate(1.05)
-      drop-shadow(0 0 16px rgba(254, 72, 50, 0.5))
-      drop-shadow(0 0 62px rgba(254, 72, 50, 0.26));
+      saturate(1.02)
+      drop-shadow(0 0 44px rgba(254, 72, 50, 0.16));
   }
 
   .title-wrap:hover::before {
@@ -192,8 +194,7 @@ a {
     filter:
       brightness(1)
       saturate(1)
-      drop-shadow(0 0 16px rgba(254, 72, 50, 0.4))
-      drop-shadow(0 0 62px rgba(254, 72, 50, 0.2));
+      drop-shadow(0 0 44px rgba(254, 72, 50, 0.14));
   }
 
   .title-wrap::before {
@@ -858,8 +859,8 @@ html[lang="ko"] .archive .menu-desc {
   gap: 0;
   padding: clamp(28px, 3vw, 44px);
   border: 0;
-  background: rgba(20, 15, 9, 0.5);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+  background: rgba(18, 13, 7, 0.56);
+  box-shadow: inset 0 1px 0 rgba(255, 236, 200, 0.02);
   backdrop-filter: blur(9px);
 }
 
@@ -873,10 +874,11 @@ html[lang="ko"] .archive .menu-desc {
   height: auto;
   pointer-events: none;
   user-select: none;
-  opacity: 0.82;
+  /* 엠블럼도 한 단 낮춥니다. 배너가 앞이고 소개는 뒤입니다. */
+  opacity: 0.58;
   filter:
-    saturate(1.02)
-    drop-shadow(0 0 16px rgba(201, 162, 39, 0.34))
+    saturate(0.92)
+    drop-shadow(0 0 14px rgba(201, 162, 39, 0.18))
     drop-shadow(0 10px 22px rgba(10, 6, 2, 0.42));
   backface-visibility: hidden;
   will-change: opacity;
@@ -890,7 +892,7 @@ html[lang="ko"] .archive .menu-desc {
 
   .about:hover .site-emblem,
   .about:focus-within .site-emblem {
-    opacity: 0.82;
+    opacity: 0.58;
   }
 }
 
@@ -909,7 +911,7 @@ html[lang="ko"] .archive .menu-desc {
 
 .about-title {
   margin-bottom: 16px;
-  color: var(--brand);
+  color: #a8873f;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: clamp(15px, 1.55vw, 23px);
   font-weight: 500;
@@ -920,7 +922,7 @@ html[lang="ko"] .archive .menu-desc {
 
 .about-copy {
   max-width: 620px;
-  color: var(--clay);
+  color: #93806a;
   font-size: clamp(13px, 1.02vw, 15px);
   line-height: 1.72;
   word-break: keep-all;
@@ -937,7 +939,7 @@ html[lang="en"] .about-copy {
 
 .studio-address {
   margin-top: 20px;
-  color: var(--clay-muted);
+  color: #786651;
   font-size: 12px;
   font-style: normal;
   line-height: 1.75;
@@ -1033,7 +1035,7 @@ html[lang="en"] .about-copy {
     width: 64px;
     margin: 0 auto;
     transform: none;
-    opacity: 0.82;
+    opacity: 0.58;
   }
 
 }
