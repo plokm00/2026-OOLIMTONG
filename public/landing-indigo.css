@@ -111,33 +111,52 @@ body {
   background: rgba(11, 9, 32, 0.5);
 }
 
-/* 워드마크는 하늘에 잠기게 둡니다. 중력에 끌려 살짝 휘고, 뒤로 도는
-   희미한 빛으로만 형태가 잡힙니다. 가까이 보면 읽히는 정도. */
-.brand-logo {
-  opacity: 0.62;
-  filter:
-    url(#gravity-warp)
-    drop-shadow(0 0 22px rgba(112, 118, 255, 0.26))
-    drop-shadow(0 0 60px rgba(84, 88, 215, 0.14));
-  transition: opacity 900ms cubic-bezier(0.22, 1, 0.36, 1);
+/* 워드마크는 색으로 그리지 않습니다. 하늘이 그 자리에서 아주 조금
+   밝아졌다 어두워질 뿐입니다. 글자 모양으로 오려낸 판 위에 빛-그늘-빛
+   그라데이션을 얹어서, 빛이 지나가며 휘는 것처럼 보이게 했습니다.
+   모양 자체는 하나도 건드리지 않습니다. */
+.title-wrap {
+  position: relative;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .masthead:hover .brand-logo {
-    opacity: 0.92;
-  }
-}
-
-.filter-defs {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
-@media (prefers-reduced-motion: reduce) {
+@supports (mask-image: url("m.svg")) or (-webkit-mask-image: url("m.svg")) {
   .brand-logo {
-    transition: none;
+    opacity: 0;
+  }
+
+  .title-wrap::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    aspect-ratio: 469 / 79;
+    pointer-events: none;
+    background: linear-gradient(
+      101deg,
+      rgba(206, 218, 255, 0.17) 0%,
+      rgba(170, 186, 255, 0.1) 24%,
+      rgba(4, 3, 14, 0.62) 47%,
+      rgba(2, 2, 10, 0.44) 60%,
+      rgba(150, 168, 245, 0.09) 78%,
+      rgba(200, 214, 255, 0.16) 100%
+    );
+    -webkit-mask: url("ninnik-kraft-logo-mask.svg") no-repeat 0 0 / 100% 100%;
+    mask: url("ninnik-kraft-logo-mask.svg") no-repeat 0 0 / 100% 100%;
+    transition: filter 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .masthead:hover .title-wrap::before {
+      filter: brightness(2.1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .title-wrap::before {
+      transition: none;
+    }
   }
 }
 

@@ -131,9 +131,12 @@ a {
   display: block;
   width: 100%;
   height: auto;
+  /* 워드마크는 크라프트 금색. 그림에서 가장 넓은 면적을 차지하는 오커를
+     사이트에서 가장 큰 요소인 이름이 받습니다. 파랑은 링크 같은 작은
+     자리에만 남아 그림의 창처럼 박힙니다. */
   filter:
-    drop-shadow(0 0 12px rgba(111, 147, 232, 0.26))
-    drop-shadow(0 0 38px rgba(201, 162, 39, 0.16));
+    drop-shadow(0 0 12px rgba(201, 162, 39, 0.3))
+    drop-shadow(0 0 40px rgba(176, 122, 46, 0.2));
 }
 
 .visually-hidden {
