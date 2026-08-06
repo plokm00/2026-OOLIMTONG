@@ -115,12 +115,12 @@
           const y = (position.y / 100) * fieldHeight;
           const alpha = 0.28 + Math.random() * 0.7;
           const coreColor = isLime
-            ? [140, 225, 190]
+            ? [223, 255, 117]
             : isBlue
               ? [214, 175, 60]
               : [244, 238, 222];
           const glowColor = isLime
-            ? "rgba(47, 174, 126, 0.68)"
+            ? "rgba(204, 255, 0, 0.68)"
             : isBlue
               ? "rgba(201, 162, 39, 0.5)"
               : "rgba(244, 238, 222, 0.42)";
@@ -294,7 +294,7 @@
         phase: random() * Math.PI * 2,
         speed: 0.0003 + random() * 0.00024,
         color:
-          index < 5 ? [226, 88, 52] : index === 5 ? [47, 174, 126] : [95, 120, 215],
+          index < 5 ? [226, 88, 52] : index === 5 ? [204, 255, 0] : [95, 120, 215],
         lobes: Array.from({ length: lobeCount }, () => ({
           amplitude: 0.12 + random() * 0.24,
           phase: random() * Math.PI * 2,
