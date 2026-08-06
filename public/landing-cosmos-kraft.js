@@ -173,16 +173,52 @@
   };
 
   const collectReservedZones = () => {
-    reservedZones = [...document.querySelectorAll(".brand-logo")].map((element) => {
-      const rect = element.getBoundingClientRect();
-      const padding = 26;
-      return {
-        left: rect.left - padding,
-        right: rect.right + padding,
-        top: rect.top - padding,
-        bottom: rect.bottom + padding,
-      };
-    });
+    // 예전에는 워드마크 자리를 비워뒀습니다. 이제 그 자리는 자기 우주를
+    // 가지므로, 바깥 별이 글자에 바짝 붙어야 안팎이 어긋나 보입니다.
+    reservedZones = [];
+  };
+
+  // 글자 안쪽 하늘. 바깥과 같은 색을 쓰되 배치를 따로 뽑아서, 경계에서
+  // 별 위치가 어긋나게 만듭니다. 그 어긋남이 곧 글자입니다.
+  const paintBrandVoid = () => {
+    const holder = document.querySelector(".brand-void");
+    const layer = holder?.querySelector("canvas");
+    if (!layer) return;
+
+    const box = holder.getBoundingClientRect();
+    const voidWidth = Math.max(1, Math.round(box.width));
+    const voidHeight = Math.max(1, Math.round(box.height));
+    const voidRatio = Math.min(window.devicePixelRatio || 1, 2);
+    const paint = layer.getContext("2d");
+
+    layer.width = Math.round(voidWidth * voidRatio);
+    layer.height = Math.round(voidHeight * voidRatio);
+    paint.setTransform(voidRatio, 0, 0, voidRatio, 0, 0);
+    paint.clearRect(0, 0, voidWidth, voidHeight);
+
+    const count = Math.round((voidWidth * voidHeight) / 450);
+    for (let index = 0; index < count; index += 1) {
+      const [r, g, b] = colors[Math.floor(Math.random() * colors.length)];
+      const grade = Math.random();
+      const size =
+        grade < 0.78
+          ? 0.3 + Math.random() * 0.7
+          : grade < 0.97
+            ? 1 + Math.random() * 1.1
+            : 2.1 + Math.random() * 1.6;
+
+      paint.save();
+      paint.globalAlpha = 0.3 + Math.random() * 0.66;
+      paint.fillStyle = `rgb(${r}, ${g}, ${b})`;
+      if (grade > 0.9) {
+        paint.shadowColor = `rgba(${r}, ${g}, ${b}, 0.6)`;
+        paint.shadowBlur = 3 + size * 4;
+      }
+      paint.beginPath();
+      paint.arc(Math.random() * voidWidth, Math.random() * voidHeight, size, 0, Math.PI * 2);
+      paint.fill();
+      paint.restore();
+    }
   };
 
   const isReserved = (x, y, extraPadding = 0) =>
@@ -255,6 +291,7 @@
     canvas.style.height = `${height}px`;
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
     collectReservedZones();
+    paintBrandVoid();
 
     // 별은 두 겹입니다. 대부분은 화면이 바뀔 때 한 번만 그려서 비트맵으로
     // 구워두고, 매 프레임에는 그 비트맵 한 장과 깜빡이는 소수만 올립니다.

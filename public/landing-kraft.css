@@ -121,7 +121,8 @@ a {
 .brand-credit {
   display: block;
   margin-top: 9px;
-  color: var(--credit);
+  /* 로고와 한 몸입니다. 같이 잠기고 같이 올라옵니다. */
+  color: #43341f;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 12px;
   font-weight: 500;
@@ -129,76 +130,85 @@ a {
   letter-spacing: 0.11em;
   text-align: right;
   white-space: nowrap;
+  transition: color 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .title-wrap:hover .brand-credit {
+    color: #a4623c;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .brand-credit {
+    color: #a4623c;
+  }
 }
 
 .title-wrap {
   position: relative;
 }
 
-/* 로고가 판 중력 우물. 워드마크 둘레의 하늘이 조금 더 깊게 꺼집니다.
-   가까이 가면 얕아집니다. */
-.title-wrap::before {
-  content: "";
+/* 워드마크 자리는 바깥과 다른 우주입니다. 글자 모양으로 오려낸 창 안에
+   따로 그린 하늘과 별이 들어 있고, 안팎의 그라데이션 방향과 별 배치가
+   조금씩 어긋납니다. 그 어긋남만으로 글자 윤곽이 어렴풋이 잡힙니다.
+   테두리도, 글로우도 없습니다. */
+.brand-void {
   position: absolute;
-  z-index: -1;
-  left: 50%;
-  top: 44%;
-  width: 124%;
-  aspect-ratio: 2.8;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  aspect-ratio: 469 / 79;
+  overflow: hidden;
   pointer-events: none;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(5, 3, 1, 0.5) 0%,
-    rgba(7, 4, 2, 0.28) 40%,
-    transparent 74%
-  );
-  transform: translate(-50%, -50%);
+  background:
+    radial-gradient(ellipse 58% 190% at 19% 34%, rgba(201, 162, 39, 0.2), transparent 68%),
+    radial-gradient(ellipse 66% 210% at 81% 70%, rgba(176, 122, 46, 0.17), transparent 70%),
+    linear-gradient(122deg, #1d1409 0%, #241a0d 44%, #120d07 100%);
+  -webkit-mask: url("ninnik-kraft-logo.svg") no-repeat 0 0 / 100% 100%;
+  mask: url("ninnik-kraft-logo.svg") no-repeat 0 0 / 100% 100%;
   transition: opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* 워드마크 자체가 블랙홀입니다. 평소에는 별빛을 삼킨 검은 형상으로
-   하늘에 묻혀 있고, 테두리에 걸린 희미한 온기만 남습니다. 글자를 가리는
-   것은 아무것도 없습니다. 색만 죽어 있을 뿐이고, 가까이 가면 안쪽의
-   주황이 1.2초에 걸쳐 되살아납니다. */
+.brand-void-sky {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* 주황 워드마크는 그 위에 겹쳐 두고 평소에는 꺼둡니다.
+   가까이 가면 별창이 물러나면서 주황이 1.2초에 걸쳐 들어옵니다. */
 .brand-logo {
+  position: relative;
+  z-index: 2;
   display: block;
   width: 100%;
   height: auto;
-  opacity: 0.95;
-  filter:
-    brightness(0.19)
-    saturate(0.7)
-    drop-shadow(0 0 44px rgba(254, 96, 52, 0.04));
-  transition:
-    filter 1200ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0;
+  filter: drop-shadow(0 0 38px rgba(254, 72, 50, 0.2));
+  transition: opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .title-wrap:hover .brand-logo {
     opacity: 1;
-    filter:
-      brightness(1)
-      saturate(1.02)
-      drop-shadow(0 0 44px rgba(254, 72, 50, 0.16));
   }
 
-  .title-wrap:hover::before {
-    opacity: 0.22;
+  .title-wrap:hover .brand-void {
+    opacity: 0;
   }
 }
 
 /* 손가락으로 보는 화면에는 롤오버가 없으니 처음부터 드러내 둡니다. */
 @media (hover: none), (pointer: coarse) {
   .brand-logo {
-    filter:
-      brightness(1)
-      saturate(1)
-      drop-shadow(0 0 44px rgba(254, 72, 50, 0.14));
+    opacity: 1;
   }
 
-  .title-wrap::before {
-    opacity: 0.3;
+  .brand-void {
+    opacity: 0;
   }
 }
 
@@ -1086,7 +1096,8 @@ html[lang="en"] .about-copy {
 
 @media (prefers-reduced-motion: reduce) {
   .brand-logo,
-  .title-wrap::before {
+  .brand-void,
+  .brand-credit {
     transition: none;
   }
 }
