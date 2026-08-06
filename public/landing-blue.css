@@ -1,22 +1,28 @@
 :root {
   --space: #01060e;
-  --space-soft: #071523;
+  --space-soft: #0a1626;
   --panel: rgba(7, 16, 32, 0.74);
   --panel-strong: rgba(4, 10, 22, 0.9);
-  --cream: #eaf1fb;
+  --cream: #f4f0e7;
   --text: #ccd8ea;
   --muted: #8496ad;
-  --blue: #1f6bff;
-  --blue-bright: #5c9dff;
-  --blue-soft: #7fc0f0;
+  --orange: #fe4832;
+  --orange-bright: #ff7657;
+  --orange-soft: #f0a064;
   --steel: #7ba7d4;
   --steel-muted: #5c82ad;
   --credit: #3f6ea8;
-  --ice: #b9d2ee;
-  --aqua: #29e0ff;
-  --aqua-soft: #9df0ff;
+  --sand: #d7b681;
+  --lime: #ccff00;
+  --lime-soft: #e2ff73;
   --line: rgba(200, 220, 245, 0.14);
-  --blue-line: rgba(31, 107, 255, 0.42);
+  --orange-line: rgba(254, 72, 50, 0.42);
+  /* 정체성 컬러. 배경과 사이트 공통 요소(워드마크, 링크, 소개글)에만 씁니다.
+     세 프로젝트 카드의 키컬러(주황, 샌드, 라임)는 원래 값을 그대로 둡니다. */
+  --brand: #4d93ff;
+  --brand-dim: #3f6ea8;
+  /* 카드가 파란 배경 위에 떠 보이지 않도록 공통으로 까는 차가운 그림자 */
+  --cool-shade: rgba(2, 10, 26, 0.46);
 }
 
 * {
@@ -37,8 +43,8 @@ html {
 body {
   min-height: 100svh;
   background:
-    radial-gradient(circle at 12% 14%, rgba(31, 107, 255, 0.16), transparent 27rem),
-    radial-gradient(circle at 86% 44%, rgba(92, 157, 255, 0.1), transparent 34rem),
+    radial-gradient(circle at 12% 14%, rgba(77, 147, 255, 0.16), transparent 27rem),
+    radial-gradient(circle at 86% 44%, rgba(92, 157, 255, 0.09), transparent 34rem),
     radial-gradient(circle at 52% 86%, rgba(46, 74, 140, 0.14), transparent 36rem),
     linear-gradient(135deg, #020814 0%, #01050f 52%, #061426 100%);
   color: var(--text);
@@ -119,8 +125,8 @@ a {
   width: 100%;
   height: auto;
   filter:
-    drop-shadow(0 0 10px rgba(31, 107, 255, 0.16))
-    drop-shadow(0 0 32px rgba(31, 107, 255, 0.08));
+    drop-shadow(0 0 10px rgba(77, 147, 255, 0.22))
+    drop-shadow(0 0 32px rgba(77, 147, 255, 0.12));
 }
 
 .visually-hidden {
@@ -160,7 +166,7 @@ a {
 }
 
 .header-links a {
-  color: var(--blue-bright);
+  color: var(--brand);
   text-decoration: none;
   white-space: nowrap;
   transition: color 180ms ease, text-shadow 180ms ease;
@@ -168,8 +174,8 @@ a {
 
 .header-links a:hover,
 .header-links a:focus-visible {
-  color: var(--blue-bright);
-  text-shadow: 0 0 16px rgba(31, 107, 255, 0.38);
+  color: var(--brand);
+  text-shadow: 0 0 16px rgba(77, 147, 255, 0.45);
 }
 
 .language-switch {
@@ -208,19 +214,19 @@ a {
 
 .language-switch a:not([aria-current="page"]):hover,
 .language-switch a:not([aria-current="page"]):focus-visible {
-  color: var(--blue-bright);
-  text-shadow: 0 0 16px rgba(31, 107, 255, 0.38);
+  color: var(--brand);
+  text-shadow: 0 0 16px rgba(77, 147, 255, 0.45);
 }
 
 .language-switch a[aria-current="page"] {
-  color: var(--blue-bright);
+  color: var(--brand);
   font-weight: 600;
 }
 
 .language-switch a[aria-current="page"]:hover,
 .language-switch a[aria-current="page"]:focus-visible {
-  color: var(--blue-bright);
-  text-shadow: 0 0 16px rgba(31, 107, 255, 0.38);
+  color: var(--brand);
+  text-shadow: 0 0 16px rgba(77, 147, 255, 0.45);
 }
 
 .menu {
@@ -243,7 +249,7 @@ a {
   background: var(--panel);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.035),
-    0 24px 70px rgba(0, 0, 0, 0.24);
+    0 24px 70px var(--cool-shade);
   text-decoration: none;
   backdrop-filter: blur(12px);
 }
@@ -274,7 +280,7 @@ a {
   inset: 0;
   background:
     linear-gradient(118deg, rgba(255, 255, 255, 0.055), transparent 38%),
-    radial-gradient(circle at 82% 18%, rgba(31, 107, 255, 0.2), transparent 28%);
+    radial-gradient(circle at 82% 18%, rgba(254, 72, 50, 0.2), transparent 28%);
   opacity: 0.72;
   transition: opacity 360ms ease, transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -289,17 +295,19 @@ a {
   right: -8%;
   border: 0;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(31, 107, 255, 0.055), transparent 67%);
+  background: radial-gradient(circle, rgba(254, 72, 50, 0.055), transparent 67%);
   box-shadow:
-    0 0 42px rgba(31, 107, 255, 0.08),
-    inset 0 0 44px rgba(31, 107, 255, 0.035);
+    0 0 42px rgba(254, 72, 50, 0.08),
+    inset 0 0 44px rgba(254, 72, 50, 0.035);
   opacity: 0.7;
   transition: transform 720ms cubic-bezier(0.16, 1, 0.3, 1), opacity 360ms ease;
 }
 
+/* 카드마다 키컬러는 그대로 두고, 카드가 배경으로 흩어지는 쪽만 파랗게 식힙니다. */
 .menu-card.archive {
   background:
-    linear-gradient(145deg, rgba(31, 107, 255, 0.38), rgba(10, 18, 34, 0.74) 64%),
+    linear-gradient(145deg, rgba(254, 72, 50, 0.38), rgba(10, 20, 38, 0.72) 64%),
+    radial-gradient(ellipse 72% 82% at 100% 100%, rgba(45, 110, 210, 0.3), transparent 62%),
     var(--panel);
 }
 
@@ -307,9 +315,9 @@ a {
   background:
     radial-gradient(
       ellipse 106% 96% at 0% 0%,
-      rgba(22, 78, 200, 0.98) 0%,
-      rgba(22, 78, 200, 0.78) 34%,
-      rgba(18, 60, 175, 0.28) 58%,
+      rgba(192, 56, 40, 0.98) 0%,
+      rgba(192, 56, 40, 0.78) 34%,
+      rgba(170, 47, 34, 0.28) 58%,
       transparent 80%
     ),
     linear-gradient(118deg, rgba(255, 255, 255, 0.04), transparent 40%);
@@ -322,7 +330,7 @@ a {
   inset: 0;
   display: block;
   overflow: hidden;
-  background: var(--blue);
+  background: var(--orange);
   opacity: 0;
   pointer-events: none;
   transition: opacity 360ms ease;
@@ -358,26 +366,30 @@ a {
   transform: scale(1.07);
 }
 
+/* 베이지는 빛이 닿는 위쪽에 그대로 두고, 그림자 지는 왼쪽 아래만
+   푸른 기가 돌게 해서 배경과 이어 붙입니다. */
 .menu-card.children {
   background:
-    radial-gradient(circle at 82% 20%, rgba(240, 248, 255, 0.82), transparent 32%),
-    linear-gradient(145deg, rgba(226, 238, 252, 0.98), rgba(168, 196, 230, 0.9));
+    radial-gradient(circle at 82% 20%, rgba(255, 250, 232, 0.82), transparent 32%),
+    radial-gradient(ellipse 80% 88% at 0% 100%, rgba(88, 132, 200, 0.32), transparent 60%),
+    linear-gradient(145deg, rgba(247, 226, 190, 0.98), rgba(215, 182, 129, 0.9));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.48),
-    0 26px 74px rgba(0, 0, 0, 0.26);
+    inset 0 -34px 62px -34px rgba(38, 78, 148, 0.34),
+    0 26px 74px rgba(2, 10, 26, 0.5);
 }
 
 .menu-card.children::before {
   background:
     linear-gradient(118deg, rgba(255, 255, 255, 0.32), transparent 42%),
-    radial-gradient(circle at 82% 18%, rgba(31, 107, 255, 0.13), transparent 30%);
+    radial-gradient(circle at 82% 18%, rgba(254, 72, 50, 0.13), transparent 30%);
 }
 
 .menu-card.children::after {
-  background: radial-gradient(circle, rgba(31, 107, 255, 0.09), transparent 67%);
+  background: radial-gradient(circle, rgba(254, 72, 50, 0.09), transparent 67%);
   box-shadow:
-    0 0 42px rgba(31, 107, 255, 0.08),
-    inset 0 0 44px rgba(31, 107, 255, 0.045);
+    0 0 42px rgba(254, 72, 50, 0.08),
+    inset 0 0 44px rgba(254, 72, 50, 0.045);
 }
 
 .children-rainbow-cover {
@@ -386,7 +398,7 @@ a {
   inset: 0;
   display: block;
   overflow: hidden;
-  background: #cbdcf2;
+  background: #ead0a2;
   opacity: 0;
   pointer-events: none;
   transition: opacity 360ms ease;
@@ -411,15 +423,15 @@ a {
   background:
     radial-gradient(
       circle at 18% 82%,
-      rgba(214, 231, 250, 0.42) 0%,
-      rgba(214, 231, 250, 0.18) 34%,
+      rgba(246, 224, 188, 0.42) 0%,
+      rgba(246, 224, 188, 0.18) 34%,
       transparent 58%
     ),
     linear-gradient(
       180deg,
-      rgba(214, 231, 250, 0.02) 32%,
-      rgba(214, 231, 250, 0.24) 62%,
-      rgba(214, 231, 250, 0.68) 100%
+      rgba(246, 224, 188, 0.02) 32%,
+      rgba(246, 224, 188, 0.24) 62%,
+      rgba(246, 224, 188, 0.68) 100%
     );
   pointer-events: none;
 }
@@ -453,7 +465,7 @@ a {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 5px 8px rgba(20, 52, 90, 0.12));
+  filter: drop-shadow(0 5px 8px rgba(111, 45, 31, 0.12));
 }
 
 .children:hover .children-cover,
@@ -466,23 +478,24 @@ a {
   min-height: clamp(200px, 20vw, 280px);
   justify-content: space-between;
   background:
-    linear-gradient(108deg, rgba(41, 224, 255, 0.23), rgba(8, 18, 36, 0.79) 54%),
+    linear-gradient(108deg, rgba(204, 255, 0, 0.23), rgba(8, 18, 36, 0.79) 54%),
+    radial-gradient(ellipse 62% 100% at 88% 50%, rgba(45, 110, 210, 0.26), transparent 66%),
     var(--panel-strong);
 }
 
 .menu-card.network::before {
   background:
-    radial-gradient(circle at 78% 32%, rgba(41, 224, 255, 0.4) 0 3px, transparent 5px),
-    radial-gradient(circle at 86% 68%, rgba(157, 240, 255, 0.22) 0 6px, transparent 8px),
-    radial-gradient(circle at 68% 78%, rgba(225, 238, 255, 0.13) 0 2px, transparent 4px),
-    linear-gradient(110deg, rgba(41, 224, 255, 0.08), transparent 62%);
+    radial-gradient(circle at 78% 32%, rgba(204, 255, 0, 0.4) 0 3px, transparent 5px),
+    radial-gradient(circle at 86% 68%, rgba(226, 255, 115, 0.22) 0 6px, transparent 8px),
+    radial-gradient(circle at 68% 78%, rgba(210, 228, 255, 0.13) 0 2px, transparent 4px),
+    linear-gradient(110deg, rgba(204, 255, 0, 0.08), transparent 62%);
 }
 
 .menu-card.network::after {
-  background: radial-gradient(circle, rgba(41, 224, 255, 0.07), transparent 67%);
+  background: radial-gradient(circle, rgba(204, 255, 0, 0.07), transparent 67%);
   box-shadow:
-    0 0 42px rgba(41, 224, 255, 0.08),
-    inset 0 0 44px rgba(41, 224, 255, 0.035);
+    0 0 42px rgba(204, 255, 0, 0.08),
+    inset 0 0 44px rgba(204, 255, 0, 0.035);
 }
 
 .network-space {
@@ -494,8 +507,8 @@ a {
   pointer-events: none;
   opacity: 0;
   background:
-    radial-gradient(circle at 78% 38%, rgba(41, 224, 255, 0.1), transparent 24%),
-    radial-gradient(circle at 24% 72%, rgba(80, 140, 220, 0.08), transparent 28%),
+    radial-gradient(circle at 78% 38%, rgba(204, 255, 0, 0.1), transparent 24%),
+    radial-gradient(circle at 24% 72%, rgba(70, 130, 210, 0.08), transparent 28%),
     linear-gradient(110deg, rgba(1, 7, 16, 0.93), rgba(3, 11, 22, 0.86));
   transition: opacity 480ms ease;
 }
@@ -511,9 +524,9 @@ a {
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(41, 224, 255, 0.13) 0%,
-    rgba(90, 200, 255, 0.075) 28%,
-    rgba(80, 140, 220, 0.025) 62%,
+    rgba(204, 255, 0, 0.13) 0%,
+    rgba(168, 218, 86, 0.075) 28%,
+    rgba(70, 130, 210, 0.025) 62%,
     transparent 100%
   );
   opacity: 0.3;
@@ -566,10 +579,10 @@ a {
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(41, 224, 255, 0.304) 0%,
-    rgba(41, 224, 255, 0.16) 20%,
-    rgba(41, 224, 255, 0.064) 48%,
-    rgba(41, 224, 255, 0.02) 72%,
+    rgba(204, 255, 0, 0.304) 0%,
+    rgba(204, 255, 0, 0.16) 20%,
+    rgba(204, 255, 0, 0.064) 48%,
+    rgba(204, 255, 0, 0.02) 72%,
     transparent 100%
   );
   transform: translate(-50%, -50%);
@@ -581,10 +594,10 @@ a {
   z-index: 0;
   inset: 0;
   border-radius: var(--node-radius);
-  background: #eaf8ff;
+  background: #f5f6ee;
   box-shadow:
     0 0 6px rgba(255, 255, 255, 0.58),
-    0 0 13px rgba(41, 224, 255, 0.48);
+    0 0 13px rgba(204, 255, 0, 0.48);
   animation: network-node-morph var(--node-morph-time) ease-in-out var(--node-morph-delay) infinite;
   will-change: border-radius, transform, opacity;
 }
@@ -610,12 +623,35 @@ a {
   }
 }
 
+/* 호버 번짐은 카드마다 자기 키컬러로. 바깥 그림자만 공통으로 차갑게 깝니다. */
 .menu-card:hover,
 .menu-card:focus-visible {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 0 42px rgba(31, 107, 255, 0.11),
-    0 30px 80px rgba(0, 0, 0, 0.34);
+    0 0 42px rgba(77, 147, 255, 0.13),
+    0 30px 80px rgba(1, 7, 20, 0.5);
+}
+
+.menu-card.archive:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 42px rgba(254, 72, 50, 0.16),
+    0 30px 80px rgba(1, 7, 20, 0.5);
+}
+
+.menu-card.children:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -34px 62px -34px rgba(38, 78, 148, 0.34),
+    0 0 42px rgba(215, 182, 129, 0.18),
+    0 30px 80px rgba(1, 7, 20, 0.5);
+}
+
+.menu-card.network:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 42px rgba(204, 255, 0, 0.12),
+    0 30px 80px rgba(1, 7, 20, 0.5);
 }
 
 .menu-card:hover::before,
@@ -633,9 +669,9 @@ a {
 .menu-card:focus-visible {
   outline: 0;
   box-shadow:
-    0 0 0 4px rgba(31, 107, 255, 0.16),
-    0 0 42px rgba(31, 107, 255, 0.18),
-    0 30px 80px rgba(0, 0, 0, 0.34);
+    0 0 0 4px rgba(77, 147, 255, 0.26),
+    0 0 42px rgba(77, 147, 255, 0.2),
+    0 30px 80px rgba(1, 7, 20, 0.5);
 }
 
 .menu-top {
@@ -643,7 +679,7 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  color: var(--blue-soft);
+  color: var(--orange-soft);
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 10px;
   font-weight: 500;
@@ -658,8 +694,8 @@ a {
   padding: 6px 12px;
   border: 0;
   border-radius: 999px;
-  background: rgba(41, 224, 255, 0.11);
-  color: var(--aqua-soft);
+  background: rgba(204, 255, 0, 0.11);
+  color: var(--lime-soft);
   font-size: 9px;
   letter-spacing: 0.14em;
 }
@@ -683,21 +719,23 @@ a {
   letter-spacing: -0.045em;
   line-height: 1.08;
   white-space: nowrap;
-  text-shadow: 0 0 28px rgba(31, 107, 255, 0.08);
+  text-shadow: 0 0 28px rgba(77, 147, 255, 0.12);
   transition: color 260ms ease, text-shadow 260ms ease;
 }
 
 .archive .menu-title {
-  color: var(--blue-bright);
+  color: var(--orange-bright);
+  text-shadow: 0 0 28px rgba(254, 72, 50, 0.14);
 }
 
 .children .menu-title {
-  color: #123f6b;
+  color: #6f2d1f;
   text-shadow: none;
 }
 
 .network .menu-title {
-  color: var(--aqua-soft);
+  color: var(--lime-soft);
+  text-shadow: 0 0 28px rgba(204, 255, 0, 0.14);
 }
 
 html[lang="en"] .menu-title {
@@ -718,7 +756,7 @@ html[lang="en"] .menu-title {
 }
 
 .archive .menu-desc {
-  color: #93bcf5;
+  color: #e7937f;
 }
 
 html[lang="ko"] .archive .menu-desc {
@@ -727,7 +765,7 @@ html[lang="ko"] .archive .menu-desc {
 }
 
 .children .menu-desc {
-  color: #123f6b;
+  color: #6f2d1f;
 }
 
 .network .menu-bottom {
@@ -738,7 +776,7 @@ html[lang="ko"] .archive .menu-desc {
 
 .network .menu-desc {
   max-width: 310px;
-  color: rgba(157, 240, 255, 0.78);
+  color: rgba(226, 255, 115, 0.78);
   text-align: right;
 }
 
@@ -767,11 +805,11 @@ html[lang="ko"] .archive .menu-desc {
   pointer-events: none;
   user-select: none;
   opacity: 0.82;
+  /* 니닉 엠블럼은 원래 색 그대로 두고, 뒤로 도는 빛만 파랗게 감쌉니다. */
   filter:
-    hue-rotate(196deg)
-    saturate(1.08)
-    drop-shadow(0 0 12px rgba(31, 107, 255, 0.28))
-    drop-shadow(0 10px 22px rgba(0, 0, 0, 0.3));
+    saturate(0.98)
+    drop-shadow(0 0 14px rgba(77, 147, 255, 0.34))
+    drop-shadow(0 10px 22px rgba(1, 7, 20, 0.4));
   backface-visibility: hidden;
   will-change: opacity;
 }
@@ -803,7 +841,7 @@ html[lang="ko"] .archive .menu-desc {
 
 .about-title {
   margin-bottom: 16px;
-  color: var(--blue-bright);
+  color: var(--brand);
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: clamp(15px, 1.55vw, 23px);
   font-weight: 500;

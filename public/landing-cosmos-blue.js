@@ -4,12 +4,14 @@
 
   const context = canvas.getContext("2d");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // 별빛은 따뜻한 색을 남겨둡니다. 파란 하늘 위의 주황 불티가 아카이브 카드와
+  // 이어지고, 차가운 쪽만 청록에서 파랑으로 옮겼습니다.
   const colors = [
-    [234, 241, 251],
-    [124, 176, 255],
-    [31, 107, 255],
-    [110, 150, 215],
-    [205, 220, 240],
+    [244, 240, 231],
+    [255, 138, 92],
+    [254, 72, 50],
+    [124, 170, 240],
+    [205, 220, 245],
   ];
 
   let width = 0;
@@ -113,15 +115,15 @@
           const y = (position.y / 100) * fieldHeight;
           const alpha = 0.28 + Math.random() * 0.7;
           const coreColor = isLime
-            ? [170, 240, 255]
+            ? [223, 255, 117]
             : isBlue
-              ? [130, 175, 235]
-              : [235, 242, 252];
+              ? [125, 172, 235]
+              : [243, 240, 231];
           const glowColor = isLime
-            ? "rgba(41, 224, 255, 0.68)"
+            ? "rgba(204, 255, 0, 0.68)"
             : isBlue
-              ? "rgba(130, 175, 235, 0.48)"
-              : "rgba(235, 242, 252, 0.42)";
+              ? "rgba(125, 172, 235, 0.5)"
+              : "rgba(243, 240, 231, 0.42)";
 
           starContext.save();
           starContext.globalAlpha = alpha;
@@ -251,7 +253,7 @@
         baseRadius: 2.8 + random() * 4.2,
         phase: random() * Math.PI * 2,
         speed: 0.0003 + random() * 0.00024,
-        color: index < 6 ? [45, 120, 255] : [120, 170, 235],
+        color: index < 6 ? [254, 91, 57] : [110, 165, 240],
         lobes: Array.from({ length: lobeCount }, () => ({
           amplitude: 0.12 + random() * 0.24,
           phase: random() * Math.PI * 2,
