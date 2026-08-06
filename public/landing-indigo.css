@@ -1,0 +1,107 @@
+/* landing-blue.css 위에 얹는 배경 전용 오버라이드.
+   하늘, 판(panel), 그림자처럼 "환경"에 해당하는 값만 인디고로 옮깁니다.
+   세 카드의 키컬러(주황, 샌드, 라임)와 글자색, 로고는 한 글자도 건드리지 않습니다. */
+
+:root {
+  --space: #0a0920;
+  --space-soft: #16123f;
+  --panel: rgba(16, 14, 44, 0.74);
+  --panel-strong: rgba(11, 9, 32, 0.9);
+  --cool-shade: rgba(8, 5, 32, 0.5);
+}
+
+body {
+  background:
+    radial-gradient(circle at 12% 14%, rgba(112, 118, 255, 0.16), transparent 27rem),
+    radial-gradient(circle at 86% 44%, rgba(124, 132, 255, 0.09), transparent 34rem),
+    radial-gradient(circle at 52% 86%, rgba(74, 62, 160, 0.16), transparent 36rem),
+    linear-gradient(135deg, #0b0a26 0%, #07061a 52%, #16123f 100%);
+}
+
+/* 아카이브: 주황은 그대로, 배경으로 흩어지는 끝만 인디고로. */
+.menu-card.archive {
+  background:
+    linear-gradient(145deg, rgba(254, 72, 50, 0.38), rgba(16, 13, 44, 0.72) 64%),
+    radial-gradient(ellipse 72% 82% at 100% 100%, rgba(84, 88, 215, 0.3), transparent 62%),
+    var(--panel);
+}
+
+.archive-cover::after {
+  background: linear-gradient(180deg, rgba(8, 6, 26, 0.06), rgba(8, 6, 26, 0.58));
+}
+
+/* 어린이 작업실: 베이지와 빛은 그대로, 그림자 지는 쪽만 인디고 반사로. */
+.menu-card.children {
+  background:
+    radial-gradient(circle at 82% 20%, rgba(255, 250, 232, 0.82), transparent 32%),
+    radial-gradient(ellipse 80% 88% at 0% 100%, rgba(104, 104, 196, 0.32), transparent 60%),
+    linear-gradient(145deg, rgba(247, 226, 190, 0.98), rgba(215, 182, 129, 0.9));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.48),
+    inset 0 -34px 62px -34px rgba(52, 44, 140, 0.34),
+    0 26px 74px rgba(8, 5, 32, 0.54);
+}
+
+.menu-card.children:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -34px 62px -34px rgba(52, 44, 140, 0.34),
+    0 0 42px rgba(215, 182, 129, 0.18),
+    0 30px 80px rgba(6, 4, 26, 0.54);
+}
+
+/* 네트워크: 라임은 그대로, 뒤로 깔리는 하늘만 인디고로. */
+.menu-card.network {
+  background:
+    linear-gradient(108deg, rgba(204, 255, 0, 0.23), rgba(13, 11, 38, 0.79) 54%),
+    radial-gradient(ellipse 62% 100% at 88% 50%, rgba(84, 88, 215, 0.26), transparent 66%),
+    var(--panel-strong);
+}
+
+.network-space {
+  background:
+    radial-gradient(circle at 78% 38%, rgba(204, 255, 0, 0.1), transparent 24%),
+    radial-gradient(circle at 24% 72%, rgba(104, 104, 210, 0.1), transparent 28%),
+    linear-gradient(110deg, rgba(6, 4, 22, 0.93), rgba(11, 8, 32, 0.86));
+}
+
+/* 공통 그림자와 소개 패널 */
+.menu-card:hover,
+.menu-card:focus-visible {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 42px rgba(112, 118, 255, 0.13),
+    0 30px 80px rgba(6, 4, 26, 0.54);
+}
+
+.menu-card.archive:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 42px rgba(254, 72, 50, 0.16),
+    0 30px 80px rgba(6, 4, 26, 0.54);
+}
+
+.menu-card.network:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 42px rgba(204, 255, 0, 0.12),
+    0 30px 80px rgba(6, 4, 26, 0.54);
+}
+
+.menu-card:focus-visible {
+  box-shadow:
+    0 0 0 4px rgba(112, 118, 255, 0.26),
+    0 0 42px rgba(112, 118, 255, 0.2),
+    0 30px 80px rgba(6, 4, 26, 0.54);
+}
+
+.about {
+  background: rgba(11, 9, 32, 0.5);
+}
+
+.site-emblem {
+  filter:
+    saturate(0.98)
+    drop-shadow(0 0 14px rgba(112, 118, 255, 0.34))
+    drop-shadow(0 10px 22px rgba(5, 3, 20, 0.44));
+}
