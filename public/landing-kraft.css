@@ -113,8 +113,8 @@ a {
 .brand-credit {
   display: block;
   margin-top: 9px;
-  /* 로고와 한 몸입니다. 같이 잠기고 같이 올라옵니다. */
-  color: #43341f;
+  /* 로고와 한 몸입니다. 같이 잠기고 같이 올라오고, 하늘도 따라갑니다. */
+  color: var(--credit-sunk);
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 12px;
   font-weight: 500;
@@ -127,13 +127,13 @@ a {
 
 @media (hover: hover) and (pointer: fine) {
   .title-wrap:hover .brand-credit {
-    color: #a4623c;
+    color: var(--credit-lit);
   }
 }
 
 @media (hover: none), (pointer: coarse) {
   .brand-credit {
-    color: #a4623c;
+    color: var(--credit-lit);
   }
 }
 
@@ -149,14 +149,20 @@ a {
 
 html[data-sky="kraft"] {
   --space: #16110a;
+  --credit-sunk: #43341f;
+  --credit-lit: #a4623c;
 }
 
 html[data-sky="teal"] {
   --space: #01080a;
+  --credit-sunk: #1d3234;
+  --credit-lit: #6e9f99;
 }
 
 html[data-sky="blue"] {
   --space: #01060e;
+  --credit-sunk: #222e4c;
+  --credit-lit: #7089bf;
 }
 
 /* 크라프트지를 태운 바탕 위로 오커 성운이 대각선으로 지나갑니다.
@@ -240,6 +246,56 @@ html[data-sky="blue"] .brand-void {
   -webkit-tap-highlight-color: transparent;
 }
 
+.sky-node {
+  animation: sky-node-breathe var(--node-beat) ease-in-out var(--node-offset) infinite;
+}
+
+/* 가끔 한 번씩 고요하게 퍼지는 파문. 17초 가운데 마지막 3초에만
+   보이고, 세 개가 서로 다른 시점에 터지도록 시작을 어긋냈습니다. */
+.sky-node::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--node-tint);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(1);
+  animation: sky-node-ripple 17s ease-out var(--node-ripple) infinite;
+}
+
+@keyframes sky-node-breathe {
+  0%,
+  100% {
+    opacity: 0.56;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes sky-node-ripple {
+  0%,
+  82% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+
+  85% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(3.6);
+  }
+}
+
 .sky-node::before {
   content: "";
   position: absolute;
@@ -252,6 +308,11 @@ html[data-sky="blue"] .brand-void {
   box-shadow: 0 0 8px 1px var(--node-halo);
   transform: translate(-50%, -50%);
   transition: width 320ms ease, height 320ms ease, box-shadow 320ms ease;
+}
+
+.sky-node:hover,
+.sky-node:focus-visible {
+  animation-name: none;
 }
 
 .sky-node:hover::before,
@@ -275,6 +336,9 @@ html[data-sky="blue"] .brand-void {
 .sky-node--kraft {
   left: 6%;
   top: 68%;
+  --node-beat: 4.6s;
+  --node-offset: -1.2s;
+  --node-ripple: -3s;
   --node-tint: #f2cd6b;
   --node-halo: rgba(217, 168, 60, 0.75);
 }
@@ -282,6 +346,9 @@ html[data-sky="blue"] .brand-void {
 .sky-node--blue {
   left: 48%;
   top: 22%;
+  --node-beat: 5.9s;
+  --node-offset: -3.4s;
+  --node-ripple: -9.5s;
   --node-tint: #8fb6ff;
   --node-halo: rgba(92, 141, 255, 0.7);
 }
@@ -289,6 +356,9 @@ html[data-sky="blue"] .brand-void {
 .sky-node--teal {
   left: 86%;
   top: 78%;
+  --node-beat: 5.2s;
+  --node-offset: -2.1s;
+  --node-ripple: -14.5s;
   --node-tint: #d8f77a;
   --node-halo: rgba(190, 240, 70, 0.66);
 }
@@ -1072,15 +1142,16 @@ html[lang="ko"] .archive .menu-desc {
   height: auto;
   pointer-events: none;
   user-select: none;
-  /* 엠블럼을 소개 타이틀 색(#a8873f)에 맞춥니다. 이 세 값이 엠블럼의
-     평균색 rgb(255,144,93) 을 rgb(168,136,62) 로 옮깁니다. 색만 돌아갈
-     뿐이라 그림 안의 명암은 그대로 남습니다. */
+  /* 주황을 골드로 갈아끼웁니다. 채도는 거의 그대로 두고(0.82) 밝기를
+     1 위로 올려서(1.12) 탁해지지 않게 했습니다. 그림 전체 평균이
+     rgb(221,179,87) 밝은 금색으로 가고, 어두워지는 픽셀은 하나도
+     없습니다. 밝기를 더 올리면 하이라이트가 흰색으로 날아갑니다. */
   opacity: 0.82;
   filter:
-    hue-rotate(30deg)
-    saturate(0.84)
-    brightness(0.84)
-    drop-shadow(0 0 14px rgba(168, 135, 63, 0.26))
+    hue-rotate(31deg)
+    saturate(0.82)
+    brightness(1.12)
+    drop-shadow(0 0 14px rgba(232, 190, 100, 0.24))
     drop-shadow(0 10px 22px rgba(10, 6, 2, 0.42));
   backface-visibility: hidden;
   will-change: opacity;
@@ -1300,5 +1371,14 @@ html[lang="en"] .about-copy {
   .brand-void,
   .brand-credit {
     transition: none;
+  }
+
+  .sky-node,
+  .sky-node::after {
+    animation: none;
+  }
+
+  .sky-node {
+    opacity: 1;
   }
 }
