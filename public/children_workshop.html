@@ -3407,6 +3407,8 @@
   let lightboxIndex = 0;
   let lightboxLoadToken = 0;
   const lightboxPreloaded = new Set();
+  let lightboxHistoryPushed = false; // 뒤로가기로 사진 창만 닫기 위해 쌓아 둔 기록이 있는지
+  let lastSwipeAt = 0;               // 스와이프 직후의 클릭으로 창이 닫히는 것을 막기 위한 시각
 
   function openLightbox(startThumb) {
     const sessionCard = startThumb.closest(".session-card");
@@ -3488,6 +3490,10 @@
     });
 
     lightbox.classList.add("active");
+    // 휴대폰 뒤로가기로 페이지를 벗어나지 않고 사진 창만 닫히도록 기록을 하나 쌓아 둡니다
+    if (!lightboxHistoryPushed) {
+      try { history.pushState({ lightbox: true }, ""); lightboxHistoryPushed = true; } catch (err) {}
+    }
     updateLightbox();
   }
 
@@ -3583,11 +3589,21 @@
     updateLightbox();
   }
 
-  function closeLightbox(e) {
+  function closeLightbox(e, fromHistory) {
     // 그림(대형 이미지), 썸네일, 좌우 화살표 버튼을 클릭한 경우에는 닫지 않음
     if (e && e.target.closest(".lightbox-img-wrap img, .lightbox-nav, .lightbox-thumb")) {
       return;
     }
+    // 스와이프가 끝나며 따라 들어오는 클릭으로 창이 닫히지 않도록
+    if (e && Date.now() - lastSwipeAt < 400) {
+      return;
+    }
+    // 뒤로가기로 닫힌 경우가 아니면, 열 때 쌓아 둔 기록을 되돌려 놓습니다
+    if (lightboxHistoryPushed && !fromHistory) {
+      lightboxHistoryPushed = false;
+      try { history.back(); } catch (err) {}
+    }
+    lightboxHistoryPushed = false;
     const lightbox = document.getElementById("art-lightbox");
     const mainImg = document.getElementById("lightbox-main-img");
     const imageWrap = mainImg.closest(".lightbox-img-wrap");
@@ -3626,6 +3642,43 @@
       closeLightbox();
     }
   });
+
+  // 휴대폰 뒤로가기: 사진 창이 열려 있으면 페이지를 벗어나지 않고 창만 닫습니다
+  window.addEventListener("popstate", function () {
+    const lightbox = document.getElementById("art-lightbox");
+    if (lightbox && lightbox.classList.contains("active")) {
+      closeLightbox(null, true);
+    }
+  });
+
+  // 손가락으로 좌우로 밀어 이전·다음 사진 보기
+  (function () {
+    const viewer = document.querySelector(".lightbox-viewer");
+    if (!viewer) return;
+    let startX = 0, startY = 0, tracking = false;
+
+    viewer.addEventListener("touchstart", function (e) {
+      if (e.touches.length !== 1) { tracking = false; return; }
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      tracking = true;
+    }, { passive: true });
+
+    viewer.addEventListener("touchend", function (e) {
+      if (!tracking) return;
+      tracking = false;
+      if (lightboxItems.length < 2) return;
+
+      const touch = e.changedTouches[0];
+      const dx = touch.clientX - startX;
+      const dy = touch.clientY - startY;
+      // 가로로 충분히, 그리고 세로보다 뚜렷하게 밀었을 때만 (세로 스크롤과 헷갈리지 않도록)
+      if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+
+      lastSwipeAt = Date.now();
+      navigateLightbox(dx < 0 ? 1 : -1);
+    }, { passive: true });
+  })();
 
   // 수업 풍경 영상용 커스텀 컨트롤 (전체화면 없이 재생/음소거 버튼만 제공)
   document.addEventListener("click", function (e) {
