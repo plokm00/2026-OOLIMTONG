@@ -58,11 +58,23 @@ body {
     var(--panel-strong);
 }
 
+/* 롤오버로 열리는 우주는 페이지 배경과 같은 인디고를 씁니다.
+   body의 하늘 그라데이션과 같은 값이라 카드가 배경으로 뚫린 것처럼 보입니다. */
 .network-space {
   background:
     radial-gradient(circle at 78% 38%, rgba(204, 255, 0, 0.1), transparent 24%),
-    radial-gradient(circle at 24% 72%, rgba(104, 104, 210, 0.1), transparent 28%),
-    linear-gradient(110deg, rgba(6, 4, 22, 0.93), rgba(11, 8, 32, 0.86));
+    radial-gradient(circle at 24% 72%, rgba(112, 118, 255, 0.12), transparent 28%),
+    linear-gradient(110deg, rgba(11, 10, 38, 0.94), rgba(22, 18, 63, 0.9));
+}
+
+.network-space::before {
+  background: radial-gradient(
+    circle,
+    rgba(204, 255, 0, 0.13) 0%,
+    rgba(168, 218, 86, 0.075) 28%,
+    rgba(112, 118, 255, 0.05) 62%,
+    transparent 100%
+  );
 }
 
 /* 공통 그림자와 소개 패널 */
@@ -97,6 +109,36 @@ body {
 
 .about {
   background: rgba(11, 9, 32, 0.5);
+}
+
+/* 워드마크는 하늘에 잠기게 둡니다. 중력에 끌려 살짝 휘고, 뒤로 도는
+   희미한 빛으로만 형태가 잡힙니다. 가까이 보면 읽히는 정도. */
+.brand-logo {
+  opacity: 0.62;
+  filter:
+    url(#gravity-warp)
+    drop-shadow(0 0 22px rgba(112, 118, 255, 0.26))
+    drop-shadow(0 0 60px rgba(84, 88, 215, 0.14));
+  transition: opacity 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .masthead:hover .brand-logo {
+    opacity: 0.92;
+  }
+}
+
+.filter-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-logo {
+    transition: none;
+  }
 }
 
 .site-emblem {

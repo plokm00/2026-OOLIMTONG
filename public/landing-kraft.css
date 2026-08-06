@@ -1,0 +1,1018 @@
+:root {
+  --space: #16110a;
+  --space-soft: #241a11;
+  --panel: rgba(30, 22, 13, 0.74);
+  --panel-strong: rgba(20, 15, 9, 0.9);
+  --cream: #f4efe2;
+  --text: #ded2bd;
+  --muted: #9c8d75;
+  --orange: #fe4832;
+  --orange-bright: #ff7657;
+  --orange-soft: #f0a064;
+  --clay: #c9a882;
+  --clay-muted: #a08a6b;
+  --credit: #7d6444;
+  --sand: #d7b681;
+  --jade: #2fae7e;
+  --jade-soft: #86dcb9;
+  --line: rgba(224, 205, 170, 0.14);
+  --orange-line: rgba(254, 72, 50, 0.42);
+  /* 그림에서 가져온 색.
+     오커는 크라프트지 바탕, 군청은 왼쪽 창, 옥색은 오른쪽 창,
+     주홍은 위쪽 해, 벽돌 갈색은 건물입니다. */
+  --ochre: #c9a227;
+  --ochre-deep: #8c5a2d;
+  --brand: #6f93e8;
+  --brand-dim: #4a6aa8;
+  --brick: #6f2d1f;
+  --deep-shade: rgba(14, 9, 4, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+html {
+  background: var(--space);
+}
+
+body {
+  min-height: 100svh;
+  /* 크라프트지를 태운 듯한 바탕 위로 오커 성운이 대각선으로 지나갑니다.
+     별밭이 지나는 띠와 같은 방향이라 둘이 한 덩어리로 읽힙니다. */
+  background:
+    radial-gradient(circle at 12% 14%, rgba(201, 162, 39, 0.2), transparent 27rem),
+    radial-gradient(circle at 86% 44%, rgba(214, 175, 96, 0.1), transparent 34rem),
+    radial-gradient(circle at 52% 86%, rgba(140, 90, 45, 0.2), transparent 36rem),
+    radial-gradient(ellipse 70% 32% at 26% 30%, rgba(201, 162, 39, 0.13), transparent 70%),
+    radial-gradient(ellipse 66% 30% at 74% 64%, rgba(176, 122, 46, 0.12), transparent 72%),
+    linear-gradient(135deg, #241a0d 0%, #17110a 48%, #35270f 100%);
+  color: var(--text);
+  font-family: "Noto Sans KR", sans-serif;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 232, 186, 0.016) 0,
+      rgba(255, 232, 186, 0.016) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    radial-gradient(circle at center, transparent 34%, rgba(26, 14, 4, 0.32) 100%);
+  mix-blend-mode: screen;
+  opacity: 0.56;
+}
+
+a {
+  color: inherit;
+}
+
+.cosmos {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  width: min(1480px, 100%);
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: clamp(28px, 4vw, 64px);
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: clamp(48px, 7vh, 96px);
+}
+
+.masthead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.title-wrap {
+  width: min(720px, 67vw);
+}
+
+.brand-credit {
+  display: block;
+  margin-top: 9px;
+  color: var(--credit);
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.11em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.brand-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter:
+    drop-shadow(0 0 12px rgba(111, 147, 232, 0.26))
+    drop-shadow(0 0 38px rgba(201, 162, 39, 0.16));
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.header-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+  flex: 0 1 auto;
+  min-width: 378px;
+}
+
+.header-links {
+  display: grid;
+  grid-template-columns: 88px 78px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  width: 272px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.header-links a {
+  color: var(--brand);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 180ms ease, text-shadow 180ms ease;
+}
+
+.header-links a:hover,
+.header-links a:focus-visible {
+  color: var(--brand);
+  text-shadow: 0 0 16px rgba(111, 147, 232, 0.45);
+}
+
+.language-switch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+  height: auto;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--clay-muted);
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+.language-switch a {
+  display: inline-block;
+  min-width: 0;
+  height: auto;
+  padding: 0;
+  color: var(--clay-muted);
+  line-height: 1.2;
+  text-align: center;
+  text-indent: 0;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 180ms ease, text-shadow 180ms ease;
+}
+
+.language-switch a:not([aria-current="page"]):hover,
+.language-switch a:not([aria-current="page"]):focus-visible {
+  color: var(--brand);
+  text-shadow: 0 0 16px rgba(111, 147, 232, 0.45);
+}
+
+.language-switch a[aria-current="page"] {
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.language-switch a[aria-current="page"]:hover,
+.language-switch a[aria-current="page"]:focus-visible {
+  color: var(--brand);
+  text-shadow: 0 0 16px rgba(111, 147, 232, 0.45);
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+}
+
+.menu-card {
+  min-height: clamp(225px, 27vw, 370px);
+  padding: clamp(28px, 3.5vw, 50px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: var(--panel);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 236, 200, 0.045),
+    0 24px 70px var(--deep-shade);
+  text-decoration: none;
+  backdrop-filter: blur(12px);
+}
+
+.menu-card[href] {
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+
+.menu-card[href] .menu-title,
+.menu-card[href] .menu-desc {
+  cursor: text;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.menu-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.menu-card::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    linear-gradient(118deg, rgba(255, 255, 255, 0.055), transparent 38%),
+    radial-gradient(circle at 82% 18%, rgba(254, 72, 50, 0.2), transparent 28%);
+  opacity: 0.72;
+  transition: opacity 360ms ease, transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu-card::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: clamp(150px, 22vw, 330px);
+  aspect-ratio: 1;
+  top: -42%;
+  right: -8%;
+  border: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(254, 72, 50, 0.055), transparent 67%);
+  box-shadow:
+    0 0 42px rgba(254, 72, 50, 0.08),
+    inset 0 0 44px rgba(254, 72, 50, 0.035);
+  opacity: 0.7;
+  transition: transform 720ms cubic-bezier(0.16, 1, 0.3, 1), opacity 360ms ease;
+}
+
+.menu-card.archive {
+  background:
+    linear-gradient(145deg, rgba(254, 72, 50, 0.38), rgba(38, 27, 14, 0.72) 64%),
+    radial-gradient(ellipse 72% 82% at 100% 100%, rgba(201, 162, 39, 0.26), transparent 62%),
+    var(--panel);
+}
+
+.menu-card.archive::before {
+  background:
+    radial-gradient(
+      ellipse 106% 96% at 0% 0%,
+      rgba(192, 56, 40, 0.98) 0%,
+      rgba(192, 56, 40, 0.78) 34%,
+      rgba(170, 47, 34, 0.28) 58%,
+      transparent 80%
+    ),
+    linear-gradient(118deg, rgba(255, 255, 255, 0.04), transparent 40%);
+  opacity: 0;
+}
+
+.archive-cover {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  background: var(--orange);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 360ms ease;
+}
+
+.archive-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(1) contrast(1.18) brightness(1.05);
+  mix-blend-mode: multiply;
+  opacity: 0.86;
+  transform: scale(1.02);
+  transition: transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.archive-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 15, 9, 0.06), rgba(20, 15, 9, 0.58));
+}
+
+.menu-card.archive:hover .archive-cover,
+.menu-card.archive:focus-visible .archive-cover {
+  opacity: 1;
+}
+
+.menu-card.archive:hover .archive-cover img,
+.menu-card.archive:focus-visible .archive-cover img {
+  transform: scale(1.07);
+}
+
+.menu-card.children {
+  background:
+    radial-gradient(circle at 82% 20%, rgba(255, 250, 232, 0.82), transparent 32%),
+    radial-gradient(ellipse 80% 88% at 0% 100%, rgba(124, 74, 38, 0.3), transparent 60%),
+    linear-gradient(145deg, rgba(247, 226, 190, 0.98), rgba(215, 182, 129, 0.9));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.48),
+    inset 0 -34px 62px -34px rgba(96, 54, 26, 0.36),
+    0 26px 74px rgba(14, 9, 4, 0.52);
+}
+
+.menu-card.children::before {
+  background:
+    linear-gradient(118deg, rgba(255, 255, 255, 0.32), transparent 42%),
+    radial-gradient(circle at 82% 18%, rgba(254, 72, 50, 0.13), transparent 30%);
+}
+
+.menu-card.children::after {
+  background: radial-gradient(circle, rgba(254, 72, 50, 0.09), transparent 67%);
+  box-shadow:
+    0 0 42px rgba(254, 72, 50, 0.08),
+    inset 0 0 44px rgba(254, 72, 50, 0.045);
+}
+
+.children-rainbow-cover {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  background: #ead0a2;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 360ms ease;
+}
+
+.children-rainbow-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  mix-blend-mode: multiply;
+  opacity: 0.36;
+  transform: scale(1.02);
+  transition: transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.children-rainbow-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 18% 82%,
+      rgba(246, 224, 188, 0.42) 0%,
+      rgba(246, 224, 188, 0.18) 34%,
+      transparent 58%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(246, 224, 188, 0.02) 32%,
+      rgba(246, 224, 188, 0.24) 62%,
+      rgba(246, 224, 188, 0.68) 100%
+    );
+  pointer-events: none;
+}
+
+.menu-card.children:hover .children-rainbow-cover,
+.menu-card.children:focus-visible .children-rainbow-cover {
+  opacity: 1;
+}
+
+.menu-card.children:hover .children-rainbow-cover img,
+.menu-card.children:focus-visible .children-rainbow-cover img {
+  transform: scale(1.07);
+}
+
+.children-cover {
+  position: absolute;
+  z-index: 1;
+  right: auto;
+  bottom: calc(100% + clamp(14px, 1.5vw, 20px));
+  left: 0;
+  width: clamp(56px, 5.5vw, 80px);
+  aspect-ratio: 300 / 269;
+  pointer-events: none;
+  opacity: 0;
+  background: transparent;
+  transition: opacity 320ms ease-in-out;
+}
+
+.children-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 8px rgba(111, 45, 31, 0.12));
+}
+
+.children:hover .children-cover,
+.children:focus-visible .children-cover {
+  opacity: 0.88;
+}
+
+.menu-card.network {
+  grid-column: 1 / -1;
+  min-height: clamp(200px, 20vw, 280px);
+  justify-content: space-between;
+  background:
+    linear-gradient(108deg, rgba(47, 174, 126, 0.24), rgba(26, 19, 11, 0.79) 54%),
+    radial-gradient(ellipse 62% 100% at 88% 50%, rgba(201, 162, 39, 0.2), transparent 66%),
+    var(--panel-strong);
+}
+
+.menu-card.network::before {
+  background:
+    radial-gradient(circle at 78% 32%, rgba(47, 174, 126, 0.4) 0 3px, transparent 5px),
+    radial-gradient(circle at 86% 68%, rgba(134, 220, 185, 0.22) 0 6px, transparent 8px),
+    radial-gradient(circle at 68% 78%, rgba(240, 232, 214, 0.13) 0 2px, transparent 4px),
+    linear-gradient(110deg, rgba(47, 174, 126, 0.08), transparent 62%);
+}
+
+.menu-card.network::after {
+  background: radial-gradient(circle, rgba(47, 174, 126, 0.07), transparent 67%);
+  box-shadow:
+    0 0 42px rgba(47, 174, 126, 0.08),
+    inset 0 0 44px rgba(47, 174, 126, 0.035);
+}
+
+.network-space {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  overflow: hidden;
+  contain: layout paint style;
+  pointer-events: none;
+  opacity: 0;
+  /* 롤오버로 열리는 우주는 페이지 배경과 같은 크라프트 하늘입니다. */
+  background:
+    radial-gradient(circle at 78% 38%, rgba(47, 174, 126, 0.12), transparent 24%),
+    radial-gradient(circle at 24% 72%, rgba(201, 162, 39, 0.12), transparent 28%),
+    linear-gradient(110deg, rgba(30, 21, 11, 0.94), rgba(48, 35, 17, 0.9));
+  transition: opacity 480ms ease;
+}
+
+.network-space::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 62%;
+  top: 43%;
+  width: clamp(80px, 12vw, 170px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(47, 174, 126, 0.13) 0%,
+    rgba(120, 200, 160, 0.075) 28%,
+    rgba(196, 150, 60, 0.025) 62%,
+    transparent 100%
+  );
+  opacity: 0.3;
+  transform: translate(-50%, -50%);
+}
+
+.network:hover .network-space,
+.network:focus-visible .network-space {
+  opacity: 1;
+}
+
+.network-static-star,
+.network-static-node {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  pointer-events: none;
+}
+
+.network-starfield {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.network-static-node {
+  z-index: 2;
+  left: var(--node-x);
+  top: var(--node-y);
+  width: var(--node-width);
+  height: var(--node-height);
+  border-radius: var(--node-radius);
+  background: transparent;
+  opacity: 0.94;
+  transform: translate(-50%, -50%) rotate(var(--node-turn));
+}
+
+.network-static-node::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 50%;
+  width: var(--node-glow-size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(47, 174, 126, 0.304) 0%,
+    rgba(47, 174, 126, 0.16) 20%,
+    rgba(47, 174, 126, 0.064) 48%,
+    rgba(47, 174, 126, 0.02) 72%,
+    transparent 100%
+  );
+  transform: translate(-50%, -50%);
+}
+
+.network-static-node::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: var(--node-radius);
+  background: #eaf7ef;
+  box-shadow:
+    0 0 6px rgba(255, 255, 255, 0.58),
+    0 0 13px rgba(47, 174, 126, 0.48);
+  animation: network-node-morph var(--node-morph-time) ease-in-out var(--node-morph-delay) infinite;
+  will-change: border-radius, transform, opacity;
+}
+
+@keyframes network-node-morph {
+  0%,
+  100% {
+    border-radius: 48% 52% 45% 55% / 55% 45% 52% 48%;
+    opacity: 0.95;
+    transform: scaleX(1) scaleY(1);
+  }
+
+  34% {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    opacity: 1;
+    transform: scaleX(0.9) scaleY(1.15);
+  }
+
+  68% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    opacity: 0.97;
+    transform: scaleX(1.1) scaleY(1);
+  }
+}
+
+.menu-card:hover,
+.menu-card:focus-visible {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 236, 200, 0.07),
+    0 0 42px rgba(201, 162, 39, 0.14),
+    0 30px 80px rgba(12, 7, 3, 0.54);
+}
+
+.menu-card.archive:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 236, 200, 0.07),
+    0 0 42px rgba(254, 72, 50, 0.17),
+    0 30px 80px rgba(12, 7, 3, 0.54);
+}
+
+.menu-card.children:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -34px 62px -34px rgba(96, 54, 26, 0.36),
+    0 0 42px rgba(215, 182, 129, 0.2),
+    0 30px 80px rgba(12, 7, 3, 0.54);
+}
+
+.menu-card.network:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 236, 200, 0.07),
+    0 0 42px rgba(47, 174, 126, 0.18),
+    0 30px 80px rgba(12, 7, 3, 0.54);
+}
+
+.menu-card:hover::before,
+.menu-card:focus-visible::before {
+  opacity: 1;
+  transform: scale(1.035);
+}
+
+.menu-card:hover::after,
+.menu-card:focus-visible::after {
+  opacity: 1;
+  transform: translate(-12px, 12px) scale(1.06);
+}
+
+.menu-card:focus-visible {
+  outline: 0;
+  box-shadow:
+    0 0 0 4px rgba(111, 147, 232, 0.3),
+    0 0 42px rgba(111, 147, 232, 0.22),
+    0 30px 80px rgba(12, 7, 3, 0.54);
+}
+
+.menu-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  color: var(--orange-soft);
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+}
+
+.menu-status {
+  justify-content: flex-end;
+}
+
+.coming-soon {
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(47, 174, 126, 0.11);
+  color: var(--jade-soft);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+}
+
+.menu-bottom {
+  display: grid;
+  gap: 18px;
+  transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu-card:hover .menu-bottom,
+.menu-card:focus-visible .menu-bottom {
+  transform: translateY(-5px);
+}
+
+.menu-title {
+  color: var(--cream);
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: clamp(28px, 3.4vw, 52px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+  white-space: nowrap;
+  text-shadow: 0 0 28px rgba(201, 162, 39, 0.14);
+  transition: color 260ms ease, text-shadow 260ms ease;
+}
+
+.archive .menu-title {
+  color: var(--orange-bright);
+  text-shadow: 0 0 28px rgba(254, 72, 50, 0.16);
+}
+
+.children .menu-title {
+  color: #6f2d1f;
+  text-shadow: none;
+}
+
+.network .menu-title {
+  color: var(--jade-soft);
+  text-shadow: 0 0 28px rgba(47, 174, 126, 0.2);
+}
+
+html[lang="en"] .menu-title {
+  font-size: clamp(23px, 3vw, 46px);
+  letter-spacing: -0.035em;
+}
+
+.menu-desc {
+  max-width: 470px;
+  color: #c3b49a;
+  font-size: clamp(14px, 1.08vw, 16px);
+  font-weight: 400;
+  line-height: 1.75;
+  word-break: keep-all;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: color 260ms ease;
+}
+
+.archive .menu-desc {
+  color: #e7937f;
+}
+
+html[lang="ko"] .archive .menu-desc {
+  max-width: none;
+  white-space: nowrap;
+}
+
+.children .menu-desc {
+  color: #6f2d1f;
+}
+
+.network .menu-bottom {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 32px;
+}
+
+.network .menu-desc {
+  max-width: 310px;
+  color: rgba(134, 220, 185, 0.78);
+  text-align: right;
+}
+
+.about {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(68px, 6.5vw, 88px) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 0;
+  padding: clamp(28px, 3vw, 44px);
+  border: 0;
+  background: rgba(20, 15, 9, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(9px);
+}
+
+.site-emblem {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  justify-self: center;
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.82;
+  filter:
+    saturate(1.02)
+    drop-shadow(0 0 16px rgba(201, 162, 39, 0.34))
+    drop-shadow(0 10px 22px rgba(10, 6, 2, 0.42));
+  backface-visibility: hidden;
+  will-change: opacity;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-emblem {
+    opacity: 0;
+    transition: opacity 480ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .about:hover .site-emblem,
+  .about:focus-within .site-emblem {
+    opacity: 0.82;
+  }
+}
+
+.about-panel {
+  min-width: 0;
+}
+
+.about-panel:first-of-type {
+  padding-right: clamp(24px, 3.2vw, 46px);
+}
+
+.about-panel:last-of-type {
+  padding-left: clamp(24px, 3.2vw, 46px);
+  border-left: 0;
+}
+
+.about-title {
+  margin-bottom: 16px;
+  color: var(--brand);
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: clamp(15px, 1.55vw, 23px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.about-copy {
+  max-width: 620px;
+  color: var(--clay);
+  font-size: clamp(13px, 1.02vw, 15px);
+  line-height: 1.72;
+  word-break: keep-all;
+}
+
+html[lang="en"] .about-title {
+  font-size: clamp(12px, 1.3vw, 20px);
+  letter-spacing: -0.02em;
+}
+
+html[lang="en"] .about-copy {
+  font-family: "IBM Plex Sans KR", sans-serif;
+}
+
+.studio-address {
+  margin-top: 20px;
+  color: var(--clay-muted);
+  font-size: 12px;
+  font-style: normal;
+  line-height: 1.75;
+}
+
+@media (max-width: 760px) {
+  .page {
+    padding: 24px 18px 30px;
+    gap: 42px;
+  }
+
+  .masthead {
+    display: block;
+  }
+
+  .title-wrap {
+    width: min(100%, 560px);
+  }
+
+  .header-tools {
+    justify-content: flex-start;
+    min-width: 0;
+    margin-top: 18px;
+  }
+
+  .header-links {
+    display: flex;
+    width: auto;
+    justify-content: flex-start;
+    gap: 8px 16px;
+  }
+
+  .menu {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .menu-card,
+  .menu-card.network {
+    grid-column: auto;
+    min-height: 245px;
+  }
+
+  .menu-title {
+    font-size: clamp(25px, 8vw, 38px);
+  }
+
+  html[lang="en"] .menu-title {
+    font-size: clamp(20px, 6.5vw, 30px);
+  }
+
+  .network .menu-bottom {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .network .menu-desc {
+    text-align: left;
+  }
+
+  html[lang="ko"] .archive .menu-desc {
+    white-space: normal;
+  }
+
+  .about {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 26px 22px;
+  }
+
+  .about-panel:last-of-type {
+    padding-top: 0;
+    padding-left: 0;
+    border-top: 0;
+    border-left: 0;
+  }
+
+  .about-panel:first-of-type {
+    padding-right: 0;
+  }
+
+  .about-title {
+    font-size: clamp(14px, 4vw, 19px);
+    white-space: normal;
+  }
+
+  html[lang="en"] .about-title {
+    font-size: clamp(12px, 3.3vw, 16px);
+  }
+
+  .site-emblem {
+    position: static;
+    width: 64px;
+    margin: 0 auto;
+    transform: none;
+    opacity: 0.82;
+  }
+
+}
+
+@media (hover: none), (pointer: coarse) {
+  .menu-card[href] .menu-title,
+  .menu-card[href] .menu-desc {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .menu-card.archive:hover .archive-cover,
+  .menu-card.children:hover .children-rainbow-cover,
+  .children:hover .children-cover,
+  .network:hover .network-space {
+    opacity: 0;
+  }
+
+  .menu-card.archive.is-touch-preview .archive-cover,
+  .menu-card.children.is-touch-preview .children-rainbow-cover,
+  .menu-card.network.is-touch-preview .network-space {
+    opacity: 1;
+  }
+
+  .menu-card.archive.is-touch-preview .archive-cover img,
+  .menu-card.children.is-touch-preview .children-rainbow-cover img {
+    transform: scale(1.07);
+  }
+
+  .menu-card.children.is-touch-preview .children-cover {
+    opacity: 0.88;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-card::before,
+  .menu-card::after,
+  .children-cover,
+  .menu-bottom,
+  .site-emblem {
+    transition: none;
+  }
+
+  .network-static-node::after {
+    animation: none;
+  }
+}
