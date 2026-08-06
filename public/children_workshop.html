@@ -463,6 +463,79 @@
     line-height: 1.8;
   }
 
+  /* 공지 안의 진행 순서 */
+  .notice-timeline {
+    list-style: none;
+    margin: 14px 0 12px;
+    padding-left: 4px;
+  }
+  .notice-timeline li {
+    position: relative;
+    padding: 0 0 14px 17px;
+    border-left: 2px solid var(--line);
+  }
+  .notice-timeline li:last-child {
+    padding-bottom: 0;
+    border-left-color: transparent;
+  }
+  .notice-timeline li::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    top: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--coral);
+  }
+  .nt-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .nt-when {
+    flex-shrink: 0;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    background: var(--coral);
+    border-radius: 20px;
+    padding: 2px 9px;
+    line-height: 1.5;
+  }
+  .nt-who {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .notice-timeline p {
+    font-size: 13px;
+    line-height: 1.75;
+    margin: 0;
+  }
+  /* 같은 시간에 두 갈래로 나뉘는 구간 */
+  .nt-split {
+    display: grid;
+    gap: 6px;
+    margin-top: 5px;
+  }
+  .nt-split div {
+    font-size: 13px;
+    line-height: 1.7;
+    background: rgba(225, 208, 172, 0.4);
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
+  .nt-split strong {
+    color: var(--coral);
+    font-weight: 700;
+    margin-right: 6px;
+  }
+
   /* 공지 안의 바로가기 버튼 */
   .np-link {
     display: inline-flex;
@@ -2961,21 +3034,27 @@
           <img src="https://ninnikkraft.vercel.app/notice-20260813-2.webp" alt="특강 안내 - 일시 8월 13일 목요일 오후 4시, 장소 원주 문막 니닉크라프트, 진행 방승연" loading="lazy" decoding="async">
         </div>
 
-        <p>이번 특강은 학부모와 아이들이 각각 다른 활동으로 나뉘어 진행됩니다.</p>
+        <p>이번 특강은 학부모와 아이들이 서로 다른 활동을 진행합니다.</p>
 
-        <div class="notice-part">
-          <div class="np-label">아이들 활동</div>
-          <div class="np-title">〈그림책 『달 샤베트』 × 얼음 그림 그리기〉</div>
-          <p>그림책은 강사님과 함께 읽습니다. 활동은 김아영 작가님이 진행합니다.</p>
-        </div>
+        <ol class="notice-timeline">
+          <li>
+            <div class="nt-head"><span class="nt-when">20분</span><span class="nt-who">아이들과 학부모 함께</span></div>
+            <p>강사님과 함께 그림책 『달 샤베트』를 읽고, ‘달이 녹아서 셔벗이 되는 장면’을 통해 여러 질문과 이야기를 주고받습니다.</p>
+          </li>
+          <li>
+            <div class="nt-head"><span class="nt-when">1시간</span><span class="nt-who">같은 시간, 두 갈래로 나뉘어</span></div>
+            <div class="nt-split">
+              <div><strong>아이들</strong>얼음 물감으로 그리기 · 김아영 작가님이 진행합니다.</div>
+              <div><strong>학부모</strong>애착검사와 함께하는 그림책테라피 · 강사님의 그림책 낭독을 들으며 재미있는 애착 심리를 배워 봅니다.</div>
+            </div>
+          </li>
+          <li>
+            <div class="nt-head"><span class="nt-when">10분</span><span class="nt-who">수업 마무리</span></div>
+          </li>
+        </ol>
 
-        <div class="notice-part">
-          <div class="np-label">학부모 활동</div>
-          <div class="np-title">〈애착으로 읽는 그림책테라피 : 삶을 배우기 전에, 사랑을 배우는 시간〉</div>
-          <p>강사님의 그림책 낭독을 들으며 재미있는 애착 심리를 배워 봅니다.</p>
-          <p>참여 전에 아래 링크로 애착검사를 미리 해주세요. 방승연 강사님이 결과를 해석해 들려드립니다.</p>
-          <a class="np-link" href="https://forms.gle/4nunLKCSBCpgaivi9" target="_blank" rel="noopener">애착검사 하러 가기 ↗</a>
-        </div>
+        <p>참여 전에 아래 링크로 애착검사를 미리 해주세요. 방승연 강사님이 결과를 해석해 들려드립니다.</p>
+        <a class="np-link" href="https://forms.gle/4nunLKCSBCpgaivi9" target="_blank" rel="noopener">애착검사 하러 가기 ↗</a>
       </div>
       <div class="notice-meta">2026.08.03 게시</div>
     </article>
