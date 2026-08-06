@@ -59,6 +59,8 @@
     return (seed - 1) / 2147483646;
   };
 
+  const networkFields = [];
+
   const populateNetworkSpace = () => {
     const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
@@ -145,16 +147,16 @@
           const x = (position.x / 100) * fieldWidth;
           const y = (position.y / 100) * fieldHeight;
           const alpha = 0.28 + Math.random() * 0.7;
-          const coreColor = isLime
-            ? [223, 255, 117]
-            : isBlue
-              ? [214, 175, 60]
-              : [244, 238, 222];
+          // 연두 마디는 이 프로젝트의 키컬러라 어느 하늘에서나 그대로이고,
+          // 나머지 별빛만 고른 하늘을 따라갑니다.
+          const skyTint = skies[activeSky].stars[3];
+          const skyPale = skies[activeSky].stars[0];
+          const coreColor = isLime ? [223, 255, 117] : isBlue ? skyTint : skyPale;
           const glowColor = isLime
             ? "rgba(204, 255, 0, 0.68)"
             : isBlue
-              ? "rgba(201, 162, 39, 0.5)"
-              : "rgba(244, 238, 222, 0.42)";
+              ? `rgba(${skyTint.join(", ")}, 0.5)`
+              : `rgba(${skyPale.join(", ")}, 0.42)`;
 
           starContext.save();
           starContext.globalAlpha = alpha;
@@ -187,6 +189,7 @@
         });
       };
 
+      networkFields.push(renderNetworkField);
       renderNetworkField();
       if (canHover) {
         card?.addEventListener("mouseenter", renderNetworkField);
@@ -314,8 +317,10 @@
   const createField = () => {
     seed = 94731;
     ratio = Math.min(window.devicePixelRatio || 1, 2);
-    width = window.innerWidth;
-    height = window.innerHeight;
+    // 창이 아직 안 펼쳐졌을 때 0 이 넘어오면 아래 drawImage 가 예외를 던지고,
+    // 그러면 스크립트가 통째로 죽어서 리사이즈 리스너조차 안 붙습니다.
+    width = Math.max(1, window.innerWidth);
+    height = Math.max(1, window.innerHeight);
     canvas.width = Math.round(width * ratio);
     canvas.height = Math.round(height * ratio);
     canvas.style.width = `${width}px`;
@@ -434,7 +439,7 @@
 
   const draw = (time = 0) => {
     context.clearRect(0, 0, width, height);
-    if (staticLayer) {
+    if (staticLayer && staticLayer.width > 0 && staticLayer.height > 0) {
       context.drawImage(staticLayer, 0, 0, width, height);
     }
     liveStars.forEach((star) => drawStar(star, time));
@@ -595,6 +600,7 @@
       node.setAttribute("aria-pressed", String(node.dataset.skyPick === name));
     });
 
+    networkFields.forEach((render) => render());
     resize();
   };
 

@@ -99,6 +99,7 @@ a {
 }
 
 .masthead {
+  position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -213,16 +214,17 @@ html[data-sky="blue"] .brand-void {
     linear-gradient(122deg, #08122a 0%, #050e20 44%, #01050f 100%);
 }
 
-/* 하늘을 바꾸는 별 세 개. 로고 바로 아래에 흩어져 있고, 위치는 CSS 에
-   박혀 있어서 새로고침해도 그대로입니다. 누르는 자리는 28px 이지만
-   보이는 것은 가운데 점뿐입니다. */
+/* 하늘을 바꾸는 별 세 개. 외부 링크 아래, 마스트헤드 오른쪽이 가장
+   넓게 비어 있는 자리라 거기에 흩뿌렸습니다. 위치는 CSS 에 박혀 있어서
+   새로고침해도 그대로입니다. 누르는 자리는 28px 이지만 보이는 것은
+   가운데 점뿐입니다. */
 .sky-nodes {
   position: absolute;
   z-index: 3;
-  left: 0;
-  top: 100%;
-  width: 30%;
-  height: clamp(38px, 5vh, 62px);
+  right: 1%;
+  top: 46%;
+  width: min(320px, 30%);
+  height: clamp(44px, 6vh, 76px);
 }
 
 .sky-node {
@@ -271,24 +273,80 @@ html[data-sky="blue"] .brand-void {
 }
 
 .sky-node--kraft {
-  left: 4%;
-  top: 34%;
+  left: 6%;
+  top: 68%;
   --node-tint: #f2cd6b;
   --node-halo: rgba(217, 168, 60, 0.75);
 }
 
 .sky-node--blue {
-  left: 15%;
-  top: 72%;
+  left: 48%;
+  top: 22%;
   --node-tint: #8fb6ff;
   --node-halo: rgba(92, 141, 255, 0.7);
 }
 
 .sky-node--teal {
-  left: 26%;
-  top: 26%;
+  left: 86%;
+  top: 78%;
   --node-tint: #d8f77a;
   --node-halo: rgba(190, 240, 70, 0.66);
+}
+
+
+/* 네트워크 배너도 하늘을 따라갑니다. 연두는 이 프로젝트의 키컬러라
+   어느 하늘에서나 그대로이고, 그 뒤에 깔리는 우주만 바뀝니다.
+   롤오버로 열리는 안쪽 하늘도 그때그때 페이지 배경과 같은 색입니다. */
+
+html[data-sky="kraft"] {
+  --network-panel: rgba(20, 15, 9, 0.9);
+}
+
+html[data-sky="teal"] {
+  --network-panel: rgba(3, 11, 13, 0.9);
+}
+
+html[data-sky="blue"] {
+  --network-panel: rgba(5, 11, 24, 0.9);
+}
+
+html[data-sky="kraft"] .menu-card.network {
+  background-image:
+    linear-gradient(108deg, rgba(204, 255, 0, 0.21), rgba(24, 17, 10, 0.84) 54%),
+    radial-gradient(ellipse 62% 100% at 88% 50%, rgba(38, 50, 128, 0.3), transparent 66%);
+}
+
+html[data-sky="teal"] .menu-card.network {
+  background-image:
+    linear-gradient(108deg, rgba(204, 255, 0, 0.21), rgba(4, 14, 16, 0.84) 54%),
+    radial-gradient(ellipse 62% 100% at 88% 50%, rgba(22, 78, 88, 0.34), transparent 66%);
+}
+
+html[data-sky="blue"] .menu-card.network {
+  background-image:
+    linear-gradient(108deg, rgba(204, 255, 0, 0.21), rgba(8, 14, 30, 0.84) 54%),
+    radial-gradient(ellipse 62% 100% at 88% 50%, rgba(34, 56, 140, 0.32), transparent 66%);
+}
+
+html[data-sky="kraft"] .network-space {
+  background-image:
+    radial-gradient(circle at 78% 38%, rgba(204, 255, 0, 0.13), transparent 24%),
+    radial-gradient(circle at 24% 72%, rgba(52, 66, 150, 0.16), transparent 28%),
+    linear-gradient(110deg, rgba(30, 21, 11, 0.94), rgba(48, 35, 17, 0.9));
+}
+
+html[data-sky="teal"] .network-space {
+  background-image:
+    radial-gradient(circle at 78% 38%, rgba(204, 255, 0, 0.13), transparent 24%),
+    radial-gradient(circle at 24% 72%, rgba(60, 140, 148, 0.16), transparent 28%),
+    linear-gradient(110deg, rgba(4, 16, 18, 0.94), rgba(7, 27, 32, 0.9));
+}
+
+html[data-sky="blue"] .network-space {
+  background-image:
+    radial-gradient(circle at 78% 38%, rgba(204, 255, 0, 0.13), transparent 24%),
+    radial-gradient(circle at 24% 72%, rgba(70, 110, 220, 0.16), transparent 28%),
+    linear-gradient(110deg, rgba(9, 15, 34, 0.94), rgba(16, 26, 58, 0.9));
 }
 
 /* 워드마크 자리는 바깥과 다른 우주입니다. 글자 모양으로 오려낸 창 안에
@@ -695,10 +753,7 @@ html[data-sky="blue"] .brand-void {
   grid-column: 1 / -1;
   min-height: clamp(200px, 20vw, 280px);
   justify-content: space-between;
-  background:
-    linear-gradient(108deg, rgba(204, 255, 0, 0.21), rgba(24, 17, 10, 0.84) 54%),
-    radial-gradient(ellipse 62% 100% at 88% 50%, rgba(38, 50, 128, 0.3), transparent 66%),
-    var(--panel-strong);
+  background-color: var(--network-panel);
 }
 
 .menu-card.network::before {
@@ -724,11 +779,6 @@ html[data-sky="blue"] .brand-void {
   contain: layout paint style;
   pointer-events: none;
   opacity: 0;
-  /* 롤오버로 열리는 우주는 페이지 배경과 같은 크라프트 하늘입니다. */
-  background:
-    radial-gradient(circle at 78% 38%, rgba(204, 255, 0, 0.13), transparent 24%),
-    radial-gradient(circle at 24% 72%, rgba(52, 66, 150, 0.16), transparent 28%),
-    linear-gradient(110deg, rgba(30, 21, 11, 0.94), rgba(48, 35, 17, 0.9));
   transition: opacity 480ms ease;
 }
 
@@ -1022,10 +1072,15 @@ html[lang="ko"] .archive .menu-desc {
   height: auto;
   pointer-events: none;
   user-select: none;
-  /* 엠블럼은 원본 그대로 둡니다. 채도도 건드리지 않습니다. */
+  /* 엠블럼을 소개 타이틀 색(#a8873f)에 맞춥니다. 이 세 값이 엠블럼의
+     평균색 rgb(255,144,93) 을 rgb(168,136,62) 로 옮깁니다. 색만 돌아갈
+     뿐이라 그림 안의 명암은 그대로 남습니다. */
   opacity: 0.82;
   filter:
-    drop-shadow(0 0 14px rgba(201, 162, 39, 0.24))
+    hue-rotate(30deg)
+    saturate(0.84)
+    brightness(0.84)
+    drop-shadow(0 0 14px rgba(168, 135, 63, 0.26))
     drop-shadow(0 10px 22px rgba(10, 6, 2, 0.42));
   backface-visibility: hidden;
   will-change: opacity;
@@ -1104,13 +1159,15 @@ html[lang="en"] .about-copy {
 
   .title-wrap {
     width: min(100%, 560px);
-    /* 노드가 앉을 자리를 비워둡니다. 안 그러면 아래 헤더 링크와 겹칩니다. */
-    margin-bottom: clamp(52px, 13vw, 68px);
   }
 
+  /* 좁은 화면에서는 마스트헤드 안이 꽉 차서, 헤더 링크 아래 띠로 내립니다. */
   .sky-nodes {
-    width: 52%;
-    height: clamp(30px, 8vw, 46px);
+    right: 0;
+    top: 100%;
+    bottom: auto;
+    width: 58%;
+    height: 30px;
   }
 
   .header-tools {
