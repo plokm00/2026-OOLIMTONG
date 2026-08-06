@@ -480,10 +480,10 @@
   }
   .np-link:hover { background: #9a3f22; }
 
-  /* 공지에 붙는 안내 이미지 — 본문 가로 폭 그대로 위아래로 이어 붙입니다 */
+  /* 공지에 붙는 안내 이미지 — 두 장을 좌우로 나란히 (좁은 화면에서는 위아래로) */
   .notice-figures {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 12px;
     margin: 16px 0;
   }
@@ -493,6 +493,9 @@
     display: block;
     border-radius: 12px;
     border: 1px solid var(--line);
+  }
+  @media (max-width: 560px) {
+    .notice-figures { grid-template-columns: 1fr; }
   }
   @media (max-width: 560px) {
     .notice { padding: 16px 18px; border-radius: 16px; }
