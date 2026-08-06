@@ -16,7 +16,8 @@
   let width = 0;
   let height = 0;
   let ratio = 1;
-  let stars = [];
+  let liveStars = [];
+  let staticLayer = null;
   let morphStars = [];
   let reservedZones = [];
   let animationFrame = 0;
@@ -216,6 +217,33 @@
     return point;
   };
 
+  const bakeStarLayer = (bakedStars) => {
+    if (!staticLayer) {
+      staticLayer = document.createElement("canvas");
+    }
+
+    staticLayer.width = Math.round(width * ratio);
+    staticLayer.height = Math.round(height * ratio);
+
+    const layer = staticLayer.getContext("2d");
+    layer.setTransform(ratio, 0, 0, ratio, 0, 0);
+    layer.clearRect(0, 0, width, height);
+
+    bakedStars.forEach((star) => {
+      const [r, g, b] = star.color;
+      layer.save();
+      if (star.halo) {
+        layer.shadowColor = `rgba(${r}, ${g}, ${b}, 0.5)`;
+        layer.shadowBlur = 3 + star.radius * 5;
+      }
+      layer.beginPath();
+      layer.fillStyle = `rgba(${r}, ${g}, ${b}, ${star.alpha})`;
+      layer.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      layer.fill();
+      layer.restore();
+    });
+  };
+
   const createField = () => {
     seed = 94731;
     ratio = Math.min(window.devicePixelRatio || 1, 2);
@@ -228,20 +256,33 @@
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
     collectReservedZones();
 
-    const starCount = Math.max(240, Math.min(720, Math.round((width * height) / 2700)));
-    stars = Array.from({ length: starCount }, () => {
-      const palette = colors[Math.floor(random() * colors.length)];
-      const point = findOpenPoint(4, random() < 0.52);
+    // 별은 두 겹입니다. 대부분은 화면이 바뀔 때 한 번만 그려서 비트맵으로
+    // 구워두고, 매 프레임에는 그 비트맵 한 장과 깜빡이는 소수만 올립니다.
+    // 밀도를 세 배로 올려도 내려받는 파일은 늘지 않고, 프레임당 그리는
+    // 횟수는 오히려 줄어듭니다.
+    const bakedCount = Math.max(760, Math.min(2600, Math.round((width * height) / 900)));
+    const liveCount = Math.max(70, Math.min(150, Math.round(bakedCount / 12)));
+
+    const makeStar = (twinkles) => {
+      const grade = random();
       return {
-        x: point.x,
-        y: point.y,
-        radius: 0.22 + random() * 0.82,
-        alpha: 0.16 + random() * 0.68,
+        ...findOpenPoint(4, random() < 0.52),
+        radius:
+          grade < 0.74
+            ? 0.2 + random() * 0.55
+            : grade < 0.96
+              ? 0.7 + random() * 0.9
+              : 1.5 + random() * 1.5,
+        alpha: (twinkles ? 0.28 : 0.12) + random() * 0.62,
+        halo: grade > 0.9,
         phase: random() * Math.PI * 2,
         speed: 0.00035 + random() * 0.0011,
-        color: palette,
+        color: colors[Math.floor(random() * colors.length)],
       };
-    });
+    };
+
+    liveStars = Array.from({ length: liveCount }, () => makeStar(true));
+    bakeStarLayer(Array.from({ length: bakedCount }, () => makeStar(false)));
 
     morphStars = Array.from({ length: 7 }, (_, index) => {
       const point = findOpenPoint(82);
@@ -326,7 +367,10 @@
 
   const draw = (time = 0) => {
     context.clearRect(0, 0, width, height);
-    stars.forEach((star) => drawStar(star, time));
+    if (staticLayer) {
+      context.drawImage(staticLayer, 0, 0, width, height);
+    }
+    liveStars.forEach((star) => drawStar(star, time));
     morphStars.forEach((star) => drawMorphStar(star, time));
 
     if (!reduceMotion) {

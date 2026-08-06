@@ -12,33 +12,6 @@
 <link rel="stylesheet" href="landing-kraft.css">
 </head>
 <body>
-<svg class="filter-defs" aria-hidden="true" focusable="false" width="0" height="0">
-  <filter id="event-horizon" x="-6%" y="-50%" width="112%" height="200%" color-interpolation-filters="sRGB">
-    <!-- 인디고와 같은 구조에 빛만 따뜻하게. 고리는 크라프트 금색입니다. -->
-    <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="swell"/>
-    <feComposite in="swell" in2="SourceAlpha" operator="out" result="rim"/>
-    <feFlood flood-color="#e6c877" flood-opacity="0.82"/>
-    <feComposite in2="rim" operator="in" result="ring"/>
-
-    <feOffset in="swell" dx="-2.6" dy="-2.6" result="swellShift"/>
-    <feComposite in="swellShift" in2="SourceAlpha" operator="out" result="arcBand"/>
-    <feFlood flood-color="#fff3d4" flood-opacity="0.94"/>
-    <feComposite in2="arcBand" operator="in" result="arcRaw"/>
-    <feComposite in="arcRaw" in2="ring" operator="in" result="arc"/>
-
-    <feGaussianBlur in="ring" stdDeviation="2.6" result="halo"/>
-
-    <feFlood flood-color="#0a0602" flood-opacity="0.78"/>
-    <feComposite in2="SourceAlpha" operator="in" result="hole"/>
-
-    <feMerge>
-      <feMergeNode in="halo"/>
-      <feMergeNode in="hole"/>
-      <feMergeNode in="ring"/>
-      <feMergeNode in="arc"/>
-    </feMerge>
-  </filter>
-</svg>
 <canvas id="cosmos" class="cosmos" aria-hidden="true"></canvas>
 <main class="page">
   <header class="masthead">
