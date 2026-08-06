@@ -13,6 +13,36 @@
 <link rel="stylesheet" href="landing-indigo.css">
 </head>
 <body>
+<svg class="filter-defs" aria-hidden="true" focusable="false" width="0" height="0">
+  <filter id="event-horizon" x="-6%" y="-50%" width="112%" height="200%" color-interpolation-filters="sRGB">
+    <!-- 글자 실루엣을 부풀린 뒤 원본을 빼면 테두리만 남습니다. 이게 광자 고리. -->
+    <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="swell"/>
+    <feComposite in="swell" in2="SourceAlpha" operator="out" result="rim"/>
+    <feFlood flood-color="#c6d3ff" flood-opacity="0.8"/>
+    <feComposite in2="rim" operator="in" result="ring"/>
+
+    <!-- 빛이 한쪽에서 오도록, 고리의 왼쪽 위만 더 밝은 호로. -->
+    <feOffset in="swell" dx="-2.6" dy="-2.6" result="swellShift"/>
+    <feComposite in="swellShift" in2="SourceAlpha" operator="out" result="arcBand"/>
+    <feFlood flood-color="#eef2ff" flood-opacity="0.92"/>
+    <feComposite in2="arcBand" operator="in" result="arcRaw"/>
+    <feComposite in="arcRaw" in2="ring" operator="in" result="arc"/>
+
+    <!-- 고리 바깥으로 새어 나가는 빛 -->
+    <feGaussianBlur in="ring" stdDeviation="2.6" result="halo"/>
+
+    <!-- 안쪽은 하늘보다 어두운 공백 -->
+    <feFlood flood-color="#02010a" flood-opacity="0.78"/>
+    <feComposite in2="SourceAlpha" operator="in" result="hole"/>
+
+    <feMerge>
+      <feMergeNode in="halo"/>
+      <feMergeNode in="hole"/>
+      <feMergeNode in="ring"/>
+      <feMergeNode in="arc"/>
+    </feMerge>
+  </filter>
+</svg>
 <canvas id="cosmos" class="cosmos" aria-hidden="true"></canvas>
 <main class="page">
   <header class="masthead">
