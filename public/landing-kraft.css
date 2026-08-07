@@ -397,63 +397,96 @@ html[data-sky="blue"] .brand-void {
   will-change: border-radius, opacity, transform;
 }
 
-/* 가끔 한 번씩 중력파를 내보냅니다. 실제 중력파는 한 축을 늘이는 만큼
-   직각 축을 눌러서, 파면이 퍼지는 동안 가로세로가 번갈아 부풀고 눌립니다.
-   그 사중극 맥동이 이 물결의 정체입니다. 두 겹을 조금 어긋나게 띄워
-   앞선 파면을 뒤 파면이 따라가는 파열로 보이게 했습니다. */
-.sky-wave {
+/* ── 중력파: 그리는 게 아니라 굽힙니다 ─────────────────────────────
+   파면을 선으로 그리면 물 위에 링을 얹은 것처럼 보입니다. 여기서는
+   backdrop-filter 로 그 자리에 실제로 놓인 하늘과 별을 굴절시켜
+   통과시킵니다. 지나가는 자리의 별이 번지고 밀리는 것이 곧 물결입니다.
+
+   렌즈를 버튼 안에 두지 않은 이유가 있습니다. 버튼은 숨쉬느라 opacity 가
+   1 아래로 내려가는데, 그런 조상 안에서는 backdrop-filter 가 배경을
+   보지 못해 아무 일도 일어나지 않습니다. */
+.sky-lens {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 16px;
-  height: 16px;
-  border: 1px solid var(--node-tint);
-  border-radius: 50%;
-  opacity: 0;
+  z-index: 2;
+  width: 118px;
+  height: 118px;
+  /* 가운데 맞추기를 margin 으로 합니다. transform 은 물결이 써야 합니다. */
+  margin: -59px 0 0 -59px;
   pointer-events: none;
-  mix-blend-mode: screen;
-  filter: blur(0.4px);
-  transform: translate(-50%, -50%) scale(0.3);
-  animation: sky-node-gwave var(--node-gw) cubic-bezier(0.2, 0.62, 0.34, 1) var(--node-gw-delay) infinite;
-  will-change: opacity, transform;
 }
 
-/* 뒤따르는 파면. 앞선 것보다 1.15초 늦게 출발하고 조금 더 흐립니다. */
-.sky-wave--trail {
-  border-color: var(--node-halo);
-  animation-delay: calc(var(--node-gw-delay) + 1.15s);
+.sky-lens-core,
+.sky-lens-quake {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  will-change: transform, opacity;
 }
 
-@keyframes sky-node-gwave {
+/* 블랙홀 곁의 상시 왜곡. 노드 바로 둘레의 별빛이 늘 조금 눌려 있습니다. */
+.sky-lens-core {
+  -webkit-backdrop-filter: blur(1.5px) brightness(0.94) contrast(1.06);
+  backdrop-filter: blur(1.5px) brightness(0.94) contrast(1.06);
+  -webkit-mask-image: radial-gradient(circle, #000 0%, rgba(0, 0, 0, 0.66) 24%, transparent 50%);
+  mask-image: radial-gradient(circle, #000 0%, rgba(0, 0, 0, 0.66) 24%, transparent 50%);
+  transform: scale(0.44);
+  animation: sky-lens-breathe var(--node-lens) ease-in-out var(--node-ripple) infinite;
+}
+
+/* 가끔 한 번, 굴절되는 고리가 바깥으로 번져 나갑니다. 실제 중력파는 한 축을
+   늘이는 만큼 직각 축을 눌러서 지나가는 동안 가로세로가 번갈아 부풀므로,
+   고리도 그렇게 일그러지며 퍼집니다. */
+.sky-lens-quake {
+  -webkit-backdrop-filter: blur(2.6px) brightness(1.12) saturate(1.3);
+  backdrop-filter: blur(2.6px) brightness(1.12) saturate(1.3);
+  -webkit-mask-image: radial-gradient(circle, transparent 0%, transparent 30%, #000 42%, #000 54%, transparent 74%);
+  mask-image: radial-gradient(circle, transparent 0%, transparent 30%, #000 42%, #000 54%, transparent 74%);
+  opacity: 0;
+  transform: scale(0.22);
+  animation: sky-lens-quake var(--node-gw) cubic-bezier(0.2, 0.62, 0.34, 1) var(--node-gw-delay) infinite;
+}
+
+@keyframes sky-lens-breathe {
+  0%,
+  100% {
+    transform: scale(0.42);
+  }
+
+  50% {
+    transform: scale(0.52);
+  }
+}
+
+@keyframes sky-lens-quake {
   0%,
   72% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.3, 0.3);
+    transform: scale(0.22, 0.22);
   }
 
   74% {
-    opacity: 0.5;
-    transform: translate(-50%, -50%) scale(0.62, 0.98);
+    opacity: 1;
+    transform: scale(0.34, 0.5);
   }
 
   80% {
-    opacity: 0.36;
-    transform: translate(-50%, -50%) scale(1.5, 0.9);
+    opacity: 0.92;
+    transform: scale(0.74, 0.46);
   }
 
   86% {
-    opacity: 0.24;
-    transform: translate(-50%, -50%) scale(1.7, 2.1);
+    opacity: 0.74;
+    transform: scale(0.84, 1.02);
   }
 
   92% {
-    opacity: 0.12;
-    transform: translate(-50%, -50%) scale(3, 2.2);
+    opacity: 0.44;
+    transform: scale(1.44, 1.06);
   }
 
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(3.6, 3.9);
+    transform: scale(1.72, 1.88);
   }
 }
 
@@ -544,7 +577,8 @@ html[data-sky="blue"] .brand-void {
   outline-offset: 2px;
 }
 
-.sky-node--kraft {
+.sky-node--kraft,
+.sky-lens--kraft {
   left: 6%;
   top: 68%;
   --node-beat: 4.6s;
@@ -559,7 +593,8 @@ html[data-sky="blue"] .brand-void {
   --node-wave: rgba(242, 205, 107, 0.2);
 }
 
-.sky-node--blue {
+.sky-node--blue,
+.sky-lens--blue {
   left: 48%;
   top: 22%;
   --node-beat: 5.9s;
@@ -574,7 +609,8 @@ html[data-sky="blue"] .brand-void {
   --node-wave: rgba(143, 182, 255, 0.18);
 }
 
-.sky-node--teal {
+.sky-node--teal,
+.sky-lens--teal {
   left: 86%;
   top: 78%;
   --node-beat: 5.2s;
@@ -1660,11 +1696,12 @@ html[lang="en"] .about-copy {
   .sky-node,
   .sky-node::before,
   .sky-node::after,
-  .sky-wave {
+  .sky-lens-core,
+  .sky-lens-quake {
     animation: none;
   }
 
-  .sky-wave {
+  .sky-lens-quake {
     opacity: 0;
   }
 
