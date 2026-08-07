@@ -898,12 +898,40 @@
   </div>
 </nav>
 <script>
+  var navHistoryPushed = false;
+
+  function openNav() {
+    document.getElementById('nav-links').classList.add('open');
+    // 휴대폰 뒤로가기로 페이지를 벗어나지 않고 메뉴만 닫히도록 기록을 하나 쌓아 둡니다
+    if (!navHistoryPushed) {
+      try { history.pushState({ nav: true }, ''); navHistoryPushed = true; } catch (err) {}
+    }
+  }
+  // fromHistory 는 뒤로가기로 닫힌 경우에만 true 입니다. 클릭 이벤트가
+  // 그대로 넘어오는 자리가 있어서 === true 로 엄격하게 봅니다.
+  function closeNav(fromHistory) {
+    var navLinks = document.getElementById('nav-links');
+    if (!navLinks.classList.contains('open')) return;
+    navLinks.classList.remove('open');
+    if (navHistoryPushed) {
+      navHistoryPushed = false;
+      // 뒤로가기로 닫힌 게 아니라면 열 때 쌓아 둔 기록을 되돌려 놓습니다
+      if (fromHistory !== true) {
+        try { history.back(); } catch (err) {}
+      }
+    }
+  }
   function toggleNav() {
-    document.getElementById('nav-links').classList.toggle('open');
+    var navLinks = document.getElementById('nav-links');
+    if (navLinks.classList.contains('open')) { closeNav(); } else { openNav(); }
   }
-  function closeNav() {
-    document.getElementById('nav-links').classList.remove('open');
-  }
+  /* 휴대폰 뒤로가기: 메뉴가 열려 있으면 페이지를 벗어나지 않고 메뉴만 닫습니다 */
+  window.addEventListener('popstate', function () {
+    var navLinks = document.getElementById('nav-links');
+    if (navLinks && navLinks.classList.contains('open')) {
+      closeNav(true);
+    }
+  });
   /* 배경(메뉴 바깥) 클릭 시 패널 닫기 */
   document.addEventListener('click', function(e) {
     var navLinks = document.getElementById('nav-links');

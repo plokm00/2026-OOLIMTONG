@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-sky="kraft">
+<html lang="en" data-sky="teal">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +19,10 @@
     } catch (error) {
       stored = null;
     }
-    document.documentElement.dataset.sky = stored === "teal" || stored === "blue" ? stored : "kraft";
+    // 저장된 값이 셋 중 하나면 그대로 씁니다. 크라프트도 유효한 선택이므로
+    // 목록에 넣어야 합니다. 아무것도 고르지 않았으면 청록으로 시작합니다.
+    document.documentElement.dataset.sky =
+      stored === "kraft" || stored === "teal" || stored === "blue" ? stored : "teal";
   })();
 </script>
 </head>
@@ -45,13 +48,13 @@
     </div>
 
     <span class="sky-nodes" role="group" aria-label="Choose a space background">
-      <button class="sky-node sky-node--kraft" type="button" data-sky-pick="kraft" aria-pressed="true" aria-label="kraft starfield">
+      <button class="sky-node sky-node--kraft" type="button" data-sky-pick="kraft" aria-pressed="false" aria-label="kraft starfield">
         <span class="sky-node-caption" aria-hidden="true">kraft starfield</span>
       </button>
       <button class="sky-node sky-node--blue" type="button" data-sky-pick="blue" aria-pressed="false" aria-label="twilight starfield">
         <span class="sky-node-caption" aria-hidden="true">twilight starfield</span>
       </button>
-      <button class="sky-node sky-node--teal" type="button" data-sky-pick="teal" aria-pressed="false" aria-label="viridian starfield">
+      <button class="sky-node sky-node--teal" type="button" data-sky-pick="teal" aria-pressed="true" aria-label="viridian starfield">
         <span class="sky-node-caption" aria-hidden="true">viridian starfield</span>
       </button>
     </span>

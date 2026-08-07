@@ -41,7 +41,7 @@
     },
   };
 
-  let activeSky = skies[document.documentElement.dataset.sky] ? document.documentElement.dataset.sky : "kraft";
+  let activeSky = skies[document.documentElement.dataset.sky] ? document.documentElement.dataset.sky : "teal";
   let colors = skies[activeSky].stars;
 
   let width = 0;
