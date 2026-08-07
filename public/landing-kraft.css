@@ -335,7 +335,7 @@ html[data-sky="blue"] .brand-void {
      몸통이 그대로 덮어버립니다. 커서는 찍은 점에서 오른쪽 아래로
      뻗으니 위쪽이 유일하게 항상 비어 있는 방향입니다. */
   left: 50%;
-  bottom: calc(100% + 5px);
+  bottom: calc(100% + 1px);
   display: grid;
   gap: 1px;
   width: max-content;
