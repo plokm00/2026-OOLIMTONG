@@ -374,8 +374,56 @@
       };
     };
 
-    liveStars = Array.from({ length: liveCount }, () => makeStar(true));
-    bakeStarLayer(Array.from({ length: bakedCount }, () => makeStar(false)));
+    // 노드 둘레에는 별을 따로 모아 둡니다. 굴절은 뒤에 굽힐 별이 있어야
+    // 보이는 것이라, 그 자리가 허공이면 렌즈가 아무 일도 안 하는 것처럼
+    // 보입니다. 헤더 링크 뒤로 넘어간 별은 다른 별과 똑같이 죽입니다.
+    const nodeSpots = [...document.querySelectorAll(".sky-node")].map((node) => {
+      const box = node.getBoundingClientRect();
+      return { x: box.left + box.width / 2, y: box.top + box.height / 2 };
+    });
+
+    // 자리를 무작위로 고르면 한 노드에만 몰립니다. 차례대로 돌려서 셋이
+    // 같은 몫을 갖게 합니다.
+    const makeClusterStar = (twinkles, index) => {
+      const spot = nodeSpots[index % nodeSpots.length];
+      const angle = random() * Math.PI * 2;
+      // 반지름을 제곱해서 뽑으면 가운데가 촘촘하고 바깥으로 갈수록 성깁니다
+      const reach = random() * random() * 118;
+      const grade = random();
+      const x = Math.max(0, Math.min(width, spot.x + Math.cos(angle) * reach));
+      const y = Math.max(0, Math.min(height, spot.y + Math.sin(angle) * reach * 0.84));
+      const quiet = isReserved(x, y);
+      const radius =
+        grade < 0.6
+          ? 0.3 + random() * 0.62
+          : grade < 0.92
+            ? 0.9 + random() * 1
+            : 1.7 + random() * 1.4;
+      const alpha = (twinkles ? 0.34 : 0.2) + random() * 0.58;
+
+      return {
+        x,
+        y,
+        radius: radius * (quiet ? 0.62 : 1),
+        alpha: alpha * (quiet ? 0.28 : 1),
+        halo: !quiet && grade > 0.88,
+        phase: random() * Math.PI * 2,
+        speed: 0.00035 + random() * 0.0011,
+        color: colors[Math.floor(random() * colors.length)],
+      };
+    };
+
+    const clusterBaked = nodeSpots.length ? 460 : 0;
+    const clusterLive = nodeSpots.length ? 42 : 0;
+
+    liveStars = [
+      ...Array.from({ length: liveCount }, () => makeStar(true)),
+      ...Array.from({ length: clusterLive }, (_, index) => makeClusterStar(true, index)),
+    ];
+    bakeStarLayer([
+      ...Array.from({ length: bakedCount }, () => makeStar(false)),
+      ...Array.from({ length: clusterBaked }, (_, index) => makeClusterStar(false, index)),
+    ]);
 
     morphStars = Array.from({ length: 7 }, (_, index) => {
       const point = findOpenPoint(82, false, 0);
