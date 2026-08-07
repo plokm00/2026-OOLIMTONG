@@ -397,6 +397,66 @@ html[data-sky="blue"] .brand-void {
   will-change: border-radius, opacity, transform;
 }
 
+/* 가끔 한 번씩 중력파를 내보냅니다. 실제 중력파는 한 축을 늘이는 만큼
+   직각 축을 눌러서, 파면이 퍼지는 동안 가로세로가 번갈아 부풀고 눌립니다.
+   그 사중극 맥동이 이 물결의 정체입니다. 두 겹을 조금 어긋나게 띄워
+   앞선 파면을 뒤 파면이 따라가는 파열로 보이게 했습니다. */
+.sky-wave {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--node-tint);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: blur(0.4px);
+  transform: translate(-50%, -50%) scale(0.3);
+  animation: sky-node-gwave var(--node-gw) cubic-bezier(0.2, 0.62, 0.34, 1) var(--node-gw-delay) infinite;
+  will-change: opacity, transform;
+}
+
+/* 뒤따르는 파면. 앞선 것보다 1.15초 늦게 출발하고 조금 더 흐립니다. */
+.sky-wave--trail {
+  border-color: var(--node-halo);
+  animation-delay: calc(var(--node-gw-delay) + 1.15s);
+}
+
+@keyframes sky-node-gwave {
+  0%,
+  72% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3, 0.3);
+  }
+
+  74% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(0.62, 0.98);
+  }
+
+  80% {
+    opacity: 0.36;
+    transform: translate(-50%, -50%) scale(1.5, 0.9);
+  }
+
+  86% {
+    opacity: 0.24;
+    transform: translate(-50%, -50%) scale(1.7, 2.1);
+  }
+
+  92% {
+    opacity: 0.12;
+    transform: translate(-50%, -50%) scale(3, 2.2);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(3.6, 3.9);
+  }
+}
+
 @keyframes sky-node-breathe {
   0%,
   100% {
@@ -492,6 +552,8 @@ html[data-sky="blue"] .brand-void {
   --node-lens: 10.8s;
   --node-offset: -1.2s;
   --node-ripple: -3s;
+  --node-gw: 17s;
+  --node-gw-delay: -2s;
   --node-tint: #f2cd6b;
   --node-halo: rgba(217, 168, 60, 0.75);
   --node-wave: rgba(242, 205, 107, 0.2);
@@ -505,6 +567,8 @@ html[data-sky="blue"] .brand-void {
   --node-lens: 13.2s;
   --node-offset: -3.4s;
   --node-ripple: -9.5s;
+  --node-gw: 19s;
+  --node-gw-delay: -8.5s;
   --node-tint: #8fb6ff;
   --node-halo: rgba(92, 141, 255, 0.7);
   --node-wave: rgba(143, 182, 255, 0.18);
@@ -518,6 +582,8 @@ html[data-sky="blue"] .brand-void {
   --node-lens: 11.9s;
   --node-offset: -2.1s;
   --node-ripple: -14.5s;
+  --node-gw: 21s;
+  --node-gw-delay: -15s;
   --node-tint: #d8f77a;
   --node-halo: rgba(190, 240, 70, 0.66);
   --node-wave: rgba(216, 247, 122, 0.18);
@@ -1593,8 +1659,13 @@ html[lang="en"] .about-copy {
 
   .sky-node,
   .sky-node::before,
-  .sky-node::after {
+  .sky-node::after,
+  .sky-wave {
     animation: none;
+  }
+
+  .sky-wave {
+    opacity: 0;
   }
 
   .sky-node {
