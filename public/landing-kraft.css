@@ -54,12 +54,7 @@ body {
   background-attachment: fixed;
   color: var(--text);
   font-family: "Noto Sans KR", sans-serif;
-  /* hidden 은 본문을 스크롤 상자로 만들어서, 안쪽 sticky 가 화면이 아니라
-     이 상자를 기준으로 삼고 그대로 흘러가 버립니다. clip 은 넘친 것을
-     똑같이 잘라내면서 상자는 만들지 않습니다. 옛 브라우저는 hidden 으로
-     남습니다. */
   overflow-x: hidden;
-  overflow-x: clip;
 }
 
 body::before {
@@ -1564,109 +1559,6 @@ html[lang="en"] .about-copy {
     opacity: 0.82;
   }
 
-}
-
-/* ── 손 화면의 세 장 ───────────────────────────────────────────────
-   좁고 세로가 넉넉한 화면은 딱 세 장입니다. 로고 장, 카드 세 개 장,
-   소개 장. 장마다 화면 높이 하나를 그대로 쓰고, 손을 떼면 브라우저가
-   가장 가까운 장에 붙여줍니다.
-   가로로 눕힌 화면처럼 세로가 짧으면 카드 세 장이 눌리므로 그대로 둡니다. */
-@media (max-width: 760px) and (min-height: 560px) {
-  /* 한 화면만큼 정확히 내리는 일은 손가락에 맡기지 않습니다. 손을 떼면
-     브라우저가 가장 가까운 장으로 알아서 붙여줍니다. 세 장 모두 붙는
-     자리를 갖고 있어야 합니다. 하나라도 빠지면 그 장에는 멈출 수가 없어
-     영영 닿지 못합니다. */
-  html {
-    scroll-snap-type: y mandatory;
-  }
-
-  /* 여백은 페이지가 아니라 각 장이 저마다 들고 있습니다. 페이지에 두면
-     장 사이 간격만큼 화면 높이가 어긋나서 두 번째 장이 딱 맞지 않습니다. */
-  .page {
-    display: block;
-    gap: 0;
-    padding: 0;
-  }
-
-  /* 첫 장. 로고와 링크와 별 세 개가 한 덩어리로 화면 한가운데 놓입니다. */
-  .masthead {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    min-height: 100vh;
-    min-height: 100svh;
-    margin-bottom: 0;
-    padding: 24px 14px 30px;
-    scroll-snap-align: start;
-  }
-
-  .title-wrap {
-    width: 100%;
-  }
-
-  .header-tools {
-    justify-content: center;
-    margin-top: 0;
-  }
-
-  .header-links {
-    justify-content: center;
-  }
-
-  /* 별 세 개는 마스트헤드 아래가 아니라 로고 밑 제자리에 놓입니다.
-     첫 장이 화면 높이만큼 길어졌으니 100% 아래에 붙이면 화면 밖입니다. */
-  .sky-nodes {
-    position: relative;
-    right: auto;
-    top: auto;
-    width: min(240px, 68%);
-    height: 40px;
-    margin-top: 0;
-  }
-
-  /* 둘째 장. 위아래 여백이 같은 액자 안에서 카드 세 장이 화면을 채웁니다. */
-  .menu-stage {
-    display: grid;
-    height: 100vh;
-    height: 100svh;
-    padding: 18px;
-    scroll-snap-align: start;
-    /* 세게 튕겨도 이 장은 건너뛰지 않고 반드시 한 번 멈춥니다. */
-    scroll-snap-stop: always;
-  }
-
-  .menu {
-    height: 100%;
-    grid-template-rows: repeat(3, minmax(0, 1fr));
-  }
-
-  /* 세 장이 액자 안을 정확히 삼등분합니다. 카드마다 갖고 있던 최소 높이는
-     그 합이 화면보다 커서 여기서는 풀어줍니다. */
-  .menu-card,
-  .menu-card.network {
-    min-height: 0;
-    padding: 22px 20px;
-  }
-
-  .menu-bottom {
-    gap: 12px;
-  }
-
-  /* 셋째 장. 소개 판이 화면 한가운데 놓이고 둘레로 하늘이 보입니다. */
-  .about-stage {
-    display: grid;
-    align-content: center;
-    min-height: 100vh;
-    min-height: 100svh;
-    padding: 18px;
-    scroll-snap-align: start;
-  }
-
-  .about {
-    margin: 0;
-  }
 }
 
 @media (hover: none), (pointer: coarse) {
