@@ -48,6 +48,8 @@
   let height = 0;
   let ratio = 1;
   let liveStars = [];
+  let clusterStars = [];
+  let lensSpots = [];
   let staticLayer = null;
   let morphStars = [];
   let reservedZones = [];
@@ -415,17 +417,32 @@
 
     // 알갱이가 잘아진 만큼 수는 도로 조금 올립니다. 굵은 별 몇 개보다
     // 고운 먼지가 촘촘한 편이 굴절이 지나갈 때 훨씬 잘 읽힙니다.
-    const clusterBaked = nodeSpots.length ? 340 : 0;
-    const clusterLive = nodeSpots.length ? 26 : 0;
+    // 별무리는 굽지 않고 매 프레임 그립니다. 좌표가 렌즈를 따라 움직여야
+    // 해서 비트맵으로 굳혀둘 수 없습니다.
+    const clusterCount = nodeSpots.length ? 340 : 0;
 
-    liveStars = [
-      ...Array.from({ length: liveCount }, () => makeStar(true)),
-      ...Array.from({ length: clusterLive }, (_, index) => makeClusterStar(true, index)),
-    ];
-    bakeStarLayer([
-      ...Array.from({ length: bakedCount }, () => makeStar(false)),
-      ...Array.from({ length: clusterBaked }, (_, index) => makeClusterStar(false, index)),
-    ]);
+    lensSpots = nodeSpots.map((spot, index) => ({
+      x: spot.x,
+      y: spot.y,
+      // 노드가 늘 끌어당기는 힘. 클수록 상시 왜곡이 넓고 셉니다.
+      pull: [11, 11.8, 11.4][index % 3],
+      period: [17000, 19000, 21000][index % 3],
+      offset: [2000, 8500, 15000][index % 3],
+    }));
+
+    liveStars = Array.from({ length: liveCount }, () => {
+      const star = makeStar(true);
+      star.lensed = true;
+      return star;
+    });
+
+    clusterStars = Array.from({ length: clusterCount }, (_, index) => {
+      const star = makeClusterStar(true, index);
+      star.lensed = true;
+      return star;
+    });
+
+    bakeStarLayer(Array.from({ length: bakedCount }, () => makeStar(false)));
 
     morphStars = Array.from({ length: 7 }, (_, index) => {
       const point = findOpenPoint(82, false, 0);
@@ -445,12 +462,72 @@
     });
   };
 
+  // ── 중력 렌즈 ─────────────────────────────────────────────────────
+  // 어두운 띠를 덧그리는 게 아니라, 그 자리에 걸친 별의 좌표를 밀어냅니다.
+  // 별밭은 우리가 그리는 캔버스라 위치를 직접 옮길 수 있습니다.
+
+  // 파면의 현재 반지름과 세기. 주기의 마지막 28% 동안만 살아 있습니다.
+  const waveAt = (spot, time) => {
+    const cycle = ((time + spot.offset) % spot.period + spot.period) % spot.period;
+    const phase = cycle / spot.period;
+    if (phase < 0.72) return null;
+
+    const run = (phase - 0.72) / 0.28;
+    return {
+      radius: 12 + run * 118,
+      band: 26 + run * 20,
+      // 멀어질수록 힘이 빠집니다. 파면 마루에서 최대 16px 안팎으로 밀리는데,
+      // 별 알갱이가 1px 남짓이라 이 정도는 되어야 밀린 게 보입니다.
+      amp: 38 * (1 - run * 0.7),
+      // 사중극이 천천히 돌아, 늘어나는 축과 눌리는 축이 뒤바뀝니다
+      twist: run * Math.PI,
+    };
+  };
+
+  // 별 하나를 렌즈 세 개에 통과시켜 옮겨진 자리를 돌려줍니다
+  const lensPoint = (x, y, time) => {
+    let px = x;
+    let py = y;
+
+    for (let index = 0; index < lensSpots.length; index += 1) {
+      const spot = lensSpots[index];
+      const vx = px - spot.x;
+      const vy = py - spot.y;
+      const distance = Math.hypot(vx, vy);
+      if (distance < 0.001 || distance > 240) continue;
+
+      // 상시 렌즈: 가까울수록 바깥으로 크게 밀립니다. 별이 노드를 비껴
+      // 흐르는 모양이 되어 아인슈타인 고리처럼 보입니다.
+      let shift = (spot.pull * spot.pull) / (distance + spot.pull);
+
+      const wave = waveAt(spot, time);
+      if (wave) {
+        const offset = (distance - wave.radius) / wave.band;
+        if (offset > -3 && offset < 3) {
+          // u·e^(-u²) 는 마루 앞에서 양수, 뒤에서 음수입니다. 파면 앞의
+          // 별은 바깥으로 밀리고 뒤의 별은 안으로 당겨지는, 물결 한 마루의
+          // 실제 변위 모양입니다.
+          const ripple = offset * Math.exp(-offset * offset);
+          const angle = Math.atan2(vy, vx);
+          const quadrupole = Math.cos(2 * angle - wave.twist);
+          shift += wave.amp * ripple * (0.45 + 0.55 * quadrupole);
+        }
+      }
+
+      px += (vx / distance) * shift;
+      py += (vy / distance) * shift;
+    }
+
+    return { x: px, y: py };
+  };
+
   const drawStar = (star, time) => {
     const pulse = reduceMotion ? 1 : 0.74 + Math.sin(time * star.speed + star.phase) * 0.26;
     const [r, g, b] = star.color;
+    const at = star.lensed ? lensPoint(star.x, star.y, time) : star;
     context.beginPath();
     context.fillStyle = `rgba(${r}, ${g}, ${b}, ${star.alpha * pulse})`;
-    context.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+    context.arc(at.x, at.y, star.radius, 0, Math.PI * 2);
     context.fill();
   };
 
@@ -513,6 +590,7 @@
       context.drawImage(staticLayer, 0, 0, width, height);
     }
     liveStars.forEach((star) => drawStar(star, time));
+    clusterStars.forEach((star) => drawStar(star, time));
     morphStars.forEach((star) => drawMorphStar(star, time));
 
     if (!reduceMotion) {
