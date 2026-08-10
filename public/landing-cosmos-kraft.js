@@ -393,28 +393,30 @@
       const x = Math.max(0, Math.min(width, spot.x + Math.cos(angle) * reach));
       const y = Math.max(0, Math.min(height, spot.y + Math.sin(angle) * reach * 0.84));
       const quiet = isReserved(x, y);
-      const radius =
-        grade < 0.6
-          ? 0.3 + random() * 0.62
-          : grade < 0.92
-            ? 0.9 + random() * 1
-            : 1.7 + random() * 1.4;
-      const alpha = (twinkles ? 0.34 : 0.2) + random() * 0.58;
+      // 잘고 고른 알갱이로 둡니다. 큰 별이 섞이면 굴절이 지나가도 그 별만
+      // 보이고 공간이 밀리는 느낌이 죽습니다.
+      const radius = grade < 0.82 ? 0.24 + random() * 0.42 : 0.7 + random() * 0.5;
+      const alpha = (twinkles ? 0.3 : 0.18) + random() * 0.46;
+      // 별무리는 하늘 팔레트의 옅은 두 색만 씁니다. 색이 많으면 알록달록해져서
+      // 굴절로 밀린 것인지 원래 그런 색인지 구분이 안 됩니다.
+      const pale = skies[activeSky].stars;
 
       return {
         x,
         y,
         radius: radius * (quiet ? 0.62 : 1),
         alpha: alpha * (quiet ? 0.28 : 1),
-        halo: !quiet && grade > 0.88,
+        halo: !quiet && grade > 0.975,
         phase: random() * Math.PI * 2,
         speed: 0.00035 + random() * 0.0011,
-        color: colors[Math.floor(random() * colors.length)],
+        color: random() < 0.72 ? pale[0] : pale[4],
       };
     };
 
-    const clusterBaked = nodeSpots.length ? 460 : 0;
-    const clusterLive = nodeSpots.length ? 42 : 0;
+    // 알갱이가 잘아진 만큼 수는 도로 조금 올립니다. 굵은 별 몇 개보다
+    // 고운 먼지가 촘촘한 편이 굴절이 지나갈 때 훨씬 잘 읽힙니다.
+    const clusterBaked = nodeSpots.length ? 340 : 0;
+    const clusterLive = nodeSpots.length ? 26 : 0;
 
     liveStars = [
       ...Array.from({ length: liveCount }, () => makeStar(true)),
