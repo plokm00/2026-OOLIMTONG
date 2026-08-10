@@ -1528,7 +1528,7 @@ html[lang="en"] .about-copy {
      나란히 서므로 크기를 따로 두지 않습니다. */
   .header-links,
   .language-switch {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   /* 글자가 작아진 만큼 누르는 자리를 따로 넓힙니다. 글자에 여백을 직접
@@ -1571,7 +1571,32 @@ html[lang="en"] .about-copy {
   .menu-card,
   .menu-card.network {
     grid-column: auto;
-    min-height: 205px;
+    /* 제목 자리(104px)에 두 줄짜리 설명과 아래 여백까지 얹히는 높이입니다.
+       세 장이 같은 키로 서야 제목 줄도 나란히 보입니다. */
+    min-height: 225px;
+  }
+
+  /* 세 장의 제목이 카드 안에서 늘 같은 높이에 섭니다. 아래에서 쌓아
+     올리면 설명이 두 줄인 카드만 제목이 위로 밀려 가운데로 올라가므로,
+     위에서부터 잰 자리에 글 뭉치를 놓고 설명만 아래로 자라게 합니다.
+     안쪽 여백 28px 에 76px 을 더해 제목 윗머리가 카드 위에서 104px
+     입니다. 글이 길어지면 카드가 따라 늘어나므로 잘리지 않습니다. */
+  .menu-card,
+  .menu-card.network {
+    justify-content: flex-start;
+  }
+
+  .menu-bottom {
+    margin-top: 76px;
+  }
+
+  /* 준비 중 딱지는 흐름에서 빼둡니다. 그대로 두면 네트워크 카드만 딱지
+     높이만큼 제목이 내려앉아 셋의 줄이 어긋납니다. 자리는 원래 있던
+     오른쪽 위 그대로입니다. */
+  .network .menu-top {
+    position: absolute;
+    top: 28px;
+    right: 28px;
   }
 
   .menu-title {
@@ -1580,6 +1605,11 @@ html[lang="en"] .about-copy {
 
   html[lang="en"] .menu-title {
     font-size: clamp(20px, 6.5vw, 30px);
+  }
+
+  /* 제목에 딸린 줄이라 제목보다 한참 작아도 됩니다. */
+  .menu-desc {
+    font-size: 12.5px;
   }
 
   .network .menu-bottom {
@@ -1639,10 +1669,8 @@ html[lang="en"] .about-copy {
     font-size: clamp(9.5px, 2.67vw, 11px);
   }
 
-  /* 주소는 본문에 딸린 줄이라 본문보다 작아야 합니다. 한글 본문이 10px
-     이므로 그 아래로 내려둡니다. */
   .studio-address {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .site-emblem {
