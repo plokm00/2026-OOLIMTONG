@@ -1561,6 +1561,76 @@ html[lang="en"] .about-copy {
 
 }
 
+/* ── 손 화면의 첫 두 장 ────────────────────────────────────────────
+   좁고 세로가 넉넉한 화면에서는 처음 보이는 한 장에 이름과 링크와 별
+   세 개만 둡니다. 한 번 내리면 카드 세 장이 화면에 꼭 맞게 들어오고,
+   그 아래 소개글부터는 지금까지처럼 스크롤을 그대로 따라갑니다.
+   스냅은 앞의 두 장에만 걸어두어서 세 번째 장부터는 손끝을 붙잡지 않습니다.
+   가로로 눕힌 화면처럼 세로가 짧으면 카드 세 장이 눌리므로 그대로 둡니다. */
+@media (max-width: 760px) and (min-height: 560px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+
+  /* 여백은 페이지가 아니라 각 장이 저마다 들고 있습니다. 페이지에 두면
+     장 사이 간격만큼 화면 높이가 어긋나서 두 번째 장이 딱 맞지 않습니다. */
+  .page {
+    display: block;
+    gap: 0;
+    padding: 0;
+  }
+
+  .masthead {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    /* 넓은 화면에서 쓰는 양끝 정렬이 그대로 오면 세 덩어리가 화면 높이만큼
+       벌어져서, 별 세 개가 첫 장 맨 아래로 내려갑니다. */
+    justify-content: flex-start;
+    min-height: 100vh;
+    min-height: 100svh;
+    margin-bottom: 0;
+    padding: 24px 18px 30px;
+    scroll-snap-align: start;
+  }
+
+  /* 별 세 개는 마스트헤드 아래가 아니라 링크 바로 밑 제자리에 놓입니다.
+     첫 장이 화면 높이만큼 길어졌으니 100% 아래에 붙이면 화면 밖입니다. */
+  .sky-nodes {
+    position: relative;
+    right: auto;
+    top: auto;
+    align-self: flex-end;
+    width: 58%;
+    height: 34px;
+    margin-top: 20px;
+  }
+
+  .menu {
+    height: 100vh;
+    height: 100svh;
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    padding: 0 18px;
+    scroll-snap-align: start;
+  }
+
+  /* 세 장이 화면을 정확히 삼등분합니다. 카드마다 갖고 있던 최소 높이는
+     그 합이 화면보다 커서 여기서는 풀어줍니다. */
+  .menu-card,
+  .menu-card.network {
+    min-height: 0;
+    padding: 22px 20px;
+  }
+
+  .menu-bottom {
+    gap: 12px;
+  }
+
+  .about {
+    margin: 42px 18px 30px;
+  }
+}
+
 @media (hover: none), (pointer: coarse) {
   .menu-card.archive:hover .archive-cover,
   .menu-card.children:hover .children-rainbow-cover,
