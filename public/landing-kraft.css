@@ -1586,8 +1586,12 @@ html[lang="en"] .about-copy {
     justify-content: flex-start;
   }
 
+  /* 제목과 설명 사이는 세 장 모두 14px 입니다. 넓은 화면의 18px 에서
+     좁힌 4px 은 제목이 그만큼 내려앉는 데 씁니다. 제목 윗머리가 104 에서
+     108px 로 가고, 설명 첫 줄은 있던 자리에 그대로 남습니다. */
   .menu-bottom {
-    margin-top: 76px;
+    margin-top: 80px;
+    gap: 14px;
   }
 
   /* 준비 중 딱지는 흐름에서 빼둡니다. 그대로 두면 네트워크 카드만 딱지
@@ -1612,6 +1616,10 @@ html[lang="en"] .about-copy {
     font-size: 12.5px;
   }
 
+  /* 좌우로 나뉘어 있던 칸을 한 줄로 되돌립니다. 간격 14px 은 위의
+     .menu-bottom 과 같은 값인데도 여기 또 적어야 합니다. 넓은 화면용
+     .network .menu-bottom 의 32px 이 선택자가 더 세서, 지우면 손 화면에서
+     그 값이 되살아납니다. */
   .network .menu-bottom {
     grid-template-columns: 1fr;
     gap: 14px;
