@@ -1596,6 +1596,17 @@ html[lang="en"] .about-copy {
     font-size: clamp(12px, 3.3vw, 16px);
   }
 
+  /* 손 화면에서는 소개 글이 화면 폭을 다 쓰는 통짜 문단이 됩니다. 넓은
+     화면에서 쓰던 크기 그대로 두면 줄이 길어져 글자만 커 보이므로 한 호
+     줄입니다. 제목과의 차이는 그대로 남습니다. */
+  .about-copy {
+    font-size: clamp(11.5px, 3.2vw, 13px);
+  }
+
+  .studio-address {
+    font-size: 11px;
+  }
+
   .site-emblem {
     position: static;
     width: 64px;
