@@ -1454,35 +1454,61 @@ html[lang="en"] .about-copy {
     display: none;
   }
 
-  /* 좁은 화면에서는 마스트헤드 안이 꽉 차서 헤더 링크 아래 띠로 내립니다.
+  /* 좁은 화면에서는 별 세 개가 헤더 링크와 같은 줄에 섭니다. 로고가 줄
+     하나를 통째로 쓰고, 그 아래 줄에 링크와 언어와 별이 나란히 놓입니다.
      이름표가 사라진 만큼 벌려두었던 자리도 도로 줄입니다. */
   .masthead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    /* 넓은 화면에서 쓰는 양끝 정렬이 그대로 오면 링크와 별이 줄 양쪽 끝으로
+       벌어집니다. 여기서는 붙어 있어야 합니다. */
+    justify-content: flex-start;
+    gap: 0;
     margin-bottom: clamp(14px, 4vw, 22px);
   }
 
-  .sky-nodes {
-    right: 0;
-    top: calc(100% + 8px);
-    bottom: auto;
-    width: 58%;
-    height: 34px;
+  .title-wrap {
+    flex: 0 0 100%;
   }
 
+  /* 띠가 아니라 KR EN 오른쪽에 붙는 한 뼘짜리 밤하늘입니다. 셋이 흩어져
+     있는 배치는 그대로라, 좁아진 만큼 간격만 촘촘해집니다. */
+  .sky-nodes {
+    position: relative;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    width: 78px;
+    height: 26px;
+    margin-top: 18px;
+    /* 맨 왼쪽 별의 누르는 자리가 EN 을 덮지 않을 만큼은 띄웁니다. */
+    margin-left: 14px;
+  }
+
+  /* 누르는 자리가 28px 이라, 맨 왼쪽 별은 상자 안쪽으로 조금 들여야
+     EN 을 덮지 않습니다. */
   .sky-node--kraft {
-    top: 70%;
+    left: 14%;
+    top: 68%;
   }
 
   .sky-node--blue {
-    top: 58%;
+    left: 50%;
+    top: 26%;
   }
 
   .sky-node--teal {
-    top: 76%;
+    left: 86%;
+    top: 78%;
   }
 
+  /* 링크와 언어와 별이 한 줄에 들어가야 하므로 사이를 조금씩 좁힙니다.
+     360px 화면까지는 이 폭으로 한 줄에 맞습니다. */
   .header-tools {
     justify-content: flex-start;
     min-width: 0;
+    gap: 14px;
     margin-top: 18px;
   }
 
@@ -1490,7 +1516,16 @@ html[lang="en"] .about-copy {
     display: flex;
     width: auto;
     justify-content: flex-start;
-    gap: 8px 16px;
+    gap: 8px 12px;
+  }
+
+  /* 360px 보다 좁으면 한 줄에 못 들어가서 저절로 아랫줄로 넘어갑니다.
+     그때는 EN 을 피하려고 띄워둔 자리가 필요 없으니 왼쪽에 맞춥니다. */
+  @media (max-width: 359px) {
+    .sky-nodes {
+      margin-left: 0;
+      margin-top: 14px;
+    }
   }
 
   .menu {
@@ -1501,7 +1536,7 @@ html[lang="en"] .about-copy {
   .menu-card,
   .menu-card.network {
     grid-column: auto;
-    min-height: 245px;
+    min-height: 205px;
   }
 
   .menu-title {
