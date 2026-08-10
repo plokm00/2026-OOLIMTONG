@@ -604,47 +604,6 @@
     draw();
   };
 
-  const enableSelectableCardLinks = () => {
-    document.querySelectorAll("a.menu-card").forEach((card) => {
-      let pointerStart = null;
-      let didDrag = false;
-
-      card.addEventListener("pointerdown", (event) => {
-        if (event.button !== 0) return;
-        pointerStart = { x: event.clientX, y: event.clientY };
-        didDrag = false;
-      });
-
-      card.addEventListener("pointermove", (event) => {
-        if (!pointerStart) return;
-        if (Math.hypot(event.clientX - pointerStart.x, event.clientY - pointerStart.y) > 3) {
-          didDrag = true;
-        }
-      });
-
-      card.addEventListener("pointerup", () => {
-        pointerStart = null;
-        window.setTimeout(() => {
-          didDrag = false;
-        }, 0);
-      });
-
-      card.addEventListener("pointercancel", () => {
-        pointerStart = null;
-        didDrag = false;
-      });
-
-      card.addEventListener("click", (event) => {
-        const selection = window.getSelection();
-        const selectedText = selection && !selection.isCollapsed ? selection.toString().trim() : "";
-
-        if (didDrag || selectedText) {
-          event.preventDefault();
-        }
-      });
-    });
-  };
-
   const enableTouchCardPreviews = () => {
     const cards = [...document.querySelectorAll(".menu-card")];
     const clearPreviews = () => {
@@ -760,7 +719,6 @@
   };
 
   enableSkyNodes();
-  enableSelectableCardLinks();
   populateNetworkSpace();
   enableTouchCardPreviews();
   createField();

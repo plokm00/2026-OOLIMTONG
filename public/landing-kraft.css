@@ -818,11 +818,18 @@ html[data-sky="blue"] .network-space {
   touch-action: manipulation;
 }
 
+/* 카드 안 글자는 어디서도 선택되지 않습니다. 링크가 아닌 네트워크 카드까지
+   포함해 세 장 모두 해당합니다. */
+.menu-card,
+.menu-card .menu-title,
+.menu-card .menu-desc {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 .menu-card[href] .menu-title,
 .menu-card[href] .menu-desc {
-  cursor: text;
-  -webkit-user-select: text;
-  user-select: text;
+  cursor: pointer;
 }
 
 .menu-card > * {
@@ -1546,12 +1553,6 @@ html[lang="en"] .about-copy {
 }
 
 @media (hover: none), (pointer: coarse) {
-  .menu-card[href] .menu-title,
-  .menu-card[href] .menu-desc {
-    -webkit-user-select: none;
-    user-select: none;
-  }
-
   .menu-card.archive:hover .archive-cover,
   .menu-card.children:hover .children-rainbow-cover,
   .children:hover .children-cover,
