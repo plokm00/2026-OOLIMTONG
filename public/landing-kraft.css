@@ -1447,16 +1447,22 @@ html[lang="en"] .about-copy {
     width: min(100%, 560px);
   }
 
+  /* 좁은 화면에서는 이름표를 아예 내립니다. 12px 글자 세 개가 점 위에
+     나란히 뜨면 헤더가 글자로 꽉 찹니다. 버튼의 aria-label 은 그대로라
+     화면 낭독기에서는 여전히 이름이 읽힙니다. */
+  .sky-node-caption {
+    display: none;
+  }
+
   /* 좁은 화면에서는 마스트헤드 안이 꽉 차서 헤더 링크 아래 띠로 내립니다.
-     캡션이 점 위에 뜨므로 그만큼 자리를 벌려주고, 세 점의 높낮이 차도
-     줄여서 캡션이 링크를 밟지 않게 합니다. */
+     이름표가 사라진 만큼 벌려두었던 자리도 도로 줄입니다. */
   .masthead {
-    margin-bottom: clamp(26px, 7vw, 40px);
+    margin-bottom: clamp(14px, 4vw, 22px);
   }
 
   .sky-nodes {
     right: 0;
-    top: calc(100% + 20px);
+    top: calc(100% + 8px);
     bottom: auto;
     width: 58%;
     height: 34px;
