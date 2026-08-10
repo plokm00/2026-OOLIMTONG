@@ -1574,6 +1574,14 @@ html[lang="en"] .about-copy {
    스크롤을 그대로 따라갑니다.
    가로로 눕힌 화면처럼 세로가 짧으면 카드 세 장이 눌리므로 그대로 둡니다. */
 @media (max-width: 760px) and (min-height: 560px) {
+  /* 한 화면만큼 정확히 내리는 일은 손가락에 맡기지 않습니다. 손을 떼면
+     브라우저가 가장 가까운 장으로 알아서 붙여줍니다. 세 장 모두 붙는
+     자리를 갖고 있어야 합니다. 하나라도 빠지면 그 장에는 멈출 수가 없어
+     영영 닿지 못합니다. */
+  html {
+    scroll-snap-type: y mandatory;
+  }
+
   /* 여백은 페이지가 아니라 각 장이 저마다 들고 있습니다. 페이지에 두면
      장 사이 간격만큼 화면 높이가 어긋나서 두 번째 장이 딱 맞지 않습니다. */
   .page {
@@ -1593,14 +1601,11 @@ html[lang="en"] .about-copy {
     min-height: 100svh;
     margin-bottom: 0;
     padding: 24px 14px 30px;
+    scroll-snap-align: start;
   }
 
   .title-wrap {
     width: 100%;
-  }
-
-  .brand-credit {
-    text-align: center;
   }
 
   .header-tools {
@@ -1629,6 +1634,9 @@ html[lang="en"] .about-copy {
   .menu-stage {
     height: 150vh;
     height: 150svh;
+    scroll-snap-align: start;
+    /* 세게 튕겨도 이 장은 건너뛰지 않고 반드시 한 번 멈춥니다. */
+    scroll-snap-stop: always;
   }
 
   .menu {
@@ -1654,6 +1662,7 @@ html[lang="en"] .about-copy {
 
   .about {
     margin: 42px 18px 30px;
+    scroll-snap-align: start;
   }
 }
 
