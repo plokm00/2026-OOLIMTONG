@@ -1401,7 +1401,9 @@ html[lang="ko"] .archive .menu-desc {
   margin-bottom: 16px;
   color: var(--orange-bright);
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: clamp(15px, 1.55vw, 23px);
+  /* 아래끝은 본문(13px)보다 넉넉히 위에 두어야 합니다. 넓은 화면에서만
+     한 호 줄이는 것이라, 1071px 아래로는 예전과 같은 15px 로 섭니다. */
+  font-size: clamp(15px, 1.4vw, 21px);
   font-weight: 500;
   letter-spacing: -0.025em;
   line-height: 1.35;
@@ -1417,7 +1419,7 @@ html[lang="ko"] .archive .menu-desc {
 }
 
 html[lang="en"] .about-title {
-  font-size: clamp(12px, 1.3vw, 20px);
+  font-size: clamp(13.5px, 1.18vw, 18px);
   letter-spacing: -0.02em;
 }
 
@@ -1587,8 +1589,13 @@ html[lang="en"] .about-copy {
     padding-right: 0;
   }
 
+  /* 손 화면에서는 한글 제목도 영문과 같은 크기로 갑니다. 두 벌을 따로
+     두면 화면 폭에 따라 어느 한쪽만 커 보이는데, 여기서는 두 줄 짜리
+     제목이라 작은 쪽이 더 정갈합니다. 값이 같아도 영문 규칙을 지워서는
+     안 됩니다. 넓은 화면용 html[lang="en"] 규칙이 더 세서, 없애면 그
+     값이 손 화면까지 따라옵니다. */
   .about-title {
-    font-size: clamp(14px, 4vw, 19px);
+    font-size: clamp(12px, 3.3vw, 16px);
     white-space: normal;
   }
 
