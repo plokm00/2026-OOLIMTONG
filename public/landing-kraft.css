@@ -1304,7 +1304,7 @@ html[lang="en"] .menu-title {
   color: #c3b49a;
   font-size: clamp(14px, 1.08vw, 16px);
   font-weight: 400;
-  line-height: 1.75;
+  line-height: 1.62;
   word-break: keep-all;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -1412,7 +1412,7 @@ html[lang="ko"] .archive .menu-desc {
   max-width: 620px;
   color: #93806a;
   font-size: clamp(13px, 1.02vw, 15px);
-  line-height: 1.72;
+  line-height: 1.6;
   word-break: keep-all;
 }
 
@@ -1430,7 +1430,7 @@ html[lang="en"] .about-copy {
   color: #786651;
   font-size: 12px;
   font-style: normal;
-  line-height: 1.75;
+  line-height: 1.62;
 }
 
 @media (max-width: 760px) {
