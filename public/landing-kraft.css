@@ -1436,7 +1436,7 @@ html[lang="en"] .about-copy {
 @media (max-width: 760px) {
   .page {
     padding: 24px 18px 30px;
-    gap: 42px;
+    gap: 34px;
   }
 
   .masthead {
@@ -1465,7 +1465,9 @@ html[lang="en"] .about-copy {
        벌어집니다. 여기서는 붙어 있어야 합니다. */
     justify-content: flex-start;
     gap: 0;
-    margin-bottom: clamp(14px, 4vw, 22px);
+    /* 별밭이 마스트헤드 아래 띠로 있던 시절에 그 자리를 비워두느라 두었던
+       여백입니다. 이제 별밭이 헤더 줄 안에 있으니 필요 없습니다. */
+    margin-bottom: 0;
   }
 
   .title-wrap {
@@ -1482,8 +1484,9 @@ html[lang="en"] .about-copy {
     width: 78px;
     height: 26px;
     margin-top: 18px;
-    /* 맨 왼쪽 별의 누르는 자리가 EN 을 덮지 않을 만큼은 띄웁니다. */
-    margin-left: 14px;
+    /* 별밭은 링크가 아니라 그 옆의 다른 것이므로, 헤더 안 간격보다 넉넉히
+       띄웁니다. 맨 왼쪽 별의 누르는 자리가 EN 에서 스무 남짓 떨어집니다. */
+    margin-left: 26px;
   }
 
   /* 누르는 자리가 28px 이라, 맨 왼쪽 별은 상자 안쪽으로 조금 들여야
@@ -1510,6 +1513,13 @@ html[lang="en"] .about-copy {
     min-width: 0;
     gap: 14px;
     margin-top: 18px;
+  }
+
+  /* 손 화면에서는 글자를 한 호 줄입니다. 로고 아래 줄이 조용해지고,
+     그만큼 별밭을 EN 에서 더 떨어뜨릴 자리도 생깁니다. */
+  .header-links,
+  .language-switch {
+    font-size: 11.5px;
   }
 
   .header-links {

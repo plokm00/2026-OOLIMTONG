@@ -761,6 +761,16 @@
     );
   };
 
+  // 손전화 주소창도 하늘을 따라갑니다. 색은 스타일시트의 --space 를 읽어
+  // 오므로, 하늘을 손볼 곳은 여전히 한 군데뿐입니다.
+  const paintAddressBar = () => {
+    const bar = document.querySelector('meta[name="theme-color"]');
+    if (!bar) return;
+
+    const space = getComputedStyle(document.documentElement).getPropertyValue("--space").trim();
+    if (space) bar.content = space;
+  };
+
   // 하늘 갈아끼우기. 별과 로고 안쪽 하늘만 다시 그리고 나머지는 그대로 둡니다.
   const applySky = (name) => {
     if (!skies[name]) return;
@@ -768,6 +778,7 @@
     activeSky = name;
     colors = skies[name].stars;
     document.documentElement.dataset.sky = name;
+    paintAddressBar();
 
     try {
       localStorage.setItem("ninnik-sky", name);
