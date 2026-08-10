@@ -50,6 +50,13 @@
   let liveStars = [];
   let clusterStars = [];
   let lensSpots = [];
+  // 별밭은 화면보다 길게 만들어 두고, 스크롤에 따라 화면 높이보다 느리게
+  // 흘러갑니다. 카드는 1의 속도로 지나가고 하늘은 이 비율로 따라오므로
+  // 둘 사이에 거리가 생깁니다. 노드 둘레 별무리와 로고 속 별자리는 각자
+  // 붙어 있는 요소를 그대로 따라가야 해서 이 비율을 쓰지 않습니다.
+  const skyDrift = 0.4;
+  let fieldHeight = 0;
+  const scrolledBy = () => window.scrollY || window.pageYOffset || 0;
   let staticLayer = null;
   let morphStars = [];
   let reservedZones = [];
@@ -280,15 +287,16 @@
   const findOpenPoint = (extraPadding = 0, galaxyBias = false, quietDensity = 0.1) => {
     const createPoint = () => {
       if (!galaxyBias) {
-        return { x: random() * width, y: random() * height };
+        return { x: random() * width, y: random() * fieldHeight };
       }
 
       const x = random() * width;
-      const bandCenter = height * (0.18 + (x / width) * 0.62);
-      const spread = (random() + random() + random() - 1.5) * height * 0.28;
+      const spreadBase = fieldHeight;
+      const bandCenter = fieldHeight * (0.18 + (x / width) * 0.62);
+      const spread = (random() + random() + random() - 1.5) * spreadBase * 0.28;
       return {
         x,
-        y: Math.max(0, Math.min(height, bandCenter + spread)),
+        y: Math.max(0, Math.min(fieldHeight, bandCenter + spread)),
       };
     };
 
@@ -310,11 +318,11 @@
     }
 
     staticLayer.width = Math.round(width * ratio);
-    staticLayer.height = Math.round(height * ratio);
+    staticLayer.height = Math.round(fieldHeight * ratio);
 
     const layer = staticLayer.getContext("2d");
     layer.setTransform(ratio, 0, 0, ratio, 0, 0);
-    layer.clearRect(0, 0, width, height);
+    layer.clearRect(0, 0, width, fieldHeight);
 
     bakedStars.forEach((star) => {
       const [r, g, b] = star.color;
@@ -343,6 +351,12 @@
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+    // 스크롤이 끝까지 갔을 때도 하늘이 비지 않도록, 화면 높이에 흘러갈
+    // 거리를 더해 그만큼 길게 만듭니다.
+    const pageHeight = Math.max(height, document.documentElement.scrollHeight);
+    fieldHeight = Math.round(height + (pageHeight - height) * skyDrift);
+
     collectReservedZones();
     paintBrandVoid();
 
@@ -350,8 +364,8 @@
     // 구워두고, 매 프레임에는 그 비트맵 한 장과 깜빡이는 소수만 올립니다.
     // 밀도를 세 배로 올려도 내려받는 파일은 늘지 않고, 프레임당 그리는
     // 횟수는 오히려 줄어듭니다.
-    const bakedCount = Math.max(760, Math.min(2600, Math.round((width * height) / 900)));
-    const liveCount = Math.max(70, Math.min(150, Math.round(bakedCount / 12)));
+    const bakedCount = Math.max(380, Math.min(1300, Math.round((width * fieldHeight) / 1800)));
+    const liveCount = Math.max(35, Math.min(75, Math.round(bakedCount / 12)));
 
     const makeStar = (twinkles) => {
       const grade = random();
@@ -379,9 +393,12 @@
     // 노드 둘레에는 별을 따로 모아 둡니다. 굴절은 뒤에 굽힐 별이 있어야
     // 보이는 것이라, 그 자리가 허공이면 렌즈가 아무 일도 안 하는 것처럼
     // 보입니다. 헤더 링크 뒤로 넘어간 별은 다른 별과 똑같이 죽입니다.
+    // 노드 자리는 문서 기준으로 잡아둡니다. 그려질 때 스크롤한 만큼 빼면
+    // 별무리가 노드를 그대로 따라다닙니다.
+    const pageTop = scrolledBy();
     const nodeSpots = [...document.querySelectorAll(".sky-node")].map((node) => {
       const box = node.getBoundingClientRect();
-      return { x: box.left + box.width / 2, y: box.top + box.height / 2 };
+      return { x: box.left + box.width / 2, y: box.top + box.height / 2 + pageTop };
     });
 
     // 자리를 무작위로 고르면 한 노드에만 몰립니다. 차례대로 돌려서 셋이
@@ -393,8 +410,8 @@
       const reach = random() * random() * 118;
       const grade = random();
       const x = Math.max(0, Math.min(width, spot.x + Math.cos(angle) * reach));
-      const y = Math.max(0, Math.min(height, spot.y + Math.sin(angle) * reach * 0.84));
-      const quiet = isReserved(x, y);
+      const y = spot.y + Math.sin(angle) * reach * 0.84;
+      const quiet = isReserved(x, y - pageTop);
       // 잘고 고른 알갱이로 둡니다. 큰 별이 섞이면 굴절이 지나가도 그 별만
       // 보이고 공간이 밀리는 느낌이 죽습니다.
       const radius = grade < 0.82 ? 0.24 + random() * 0.42 : 0.7 + random() * 0.5;
@@ -419,7 +436,7 @@
     // 고운 먼지가 촘촘한 편이 굴절이 지나갈 때 훨씬 잘 읽힙니다.
     // 별무리는 굽지 않고 매 프레임 그립니다. 좌표가 렌즈를 따라 움직여야
     // 해서 비트맵으로 굳혀둘 수 없습니다.
-    const clusterCount = nodeSpots.length ? 340 : 0;
+    const clusterCount = nodeSpots.length ? 170 : 0;
 
     lensSpots = nodeSpots.map((spot, index) => ({
       x: spot.x,
@@ -492,7 +509,7 @@
     for (let index = 0; index < lensSpots.length; index += 1) {
       const spot = lensSpots[index];
       const vx = px - spot.x;
-      const vy = py - spot.y;
+      const vy = py - (spot.y - scrolledBy());
       const distance = Math.hypot(vx, vy);
       if (distance < 0.001 || distance > 240) continue;
 
@@ -521,10 +538,10 @@
     return { x: px, y: py };
   };
 
-  const drawStar = (star, time) => {
+  const drawStar = (star, time, offset = 0) => {
     const pulse = reduceMotion ? 1 : 0.74 + Math.sin(time * star.speed + star.phase) * 0.26;
     const [r, g, b] = star.color;
-    const at = star.lensed ? lensPoint(star.x, star.y, time) : star;
+    const at = star.lensed ? lensPoint(star.x, star.y - offset, time) : { x: star.x, y: star.y - offset };
     context.beginPath();
     context.fillStyle = `rgba(${r}, ${g}, ${b}, ${star.alpha * pulse})`;
     context.arc(at.x, at.y, star.radius, 0, Math.PI * 2);
@@ -555,11 +572,11 @@
     context.closePath();
   };
 
-  const drawMorphStar = (star, time) => {
+  const drawMorphStar = (star, time, offset = 0) => {
     const growthWave = reduceMotion ? 0 : Math.sin(time * star.speed + star.phase);
     const scale = reduceMotion ? 1 : 0.72 + (growthWave + 1) * 0.39;
     const centerX = star.x + (reduceMotion ? 0 : Math.sin(time * 0.00012 + star.phase) * 1.8);
-    const centerY = star.y + (reduceMotion ? 0 : Math.cos(time * 0.0001 + star.phase) * 1.4);
+    const centerY = star.y - offset + (reduceMotion ? 0 : Math.cos(time * 0.0001 + star.phase) * 1.4);
     const [r, g, b] = star.color;
     const radii = star.lobes.map((lobe, index) => {
       const distortion = reduceMotion
@@ -584,14 +601,19 @@
     context.fill();
   };
 
+  let lastFrameTime = 0;
+
   const draw = (time = 0) => {
+    lastFrameTime = time;
     context.clearRect(0, 0, width, height);
+    const drift = scrolledBy() * skyDrift;
     if (staticLayer && staticLayer.width > 0 && staticLayer.height > 0) {
-      context.drawImage(staticLayer, 0, 0, width, height);
+      context.drawImage(staticLayer, 0, -drift, width, fieldHeight);
     }
-    liveStars.forEach((star) => drawStar(star, time));
-    clusterStars.forEach((star) => drawStar(star, time));
-    morphStars.forEach((star) => drawMorphStar(star, time));
+    liveStars.forEach((star) => drawStar(star, time, drift));
+    // 별무리와 렌즈는 노드에 붙어 있으므로 스크롤을 그대로 따라갑니다
+    clusterStars.forEach((star) => drawStar(star, time, scrolledBy()));
+    morphStars.forEach((star) => drawMorphStar(star, time, drift));
 
     if (!reduceMotion) {
       animationFrame = window.requestAnimationFrame(draw);
@@ -724,4 +746,10 @@
   createField();
   draw();
   window.addEventListener("resize", resize, { passive: true });
+  // 움직임을 줄인 설정에서는 프레임 루프가 돌지 않으므로, 스크롤할 때만
+  // 한 장 다시 그려서 하늘이 따라오게 합니다. 평소에는 루프가 이미 매
+  // 프레임 그리고 있어 여기서 또 그릴 필요가 없습니다.
+  if (reduceMotion) {
+    window.addEventListener("scroll", () => draw(lastFrameTime), { passive: true });
+  }
 })();
