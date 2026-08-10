@@ -339,8 +339,8 @@
     });
   };
 
-  const createField = () => {
-    seed = pageSeed;
+  // 캔버스만 창에 맞춥니다. 별은 건드리지 않습니다.
+  const fitCanvas = () => {
     ratio = Math.min(window.devicePixelRatio || 1, 2);
     // 창이 아직 안 펼쳐졌을 때 0 이 넘어오면 아래 drawImage 가 예외를 던지고,
     // 그러면 스크립트가 통째로 죽어서 리사이즈 리스너조차 안 붙습니다.
@@ -351,6 +351,11 @@
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
+  };
+
+  const createField = () => {
+    seed = pageSeed;
+    fitCanvas();
 
     // 스크롤이 끝까지 갔을 때도 하늘이 비지 않도록, 화면 높이에 흘러갈
     // 거리를 더해 그만큼 길게 만듭니다.
@@ -367,26 +372,40 @@
     const bakedCount = Math.max(380, Math.min(1300, Math.round((width * fieldHeight) / 1800)));
     const liveCount = Math.max(35, Math.min(75, Math.round(bakedCount / 12)));
 
+    // 별빛은 대부분 옅은 종이색과 하늘색입니다. 짙은 주홍은 아주 드물게만
+    // 섞습니다. 고르게 뽑으면 다섯 색 중 둘이 강한 색이라 한 화면이
+    // 알록달록해집니다.
+    const pickStarColor = () => {
+      const roll = random();
+      if (roll < 0.54) return colors[0];
+      if (roll < 0.82) return colors[4];
+      if (roll < 0.94) return colors[3];
+      return colors[roll < 0.975 ? 1 : 2];
+    };
+
     const makeStar = (twinkles) => {
       const grade = random();
       const point = findOpenPoint(4, random() < 0.52);
       const isHeaderStar = isReserved(point.x, point.y);
+      // 큰 별은 백 개 중 한 개꼴이고 그 한 개도 예전의 절반 크기입니다.
+      // 한 화면에 눈에 띄는 별이 대여섯 개만 남습니다.
       const radius =
-        grade < 0.74
-          ? 0.2 + random() * 0.55
-          : grade < 0.96
-            ? 0.7 + random() * 0.9
-            : 1.5 + random() * 1.5;
+        grade < 0.86
+          ? 0.2 + random() * 0.5
+          : grade < 0.988
+            ? 0.6 + random() * 0.62
+            : 1.15 + random() * 0.72;
       const alpha = (twinkles ? 0.28 : 0.12) + random() * 0.62;
 
       return {
         ...point,
         radius: radius * (isHeaderStar ? 0.62 : 1),
         alpha: alpha * (isHeaderStar ? 0.28 : 1),
-        halo: !isHeaderStar && grade > 0.9,
+        // 번지는 빛은 그 큰 별에만 답니다. 예전에는 열에 하나가 번졌습니다.
+        halo: !isHeaderStar && grade > 0.988,
         phase: random() * Math.PI * 2,
         speed: 0.00035 + random() * 0.0011,
-        color: colors[Math.floor(random() * colors.length)],
+        color: pickStarColor(),
       };
     };
 
@@ -461,16 +480,21 @@
 
     bakeStarLayer(Array.from({ length: bakedCount }, () => makeStar(false)));
 
-    morphStars = Array.from({ length: 7 }, (_, index) => {
+    // 크게 번지는 덩어리 별은 이 하늘에서 가장 눈에 띄는 것이라 수와 크기를
+    // 함께 줄였습니다. 별밭 길이에 맞춰 서넛만 두면 한 화면에 한둘이
+    // 들어옵니다.
+    const morphCount = Math.max(3, Math.min(4, Math.round((width * fieldHeight) / 620000)));
+
+    morphStars = Array.from({ length: morphCount }, (_, index) => {
       const point = findOpenPoint(82, false, 0);
       const lobeCount = 6 + Math.floor(random() * 3);
       return {
         x: point.x,
         y: point.y,
-        baseRadius: 2.8 + random() * 4.2,
+        baseRadius: 1.9 + random() * 2.1,
         phase: random() * Math.PI * 2,
         speed: 0.0003 + random() * 0.00024,
-        color: skies[activeSky].blobs[index < 5 ? 0 : index === 5 ? 1 : 2],
+        color: skies[activeSky].blobs[index === 1 ? 1 : index === 3 ? 2 : 0],
         lobes: Array.from({ length: lobeCount }, () => ({
           amplitude: 0.12 + random() * 0.24,
           phase: random() * Math.PI * 2,
@@ -490,12 +514,16 @@
     if (phase < 0.72) return null;
 
     const run = (phase - 0.72) / 0.28;
+    // 태어나는 순간과 사라지는 순간에 세기가 0 이어야 합니다. 예전에는 다
+    // 자란 세기로 갑자기 나타났다가 반쯤 살아 있는 채로 툭 끊겨서, 노드
+    // 둘레 별들이 그때마다 뾰족하게 튀었습니다.
+    const envelope = Math.sin(Math.PI * run);
     return {
       radius: 12 + run * 118,
       band: 26 + run * 20,
       // 멀어질수록 힘이 빠집니다. 파면 마루에서 최대 16px 안팎으로 밀리는데,
       // 별 알갱이가 1px 남짓이라 이 정도는 되어야 밀린 게 보입니다.
-      amp: 38 * (1 - run * 0.7),
+      amp: 40 * envelope * (1 - run * 0.45),
       // 사중극이 천천히 돌아, 늘어나는 축과 눌리는 축이 뒤바뀝니다
       twist: run * Math.PI,
     };
@@ -574,7 +602,9 @@
 
   const drawMorphStar = (star, time, offset = 0) => {
     const growthWave = reduceMotion ? 0 : Math.sin(time * star.speed + star.phase);
-    const scale = reduceMotion ? 1 : 0.72 + (growthWave + 1) * 0.39;
+    // 두 배로 부풀었다 줄어들면 그 자체가 눈에 걸립니다. 숨 쉬는 정도로만
+    // 둡니다.
+    const scale = reduceMotion ? 1 : 0.9 + (growthWave + 1) * 0.1;
     const centerX = star.x + (reduceMotion ? 0 : Math.sin(time * 0.00012 + star.phase) * 1.8);
     const centerY = star.y - offset + (reduceMotion ? 0 : Math.cos(time * 0.0001 + star.phase) * 1.4);
     const [r, g, b] = star.color;
@@ -584,8 +614,10 @@
         : 1 + Math.sin(time * (star.speed * 1.7) + lobe.phase + index) * lobe.amplitude;
       return star.baseRadius * scale * distortion;
     });
-    const glowRadius = star.baseRadius * scale * 8.5 + 14;
-    const glowStrength = Math.min(0.42, 0.25 + star.baseRadius * 0.024);
+    // 번지는 빛도 좁히고 옅게. 알갱이보다 빛무리가 먼저 눈에 들어오면
+    // 그 별만 보입니다.
+    const glowRadius = star.baseRadius * scale * 7 + 11;
+    const glowStrength = Math.min(0.26, 0.15 + star.baseRadius * 0.02);
 
     const glow = context.createRadialGradient(centerX, centerY, 0, centerX, centerY, glowRadius);
     glow.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${glowStrength})`);
@@ -597,7 +629,7 @@
     context.fill();
 
     createBlobPath(centerX, centerY, radii);
-    context.fillStyle = `rgba(${r}, ${g}, ${b}, 0.9)`;
+    context.fillStyle = `rgba(${r}, ${g}, ${b}, 0.72)`;
     context.fill();
   };
 
@@ -620,10 +652,28 @@
     }
   };
 
-  const resize = () => {
+  const rebuild = () => {
     window.cancelAnimationFrame(animationFrame);
     createField();
     draw();
+  };
+
+  // 주소창이 접히고 펴질 때마다 창 높이가 바뀝니다. 그때마다 별을 다시
+  // 뽑으면 화면을 위로 밀었을 뿐인데 하늘이 통째로 갈아끼워집니다. 폭이
+  // 그대로이고 높이만 주소창만큼 달라졌으면 캔버스만 늘리고 별은 있던
+  // 자리에 그대로 둡니다. 창을 진짜로 바꿨을 때만 다시 뽑습니다.
+  const resize = () => {
+    const sameWidth = window.innerWidth === width;
+    const heightShift = Math.abs(window.innerHeight - height);
+
+    if (staticLayer && sameWidth && heightShift < 200) {
+      window.cancelAnimationFrame(animationFrame);
+      fitCanvas();
+      draw();
+      return;
+    }
+
+    rebuild();
   };
 
   const enableTouchCardPreviews = () => {
@@ -730,7 +780,8 @@
     });
 
     networkFields.forEach((render) => render());
-    resize();
+    // 하늘을 갈아끼울 때는 색이 바뀌었으니 별도 다시 뽑아야 합니다.
+    rebuild();
   };
 
   const enableSkyNodes = () => {
