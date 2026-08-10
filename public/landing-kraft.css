@@ -1523,12 +1523,28 @@ html[lang="en"] .about-copy {
     margin-top: 18px;
   }
 
-  /* 손 화면에서는 글자를 세 호 줄입니다. 로고 아래 줄이 조용해지고,
-     그만큼 별밭을 EN 에서 더 떨어뜨릴 자리도 생깁니다. 링크와 KR EN 은
-     한 줄에 나란히 서므로 크기를 따로 두지 않습니다. */
+  /* 손 화면에서는 글자를 줄입니다. 로고 아래 줄이 조용해지고, 그만큼
+     별밭을 EN 에서 더 떨어뜨릴 자리도 생깁니다. 링크와 KR EN 은 한 줄에
+     나란히 서므로 크기를 따로 두지 않습니다. */
   .header-links,
   .language-switch {
-    font-size: 8.5px;
+    font-size: 10px;
+  }
+
+  /* 글자가 작아진 만큼 누르는 자리를 따로 넓힙니다. 글자에 여백을 직접
+     주면 헤더 줄이 통째로 두꺼워지고 그 옆 별밭이 밀리므로, 보이지 않는
+     상자를 글자 위에 덮어 씌웁니다. 좌우는 6px 까지만 벌립니다. 링크
+     사이가 12px 이라, 그보다 넓히면 옆 링크의 자리를 잡아먹습니다. */
+  .header-links a,
+  .language-switch a {
+    position: relative;
+  }
+
+  .header-links a::after,
+  .language-switch a::after {
+    content: "";
+    position: absolute;
+    inset: -14px -6px;
   }
 
   .header-links {
@@ -1623,8 +1639,10 @@ html[lang="en"] .about-copy {
     font-size: clamp(9.5px, 2.67vw, 11px);
   }
 
+  /* 주소는 본문에 딸린 줄이라 본문보다 작아야 합니다. 한글 본문이 10px
+     이므로 그 아래로 내려둡니다. */
   .studio-address {
-    font-size: 11px;
+    font-size: 9px;
   }
 
   .site-emblem {
