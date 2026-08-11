@@ -1684,9 +1684,12 @@ html[lang="en"] .about-copy {
     font-size: 10px;
   }
 
+  /* 둘레 글자를 줄인 만큼 같이 줄입니다. 64px 은 본문이 13px 이던 때의
+     크기라, 10px 본문 옆에서는 혼자 커 보입니다. 그때의 비율(약 다섯 배)
+     을 그대로 되살린 값입니다. */
   .site-emblem {
     position: static;
-    width: 64px;
+    width: 48px;
     margin: 0 auto;
     transform: none;
     opacity: 0.82;
