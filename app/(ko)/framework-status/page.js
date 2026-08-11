@@ -1,4 +1,5 @@
 export const metadata = {
+  title: "Next.js 실행 상태",
   robots: {
     index: false,
     follow: false,
