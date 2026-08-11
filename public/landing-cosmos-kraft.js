@@ -678,9 +678,28 @@
 
   const enableTouchCardPreviews = () => {
     const cards = [...document.querySelectorAll(".menu-card")];
+    // 소개 칸도 카드와 한 식구입니다. 손끝이 닿으면 엠블럼이 떠오르고,
+    // 다른 곳을 누르면 같이 가라앉습니다. 다만 카드에 걸어둔 길게 누르기
+    // 막기까지 물려주지는 않습니다. 여기 글은 눌러서 고를 수 있어야 하고,
+    // 링크가 아니라 눌러도 어디로 가지 않습니다.
+    const about = document.querySelector(".about");
+    const previewables = about ? [...cards, about] : cards;
     const clearPreviews = () => {
-      cards.forEach((card) => card.classList.remove("is-touch-preview"));
+      previewables.forEach((node) => node.classList.remove("is-touch-preview"));
     };
+
+    if (about) {
+      about.addEventListener(
+        "pointerdown",
+        (event) => {
+          if (event.pointerType === "mouse") return;
+
+          clearPreviews();
+          about.classList.add("is-touch-preview");
+        },
+        { passive: true },
+      );
+    }
 
     cards.forEach((card) => {
       let longPressTimer = 0;
@@ -753,7 +772,7 @@
     document.addEventListener(
       "pointerdown",
       (event) => {
-        if (!event.target.closest(".menu-card")) {
+        if (!event.target.closest(".menu-card, .about")) {
           clearPreviews();
         }
       },

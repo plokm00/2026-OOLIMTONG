@@ -1690,15 +1690,10 @@ html[lang="en"] .about-copy {
   /* 둘레 글자를 줄인 만큼 같이 줄입니다. 64px 은 본문이 13px 이던 때의
      크기라, 10px 본문 옆에서는 혼자 커 보입니다. 그때의 비율(약 다섯 배)
      을 그대로 되살린 값입니다. */
-  /* 넓은 화면에서는 두 칸 사이에 끼어 가운데가 제자리지만, 한 줄로
-     쌓이는 손 화면에서는 가운데에 뜬 작은 그림이 갈 곳 없어 보입니다.
-     오른쪽 끝에 붙이면 로고 아래 서명과 같은 세로줄에 서서, 글 끝에
-     찍은 도장처럼 읽힙니다. */
   .site-emblem {
     position: static;
     width: 48px;
-    justify-self: end;
-    margin: 0;
+    margin: 0 auto;
     transform: none;
     opacity: 0.82;
   }
@@ -1726,6 +1721,18 @@ html[lang="en"] .about-copy {
 
   .menu-card.children.is-touch-preview .children-cover {
     opacity: 0.88;
+  }
+
+  /* 엠블럼도 카드처럼 손끝에 반응합니다. 마우스가 있는 화면에서는 소개
+     칸에 커서가 닿을 때 떠오르는데, 손 화면에서는 늘 떠 있었습니다.
+     여기서도 눌러야 보이게 맞춥니다. */
+  .site-emblem {
+    opacity: 0;
+    transition: opacity 480ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .about.is-touch-preview .site-emblem {
+    opacity: 0.82;
   }
 }
 
