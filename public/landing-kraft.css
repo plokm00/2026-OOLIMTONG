@@ -1481,8 +1481,11 @@ html[lang="en"] .about-copy {
      건드리지 않습니다. 위쪽 여백을 줄이면 아래 헤더 줄까지 딸려 올라
      갑니다. */
   .brand-credit {
-    font-size: 9px;
-    transform: translateY(-4px);
+    font-size: 8px;
+    /* 9px 시절의 줄 높이(9 × 1.4)를 그대로 붙들어 둡니다. 글자만 줄이면
+       줄 높이가 1.4px 얕아지면서 아래 헤더 줄이 딸려 올라갑니다. */
+    line-height: 12.6px;
+    transform: translateY(-5px);
   }
 
   /* 띠가 아니라 KR EN 오른쪽에 붙는 한 뼘짜리 밤하늘입니다. 셋이 흩어져
@@ -1687,10 +1690,15 @@ html[lang="en"] .about-copy {
   /* 둘레 글자를 줄인 만큼 같이 줄입니다. 64px 은 본문이 13px 이던 때의
      크기라, 10px 본문 옆에서는 혼자 커 보입니다. 그때의 비율(약 다섯 배)
      을 그대로 되살린 값입니다. */
+  /* 넓은 화면에서는 두 칸 사이에 끼어 가운데가 제자리지만, 한 줄로
+     쌓이는 손 화면에서는 가운데에 뜬 작은 그림이 갈 곳 없어 보입니다.
+     오른쪽 끝에 붙이면 로고 아래 서명과 같은 세로줄에 서서, 글 끝에
+     찍은 도장처럼 읽힙니다. */
   .site-emblem {
     position: static;
     width: 48px;
-    margin: 0 auto;
+    justify-self: end;
+    margin: 0;
     transform: none;
     opacity: 0.82;
   }
