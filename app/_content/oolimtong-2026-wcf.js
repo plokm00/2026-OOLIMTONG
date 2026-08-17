@@ -1,16 +1,16 @@
 // Generated from oolimtong_2026_wcf.html during the Next.js route migration.
 const pageData = {
   "metadata": {
-    "title": "울림통-변주 2026 — 시민작가 OT",
+    "title": "울림통-변주 2026",
     "openGraph": {
       "type": "website",
-      "title": "2026 울림통-변주 시민작가 프로젝트",
-      "description": "시민작가 17명과 김아영 작가가 함께하는 협력창작 프로젝트"
+      "title": "울림통-변주 2026",
+      "description": "시민작가와 김아영 작가가 함께 만드는 울림통-변주 프로젝트"
     },
     "twitter": {
       "card": "summary",
-      "title": "2026 울림통-변주 시민작가 프로젝트",
-      "description": "시민작가 17명과 김아영 작가가 함께하는 협력창작 프로젝트"
+      "title": "울림통-변주 2026",
+      "description": "시민작가와 김아영 작가가 함께 만드는 울림통-변주 프로젝트"
     }
   },
   "styles": [

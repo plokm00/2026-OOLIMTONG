@@ -15,6 +15,7 @@ const nextConfig = {
         "oolimtong_2026_ipo",
         "oolimtong_2026_wcf",
         "oolimtong_2026_wcf_assistant",
+        "oolimtong_2026_wcf_artists",
         "oolimtong_2026_wcf_book",
         "oolimtong_2026_wcf_curriculum",
         "oolimtong_2026_wcf_record",
