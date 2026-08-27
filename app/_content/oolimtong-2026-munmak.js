@@ -155,10 +155,10 @@ const styles = `
   .cover-meta dd small { display: block; color: var(--text-dim); font-size: 13px; }
 
   /* ── 포스터 썸네일 ── */
-  /* 포스터를 네비게이션 아래 가로 구분선에서 70px 내려 앉힌다.
-     커버 섹션 위쪽 여백(92px)에서 70px를 남기고 끌어올린다. */
+  /* 포스터를 네비게이션 아래 가로 구분선에서 88px 내려 앉힌다.
+     커버 섹션 위쪽 여백(92px)에서 88px를 남기고 끌어올린다. */
   .poster-col {
-    margin-top: -22px;
+    margin-top: -4px;
     padding-top: 0;
   }
 
