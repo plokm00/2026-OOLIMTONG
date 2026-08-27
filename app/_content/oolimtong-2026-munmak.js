@@ -548,7 +548,7 @@ const body = `
       <div class="booking-summary-row">
         <p class="booking-summary" id="booking-summary"></p>
         <form class="admin-toggle" id="detail-form" autocomplete="off">
-          <span class="admin-toggle-label">관리자 상세보기 &lt;</span>
+          <span class="admin-toggle-label">관리자 상세보기</span>
           <input type="password" id="detail-pw" inputmode="numeric" maxlength="8" placeholder="••••" aria-label="비밀번호">
           <button type="submit">확인</button>
           <button type="button" class="ghost" id="detail-hide" style="display:none;" onclick="hideDetails()">가리기</button>
