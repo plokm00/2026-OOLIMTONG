@@ -260,25 +260,6 @@ const styles = `
     .about-card.wide { grid-column: span 2; }
   }
 
-  .session-strip {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 28px;
-  }
-  .session-chip {
-    border: 1px solid var(--accent);
-    background: var(--accent);
-    color: var(--white);
-    border-radius: 999px;
-    padding: 8px 20px;
-    font-family: 'IBM Plex Sans KR', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-  }
-  .session-chip small { font-weight: 400; opacity: 0.85; margin-left: 4px; }
-
   /* ── 예약 현황 ── */
   .booking-layout {
     display: grid;
@@ -542,9 +523,7 @@ const body = `
 </section>
 
 <!-- ── 프로그램 소개 ── -->
-<section id="about">
-  <p class="section-label">Program</p>
-  <h2 class="section-title">프로그램 소개</h2>
+<section id="about" style="border-bottom:none;">
   <div class="about-grid">
     <div class="about-card">
       <h3>흙으로 잇다</h3>
@@ -562,14 +541,6 @@ const body = `
       <h3>참여 안내</h3>
       <p>참가비 없이 지역주민 누구나 참여할 수 있습니다. 사전 신청 없이 현장에서 바로 함께하셔도 되고, 미리 신청하시면 혼잡할 때 우선 참여하실 수 있습니다.</p>
     </div>
-  </div>
-
-  <div class="session-strip">
-    <span class="session-chip">9. 5. <small>토</small></span>
-    <span class="session-chip">9. 12. <small>토</small></span>
-    <span class="session-chip">9. 19. <small>토</small></span>
-    <span class="session-chip" style="background:none;color:var(--accent2);border-color:var(--line);">오전 10시 ~ 오후 4시</span>
-    <span class="session-chip" style="background:none;color:var(--accent2);border-color:var(--line);">참가비 무료</span>
   </div>
 </section>
 
