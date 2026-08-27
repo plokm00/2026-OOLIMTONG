@@ -155,10 +155,10 @@ const styles = `
   .cover-meta dd small { display: block; color: var(--text-dim); font-size: 13px; }
 
   /* ── 포스터 썸네일 ── */
-  /* 포스터 윗변을 네비게이션 아래 가로 구분선에 맞춘다.
-     커버 섹션의 위쪽 여백(92px)만큼 끌어올리면 구분선에 딱 붙는다. */
+  /* 포스터를 네비게이션 아래 가로 구분선에서 30px 내려 앉힌다.
+     커버 섹션 위쪽 여백(92px)에서 30px를 남기고 끌어올린다. */
   .poster-col {
-    margin-top: -92px;
+    margin-top: -62px;
     padding-top: 0;
   }
 
