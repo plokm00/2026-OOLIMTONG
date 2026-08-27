@@ -256,7 +256,7 @@ const styles = `
   }
   .about-card p { font-size: 14px; color: var(--text-dim); line-height: 1.85; }
 
-  /* ── 예약 현황 ── */
+  /* ── 사전신청 현황 ── */
   .booking-layout {
     display: grid;
     grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
@@ -467,7 +467,7 @@ const body = `
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="nav-links">
-    <a href="#booking" onclick="closeNav()">예약 현황</a>
+    <a href="#booking" onclick="closeNav()">사전신청 현황</a>
     <a href="/oolimtong_archive" class="nav-cta" onclick="closeNav()">울림통 아카이브 ↗</a>
   </div>
 </nav>
@@ -528,10 +528,10 @@ const body = `
   </div>
 </section>
 
-<!-- ── 예약 현황 ── -->
+<!-- ── 사전신청 현황 ── -->
 <section id="booking" style="border-bottom:none;">
   <p class="section-label">Reservations</p>
-  <h2 class="section-title">예약 현황</h2>
+  <h2 class="section-title">사전신청 현황</h2>
 
   <div class="booking-layout">
     <div>
@@ -561,7 +561,7 @@ const body = `
           <tbody id="booking-body"></tbody>
         </table>
       </div>
-      <p class="booking-empty" id="booking-empty" style="display:none;">해당 날짜에는 아직 예약이 없습니다.</p>
+      <p class="booking-empty" id="booking-empty" style="display:none;">해당 날짜에는 아직 사전신청이 없습니다.</p>
     </div>
   </div>
 </section>
@@ -666,7 +666,7 @@ const script = `
       var count = rows.filter(function (r) { return dayOf(r.date) === d; }).length;
       var cls = "cal-cell event" + (selectedDay === d ? " selected" : "");
       html += '<div class="' + cls + '" data-day="' + d + '" role="button" tabindex="0">' + d +
-        '<span class="cal-dot">' + (count ? count + "건" : "예약 0") + "</span></div>";
+        '<span class="cal-dot">' + (count ? count + "건" : "사전신청 0") + "</span></div>";
     }
     grid.innerHTML = html;
 
@@ -715,7 +715,7 @@ const script = `
       var people = known.reduce(function (a, r) { return a + r.total; }, 0);
       var undecided = list.length - known.length;
       var scope = selectedDay == null ? "전체" : "9월 " + selectedDay + "일";
-      summary.innerHTML = scope + " · 예약 <strong>" + list.length + "건</strong> · 인원 <strong>" + people + "명</strong>" +
+      summary.innerHTML = scope + " · 사전신청 <strong>" + list.length + "건</strong> · 인원 <strong>" + people + "명</strong>" +
         (undecided ? " <span>(인원 미정 " + undecided + "건 별도)</span>" : "");
     }
   }
@@ -774,7 +774,7 @@ const script = `
       var hide = document.getElementById("detail-hide");
       if (pw && pw.value.trim() === PW) {
         showDetails = true;
-        if (msg) msg.textContent = "전체 예약 정보를 표시합니다.";
+        if (msg) msg.textContent = "전체 사전신청 정보를 표시합니다.";
         if (hide) hide.style.display = "inline-block";
         renderTable();
       } else {
