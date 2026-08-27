@@ -149,7 +149,7 @@ export default function ArtistNotesMainLink() {
           className="nav-manual-btn"
           style={{ fontSize: 12, padding: "8px 20px" }}
         >
-          시민작가 보기 ↗
+          시민작가 파일 보기 ↗
         </a>
       </div>
     </section>,
