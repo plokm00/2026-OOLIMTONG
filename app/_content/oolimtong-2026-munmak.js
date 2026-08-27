@@ -443,91 +443,6 @@ const styles = `
   .detail-form button.ghost:hover { background: var(--bg3); color: var(--accent2); }
   .detail-msg { font-size: 13px; color: var(--accent2); margin-top: 10px; min-height: 20px; }
 
-  /* ── 신청 안내 ── */
-  .apply-lead {
-    max-width: 720px;
-    font-size: clamp(16px, 1.5vw, 19px);
-    line-height: 1.9;
-    margin-bottom: 34px;
-  }
-  .apply-lead strong { color: var(--accent2); font-weight: 600; }
-
-  .apply-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 36px;
-    align-items: start;
-  }
-  .apply-block h3 {
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--accent2);
-    margin-bottom: 14px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--line);
-  }
-  .perk-list { list-style: none; }
-  .perk-list li {
-    position: relative;
-    padding-left: 26px;
-    margin-bottom: 14px;
-    font-size: 15px;
-    line-height: 1.85;
-  }
-  .perk-list li:last-child { margin-bottom: 0; }
-  .perk-list li::before {
-    content: "";
-    position: absolute;
-    left: 4px;
-    top: 11px;
-    width: 8px;
-    height: 8px;
-    background: var(--accent);
-    border-radius: 50%;
-  }
-  .perk-list li small { display: block; color: var(--text-dim); font-size: 13px; }
-
-  .form-card {
-    border: 1px solid var(--line);
-    background: var(--bg2);
-    border-radius: 3px;
-    padding: 22px;
-  }
-  .form-card pre {
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 14px;
-    line-height: 2.1;
-    white-space: pre-wrap;
-    color: var(--text);
-    background: var(--white);
-    border: 1px solid var(--line);
-    border-radius: 2px;
-    padding: 16px 18px;
-  }
-  .form-card pre span { color: var(--text-dim); }
-  .form-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 14px;
-    flex-wrap: wrap;
-  }
-  .copy-btn {
-    font-family: 'IBM Plex Sans KR', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 9px 18px;
-    border: 1px solid var(--accent);
-    background: var(--accent);
-    color: var(--white);
-    border-radius: 2px;
-    cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
-  }
-  .copy-btn:hover { background: var(--accent2); border-color: var(--accent2); }
-  .copy-msg { font-size: 13px; color: var(--accent2); }
-
   /* ── 문의 ── */
   .contact-row {
     display: flex;
@@ -568,7 +483,6 @@ const styles = `
   @media (max-width: 900px) {
     .cover-grid { grid-template-columns: 1fr; gap: 36px; }
     .booking-layout { grid-template-columns: 1fr; gap: 30px; }
-    .apply-layout { grid-template-columns: 1fr; gap: 30px; }
     .calendar { max-width: 400px; }
   }
 
@@ -599,7 +513,6 @@ const body = `
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="nav-links">
-    <a href="#apply" onclick="closeNav()">신청 안내</a>
     <a href="#about" onclick="closeNav()">프로그램</a>
     <a href="#poster" onclick="closeNav()">포스터</a>
     <a href="#booking" onclick="closeNav()">예약 현황</a>
@@ -628,8 +541,21 @@ const body = `
         <dt>참가비</dt>
         <dd>무료<small>사전 신청 없이 현장 참여도 가능합니다</small></dd>
         <dt>신청·문의</dt>
-        <dd>인스타그램 DM<small>@NINNIK_KRAFT</small></dd>
+        <dd>
+          인스타그램 <a href="https://instagram.com/ninnik_kraft" target="_blank" rel="noopener noreferrer" style="color:var(--accent2);">@NINNIK_KRAFT</a> DM
+          <small>
+            성함·연락처·참여 인원·방문 예정 시간을 보내주시면 사전 신청 완료입니다.
+            신청하시면 혼잡할 때 우선 안내해 드리고 작업 사진도 보내드려요.
+            흙 묻어도 되는 편한 옷차림과 모자·물 등을 챙겨오시면 좋습니다.
+          </small>
+        </dd>
       </dl>
+
+      <div class="contact-row" style="margin-top:28px;">
+        <a class="contact-btn primary" href="https://instagram.com/ninnik_kraft" target="_blank" rel="noopener noreferrer">@NINNIK_KRAFT DM ↗</a>
+        <a class="contact-btn" href="https://map.naver.com/p/search/동화마을수목원" target="_blank" rel="noopener noreferrer">동화마을수목원 길찾기 ↗</a>
+        <a class="contact-btn" href="/oolimtong_manual">울림통 매뉴얼 ↗</a>
+      </div>
     </div>
 
     <div id="poster" class="poster-col" style="scroll-margin-top:80px;">
@@ -639,63 +565,6 @@ const body = `
       <p class="poster-caption">포스터를 누르면 크게 볼 수 있습니다</p>
       <div class="poster-fallback">포스터 준비 중</div>
     </div>
-  </div>
-</section>
-
-<!-- ── 신청 안내 ── -->
-<section id="apply">
-  <p class="section-label">Apply</p>
-  <h2 class="section-title">신청 안내</h2>
-
-  <p class="apply-lead">
-    <strong>참가비 없이 누구나 자유롭게 현장에서 참여할 수 있는 열린 워크숍</strong>입니다.<br>
-    다만 사전 신청을 해주시면 아래 두 가지를 챙겨드립니다.
-  </p>
-
-  <div class="apply-layout">
-    <div class="apply-block">
-      <h3>사전 신청 혜택</h3>
-      <ul class="perk-list">
-        <li>혼잡할 때 우선 참여<small>현장에 사람이 몰리면 신청하신 분들부터 안내해 드립니다.</small></li>
-        <li>작업 사진 전송<small>흙을 만지시는 모습을 사진으로 담아, 행사가 끝난 뒤 보내드립니다.</small></li>
-      </ul>
-
-      <h3 style="margin-top:32px;">준비하시면 좋아요</h3>
-      <ul class="perk-list">
-        <li>흙이 묻어도 괜찮은 편안한 복장</li>
-        <li>가을 낮볕을 피할 개인 물품<small>모자, 음료 등</small></li>
-        <li>어린이는 보호자와 함께<small>보호자분도 같이 흙을 만지시면 더 즐겁습니다.</small></li>
-      </ul>
-    </div>
-
-    <div class="apply-block">
-      <h3>사전 신청 방법</h3>
-      <p style="font-size:14px;color:var(--text-dim);line-height:1.85;margin-bottom:16px;">
-        인스타그램 <a href="https://instagram.com/ninnik_kraft" target="_blank" rel="noopener noreferrer" style="color:var(--accent2);">@NINNIK_KRAFT</a>
-        DM으로 아래 양식을 작성해 보내주시면 사전 신청이 완료됩니다.
-      </p>
-      <div class="form-card">
-        <pre id="apply-form-text">예약자 성함:
-연락처:
-참여 인원: 총 0명 <span>(성인 0명 / 아동·청소년 0명)</span>
-방문 예정 시간: <span>(운영시간 10:00 ~ 16:00 중 기재)</span></pre>
-        <div class="form-actions">
-          <button class="copy-btn" type="button" onclick="copyApplyForm()">양식 복사하기</button>
-          <span class="copy-msg" id="copy-msg"></span>
-        </div>
-      </div>
-      <p style="font-size:13px;color:var(--text-dim);margin-top:14px;line-height:1.85;">
-        워크숍은 9월 5일·12일·19일 토요일 세 번, 각 날짜 오전 10시부터 오후 4시까지 열립니다.<br>
-        원하시는 날짜와 방문 시간을 함께 적어 주세요.
-      </p>
-    </div>
-  </div>
-
-  <div class="contact-row" style="margin-top:40px;">
-    <a class="contact-btn primary" href="https://instagram.com/ninnik_kraft" target="_blank" rel="noopener noreferrer">@NINNIK_KRAFT DM ↗</a>
-    <a class="contact-btn" href="https://map.naver.com/p/search/동화마을수목원" target="_blank" rel="noopener noreferrer">동화마을수목원 길찾기 ↗</a>
-    <a class="contact-btn" href="/oolimtong_archive">울림통 아카이브 ↗</a>
-    <a class="contact-btn" href="/oolimtong_manual">울림통 매뉴얼 ↗</a>
   </div>
 </section>
 
@@ -950,38 +819,6 @@ const script = `
     var wrap = document.getElementById("poster");
     if (wrap) wrap.classList.add("poster-missing");
   };
-  window.copyApplyForm = function () {
-    var text = [
-      "예약자 성함:",
-      "연락처:",
-      "참여 인원: 총 0명 (성인 0명 / 아동·청소년 0명)",
-      "방문 예정 시간: (운영시간 10:00 ~ 16:00 중 기재)"
-    ].join("\\n");
-    var msg = document.getElementById("copy-msg");
-
-    function done(ok) {
-      if (!msg) return;
-      msg.textContent = ok ? "복사했습니다. DM에 붙여넣어 주세요." : "복사에 실패했습니다. 직접 선택해 복사해 주세요.";
-      setTimeout(function () { msg.textContent = ""; }, 4000);
-    }
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
-      return;
-    }
-
-    var ta = document.createElement("textarea");
-    ta.value = text;
-    ta.style.position = "fixed";
-    ta.style.opacity = "0";
-    document.body.appendChild(ta);
-    ta.select();
-    var ok = false;
-    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
-    document.body.removeChild(ta);
-    done(ok);
-  };
-
   window.hideDetails = function () {
     showDetails = false;
     var hide = document.getElementById("detail-hide");
