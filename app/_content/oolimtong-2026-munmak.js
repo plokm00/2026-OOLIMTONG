@@ -237,11 +237,11 @@ const styles = `
   /* ── 소개 ── */
   .about-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: 1fr;
     gap: 20px;
   }
   .about-card {
-    max-width: 480px;
+    max-width: 960px;
     background: var(--bg2);
     border: 1px solid var(--line);
     border-radius: 3px;
@@ -254,10 +254,6 @@ const styles = `
     color: var(--accent2);
   }
   .about-card p { font-size: 14px; color: var(--text-dim); line-height: 1.85; }
-
-  @media (min-width: 721px) {
-    .about-grid { grid-template-columns: repeat(2, 1fr); }
-  }
 
   /* ── 예약 현황 ── */
   .booking-layout {
