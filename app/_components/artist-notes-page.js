@@ -113,8 +113,7 @@ export default function ArtistNotesPage() {
         <p className="artist-notes-kicker">ARTIST NOTES</p>
         <h1 className="artist-notes-title">작가 노트</h1>
         <p className="artist-notes-summary">
-          참여 작가들의 리뷰 인터뷰와 각자의 작업계획을 담습니다. 지난 회차를 정리하는 기록이 아니라,
-          울림통-변주 이후 각자의 자리에서 이어질 작업을 향한 노트입니다.
+          참여 작가들의 인터뷰와 울림통-변주를 통해 선보일 전시 계획을 담은 노트입니다.
         </p>
       </header>
 
