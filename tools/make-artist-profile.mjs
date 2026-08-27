@@ -2,6 +2,8 @@
 // 사용법: node tools/make-artist-profile.mjs <원본이미지> <작가id> [--cx 0.5] [--cy 0.35] [--h 0.5]
 //   cx, cy : 얼굴 중심 위치(이미지 기준 0~1 비율)
 //   h      : 잘라낼 세로 길이(이미지 높이 기준 비율). 가로는 4:5 비율로 자동 계산.
+// 보정(모두 1이 원본 그대로, 생략 가능):
+//   --contrast 1.15 --saturation 1.15 --brightness 1.03 --sharpen 1
 // 결과: public/artist-profiles/<작가id>.webp (300x375, 2x 해상도)
 
 import path from "node:path";
@@ -16,7 +18,7 @@ if (!input || !id) {
   process.exit(1);
 }
 
-const opts = { cx: 0.5, cy: 0.35, h: 0.5 };
+const opts = { cx: 0.5, cy: 0.35, h: 0.5, contrast: 1, saturation: 1, brightness: 1, sharpen: 0 };
 for (let i = 0; i < rest.length; i += 2) {
   const key = rest[i].replace(/^--/, "");
   if (key in opts) opts[key] = Number(rest[i + 1]);
@@ -39,10 +41,23 @@ const left = clamp(Math.round(meta.width * opts.cx - cropW / 2), 0, meta.width -
 const top = clamp(Math.round(meta.height * opts.cy - cropH / 2), 0, meta.height - cropH);
 
 const out = path.join("public", "artist-profiles", `${id}.webp`);
-await image
+let pipeline = image
   .extract({ left, top, width: cropW, height: cropH })
-  .resize(OUT_W, OUT_H, { fit: "cover" })
-  .webp({ quality: 82 })
-  .toFile(out);
+  .resize(OUT_W, OUT_H, { fit: "cover" });
 
-console.log(`${out} <- ${input} (원본 ${meta.width}x${meta.height}, 크롭 ${cropW}x${cropH} @ ${left},${top})`);
+// 배경에 묻히는 인물을 살리는 보정. 대비는 중간톤(128)을 축으로 벌린다.
+if (opts.contrast !== 1) {
+  pipeline = pipeline.linear(opts.contrast, 128 * (1 - opts.contrast));
+}
+if (opts.saturation !== 1 || opts.brightness !== 1) {
+  pipeline = pipeline.modulate({ saturation: opts.saturation, brightness: opts.brightness });
+}
+if (opts.sharpen) pipeline = pipeline.sharpen({ sigma: 1 });
+
+await pipeline.webp({ quality: 82 }).toFile(out);
+
+const tweaks = ["contrast", "saturation", "brightness", "sharpen"]
+  .filter((key) => opts[key] !== (key === "sharpen" ? 0 : 1))
+  .map((key) => `${key} ${opts[key]}`)
+  .join(", ");
+console.log(`${out} <- ${input} (원본 ${meta.width}x${meta.height}, 크롭 ${cropW}x${cropH} @ ${left},${top}${tweaks ? `, ${tweaks}` : ""})`);
