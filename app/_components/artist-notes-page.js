@@ -16,7 +16,7 @@ const artists = [
   { id: "lee-jaehong", name: "이재홍", team: "네모", photo: "/artist-profiles/lee-jaehong.webp" },
   { id: "lee-chaemyeong", name: "이채명", team: "고리" },
   { id: "in-donguk", name: "인동욱", team: "미로" },
-  { id: "im-gyehwa", name: "임계화", team: "네모" },
+  { id: "im-gyehwa", name: "임계화", team: "네모", photo: "/artist-profiles/im-gyehwa.webp" },
   { id: "cho-youngbeom", name: "조영범", team: "네모 · 미로" },
   { id: "joo-jangseok", name: "주장석", team: "미로" },
   { id: "heoyang", name: "허양", team: "네모", photo: "/artist-profiles/heoyang.webp" },
@@ -81,8 +81,7 @@ export default function ArtistNotesPage() {
         .profile-photo img { display:block; width:100%; height:100%; object-fit:cover; }
         .artist-note-label { margin:0 0 12px; color:var(--an-accent); font-size:11px; font-weight:700; letter-spacing:.14em; }
         .artist-note-name { margin:0; font-family:'IBM Plex Sans KR', sans-serif; font-size:clamp(38px,5vw,62px); line-height:1.15; letter-spacing:-.05em; }
-        .artist-note-team { margin:12px 0 28px; color:var(--an-dim); font-size:14px; }
-        .artist-note-intro { margin:0; max-width:590px; color:var(--an-dim); font-size:15px; line-height:1.9; }
+        .artist-note-team { margin:12px 0 0; color:var(--an-dim); font-size:14px; }
         .artist-note-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; border-left:1px solid var(--an-line); }
         .artist-note-block { min-height:255px; padding:30px; border-right:1px solid var(--an-line); border-bottom:1px solid var(--an-line); }
         .artist-note-block:nth-child(1), .artist-note-block:nth-child(4) { background:var(--an-bg2); }
@@ -142,7 +141,6 @@ export default function ArtistNotesPage() {
             <p className="artist-note-label">ARTIST NOTE</p>
             <h1 className="artist-note-name">{selected.name}</h1>
             <p className="artist-note-team">참여 팀 · {selected.team}</p>
-            <p className="artist-note-intro">이 페이지는 짧은 작가 소개와 리뷰 인터뷰, 이후의 작업계획을 함께 담는 개인 노트입니다.</p>
           </div>
         </header>
 
