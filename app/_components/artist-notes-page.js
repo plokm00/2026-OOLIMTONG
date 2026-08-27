@@ -9,7 +9,7 @@ const artists = [
   { id: "park-soyeon", name: "박소연", team: "고리" },
   { id: "park-suyeon", name: "박수연", team: "고리", photo: "/artist-profiles/park-suyeon.webp" },
   { id: "park-jinhee", name: "박진희", team: "고리", photo: "/artist-profiles/park-jinhee.webp" },
-  { id: "shin-jeongsuk", name: "신정숙", team: "네모" },
+  { id: "shin-jeongsuk", name: "신정숙", team: "네모", photo: "/artist-profiles/shin-jeongsuk.webp" },
   { id: "lee-saerom", name: "이새롬", team: "미로" },
   { id: "lee-seongsun", name: "이성순", team: "고리", photo: "/artist-profiles/lee-seongsun.webp" },
   { id: "lee-an", name: "이안", team: "고리" },
@@ -18,7 +18,7 @@ const artists = [
   { id: "in-donguk", name: "인동욱", team: "미로" },
   { id: "im-gyehwa", name: "임계화", team: "네모", photo: "/artist-profiles/im-gyehwa.webp" },
   { id: "cho-youngbeom", name: "조영범", team: "네모 · 미로" },
-  { id: "joo-jangseok", name: "주장석", team: "미로" },
+  { id: "joo-jangseok", name: "주장석", team: "미로", photo: "/artist-profiles/joo-jangseok.webp" },
   { id: "heoyang", name: "허양", team: "네모", photo: "/artist-profiles/heoyang.webp" },
 ];
 
