@@ -238,10 +238,10 @@ const styles = `
   .about-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    grid-auto-flow: dense;
     gap: 20px;
   }
   .about-card {
+    max-width: 480px;
     background: var(--bg2);
     border: 1px solid var(--line);
     border-radius: 3px;
@@ -255,10 +255,8 @@ const styles = `
   }
   .about-card p { font-size: 14px; color: var(--text-dim); line-height: 1.85; }
 
-  /* 울림통 카드는 글이 길어, 두 칸을 쓰게 두어 줄 수를 줄인다. */
   @media (min-width: 721px) {
     .about-grid { grid-template-columns: repeat(2, 1fr); }
-    .about-card.wide { grid-column: span 2; }
   }
 
   /* ── 예약 현황 ── */
@@ -528,15 +526,11 @@ const body = `
   <div class="about-grid">
     <div class="about-card">
       <h3>흙으로 잇다</h3>
-      <p>점토를 손으로 반죽하고 길게 밀어 타래를 만듭니다. 그 타래를 켜켜이 쌓아 올리고 다지며, 여럿의 손이 하나의 형태를 함께 지어 나갑니다.</p>
-    </div>
-    <div class="about-card wide">
-      <h3>울림통</h3>
-      <p>울림통은 흙으로 짓는 공명의 기(器)입니다. 완성된 형태보다 함께 쌓아 올리는 과정과 그 안에 담기는 이야기를 중요하게 봅니다. 생태적으로는 굽지 않은 흙에 기름과 발수제를 이용한 최소한의 마감을 함으로써 최종적으로는 자연으로 돌아가는 생애주기마저 작품의 한 맥락으로 봅니다. 동화마을수목원에서 짓는 작품은 공간을 품은 종 모양의 일반 울림통이 아닌, 거대한 울림통의 한 벽면을 떼어놓은 것 같은 형태로 제작하게 됩니다.</p>
+      <p>점토를 손으로 반죽하고 길게 주물러 타래를 만듭니다. 그 타래를 켜켜이 쌓아 올리고 다지며, 여럿의 손이 하나의 형태를 함께 지어 나갑니다. 정해진 도면 없이 그날 모인 사람들의 손과 호흡에 따라 형태가 달라집니다. 울림통에는 거쳐간 사람들만큼의 이야기가 쌓이게 됩니다.</p>
     </div>
     <div class="about-card">
-      <h3>즉흥적으로</h3>
-      <p>정해진 도면 없이 그날 모인 사람들의 손과 호흡에 따라 형태가 달라집니다. 세 번의 토요일마다 다른 울림통이 태어납니다.</p>
+      <h3>울림통</h3>
+      <p>울림통은 흙으로 짓는 공명의 기(器)입니다. 완성된 형태보다 함께 쌓아 올리는 과정과 그 안에 담기는 이야기를 중요하게 봅니다. 생태적으로는 굽지 않은 흙에 기름과 발수제를 이용한 최소한의 마감을 함으로써 최종적으로는 자연으로 돌아가는 생애주기마저 작품의 한 맥락으로 봅니다. 동화마을수목원에서 짓는 작품은 공간을 품은 종 모양의 일반 울림통이 아닌, 거대한 울림통의 한 벽면을 떼어놓은 것 같은 형태로 제작하게 됩니다.</p>
     </div>
   </div>
 </section>
