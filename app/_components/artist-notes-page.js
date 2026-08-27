@@ -55,25 +55,29 @@ export default function ArtistNotesPage() {
         :root { --an-bg:#f6ede6; --an-bg2:#eee0d6; --an-bg3:#e4d0c4; --an-line:#ceb0a0; --an-accent:#c03828; --an-accent2:#8c2418; --an-text:#261410; --an-dim:#7a4c3c; }
         * { box-sizing:border-box; }
         body { margin:0; background:var(--an-bg); color:var(--an-text); font-family:'Noto Sans KR', sans-serif; }
-        .artist-notes-page { min-height:100vh; background:var(--an-bg); }
-        .artist-notes-nav { max-width:800px; min-height:56px; margin:0 auto; padding:0 20px; display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid var(--an-line); background:rgba(246,237,230,.94); }
+        .artist-notes-page { min-height:100vh; padding-top:56px; background:var(--an-bg); }
+        .artist-notes-nav { position:fixed; top:0; right:0; left:0; z-index:100; height:56px; padding:0 max(40px, calc((100% - 860px) / 2)); display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid var(--an-line); background:rgba(246,237,230,.95); backdrop-filter:blur(8px); }
+        .artist-notes-nav-left { display:flex; align-items:baseline; gap:14px; min-width:0; }
         .artist-notes-brand { color:var(--an-accent); font-size:13px; font-weight:600; letter-spacing:.1em; text-decoration:none; }
-        .artist-notes-links { display:flex; align-items:center; gap:16px; }
+        .artist-notes-nav-title { font-family:'IBM Plex Sans KR', sans-serif; font-size:16px; font-weight:700; letter-spacing:.02em; white-space:nowrap; }
+        .artist-notes-links { display:flex; align-items:center; gap:12px; }
         .artist-notes-links a { color:var(--an-dim); font-size:12px; text-decoration:none; }
         .artist-notes-links a:hover { color:var(--an-accent); }
-        .artist-notes-hero { max-width:800px; margin:0 auto; padding:clamp(68px,10vw,104px) 20px 50px; border-bottom:1px solid var(--an-line); }
+        .artist-notes-record-link { padding:5px 12px; border:1px solid var(--an-line); border-radius:2px; letter-spacing:.06em; }
+        .artist-notes-record-link:hover { background:var(--an-bg3); }
+        .artist-notes-hero { max-width:940px; margin:0 auto; padding:44px 40px 30px; }
         .artist-notes-kicker { margin:0 0 14px; color:var(--an-accent); font-size:11px; font-weight:600; letter-spacing:.16em; }
-        .artist-notes-title { margin:0; font-family:'IBM Plex Sans KR', sans-serif; font-size:clamp(42px,7vw,76px); line-height:1.1; letter-spacing:-.05em; }
-        .artist-notes-summary { max-width:630px; margin:24px 0 0; color:var(--an-dim); font-size:15px; line-height:1.9; }
-        .artist-picker { max-width:800px; margin:0 auto; padding:32px 20px 38px; background:var(--an-bg2); border-bottom:1px solid var(--an-line); }
+        .artist-notes-title { margin:0; padding-left:16px; border-left:3px solid var(--an-accent); font-family:'IBM Plex Sans KR', sans-serif; font-size:clamp(30px,4vw,42px); line-height:1.2; letter-spacing:-.04em; }
+        .artist-notes-summary { max-width:680px; margin:18px 0 0; color:var(--an-dim); font-size:15px; line-height:1.9; }
+        .artist-picker { max-width:940px; margin:0 auto; padding:0 40px 40px; }
         .artist-picker-label { display:block; margin-bottom:14px; color:var(--an-accent2); font-size:12px; font-weight:700; letter-spacing:.08em; }
         .artist-picker-list { display:flex; flex-wrap:wrap; gap:8px; }
-        .artist-picker-button { min-width:78px; padding:10px 13px; border:1px solid var(--an-line); background:var(--an-bg); color:var(--an-text); cursor:pointer; font:600 13px 'Noto Sans KR', sans-serif; text-align:left; transition:background .18s,color .18s,border-color .18s; }
+        .artist-picker-button { min-width:88px; padding:10px 13px; border:0; border-radius:4px; background:var(--an-bg2); color:var(--an-text); cursor:pointer; font:600 13px 'Noto Sans KR', sans-serif; text-align:left; transition:background .18s,color .18s; }
         .artist-picker-button small { display:block; margin-top:3px; color:var(--an-dim); font-size:10px; font-weight:400; }
         .artist-picker-button:hover, .artist-picker-button[aria-selected='true'] { background:var(--an-accent); border-color:var(--an-accent); color:var(--an-bg); }
         .artist-picker-button[aria-selected='true'] small { color:rgba(246,237,230,.8); }
-        .artist-note { max-width:800px; margin:0 auto; padding:56px 20px 88px; }
-        .artist-note-header { display:grid; grid-template-columns:190px minmax(0,1fr); gap:clamp(32px,6vw,64px); align-items:end; padding-bottom:46px; border-bottom:2px solid var(--an-text); }
+        .artist-note { max-width:940px; margin:0 auto; padding:36px 40px 100px; }
+        .artist-note-header { display:grid; grid-template-columns:220px minmax(0,1fr); gap:clamp(32px,6vw,64px); align-items:end; padding-bottom:46px; border-bottom:2px solid var(--an-text); }
         .profile-photo { aspect-ratio:4/5; display:flex; align-items:center; justify-content:center; background:var(--an-bg3); border:1px dashed var(--an-line); color:var(--an-dim); font-size:13px; text-align:center; }
         .profile-photo span { display:block; padding:16px; }
         .artist-note-label { margin:0 0 12px; color:var(--an-accent); font-size:11px; font-weight:700; letter-spacing:.14em; }
@@ -89,14 +93,17 @@ export default function ArtistNotesPage() {
         .work-photo-slot { min-height:145px; display:flex; align-items:center; justify-content:center; margin-top:20px; border:1px dashed var(--an-line); background:var(--an-bg); color:var(--an-dim); font-size:12px; }
         .artist-note-foot { margin-top:34px; display:flex; justify-content:space-between; gap:20px; color:var(--an-dim); font-size:12px; }
         .artist-note-foot a { color:var(--an-accent); text-decoration:none; }
-        @media (max-width:700px) { .artist-notes-brand { font-size:11px; } .artist-notes-links { gap:10px; } .artist-notes-links a { font-size:11px; } .artist-note { padding:40px 20px 64px; } .artist-note-header, .artist-note-grid { grid-template-columns:1fr; } .profile-photo { max-width:220px; } .artist-note-block { min-height:auto; } .artist-note-foot { flex-direction:column; } }
+        @media (max-width:700px) { .artist-notes-nav { padding:0 20px; } .artist-notes-brand { font-size:11px; } .artist-notes-nav-title { display:none; } .artist-notes-links { gap:10px; } .artist-notes-links a { font-size:11px; } .artist-notes-hero, .artist-picker, .artist-note { padding-right:20px; padding-left:20px; } .artist-note { padding-top:32px; padding-bottom:64px; } .artist-note-header, .artist-note-grid { grid-template-columns:1fr; } .profile-photo { max-width:220px; } .artist-note-block { min-height:auto; } .artist-note-foot { flex-direction:column; } }
       `}</style>
 
       <nav className="artist-notes-nav" aria-label="울림통-변주 2026 탐색">
-        <a className="artist-notes-brand" href="/oolimtong_2026_wcf">NINNIK × 울림통-변주 2026</a>
+        <div className="artist-notes-nav-left">
+          <a className="artist-notes-brand" href="/oolimtong_2026_wcf">NINNIK × 울림통-변주 2026</a>
+          <span className="artist-notes-nav-title">작가 노트</span>
+        </div>
         <div className="artist-notes-links">
-          <a href="/oolimtong_2026_wcf_record">팀별 작업 기록</a>
           <a href="/oolimtong_2026_wcf">메인으로</a>
+          <a className="artist-notes-record-link" href="/oolimtong_2026_wcf_record">팀별 작업 기록</a>
         </div>
       </nav>
 

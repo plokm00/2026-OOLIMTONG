@@ -43,12 +43,15 @@ export default function ArtistNotesMainLink() {
     artist.querySelector(".section-label").textContent = "03 · Artists";
 
     if (universe) {
+      const worldLabel = document.createElement("p");
+      worldLabel.className = "artist-world-label";
+      worldLabel.textContent = "KIM AH YOUNG'S NINNIK UNIVERSE";
       const worldHeading = document.createElement("h3");
       worldHeading.className = "artist-world-heading";
-      worldHeading.textContent = "니닉 세계관";
+      worldHeading.textContent = "김아영 작가의 니닉 세계관";
       const worldLayout = universe.querySelector(".universe-layout");
       if (worldLayout) {
-        artist.append(worldHeading, worldLayout);
+        artist.append(worldLabel, worldHeading, worldLayout);
       }
       universe.remove();
     }
@@ -105,11 +108,12 @@ export default function ArtistNotesMainLink() {
         .project-hub-section { min-height:auto !important; padding:92px 60px !important; justify-content:flex-start !important; }
         .project-hub-section > .section-label { margin-bottom:12px !important; }
         .project-hub-section > .section-title { margin-bottom:42px !important; font-size:clamp(32px,4vw,48px) !important; }
-        .artist-world-heading { margin:64px 0 24px; padding-top:32px; border-top:1px solid var(--line); color:var(--text); font-family:'IBM Plex Sans KR',sans-serif; font-size:clamp(27px,3.2vw,38px); line-height:1.25; }
-        .citizen-artists-intro { margin-top:64px; padding-top:32px; border-top:1px solid var(--line); }
+        .artist-world-label { margin:64px 0 8px; padding-top:32px; border-top:1px solid var(--line); color:var(--accent); font-size:11px; font-weight:500; letter-spacing:.16em; }
+        .artist-world-heading { margin:0 0 24px; color:var(--text); font-family:'IBM Plex Sans KR',sans-serif; font-size:clamp(27px,3.2vw,38px); line-height:1.25; }
+        .citizen-artists-intro { min-height:auto !important; margin-top:64px; padding:32px 0 0 !important; border:0 !important; border-top:1px solid var(--line) !important; }
         .citizen-intro-copy { max-width:720px; margin:0 0 28px; color:var(--text-dim); font-size:15px; line-height:1.95; }
         .citizen-roster { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin:30px 0 26px; }
-        .citizen-team { padding:22px 20px; background:var(--bg2); }
+        .citizen-team { min-height:auto; display:block; padding:22px 20px; background:var(--bg2); border:0; }
         .citizen-team:nth-child(2) { background:var(--bg3); }
         .citizen-team-name { margin:0 0 13px; color:var(--accent); font-size:12px; font-weight:700; letter-spacing:.12em; }
         .citizen-names { display:flex; flex-wrap:wrap; gap:7px 12px; }
