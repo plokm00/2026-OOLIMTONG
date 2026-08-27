@@ -583,7 +583,7 @@ const styles = `
 const body = `
 <!-- ── 고정 네비게이션 ── -->
 <nav id="nav">
-  <a href="/oolimtong_2026_munmak" class="nav-logo">ninnik × 문막 — 흙으로 잇다 2026</a>
+  <a href="/oolimtong_2026_munmak" class="nav-logo">문막-흙으로 잇다 2026</a>
   <button class="nav-hamburger" type="button" onclick="toggleNav()" aria-label="메뉴 열기">
     <span></span><span></span><span></span>
   </button>
