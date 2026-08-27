@@ -238,6 +238,7 @@ const styles = `
   .about-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-auto-flow: dense;
     gap: 20px;
   }
   .about-card {
@@ -256,7 +257,7 @@ const styles = `
 
   /* 울림통 카드는 글이 길어, 두 칸을 쓰게 두어 줄 수를 줄인다. */
   @media (min-width: 721px) {
-    .about-grid { grid-template-columns: repeat(3, 1fr); }
+    .about-grid { grid-template-columns: repeat(2, 1fr); }
     .about-card.wide { grid-column: span 2; }
   }
 
@@ -536,10 +537,6 @@ const body = `
     <div class="about-card">
       <h3>즉흥적으로</h3>
       <p>정해진 도면 없이 그날 모인 사람들의 손과 호흡에 따라 형태가 달라집니다. 세 번의 토요일마다 다른 울림통이 태어납니다.</p>
-    </div>
-    <div class="about-card">
-      <h3>참여 안내</h3>
-      <p>참가비 없이 지역주민 누구나 참여할 수 있습니다. 사전 신청 없이 현장에서 바로 함께하셔도 되고, 미리 신청하시면 혼잡할 때 우선 참여하실 수 있습니다.</p>
     </div>
   </div>
 </section>
