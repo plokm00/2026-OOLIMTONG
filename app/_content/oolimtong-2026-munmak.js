@@ -155,10 +155,10 @@ const styles = `
   .cover-meta dd small { display: block; color: var(--text-dim); font-size: 13px; }
 
   /* ── 포스터 썸네일 ── */
-  /* 포스터 윗변을 커버 기본 여백선(왼쪽 eyebrow 줄 윗변)보다 5px 더 내린다.
-     구분선 기준으로는 97px 아래. */
+  /* 포스터 윗변을 커버 기본 여백선(왼쪽 eyebrow 줄 윗변)보다 6px 더 내린다.
+     구분선 기준으로는 98px 아래. */
   .poster-col {
-    margin-top: 5px;
+    margin-top: 6px;
   }
 
   .poster-thumb {
