@@ -666,7 +666,7 @@ const script = `
       var count = rows.filter(function (r) { return dayOf(r.date) === d; }).length;
       var cls = "cal-cell event" + (selectedDay === d ? " selected" : "");
       html += '<div class="' + cls + '" data-day="' + d + '" role="button" tabindex="0">' + d +
-        '<span class="cal-dot">' + (count ? count + "건" : "사전신청 0") + "</span></div>";
+        '<span class="cal-dot">' + count + "건</span></div>";
     }
     grid.innerHTML = html;
 
