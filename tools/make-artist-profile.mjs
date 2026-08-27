@@ -22,7 +22,9 @@ for (let i = 0; i < rest.length; i += 2) {
   if (key in opts) opts[key] = Number(rest[i + 1]);
 }
 
-const image = sharp(input).rotate();
+// EXIF 회전을 먼저 굽고 나서 크기를 재야 세로 사진의 좌표가 맞습니다.
+const upright = await sharp(input).rotate().toBuffer();
+const image = sharp(upright);
 const meta = await image.metadata();
 
 let cropH = Math.round(meta.height * opts.h);
