@@ -60,17 +60,17 @@ const styles = `
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 14px 32px;
+    padding: 14px 60px;
     background: rgba(247, 242, 232, 0.92);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--line);
   }
   .nav-logo {
-    font-family: 'IBM Plex Sans KR', sans-serif;
     font-size: 13px;
     font-weight: 500;
-    letter-spacing: 0.04em;
-    color: var(--text);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
     text-decoration: none;
   }
   .nav-links {
@@ -577,7 +577,7 @@ const styles = `
   }
 
   @media (max-width: 720px) {
-    #nav { padding: 12px 20px; flex-wrap: wrap; }
+    #nav { padding: 12px 22px; flex-wrap: wrap; }
     .nav-hamburger { display: block; }
     .nav-links {
       display: none;
@@ -598,7 +598,7 @@ const styles = `
 const body = `
 <!-- ── 고정 네비게이션 ── -->
 <nav id="nav">
-  <a href="/oolimtong_2026_munmak" class="nav-logo">문막-흙으로 잇다 2026</a>
+  <a href="/oolimtong_2026_munmak" class="nav-logo">ninnik × 문막-흙으로 잇다 2026</a>
   <button class="nav-hamburger" type="button" onclick="toggleNav()" aria-label="메뉴 열기">
     <span></span><span></span><span></span>
   </button>
