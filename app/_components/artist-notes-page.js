@@ -65,11 +65,8 @@ export default function ArtistNotesPage() {
         .artist-notes-links a:hover { color:var(--an-accent); }
         .artist-notes-record-link { padding:5px 12px; border:1px solid var(--an-line); border-radius:2px; letter-spacing:.06em; }
         .artist-notes-record-link:hover { background:var(--an-bg3); }
-        .artist-notes-hero { max-width:940px; margin:0 auto; padding:44px 40px 30px; }
-        .artist-notes-kicker { margin:0 0 14px; color:var(--an-accent); font-size:11px; font-weight:600; letter-spacing:.16em; }
-        .artist-notes-title { margin:0; padding-left:16px; border-left:3px solid var(--an-accent); font-family:'IBM Plex Sans KR', sans-serif; font-size:clamp(30px,4vw,42px); line-height:1.2; letter-spacing:-.04em; }
-        .artist-notes-summary { max-width:680px; margin:18px 0 0; color:var(--an-dim); font-size:15px; line-height:1.9; }
-        .artist-picker { max-width:940px; margin:0 auto; padding:0 40px 40px; }
+        .artist-notes-summary { max-width:680px; margin:24px 0 0; color:var(--an-dim); font-size:15px; line-height:1.9; }
+        .artist-picker { max-width:940px; margin:0 auto; padding:40px 40px; }
         .artist-picker-label { display:block; margin-bottom:14px; color:var(--an-accent2); font-size:12px; font-weight:700; letter-spacing:.08em; }
         .artist-picker-list { display:flex; flex-wrap:wrap; gap:8px; }
         .artist-picker-button { min-width:88px; padding:10px 13px; border:0; border-radius:4px; background:var(--an-bg2); color:var(--an-text); cursor:pointer; font:600 13px 'Noto Sans KR', sans-serif; text-align:left; transition:background .18s,color .18s; }
@@ -95,7 +92,7 @@ export default function ArtistNotesPage() {
         .work-photo-slot { min-height:145px; display:flex; align-items:center; justify-content:center; margin-top:20px; border:1px dashed var(--an-line); background:var(--an-bg); color:var(--an-dim); font-size:12px; }
         .artist-note-foot { margin-top:34px; display:flex; justify-content:space-between; gap:20px; color:var(--an-dim); font-size:12px; }
         .artist-note-foot a { color:var(--an-accent); text-decoration:none; }
-        @media (max-width:700px) { .artist-notes-nav { padding:0 20px; } .artist-notes-brand { font-size:11px; } .artist-notes-nav-title { display:none; } .artist-notes-links { gap:10px; } .artist-notes-links a { font-size:11px; } .artist-notes-hero, .artist-picker, .artist-note { padding-right:20px; padding-left:20px; } .artist-note { padding-top:32px; padding-bottom:64px; } .artist-note-header, .artist-note-grid { grid-template-columns:1fr; } .profile-photo { max-width:150px; } .artist-note-block { min-height:auto; } .artist-note-foot { flex-direction:column; } }
+        @media (max-width:700px) { .artist-notes-nav { padding:0 20px; } .artist-notes-brand { font-size:11px; } .artist-notes-nav-title { display:none; } .artist-notes-links { gap:10px; } .artist-notes-links a { font-size:11px; } .artist-picker, .artist-note { padding-right:20px; padding-left:20px; } .artist-picker { padding-top:28px; } .artist-note { padding-top:32px; padding-bottom:64px; } .artist-note-header, .artist-note-grid { grid-template-columns:1fr; } .profile-photo { max-width:150px; } .artist-note-block { min-height:auto; } .artist-note-foot { flex-direction:column; } }
       `}</style>
 
       <nav className="artist-notes-nav" aria-label="울림통-변주 2026 탐색">
@@ -108,14 +105,6 @@ export default function ArtistNotesPage() {
           <a className="artist-notes-record-link" href="/oolimtong_2026_wcf_record">팀별 작업 기록</a>
         </div>
       </nav>
-
-      <header className="artist-notes-hero">
-        <p className="artist-notes-kicker">ARTIST NOTES</p>
-        <h1 className="artist-notes-title">작가 노트</h1>
-        <p className="artist-notes-summary">
-          참여 작가들의 인터뷰와 울림통-변주를 통해 선보일 전시 계획을 담은 노트입니다.
-        </p>
-      </header>
 
       <section className="artist-picker" aria-label="작가 선택">
         <span className="artist-picker-label">참여 작가 선택</span>
@@ -132,6 +121,9 @@ export default function ArtistNotesPage() {
             </button>
           ))}
         </div>
+        <p className="artist-notes-summary">
+          참여 작가들의 인터뷰와 울림통-변주를 통해 선보일 전시 계획을 담은 노트입니다.
+        </p>
       </section>
 
       <article className="artist-note" id={selected.id}>
@@ -148,7 +140,7 @@ export default function ArtistNotesPage() {
           </div>
           <div>
             <p className="artist-note-label">ARTIST NOTE</p>
-            <h2 className="artist-note-name">{selected.name}</h2>
+            <h1 className="artist-note-name">{selected.name}</h1>
             <p className="artist-note-team">참여 팀 · {selected.team}</p>
             <p className="artist-note-intro">이 페이지는 짧은 작가 소개와 리뷰 인터뷰, 이후의 작업계획을 함께 담는 개인 노트입니다.</p>
           </div>
