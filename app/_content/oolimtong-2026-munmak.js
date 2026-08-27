@@ -419,6 +419,7 @@ const styles = `
   .detail-form button.ghost { background: none; color: var(--accent2); }
   .detail-form button.ghost:hover { background: var(--bg3); color: var(--accent2); }
   .detail-msg { font-size: 13px; color: var(--accent2); margin-top: 10px; min-height: 20px; }
+  .detail-msg:empty { margin-top: 0; min-height: 0; }
 
   /* ── 푸터 ── */
   .site-footer {
