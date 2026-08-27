@@ -250,6 +250,12 @@ const styles = `
   }
   .about-card p { font-size: 14px; color: var(--text-dim); line-height: 1.85; }
 
+  /* 울림통 카드는 글이 길어, 두 칸을 쓰게 두어 줄 수를 줄인다. */
+  @media (min-width: 721px) {
+    .about-grid { grid-template-columns: repeat(3, 1fr); }
+    .about-card.wide { grid-column: span 2; }
+  }
+
   .session-strip {
     display: flex;
     flex-wrap: wrap;
@@ -640,11 +646,11 @@ const body = `
   <div class="about-grid">
     <div class="about-card">
       <h3>흙으로 잇다</h3>
-      <p>도자 흙을 손으로 반죽하고 길게 밀어 타래를 만듭니다. 그 타래를 켜켜이 쌓아 올리고 다지며, 여럿의 손이 하나의 형태를 함께 지어 나갑니다.</p>
+      <p>점토를 손으로 반죽하고 길게 밀어 타래를 만듭니다. 그 타래를 켜켜이 쌓아 올리고 다지며, 여럿의 손이 하나의 형태를 함께 지어 나갑니다.</p>
     </div>
-    <div class="about-card">
+    <div class="about-card wide">
       <h3>울림통</h3>
-      <p>울림통은 흙으로 짓는 공명의 기(器)입니다. 완성된 형태보다 함께 쌓아 올리는 과정과 그 안에 담기는 소리를 중요하게 봅니다.</p>
+      <p>울림통은 흙으로 짓는 공명의 기(器)입니다. 완성된 형태보다 함께 쌓아 올리는 과정과 그 안에 담기는 이야기를 중요하게 봅니다. 생태적으로는 굽지 않은 흙에 기름과 발수제를 이용한 최소한의 마감을 함으로써 최종적으로는 자연으로 돌아가는 생애주기마저 작품의 한 맥락으로 봅니다. 동화마을수목원에서 짓는 작품은 공간을 품은 종 모양의 일반 울림통이 아닌, 거대한 울림통의 한 벽면을 떼어놓은 것 같은 형태로 제작하게 됩니다.</p>
     </div>
     <div class="about-card">
       <h3>즉흥적으로</h3>
