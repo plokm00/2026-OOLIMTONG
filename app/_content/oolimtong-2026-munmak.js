@@ -473,7 +473,7 @@ const body = `
 </nav>
 
 <!-- ── 커버 ── -->
-<section id="cover">
+<section id="cover" style="border-bottom:none;">
   <div class="cover-grid">
     <div>
       <p class="cover-eyebrow">문막읍 농촌중심지활성화사업 · 온누리 기획단 양성 프로그램 · 2026</p>
