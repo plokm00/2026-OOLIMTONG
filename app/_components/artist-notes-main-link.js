@@ -122,7 +122,7 @@ export default function ArtistNotesMainLink() {
         @media (max-width:720px) { .project-hub-section { padding:64px 24px !important; } .project-hub-section > .section-title { margin-bottom:30px !important; } .citizen-roster { grid-template-columns:1fr; } }
       `}</style>
       <p className="section-label" style={{ marginBottom: 10 }}>Citizen Artists</p>
-      <h3 className="artist-name" style={{ fontSize: 30, marginBottom: 10 }}>시민작가</h3>
+      <h3 className="artist-world-heading">시민작가</h3>
       <p className="citizen-intro-copy">
         서로 다른 일상과 시간을 살아온 17명의 시민작가는 흙을 매개로 자신의 이야기를 낯선 이들과 나누기 위해 이 프로젝트에 모였습니다. 손으로 무언가를 만들어 보고 싶어서, 공동 작업의 감각을 경험하고 싶어서, 혹은 삶의 한가운데에서 새로운 움직임을 찾고 싶어서 참여한 이들은 나이와 배경, 작업의 속도도 서로 다릅니다. 그 차이는 각자의 모뉴먼트와 세 개의 울림통 안에서 새로운 형태와 관계로 이어졌습니다.
       </p>
