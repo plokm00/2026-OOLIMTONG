@@ -7,19 +7,19 @@ const citizenTeams = [
   {
     name: "네모",
     members: [
-      ["허양", "heoyang"], ["이재홍", "lee-jaehong"], ["조영범", "cho-youngbeom"], ["임계화", "im-gyehwa"], ["신정숙", "shin-jeongsuk"],
+      ["신정숙", "shin-jeongsuk"], ["이재홍", "lee-jaehong"], ["임계화", "im-gyehwa"], ["조영범", "cho-youngbeom"], ["허양", "heoyang"],
     ],
   },
   {
     name: "고리",
     members: [
-      ["이채명", "lee-chaemyeong"], ["박수연", "park-suyeon"], ["박소연", "park-soyeon"], ["이안", "lee-an"], ["박진희", "park-jinhee"], ["이성순", "lee-seongsun"],
+      ["박소연", "park-soyeon"], ["박수연", "park-suyeon"], ["박진희", "park-jinhee"], ["이성순", "lee-seongsun"], ["이안", "lee-an"], ["이채명", "lee-chaemyeong"],
     ],
   },
   {
     name: "미로",
     members: [
-      ["인동욱", "in-donguk"], ["민지현", "min-jihyeon"], ["조영범", "cho-youngbeom"], ["김주원", "kim-juwon"], ["김현국", "kim-hyeonguk"], ["이새롬", "lee-saerom"], ["주장석", "joo-jangseok"],
+      ["김주원", "kim-juwon"], ["김현국", "kim-hyeonguk"], ["민지현", "min-jihyeon"], ["이새롬", "lee-saerom"], ["인동욱", "in-donguk"], ["조영범", "cho-youngbeom"], ["주장석", "joo-jangseok"],
     ],
   },
 ];
