@@ -23,6 +23,7 @@ const styles = `
     font-size: 16px;
     line-height: 1.75;
     word-break: keep-all;
+    overflow-x: hidden;
   }
 
   h1, h2, h3 { font-family: 'IBM Plex Sans KR', sans-serif; }
@@ -435,7 +436,7 @@ const styles = `
 
   @media (max-width: 900px) {
     .cover-grid { grid-template-columns: 1fr; gap: 36px; }
-    .booking-layout { grid-template-columns: 1fr; gap: 30px; }
+    .booking-layout { grid-template-columns: minmax(0, 1fr); gap: 30px; }
     .calendar { max-width: 400px; }
   }
 
