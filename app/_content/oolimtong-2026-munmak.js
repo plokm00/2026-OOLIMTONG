@@ -97,7 +97,7 @@ const styles = `
 
   /* ── 커버 ── */
   #cover {
-    padding: 92px 60px 76px;
+    padding: 92px 60px 32px;
     background:
       radial-gradient(circle at 88% 12%, rgba(226, 87, 30, 0.10), transparent 42%),
       var(--bg);
@@ -235,6 +235,7 @@ const styles = `
   #poster-lightbox .lb-close:hover { background: rgba(253, 250, 243, 0.14); }
 
   /* ── 소개 ── */
+  #about { padding-top: 40px; }
   .about-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -451,7 +452,8 @@ const styles = `
     }
     .nav-links.open { display: flex; }
     section { padding: 56px 22px; }
-    #cover { padding: 56px 22px 48px; }
+    #cover { padding: 56px 22px 24px; }
+    #about { padding-top: 24px; }
     .cover-meta { grid-template-columns: 60px 1fr; font-size: 14px; }
     .site-footer { padding: 30px 22px; flex-direction: column; text-align: center; }
   }
