@@ -443,27 +443,6 @@ const styles = `
   .detail-form button.ghost:hover { background: var(--bg3); color: var(--accent2); }
   .detail-msg { font-size: 13px; color: var(--accent2); margin-top: 10px; min-height: 20px; }
 
-  /* ── 문의 ── */
-  .contact-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 8px;
-  }
-  .contact-btn {
-    font-size: 13px;
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    color: var(--text-dim);
-    border: 1px solid var(--line);
-    border-radius: 2px;
-    padding: 9px 18px;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
-  }
-  .contact-btn:hover { background: var(--accent); border-color: var(--accent); color: var(--white); }
-  .contact-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--white); font-weight: 500; }
-  .contact-btn.primary:hover { background: var(--accent2); border-color: var(--accent2); }
-
   /* ── 푸터 ── */
   .site-footer {
     padding: 40px 60px;
@@ -544,18 +523,12 @@ const body = `
         <dd>
           인스타그램 <a href="https://instagram.com/ninnik_kraft" target="_blank" rel="noopener noreferrer" style="color:var(--accent2);">@NINNIK_KRAFT</a> DM
           <small>
-            성함·연락처·참여 인원·방문 예정 시간을 보내주시면 사전 신청 완료입니다.
-            신청하시면 혼잡할 때 우선 안내해 드리고 작업 사진도 보내드려요.
+            성함·연락처·참여 인원·방문 예정 시간을 보내주시면 사전 신청 완료입니다.<br>
+            신청하시면 혼잡할 때 우선 안내해 드리고 작업 사진도 보내드려요.<br>
             흙 묻어도 되는 편한 옷차림과 모자·물 등을 챙겨오시면 좋습니다.
           </small>
         </dd>
       </dl>
-
-      <div class="contact-row" style="margin-top:28px;">
-        <a class="contact-btn primary" href="https://instagram.com/ninnik_kraft" target="_blank" rel="noopener noreferrer">@NINNIK_KRAFT DM ↗</a>
-        <a class="contact-btn" href="https://map.naver.com/p/search/동화마을수목원" target="_blank" rel="noopener noreferrer">동화마을수목원 길찾기 ↗</a>
-        <a class="contact-btn" href="/oolimtong_manual">울림통 매뉴얼 ↗</a>
-      </div>
     </div>
 
     <div id="poster" class="poster-col" style="scroll-margin-top:80px;">
