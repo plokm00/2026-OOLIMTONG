@@ -3,23 +3,23 @@
 import { useEffect, useState } from "react";
 
 const artists = [
-  { id: "shin-jeongsuk", name: "신정숙", team: "네모" },
-  { id: "lee-jaehong", name: "이재홍", team: "네모" },
-  { id: "im-gyehwa", name: "임계화", team: "네모" },
-  { id: "cho-youngbeom", name: "조영범", team: "네모 · 미로" },
-  { id: "heoyang", name: "허양", team: "네모" },
-  { id: "park-soyeon", name: "박소연", team: "고리" },
-  { id: "park-suyeon", name: "박수연", team: "고리" },
-  { id: "park-jinhee", name: "박진희", team: "고리" },
-  { id: "lee-seongsun", name: "이성순", team: "고리" },
-  { id: "lee-an", name: "이안", team: "고리" },
-  { id: "lee-chaemyeong", name: "이채명", team: "고리" },
   { id: "kim-juwon", name: "김주원", team: "미로" },
   { id: "kim-hyeonguk", name: "김현국", team: "미로" },
   { id: "min-jihyeon", name: "민지현", team: "미로" },
+  { id: "park-soyeon", name: "박소연", team: "고리" },
+  { id: "park-suyeon", name: "박수연", team: "고리" },
+  { id: "park-jinhee", name: "박진희", team: "고리" },
+  { id: "shin-jeongsuk", name: "신정숙", team: "네모" },
   { id: "lee-saerom", name: "이새롬", team: "미로" },
+  { id: "lee-seongsun", name: "이성순", team: "고리" },
+  { id: "lee-an", name: "이안", team: "고리" },
+  { id: "lee-jaehong", name: "이재홍", team: "네모" },
+  { id: "lee-chaemyeong", name: "이채명", team: "고리" },
   { id: "in-donguk", name: "인동욱", team: "미로" },
+  { id: "im-gyehwa", name: "임계화", team: "네모" },
+  { id: "cho-youngbeom", name: "조영범", team: "네모 · 미로" },
   { id: "joo-jangseok", name: "주장석", team: "미로" },
+  { id: "heoyang", name: "허양", team: "네모" },
 ];
 
 function initialArtist() {
