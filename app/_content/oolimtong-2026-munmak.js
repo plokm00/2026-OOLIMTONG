@@ -261,6 +261,7 @@ const styles = `
     grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
     gap: 44px;
     align-items: start;
+    max-width: 960px;
   }
   .calendar {
     background: var(--bg2);
