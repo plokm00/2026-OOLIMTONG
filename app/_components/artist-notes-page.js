@@ -11,7 +11,7 @@ const artists = [
   { id: "park-jinhee", name: "박진희", team: "고리", photo: "/artist-profiles/park-jinhee.webp" },
   { id: "shin-jeongsuk", name: "신정숙", team: "네모" },
   { id: "lee-saerom", name: "이새롬", team: "미로" },
-  { id: "lee-seongsun", name: "이성순", team: "고리" },
+  { id: "lee-seongsun", name: "이성순", team: "고리", photo: "/artist-profiles/lee-seongsun.webp" },
   { id: "lee-an", name: "이안", team: "고리" },
   { id: "lee-jaehong", name: "이재홍", team: "네모" },
   { id: "lee-chaemyeong", name: "이채명", team: "고리" },
