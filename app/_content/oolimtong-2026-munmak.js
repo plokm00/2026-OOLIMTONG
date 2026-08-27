@@ -467,8 +467,6 @@ const body = `
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="nav-links">
-    <a href="#about" onclick="closeNav()">프로그램</a>
-    <a href="#poster" onclick="closeNav()">포스터</a>
     <a href="#booking" onclick="closeNav()">예약 현황</a>
     <a href="/oolimtong_archive" class="nav-cta" onclick="closeNav()">울림통 아카이브 ↗</a>
   </div>
