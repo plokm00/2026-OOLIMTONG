@@ -217,6 +217,9 @@ const styles = `
   #poster-lightbox img {
     max-width: min(100%, 900px);
     max-height: 100%;
+    width: auto;
+    height: auto;
+    aspect-ratio: 1500 / 2118;
     object-fit: contain;
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
   }
