@@ -369,45 +369,40 @@ const styles = `
     font-size: 14px;
     color: var(--text-dim);
   }
-  .booking-summary {
+  .booking-summary-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px 16px;
     margin-bottom: 14px;
-    font-size: 13px;
-    color: var(--text-dim);
   }
+  .booking-summary { font-size: 13px; color: var(--text-dim); }
   .booking-summary strong { color: var(--accent2); }
 
-  .detail-box {
-    margin-top: 26px;
-    border: 1px solid var(--line);
-    border-radius: 3px;
-    background: var(--bg2);
-    padding: 20px 22px;
+  .admin-toggle { display: flex; align-items: center; gap: 6px; }
+  .admin-toggle-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    white-space: nowrap;
   }
-  .detail-box h3 {
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    margin-bottom: 6px;
-  }
-  .detail-box p.hint { font-size: 12.5px; color: var(--text-dim); margin-bottom: 14px; }
-  .detail-form { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-  .detail-form input {
+  .admin-toggle input {
     font-family: inherit;
-    font-size: 14px;
-    letter-spacing: 0.3em;
-    padding: 9px 14px;
-    width: 140px;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    padding: 4px 8px;
+    width: 64px;
     border: 1px solid var(--line);
     border-radius: 2px;
     background: var(--white);
     color: var(--text);
   }
-  .detail-form input:focus { outline: none; border-color: var(--accent); }
-  .detail-form button {
+  .admin-toggle input:focus { outline: none; border-color: var(--accent); }
+  .admin-toggle button {
     font-family: 'IBM Plex Sans KR', sans-serif;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 500;
-    padding: 10px 20px;
+    padding: 5px 10px;
     border: 1px solid var(--accent);
     background: var(--accent);
     color: var(--white);
@@ -415,10 +410,10 @@ const styles = `
     cursor: pointer;
     transition: background 0.15s, border-color 0.15s;
   }
-  .detail-form button:hover { background: var(--accent2); border-color: var(--accent2); }
-  .detail-form button.ghost { background: none; color: var(--accent2); }
-  .detail-form button.ghost:hover { background: var(--bg3); color: var(--accent2); }
-  .detail-msg { font-size: 13px; color: var(--accent2); margin-top: 10px; min-height: 20px; }
+  .admin-toggle button:hover { background: var(--accent2); border-color: var(--accent2); }
+  .admin-toggle button.ghost { background: none; color: var(--accent2); border-color: var(--line); }
+  .admin-toggle button.ghost:hover { background: var(--bg3); color: var(--accent2); }
+  .detail-msg { font-size: 11px; color: var(--accent2); text-align: right; margin-top: 4px; min-height: 16px; }
   .detail-msg:empty { margin-top: 0; min-height: 0; }
 
   /* ── 푸터 ── */
@@ -550,7 +545,16 @@ const body = `
     </div>
 
     <div>
-      <p class="booking-summary" id="booking-summary"></p>
+      <div class="booking-summary-row">
+        <p class="booking-summary" id="booking-summary"></p>
+        <form class="admin-toggle" id="detail-form" autocomplete="off">
+          <span class="admin-toggle-label">관리자 상세보기 &lt;</span>
+          <input type="password" id="detail-pw" inputmode="numeric" maxlength="8" placeholder="••••" aria-label="비밀번호">
+          <button type="submit">확인</button>
+          <button type="button" class="ghost" id="detail-hide" style="display:none;" onclick="hideDetails()">가리기</button>
+        </form>
+      </div>
+      <p class="detail-msg" id="detail-msg"></p>
       <div class="booking-table-wrap">
         <table class="booking">
           <thead id="booking-head"></thead>
@@ -558,17 +562,6 @@ const body = `
         </table>
       </div>
       <p class="booking-empty" id="booking-empty" style="display:none;">해당 날짜에는 아직 예약이 없습니다.</p>
-
-      <div class="detail-box">
-        <h3>상세보기</h3>
-        <p class="hint">신청자 성함·연락처·인원 구성이 포함된 전체 목록입니다. 진행자 확인용 비밀번호가 필요합니다.</p>
-        <form class="detail-form" id="detail-form" autocomplete="off">
-          <input type="password" id="detail-pw" inputmode="numeric" maxlength="8" placeholder="••••" aria-label="비밀번호">
-          <button type="submit">상세보기</button>
-          <button type="button" class="ghost" id="detail-hide" style="display:none;" onclick="hideDetails()">가리기</button>
-        </form>
-        <p class="detail-msg" id="detail-msg"></p>
-      </div>
     </div>
   </div>
 </section>
@@ -631,6 +624,11 @@ const script = `
   }
 
   function fmtTotal(n) { return n == null ? "미정" : n + "명"; }
+
+  function fmtTotalDetail(r) {
+    if (r.total == null) return r.detail || "미정";
+    return fmtTotal(r.total) + (r.detail ? " (" + r.detail + ")" : "");
+  }
 
   function esc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -695,7 +693,7 @@ const script = `
     var list = visible();
 
     head.innerHTML = showDetails
-      ? "<tr><th>이름</th><th>연락처</th><th>날짜</th><th>시간</th><th>총인원</th><th>인원 구성</th></tr>"
+      ? "<tr><th>이름</th><th>연락처</th><th>날짜</th><th>시간</th><th>총인원</th></tr>"
       : "<tr><th>이름</th><th>날짜</th><th>시간</th><th>총인원</th></tr>";
 
     var html = "";
@@ -703,7 +701,7 @@ const script = `
       if (showDetails) {
         html += "<tr><td>" + esc(r.name) + "</td><td class=\\"num\\">" + esc(r.phone) +
           "</td><td class=\\"num\\">" + fmtDate(r.date) + "</td><td class=\\"num\\">" + fmtTime(r.time) +
-          "</td><td class=\\"num\\">" + fmtTotal(r.total) + "</td><td>" + esc(r.detail) + "</td></tr>";
+          "</td><td>" + esc(fmtTotalDetail(r)) + "</td></tr>";
       } else {
         html += "<tr><td>" + esc(mask(r.name)) + "</td><td class=\\"num\\">" + fmtDate(r.date) +
           "</td><td class=\\"num\\">" + fmtTime(r.time) + "</td><td class=\\"num\\">" + fmtTotal(r.total) + "</td></tr>";
