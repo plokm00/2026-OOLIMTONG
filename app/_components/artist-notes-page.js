@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 
 const artists = [
-  { id: "kim-juwon", name: "김주원", team: "미로" },
-  { id: "kim-hyeonguk", name: "김현국", team: "미로" },
+  { id: "kim-juwon", name: "김주원", team: "미로", photo: "/artist-profiles/kim-juwon.webp" },
+  { id: "kim-hyeonguk", name: "김현국", team: "미로", photo: "/artist-profiles/kim-hyeonguk.webp" },
   { id: "min-jihyeon", name: "민지현", team: "미로" },
   { id: "park-soyeon", name: "박소연", team: "고리" },
   { id: "park-suyeon", name: "박수연", team: "고리", photo: "/artist-profiles/park-suyeon.webp" },
