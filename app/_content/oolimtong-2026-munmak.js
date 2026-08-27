@@ -10,6 +10,8 @@ const styles = `
     --text:      #241f19;
     --text-dim:  #7a6852;
     --white:     #fdfaf3;
+    /* 커버 제목 크기. 포스터 윗변을 제목 글자에 맞출 때 함께 쓴다. */
+    --cover-title-size: clamp(38px, 8vw, 84px);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -109,7 +111,7 @@ const styles = `
     margin-bottom: 14px;
   }
   .cover-title {
-    font-size: clamp(38px, 8vw, 84px);
+    font-size: var(--cover-title-size);
     font-weight: 600;
     letter-spacing: -0.03em;
     line-height: 1.05;
@@ -154,8 +156,13 @@ const styles = `
   .cover-meta dd small { display: block; color: var(--text-dim); font-size: 13px; }
 
   /* ── 포스터 썸네일 ── */
-  /* 왼쪽 칼럼의 eyebrow 한 줄만큼 내려, 포스터 윗변이 큰 제목 윗변과 맞도록 한다. */
-  .poster-col { padding-top: calc(13px * 1.75 + 14px); }
+  /* 포스터 윗변을 큰 제목의 '글자가 보이기 시작하는 선'에 맞춘다.
+     eyebrow 한 줄(줄상자 + 아래 여백)만큼 내리면 제목의 줄상자 윗변에 닿는데,
+     줄상자 위쪽에는 글자가 없는 여백(half-leading + 어센더)이 남는다.
+     그 여백이 제목 크기의 약 0.084배라 같은 비율만큼 더 내린다. */
+  .poster-col {
+    padding-top: calc(13px * 1.75 + 14px + var(--cover-title-size) * 0.084);
+  }
 
   .poster-thumb {
     display: block;
