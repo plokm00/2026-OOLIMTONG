@@ -563,7 +563,9 @@ const styles = `
     color: rgba(253, 250, 243, 0.7);
     background: var(--accent2);
   }
-  .site-footer a { color: rgba(253, 250, 243, 0.8); text-decoration: none; }
+  .footer-credit { line-height: 1.9; }
+  .footer-credit b { font-weight: 600; color: var(--white); margin-right: 6px; }
+  .site-footer a { color: rgba(253, 250, 243, 0.8); text-decoration: none; white-space: nowrap; }
   .site-footer a:hover { color: var(--white); }
 
   @media (max-width: 900px) {
@@ -601,10 +603,10 @@ const body = `
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="nav-links">
+    <a href="#apply" onclick="closeNav()">신청 안내</a>
     <a href="#about" onclick="closeNav()">프로그램</a>
     <a href="#poster" onclick="closeNav()">포스터</a>
     <a href="#booking" onclick="closeNav()">예약 현황</a>
-    <a href="#apply" onclick="closeNav()">신청 안내</a>
     <a href="/oolimtong_archive" class="nav-cta" onclick="closeNav()">울림통 아카이브 ↗</a>
   </div>
 </nav>
@@ -628,11 +630,9 @@ const body = `
         <dt>대상</dt>
         <dd>지역주민 누구나<small>어린이는 보호자와 함께</small></dd>
         <dt>참가비</dt>
-        <dd><strong style="color:var(--accent2);">무료</strong><small>사전 신청 없이 현장 참여도 가능합니다</small></dd>
+        <dd>무료<small>사전 신청 없이 현장 참여도 가능합니다</small></dd>
         <dt>신청·문의</dt>
         <dd>인스타그램 DM<small>@NINNIK_KRAFT</small></dd>
-        <dt>주최·주관</dt>
-        <dd>온누리 기획단 양성 × 니닉크라프트 × 동화마을수목원<small>원주시 · 한국농어촌공사 · 문막읍 농촌중심지활성화사업 주민위원회</small></dd>
       </dl>
     </div>
 
@@ -646,80 +646,8 @@ const body = `
   </div>
 </section>
 
-<!-- ── 프로그램 소개 ── -->
-<section id="about">
-  <p class="section-label">Program</p>
-  <h2 class="section-title">프로그램 소개</h2>
-  <div class="about-grid">
-    <div class="about-card">
-      <h3>흙으로 잇다</h3>
-      <p>점토를 손으로 반죽하고 길게 밀어 타래를 만듭니다. 그 타래를 켜켜이 쌓아 올리고 다지며, 여럿의 손이 하나의 형태를 함께 지어 나갑니다.</p>
-    </div>
-    <div class="about-card wide">
-      <h3>울림통</h3>
-      <p>울림통은 흙으로 짓는 공명의 기(器)입니다. 완성된 형태보다 함께 쌓아 올리는 과정과 그 안에 담기는 이야기를 중요하게 봅니다. 생태적으로는 굽지 않은 흙에 기름과 발수제를 이용한 최소한의 마감을 함으로써 최종적으로는 자연으로 돌아가는 생애주기마저 작품의 한 맥락으로 봅니다. 동화마을수목원에서 짓는 작품은 공간을 품은 종 모양의 일반 울림통이 아닌, 거대한 울림통의 한 벽면을 떼어놓은 것 같은 형태로 제작하게 됩니다.</p>
-    </div>
-    <div class="about-card">
-      <h3>즉흥적으로</h3>
-      <p>정해진 도면 없이 그날 모인 사람들의 손과 호흡에 따라 형태가 달라집니다. 세 번의 토요일마다 다른 울림통이 태어납니다.</p>
-    </div>
-    <div class="about-card">
-      <h3>참여 안내</h3>
-      <p>참가비 없이 지역주민 누구나 참여할 수 있습니다. 사전 신청 없이 현장에서 바로 함께하셔도 되고, 미리 신청하시면 혼잡할 때 우선 참여하실 수 있습니다.</p>
-    </div>
-  </div>
-
-  <div class="session-strip">
-    <span class="session-chip">9. 5. <small>토</small></span>
-    <span class="session-chip">9. 12. <small>토</small></span>
-    <span class="session-chip">9. 19. <small>토</small></span>
-    <span class="session-chip" style="background:none;color:var(--accent2);border-color:var(--line);">오전 10시 ~ 오후 4시</span>
-    <span class="session-chip" style="background:none;color:var(--accent2);border-color:var(--line);">참가비 무료</span>
-  </div>
-</section>
-
-<!-- ── 예약 현황 ── -->
-<section id="booking">
-  <p class="section-label">Reservations</p>
-  <h2 class="section-title">예약 현황</h2>
-
-  <div class="booking-layout">
-    <div>
-      <div class="calendar">
-        <p class="cal-head">2026년 9월</p>
-        <div class="cal-grid" id="cal-grid"></div>
-        <p class="cal-legend">
-          <span class="swatch"></span>워크숍 진행일 · 날짜를 누르면 해당 회차만 볼 수 있습니다.
-        </p>
-      </div>
-    </div>
-
-    <div>
-      <p class="booking-summary" id="booking-summary"></p>
-      <div class="booking-table-wrap">
-        <table class="booking">
-          <thead id="booking-head"></thead>
-          <tbody id="booking-body"></tbody>
-        </table>
-      </div>
-      <p class="booking-empty" id="booking-empty" style="display:none;">해당 날짜에는 아직 예약이 없습니다.</p>
-
-      <div class="detail-box">
-        <h3>상세보기</h3>
-        <p class="hint">신청자 성함·연락처·인원 구성이 포함된 전체 목록입니다. 진행자 확인용 비밀번호가 필요합니다.</p>
-        <form class="detail-form" id="detail-form" autocomplete="off">
-          <input type="password" id="detail-pw" inputmode="numeric" maxlength="8" placeholder="••••" aria-label="비밀번호">
-          <button type="submit">상세보기</button>
-          <button type="button" class="ghost" id="detail-hide" style="display:none;" onclick="hideDetails()">가리기</button>
-        </form>
-        <p class="detail-msg" id="detail-msg"></p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ── 신청 안내 ── -->
-<section id="apply" style="border-bottom:none;">
+<section id="apply">
   <p class="section-label">Apply</p>
   <h2 class="section-title">신청 안내</h2>
 
@@ -775,9 +703,85 @@ const body = `
   </div>
 </section>
 
+<!-- ── 프로그램 소개 ── -->
+<section id="about">
+  <p class="section-label">Program</p>
+  <h2 class="section-title">프로그램 소개</h2>
+  <div class="about-grid">
+    <div class="about-card">
+      <h3>흙으로 잇다</h3>
+      <p>점토를 손으로 반죽하고 길게 밀어 타래를 만듭니다. 그 타래를 켜켜이 쌓아 올리고 다지며, 여럿의 손이 하나의 형태를 함께 지어 나갑니다.</p>
+    </div>
+    <div class="about-card wide">
+      <h3>울림통</h3>
+      <p>울림통은 흙으로 짓는 공명의 기(器)입니다. 완성된 형태보다 함께 쌓아 올리는 과정과 그 안에 담기는 이야기를 중요하게 봅니다. 생태적으로는 굽지 않은 흙에 기름과 발수제를 이용한 최소한의 마감을 함으로써 최종적으로는 자연으로 돌아가는 생애주기마저 작품의 한 맥락으로 봅니다. 동화마을수목원에서 짓는 작품은 공간을 품은 종 모양의 일반 울림통이 아닌, 거대한 울림통의 한 벽면을 떼어놓은 것 같은 형태로 제작하게 됩니다.</p>
+    </div>
+    <div class="about-card">
+      <h3>즉흥적으로</h3>
+      <p>정해진 도면 없이 그날 모인 사람들의 손과 호흡에 따라 형태가 달라집니다. 세 번의 토요일마다 다른 울림통이 태어납니다.</p>
+    </div>
+    <div class="about-card">
+      <h3>참여 안내</h3>
+      <p>참가비 없이 지역주민 누구나 참여할 수 있습니다. 사전 신청 없이 현장에서 바로 함께하셔도 되고, 미리 신청하시면 혼잡할 때 우선 참여하실 수 있습니다.</p>
+    </div>
+  </div>
+
+  <div class="session-strip">
+    <span class="session-chip">9. 5. <small>토</small></span>
+    <span class="session-chip">9. 12. <small>토</small></span>
+    <span class="session-chip">9. 19. <small>토</small></span>
+    <span class="session-chip" style="background:none;color:var(--accent2);border-color:var(--line);">오전 10시 ~ 오후 4시</span>
+    <span class="session-chip" style="background:none;color:var(--accent2);border-color:var(--line);">참가비 무료</span>
+  </div>
+</section>
+
+<!-- ── 예약 현황 ── -->
+<section id="booking" style="border-bottom:none;">
+  <p class="section-label">Reservations</p>
+  <h2 class="section-title">예약 현황</h2>
+
+  <div class="booking-layout">
+    <div>
+      <div class="calendar">
+        <p class="cal-head">2026년 9월</p>
+        <div class="cal-grid" id="cal-grid"></div>
+        <p class="cal-legend">
+          <span class="swatch"></span>워크숍 진행일 · 날짜를 누르면 해당 회차만 볼 수 있습니다.
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <p class="booking-summary" id="booking-summary"></p>
+      <div class="booking-table-wrap">
+        <table class="booking">
+          <thead id="booking-head"></thead>
+          <tbody id="booking-body"></tbody>
+        </table>
+      </div>
+      <p class="booking-empty" id="booking-empty" style="display:none;">해당 날짜에는 아직 예약이 없습니다.</p>
+
+      <div class="detail-box">
+        <h3>상세보기</h3>
+        <p class="hint">신청자 성함·연락처·인원 구성이 포함된 전체 목록입니다. 진행자 확인용 비밀번호가 필요합니다.</p>
+        <form class="detail-form" id="detail-form" autocomplete="off">
+          <input type="password" id="detail-pw" inputmode="numeric" maxlength="8" placeholder="••••" aria-label="비밀번호">
+          <button type="submit">상세보기</button>
+          <button type="button" class="ghost" id="detail-hide" style="display:none;" onclick="hideDetails()">가리기</button>
+        </form>
+        <p class="detail-msg" id="detail-msg"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── 푸터 ── -->
 <footer class="site-footer">
-  <span>문막-흙으로 잇다 · 울림통 · ninnik_kraft · 김아영</span>
+  <div class="footer-credit">
+    <p><b>주최·주관</b> 온누리 기획단 양성 × 니닉크라프트 × 동화마을수목원</p>
+    <p>원주시 · 한국농어촌공사 · 문막읍 농촌중심지활성화사업 주민위원회</p>
+    <p>문막-흙으로 잇다 · 울림통 · ninnik_kraft · 김아영</p>
+  </div>
   <a href="/oolimtong_archive">울림통 아카이브로 돌아가기 ↑</a>
 </footer>
 
