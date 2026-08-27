@@ -532,7 +532,7 @@ const body = `
 
     <div id="poster" style="scroll-margin-top:80px;">
       <button class="poster-thumb" type="button" onclick="openPoster()" aria-label="포스터 크게 보기">
-        <img id="poster-img" src="/munmak-heuk-poster.webp" alt="문막-흙으로 잇다 2026 워크숍 포스터">
+        <img id="poster-img" src="/munmak-heuk-poster-thumb.webp" width="680" height="960" alt="문막-흙으로 잇다 2026 워크숍 포스터">
       </button>
       <p class="poster-caption">포스터를 누르면 크게 볼 수 있습니다</p>
       <div class="poster-fallback">포스터 준비 중</div>
@@ -635,7 +635,7 @@ const body = `
 <!-- ── 포스터 라이트박스 ── -->
 <div id="poster-lightbox" onclick="closePoster()">
   <button class="lb-close" type="button" aria-label="닫기">✕</button>
-  <img src="/munmak-heuk-poster.webp" alt="문막-흙으로 잇다 2026 워크숍 포스터 크게 보기">
+  <img id="poster-full" data-src="/munmak-heuk-poster.webp" width="1500" height="2118" alt="문막-흙으로 잇다 2026 워크숍 포스터 크게 보기">
 </div>
 `;
 
@@ -787,7 +787,11 @@ const script = `
 
   window.openPoster = function () {
     var lb = document.getElementById("poster-lightbox");
-    if (lb) { lb.classList.add("open"); document.body.style.overflow = "hidden"; }
+    if (!lb) return;
+    var full = document.getElementById("poster-full");
+    if (full && !full.getAttribute("src")) full.src = full.getAttribute("data-src");
+    lb.classList.add("open");
+    document.body.style.overflow = "hidden";
   };
   window.closePoster = function () {
     var lb = document.getElementById("poster-lightbox");
