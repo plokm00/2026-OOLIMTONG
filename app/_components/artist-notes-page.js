@@ -7,7 +7,7 @@ const artists = [
   { id: "kim-hyeonguk", name: "김현국", team: "미로" },
   { id: "min-jihyeon", name: "민지현", team: "미로" },
   { id: "park-soyeon", name: "박소연", team: "고리" },
-  { id: "park-suyeon", name: "박수연", team: "고리" },
+  { id: "park-suyeon", name: "박수연", team: "고리", photo: "/artist-profiles/park-suyeon.webp" },
   { id: "park-jinhee", name: "박진희", team: "고리", photo: "/artist-profiles/park-jinhee.webp" },
   { id: "shin-jeongsuk", name: "신정숙", team: "네모" },
   { id: "lee-saerom", name: "이새롬", team: "미로" },
