@@ -155,12 +155,8 @@ const styles = `
   .cover-meta dd small { display: block; color: var(--text-dim); font-size: 13px; }
 
   /* ── 포스터 썸네일 ── */
-  /* 포스터를 네비게이션 아래 가로 구분선에서 88px 내려 앉힌다.
-     커버 섹션 위쪽 여백(92px)에서 88px를 남기고 끌어올린다. */
-  .poster-col {
-    margin-top: -4px;
-    padding-top: 0;
-  }
+  /* 포스터 윗변은 커버 섹션 기본 여백선(구분선에서 92px 아래),
+     즉 왼쪽 eyebrow 줄 윗변과 같은 높이에 놓인다. 따로 밀지 않는다. */
 
   .poster-thumb {
     display: block;
@@ -568,7 +564,6 @@ const styles = `
 
   @media (max-width: 900px) {
     .cover-grid { grid-template-columns: 1fr; gap: 36px; }
-    .poster-col { margin-top: 0; }
     .booking-layout { grid-template-columns: 1fr; gap: 30px; }
     .apply-layout { grid-template-columns: 1fr; gap: 30px; }
     .calendar { max-width: 400px; }
