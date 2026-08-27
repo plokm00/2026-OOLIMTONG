@@ -13,13 +13,13 @@ const artists = [
   { id: "lee-saerom", name: "이새롬", team: "미로" },
   { id: "lee-seongsun", name: "이성순", team: "고리", photo: "/artist-profiles/lee-seongsun.webp" },
   { id: "lee-an", name: "이안", team: "고리" },
-  { id: "lee-jaehong", name: "이재홍", team: "네모" },
+  { id: "lee-jaehong", name: "이재홍", team: "네모", photo: "/artist-profiles/lee-jaehong.webp" },
   { id: "lee-chaemyeong", name: "이채명", team: "고리" },
   { id: "in-donguk", name: "인동욱", team: "미로" },
   { id: "im-gyehwa", name: "임계화", team: "네모" },
   { id: "cho-youngbeom", name: "조영범", team: "네모 · 미로" },
   { id: "joo-jangseok", name: "주장석", team: "미로" },
-  { id: "heoyang", name: "허양", team: "네모" },
+  { id: "heoyang", name: "허양", team: "네모", photo: "/artist-profiles/heoyang.webp" },
 ];
 
 function initialArtist() {
