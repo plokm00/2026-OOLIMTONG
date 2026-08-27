@@ -523,7 +523,7 @@ const body = `
         <dd>
           인스타그램 <a href="https://instagram.com/ninnik_kraft" target="_blank" rel="noopener noreferrer" style="color:var(--accent2);">@NINNIK_KRAFT</a> DM
           <small>
-            성함·연락처·참여 인원·방문 예정 시간을 보내주시면 사전 신청 완료입니다.<br>
+            이름·연락처·참여 인원·방문 예정 날짜와 시간을 보내주시면 사전등록이 완료됩니다.<br>
             신청하시면 혼잡할 때 우선 안내해 드리고 작업 사진도 보내드려요.<br>
             흙 묻어도 되는 편한 옷차림과 모자·물 등을 챙겨오시면 좋습니다.
           </small>
