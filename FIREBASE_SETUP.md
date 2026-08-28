@@ -1,41 +1,41 @@
-# Firebase 연결 안내
+# Firebase / Cloud Firestore 연결 안내
 
-이 사이트는 별도의 빌드 과정이 없는 정적 HTML 사이트입니다. 따라서 Firebase의 브라우저 모듈 방식을 사용하도록 준비했습니다. Firebase 웹 앱 설정을 넣으면 `firebase-app.js`에서 Cloud Firestore를 사용할 수 있습니다.
+이 Next.js 앱은 Firebase 프로젝트 `oolimtong-archive`에 연결되어 있습니다.
 
-## 1. Firebase 프로젝트와 웹 앱 만들기
+- 앱 및 Firestore 초기화: `app/_lib/firebase.js`
+- 프로젝트 선택: `.firebaserc`
+- Firestore 보안 규칙: `firestore.rules`
+- Storage 보안 규칙: `storage.rules`
 
-1. [Firebase 콘솔](https://console.firebase.google.com/)에서 프로젝트를 만듭니다.
-2. 프로젝트 개요에서 **웹 앱(</>)**을 등록합니다.
-3. 표시되는 `firebaseConfig`의 값을 `2026 OOLIMTONG/firebase-config.js`에 넣습니다.
-4. Firebase 콘솔에서 **Cloud Firestore** 데이터베이스를 만듭니다. 처음에는 운영 모드로 만드세요.
+Firebase 웹 설정값은 브라우저에 공개되는 프로젝트 식별 정보입니다. 서비스 계정 JSON 키, 관리자 비밀번호, 개인 키는 저장소에 넣지 마세요.
 
-`firebaseConfig`는 웹 앱 식별용 설정이라 사이트에 포함되어도 됩니다. 단, 서비스 계정 JSON 키나 관리자 비밀번호는 절대로 이 저장소나 HTML에 넣으면 안 됩니다.
+## 클라이언트 컴포넌트에서 사용하기
 
-## 2. 페이지에서 Firestore 사용하기
+```js
+"use client";
 
-데이터를 저장할 HTML 파일의 마지막 `</body>` 직전에 아래처럼 모듈 스크립트를 추가합니다.
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../_lib/firebase";
 
-```html
-<script type="module">
-  import { db, isFirebaseConfigured } from "./firebase-app.js";
-  import { doc, setDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
-
-  if (isFirebaseConfigured()) {
-    await setDoc(doc(db, "workRecords", "example"), { updatedAt: new Date().toISOString() });
-  }
-</script>
+await addDoc(collection(db, "workRecords"), {
+  title: "작업 기록",
+  createdAt: serverTimestamp(),
+});
 ```
 
-실제 기록 저장 기능을 붙일 때는 공개 쓰기를 열지 말고, 먼저 Firebase Authentication으로 관리자 계정을 인증한 뒤 `firestore.rules`에서 그 계정만 쓰도록 제한하세요.
+컬렉션과 문서는 첫 쓰기 때 자동으로 만들어집니다. 서버 전용 관리자 작업은 웹 SDK가 아닌 `firebase-admin`과 별도의 서비스 계정 구성이 필요합니다.
 
-## 3. Hosting 배포 (선택)
+## 현재 보안 상태
 
-Firebase CLI를 설치한 뒤, 이 저장소의 최상위 폴더에서 아래 순서로 실행합니다.
+`firestore.rules`는 인증 기능을 연결하기 전까지 모든 읽기와 쓰기를 차단합니다. 설정 확인을 이유로 공개 쓰기를 허용하지 마세요. 실제 저장 기능을 붙일 때 Firebase Authentication을 먼저 구성하고, 필요한 컬렉션에만 최소 권한을 부여해야 합니다.
+
+## 규칙 배포
+
+Firebase 프로젝트 관리 권한이 있는 계정으로 로그인한 환경에서 실행합니다.
 
 ```powershell
-firebase login
-firebase use --add
-firebase deploy --only hosting,firestore:rules
+npx firebase-tools login
+npx firebase-tools deploy --only firestore:rules,storage
 ```
 
-`firebase.json`은 `2026 OOLIMTONG` 폴더를 배포 대상으로 지정합니다. 현재의 Python 로컬 서버로도 Firebase 연결을 테스트할 수 있습니다.
+사이트 배포는 현재 Vercel/Next.js 구성을 그대로 사용하며, Firebase는 Firestore와 Storage만 담당합니다.
