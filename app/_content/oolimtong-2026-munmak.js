@@ -366,6 +366,9 @@ const styles = `
   }
   table.booking th {
     font-family: 'IBM Plex Sans KR', sans-serif;
+    /* 단위·범례를 머리글로 옮겼으므로 두 줄로 접히게 둔다. */
+    white-space: normal;
+    line-height: 1.35;
     font-size: 12px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -433,6 +436,14 @@ const styles = `
 
   /* ── 현장 배치 & 혼잡도 ── */
   .venue-section { margin-top: 52px; max-width: 960px; }
+  /* 배치도를 달력 자리(왼쪽), 혼잡도 표를 신청 리스트 자리(오른쪽)에 놓아
+     위 예약 블록과 열을 맞춘다. 표가 좁아지는 만큼 눈에 더 들어온다. */
+  .venue-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+    gap: 44px;
+    align-items: start;
+  }
   .venue-heading {
     font-family: 'IBM Plex Sans KR', sans-serif;
     font-size: 15px;
@@ -441,7 +452,7 @@ const styles = `
     margin-bottom: 4px;
   }
   .venue-sub { font-size: 12.5px; color: var(--text-dim); margin-bottom: 18px; line-height: 1.7; }
-  .venue-diagram { display: block; width: 100%; max-width: 480px; height: auto; margin-bottom: 14px; }
+  .venue-diagram { display: block; width: 100%; max-width: 340px; height: auto; }
   .venue-note {
     font-size: 13px;
     color: var(--text-dim);
@@ -451,11 +462,11 @@ const styles = `
   .venue-note strong { color: var(--accent2); }
 
   .cong-wrap { overflow-x: auto; }
-  table.cong { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 620px; }
+  table.cong { width: 100%; border-collapse: collapse; font-size: 11.5px; min-width: 470px; }
   table.cong th,
   table.cong td {
     text-align: center;
-    padding: 7px 6px;
+    padding: 6px 4px;
     line-height: 1.5;
     border-bottom: 1px solid var(--line);
     border-right: 1px solid var(--line);
@@ -465,6 +476,9 @@ const styles = `
   table.cong td:last-child { border-right: none; }
   table.cong th {
     font-family: 'IBM Plex Sans KR', sans-serif;
+    /* 머리글은 두 줄로 접어 열 폭을 줄인다. */
+    white-space: normal;
+    line-height: 1.35;
     font-size: 10.5px;
     letter-spacing: 0.06em;
     color: var(--accent2);
@@ -476,7 +490,8 @@ const styles = `
   .cg-cell { font-variant-numeric: tabular-nums; }
   .cg-empty { color: var(--line); }
   .cg-low { background: rgba(226, 87, 30, 0.12); }
-  .cg-mid { background: rgba(226, 87, 30, 0.32); color: var(--accent2); font-weight: 600; }
+  .cg-mid { background: rgba(226, 87, 30, 0.30); color: var(--accent2); font-weight: 600; }
+  .cg-high { background: rgba(226, 87, 30, 0.55); color: var(--accent2); font-weight: 700; }
   .cg-over { background: var(--accent2); color: var(--white); font-weight: 700; }
 
   /* 시간을 정하지 않은 신청은 주황 히트맵과 아예 다른 청회색 계열로 빼서,
@@ -522,6 +537,8 @@ const styles = `
   @media (max-width: 900px) {
     .cover-grid { grid-template-columns: 1fr; gap: 36px; }
     .booking-layout { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+    .venue-grid { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+    .venue-diagram { max-width: 480px; }
     .calendar { max-width: 400px; }
   }
 
@@ -655,41 +672,59 @@ const body = `
 
   <div class="venue-section">
     <p class="venue-heading">현장 배치 &amp; 혼잡도</p>
-    <svg class="venue-diagram" viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="울림통 구역 최대 6명, 테이블 구역 최대 8명 배치도">
-      <ellipse cx="150" cy="140" rx="72" ry="38" fill="var(--bg3)" stroke="var(--accent)" stroke-width="2"></ellipse>
-      <text x="150" y="146" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent2)">울림통</text>
-      <circle cx="114" cy="80" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="186" cy="80" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="114" cy="200" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="186" cy="200" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="56" cy="140" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="244" cy="140" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <text x="150" y="266" text-anchor="middle" font-size="12" fill="var(--text-dim)">최대 6명 (긴 변 2명씩 · 짧은 변 1명씩)</text>
 
-      <rect x="390" y="105" width="170" height="70" rx="6" fill="var(--bg3)" stroke="var(--line)" stroke-width="2"></rect>
-      <text x="475" y="146" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent2)">테이블</text>
-      <circle cx="424" cy="83" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="475" cy="83" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="526" cy="83" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="424" cy="197" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="475" cy="197" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="526" cy="197" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="368" cy="140" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="582" cy="140" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <text x="475" y="266" text-anchor="middle" font-size="12" fill="var(--text-dim)">최대 8명 (긴 변 3명씩 · 짧은 변 1명씩)</text>
+    <div class="venue-grid">
+    <svg class="venue-diagram" viewBox="0 0 440 365" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="울림통 최대 6명, 돗자리 두 장 각 8명 배치도">
+      <ellipse cx="220" cy="75" rx="60" ry="28" fill="var(--bg3)" stroke="var(--accent)" stroke-width="2"></ellipse>
+      <text x="220" y="82" text-anchor="middle" font-size="20" font-weight="700" fill="var(--accent2)">울림통</text>
+      <circle cx="190" cy="27" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="250" cy="27" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="190" cy="123" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="250" cy="123" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="140" cy="75" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="300" cy="75" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <text x="220" y="157" text-anchor="middle" font-size="17" fill="var(--text-dim)">둘러서서 최대 6명</text>
+
+      <rect x="40" y="225" width="110" height="55" rx="4" fill="var(--bg3)" stroke="var(--line)" stroke-width="2"></rect>
+      <text x="95" y="258" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent2)">돗자리 1</text>
+      <circle cx="62" cy="205" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="95" cy="205" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="128" cy="205" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="62" cy="300" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="95" cy="300" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="128" cy="300" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="20" cy="252" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="170" cy="252" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <text x="95" y="340" text-anchor="middle" font-size="17" fill="var(--text-dim)">앉아서 8명</text>
+
+      <rect x="290" y="225" width="110" height="55" rx="4" fill="var(--bg3)" stroke="var(--line)" stroke-width="2"></rect>
+      <text x="345" y="258" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent2)">돗자리 2</text>
+      <circle cx="312" cy="205" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="345" cy="205" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="378" cy="205" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="312" cy="300" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="345" cy="300" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="378" cy="300" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="270" cy="252" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="420" cy="252" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <text x="345" y="340" text-anchor="middle" font-size="17" fill="var(--text-dim)">앉아서 8명</text>
     </svg>
 
-    <p class="venue-note">두 구역을 합치면 같은 시간대에 <strong>최대 14명</strong>까지 여유 있게 작업할 수 있습니다. 아래 표는 신청서에 적힌 시간을 기준으로, 날짜·시간대별 예상 인원이 이 기준을 넘는지 자동으로 보여줍니다.</p>
+    <div>
+    <p class="venue-note">울림통 둘레 6명에 돗자리 두 장 16명을 더해, 같은 시간대에 <strong>최대 22명</strong>까지 작업할 수 있습니다. 아래 표는 신청서에 적힌 시간을 기준으로, 날짜·시간대별 예상 인원이 이 기준을 넘는지 자동으로 보여줍니다.</p>
 
     <div class="cong-wrap">
       <table class="cong" id="cong-table"></table>
     </div>
     <p class="cong-legend">
-      <span><span class="cg-swatch cg-low"></span>여유 (1~6명 · 한 구역으로 충분)</span>
-      <span><span class="cg-swatch cg-mid"></span>혼잡 (7~14명 · 두 구역 모두 필요)</span>
-      <span><span class="cg-swatch cg-over"></span>초과 (14명 초과 · 시간 분산 필요)</span>
+      <span><span class="cg-swatch cg-low"></span>여유 (1~8명 · 한 구역)</span>
+      <span><span class="cg-swatch cg-mid"></span>보통 (9~16명 · 두 구역)</span>
+      <span><span class="cg-swatch cg-high"></span>빠듯 (17~22명 · 세 구역 전부)</span>
+      <span><span class="cg-swatch cg-over"></span>초과 (22명 초과 · 시간 분산 필요)</span>
       <span><span class="cg-swatch cg-na"></span>시간 미정 (시간대별 혼잡도에 안 잡힘)</span>
     </p>
+    </div>
+    </div>
   </div>
 </section>
 
@@ -714,7 +749,7 @@ const script = `
 (function () {
   var EVENT_DAYS = [5, 12, 19];
   var PW = "1661";
-  var PACKED = "W3siaWQiOiJyMSIsIm5hbWUiOiLsnbTsp4TtnawiLCJwaG9uZSI6IjAxMC05MzE4LTA5OTEiLCJkYXRlIjoiMjAyNi0wOS0xOSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjozLCJkZXRhaWwiOiLshLHsnbggMuuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDHrqoUiLCJub3RlIjoiIn0seyJpZCI6InIyIiwibmFtZSI6Iu2XiO2drOqyvSIsInBob25lIjoiMDEwLTk5MDctNjA3MiIsImRhdGUiOiIyMDI2LTA5LTE5IiwidGltZSI6IjE0OjAwIiwidG90YWwiOm51bGwsImRldGFpbCI6IiIsIm5vdGUiOiIifSx7ImlkIjoicjMiLCJuYW1lIjoi7J2064+Z7Z2sIiwicGhvbmUiOiIwMTAtODg1Ny04MzQ5IiwiZGF0ZSI6IjIwMjYtMDktMTIiLCJ0aW1lIjoiMTA6MDAiLCJ0b3RhbCI6NiwiZGV0YWlsIjoi7ISx7J24IDTrqoUgLyDslYTrj5nCt+yyreyGjOuFhCAy66qFIiwibm90ZSI6IiJ9LHsiaWQiOiJyNCIsIm5hbWUiOiLsl4Ttg5zrprwiLCJwaG9uZSI6IjAxMC05MDU3LTc5MTgiLCJkYXRlIjoiMjAyNi0wOS0xOSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjo0LCJkZXRhaWwiOiLshLHsnbggMuuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUiLCJub3RlIjoiIn0seyJpZCI6InI1IiwibmFtZSI6IuuwleyVhOumhCIsInBob25lIjoiMDEwLTQ4NTEtNDU1MCIsImRhdGUiOiIyMDI2LTA5LTA1IiwidGltZSI6IjEwOjAwIiwidG90YWwiOjQsImRldGFpbCI6IuyEseyduCAy66qFIC8g7JWE64+Zwrfssq3shozrhYQgMuuqhSIsIm5vdGUiOiIifSx7ImlkIjoicjYiLCJuYW1lIjoi6rmA7ISg7JiBIiwicGhvbmUiOiIwMTAtNDIxMC02NTg4IiwiZGF0ZSI6IjIwMjYtMDktMDUiLCJ0aW1lIjoiMTM6MDAiLCJ0b3RhbCI6MywiZGV0YWlsIjoiIiwibm90ZSI6IiJ9LHsiaWQiOiJyNyIsIm5hbWUiOiLrgpjsmIHsi6QiLCJwaG9uZSI6IjAxMC0zMDAyLTY1NDMiLCJkYXRlIjoiMjAyNi0wOS0xMiIsInRpbWUiOiIxMDozMCIsInRvdGFsIjozLCJkZXRhaWwiOiLshLHsnbggMuuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDHrqoUiLCJub3RlIjoiIn0seyJpZCI6InI4IiwibmFtZSI6IuqwleuvvOyngCIsInBob25lIjoiMDEwLTcxODgtNDk2MyIsImRhdGUiOiIyMDI2LTA5LTE5IiwidGltZSI6IlBNIiwidG90YWwiOjQsImRldGFpbCI6IiIsIm5vdGUiOiIifSx7ImlkIjoicjkiLCJuYW1lIjoi7J207J2A7KO8IiwicGhvbmUiOiIwMTAtMzMzNi0zNDY1IiwiZGF0ZSI6IjIwMjYtMDktMTkiLCJ0aW1lIjoiQU0iLCJ0b3RhbCI6MywiZGV0YWlsIjoi7ISx7J24IDLrqoUgLyDslYTrj5nCt+yyreyGjOuFhCAx66qFIiwibm90ZSI6Iuy0iDIg64Ko7JWEICsg67aA66qoIn0seyJpZCI6InIxMCIsIm5hbWUiOiLsnbTrr7zsiJkiLCJwaG9uZSI6IjAxMC00MTQ1LTA5OTAiLCJkYXRlIjoiMjAyNi0wOS0xOSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjo0LCJkZXRhaWwiOiLshLHsnbggMuuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUiLCJub3RlIjoiMTM6MDAg7J207ZuEIO2drOunnSJ9LHsiaWQiOiJyMTEiLCJuYW1lIjoi7J207IOB7JWEIiwicGhvbmUiOiIwMTAtMzM5NS01NjY4IiwiZGF0ZSI6IjIwMjYtMDktMTIiLCJ0aW1lIjoiMTA6MDAiLCJ0b3RhbCI6NCwiZGV0YWlsIjoi7ISx7J24IDLrqoUgLyDslYTrj5nCt+yyreyGjOuFhCAy66qFIiwibm90ZSI6IiJ9LHsiaWQiOiJyMTIiLCJuYW1lIjoi7Jyg7KeA7ZicIiwicGhvbmUiOiIwMTAtNDYyNy04NTE2IiwiZGF0ZSI6IjIwMjYtMDktMDUiLCJ0aW1lIjoiMTE6MDAiLCJ0b3RhbCI6NCwiZGV0YWlsIjoi7ISx7J24IDLrqoUgLyDslYTrj5nCt+yyreyGjOuFhCAy66qFIiwibm90ZSI6IuyVhOuPmSA47IS4LCA27IS4In0seyJpZCI6InIxMyIsIm5hbWUiOiLtmY3sp4DsnYAiLCJwaG9uZSI6IjAxMC02NDg5LTMyMjIiLCJkYXRlIjoiMjAyNi0wOS0xMiIsInRpbWUiOiIxMzowMCIsInRvdGFsIjozLCJkZXRhaWwiOiLshLHsnbggMeuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUiLCJub3RlIjoiMTM6MDB+MTU6MzAifSx7ImlkIjoicjE0IiwibmFtZSI6Iu2ZjeyngOydgCIsInBob25lIjoiMDEwLTY0ODktMzIyMiIsImRhdGUiOiIyMDI2LTA5LTE5IiwidGltZSI6IjEzOjAwIiwidG90YWwiOjMsImRldGFpbCI6IuyEseyduCAx66qFIC8g7JWE64+Zwrfssq3shozrhYQgMuuqhSIsIm5vdGUiOiIxMzowMH4xNTozMCJ9LHsiaWQiOiJyMTUiLCJuYW1lIjoi7LWc7Jew7Z2sIiwicGhvbmUiOiIwMTAtNjM4OC0wMDA3IiwiZGF0ZSI6IjIwMjYtMDktMTIiLCJ0aW1lIjoiMTA6MDAiLCJ0b3RhbCI6MywiZGV0YWlsIjoiIiwibm90ZSI6IjEwOjAwfjExOjAwIOuwqeusuCDsmIjsoJUifSx7ImlkIjoicjE2IiwibmFtZSI6Iuq5gOygleuvuCIsInBob25lIjoiMDEwLTcxMDUtMTU3MCIsImRhdGUiOiIyMDI2LTA5LTEyIiwidGltZSI6bnVsbCwidG90YWwiOjIsImRldGFpbCI6IuyVhOuPmcK37LKt7IaM64WEIDLrqoUiLCJub3RlIjoi7LSIMiDsl6zslYQifSx7ImlkIjoicjE3IiwibmFtZSI6IuycoOuvuOuCmCIsInBob25lIjoiMDEwLTY2MTEtNDg4MyIsImRhdGUiOiIyMDI2LTA5LTA1IiwidGltZSI6IjEzOjAwIiwidG90YWwiOjUsImRldGFpbCI6IiIsIm5vdGUiOiIxMzowMCDsoITtm4QifV0=";
+  var PACKED = "W3siaWQiOiJyMSIsIm5hbWUiOiLsnbTsp4TtnawiLCJwaG9uZSI6IjAxMC05MzE4LTA5OTEiLCJkYXRlIjoiMjAyNi0wOS0xOSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjozLCJhZHVsdHMiOjIsImtpZHMiOjEsIm5vdGUiOiIifSx7ImlkIjoicjIiLCJuYW1lIjoi7ZeI7Z2s6rK9IiwicGhvbmUiOiIwMTAtOTkwNy02MDcyIiwiZGF0ZSI6IjIwMjYtMDktMTkiLCJ0aW1lIjoiMTQ6MDAiLCJ0b3RhbCI6bnVsbCwiYWR1bHRzIjpudWxsLCJraWRzIjpudWxsLCJub3RlIjoiIn0seyJpZCI6InIzIiwibmFtZSI6IuydtOuPme2drCIsInBob25lIjoiMDEwLTg4NTctODM0OSIsImRhdGUiOiIyMDI2LTA5LTEyIiwidGltZSI6IjEwOjAwIiwidG90YWwiOjYsImFkdWx0cyI6NCwia2lkcyI6Miwibm90ZSI6IiJ9LHsiaWQiOiJyNCIsIm5hbWUiOiLsl4Ttg5zrprwiLCJwaG9uZSI6IjAxMC05MDU3LTc5MTgiLCJkYXRlIjoiMjAyNi0wOS0xOSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjo0LCJhZHVsdHMiOjIsImtpZHMiOjIsIm5vdGUiOiIifSx7ImlkIjoicjUiLCJuYW1lIjoi67CV7JWE66aEIiwicGhvbmUiOiIwMTAtNDg1MS00NTUwIiwiZGF0ZSI6IjIwMjYtMDktMDUiLCJ0aW1lIjoiMTA6MDAiLCJ0b3RhbCI6NCwiYWR1bHRzIjoyLCJraWRzIjoyLCJub3RlIjoiIn0seyJpZCI6InI2IiwibmFtZSI6Iuq5gOyEoOyYgSIsInBob25lIjoiMDEwLTQyMTAtNjU4OCIsImRhdGUiOiIyMDI2LTA5LTA1IiwidGltZSI6IjEzOjAwIiwidG90YWwiOjMsImFkdWx0cyI6bnVsbCwia2lkcyI6bnVsbCwibm90ZSI6IiJ9LHsiaWQiOiJyNyIsIm5hbWUiOiLrgpjsmIHsi6QiLCJwaG9uZSI6IjAxMC0zMDAyLTY1NDMiLCJkYXRlIjoiMjAyNi0wOS0xMiIsInRpbWUiOiIxMDozMCIsInRvdGFsIjozLCJhZHVsdHMiOjIsImtpZHMiOjEsIm5vdGUiOiIifSx7ImlkIjoicjgiLCJuYW1lIjoi6rCV66+87KeAIiwicGhvbmUiOiIwMTAtNzE4OC00OTYzIiwiZGF0ZSI6IjIwMjYtMDktMTkiLCJ0aW1lIjoiUE0iLCJ0b3RhbCI6NCwiYWR1bHRzIjpudWxsLCJraWRzIjpudWxsLCJub3RlIjoiIn0seyJpZCI6InI5IiwibmFtZSI6IuydtOydgOyjvCIsInBob25lIjoiMDEwLTMzMzYtMzQ2NSIsImRhdGUiOiIyMDI2LTA5LTE5IiwidGltZSI6IkFNIiwidG90YWwiOjMsImFkdWx0cyI6Miwia2lkcyI6MSwibm90ZSI6Iuy0iDIg64Ko7JWEICsg67aA66qoIn0seyJpZCI6InIxMCIsIm5hbWUiOiLsnbTrr7zsiJkiLCJwaG9uZSI6IjAxMC00MTQ1LTA5OTAiLCJkYXRlIjoiMjAyNi0wOS0xOSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjo0LCJhZHVsdHMiOjIsImtpZHMiOjIsIm5vdGUiOiIxMzowMCDsnbTtm4Qg7Z2s66edIn0seyJpZCI6InIxMSIsIm5hbWUiOiLsnbTsg4HslYQiLCJwaG9uZSI6IjAxMC0zMzk1LTU2NjgiLCJkYXRlIjoiMjAyNi0wOS0xMiIsInRpbWUiOiIxMDowMCIsInRvdGFsIjo0LCJhZHVsdHMiOjIsImtpZHMiOjIsIm5vdGUiOiIifSx7ImlkIjoicjEyIiwibmFtZSI6IuycoOyngO2YnCIsInBob25lIjoiMDEwLTQ2MjctODUxNiIsImRhdGUiOiIyMDI2LTA5LTA1IiwidGltZSI6IjExOjAwIiwidG90YWwiOjQsImFkdWx0cyI6Miwia2lkcyI6Miwibm90ZSI6IuyVhOuPmSA47IS4LCA27IS4In0seyJpZCI6InIxMyIsIm5hbWUiOiLtmY3sp4DsnYAiLCJwaG9uZSI6IjAxMC02NDg5LTMyMjIiLCJkYXRlIjoiMjAyNi0wOS0xMiIsInRpbWUiOiIxMzowMCIsInRvdGFsIjozLCJhZHVsdHMiOjEsImtpZHMiOjIsIm5vdGUiOiIxMzowMH4xNTozMCJ9LHsiaWQiOiJyMTQiLCJuYW1lIjoi7ZmN7KeA7J2AIiwicGhvbmUiOiIwMTAtNjQ4OS0zMjIyIiwiZGF0ZSI6IjIwMjYtMDktMTkiLCJ0aW1lIjoiMTM6MDAiLCJ0b3RhbCI6MywiYWR1bHRzIjoxLCJraWRzIjoyLCJub3RlIjoiMTM6MDB+MTU6MzAifSx7ImlkIjoicjE1IiwibmFtZSI6Iuy1nOyXsO2drCIsInBob25lIjoiMDEwLTYzODgtMDAwNyIsImRhdGUiOiIyMDI2LTA5LTEyIiwidGltZSI6IjEwOjAwIiwidG90YWwiOjMsImFkdWx0cyI6bnVsbCwia2lkcyI6bnVsbCwibm90ZSI6IjEwOjAwfjExOjAwIOuwqeusuCDsmIjsoJUifSx7ImlkIjoicjE2IiwibmFtZSI6Iuq5gOygleuvuCIsInBob25lIjoiMDEwLTcxMDUtMTU3MCIsImRhdGUiOiIyMDI2LTA5LTEyIiwidGltZSI6bnVsbCwidG90YWwiOjIsImFkdWx0cyI6MCwia2lkcyI6Miwibm90ZSI6Iuy0iDIg7Jes7JWEIn0seyJpZCI6InIxNyIsIm5hbWUiOiLsnKDrr7jrgpgiLCJwaG9uZSI6IjAxMC02NjExLTQ4ODMiLCJkYXRlIjoiMjAyNi0wOS0wNSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjo1LCJhZHVsdHMiOm51bGwsImtpZHMiOm51bGwsIm5vdGUiOiIxMzowMCDsoITtm4QifSx7ImlkIjoicjE4IiwibmFtZSI6IuuwleycoOumvCIsInBob25lIjoiMDEwLTI0NzItNjc2MyIsImRhdGUiOiIyMDI2LTA5LTA1IiwidGltZSI6IjE0OjAwIiwidG90YWwiOjQsImFkdWx0cyI6bnVsbCwia2lkcyI6bnVsbCwibm90ZSI6IiJ9LHsiaWQiOiJyMTkiLCJuYW1lIjoi6rmA7Jyk7KCVIiwicGhvbmUiOiIwMTAtMzMyMy0xMTc1IiwiZGF0ZSI6IjIwMjYtMDktMTkiLCJ0aW1lIjoiMTQ6MDAiLCJ0b3RhbCI6NCwiYWR1bHRzIjpudWxsLCJraWRzIjpudWxsLCJub3RlIjoiIn1d";
 
   var rows = [];
   var showDetails = false;
@@ -738,11 +773,15 @@ const script = `
 
   function dayOf(iso) { return parseInt(iso.slice(8, 10), 10); }
 
+  // 세 회차 모두 9월 토요일이라 월·요일은 달력이 이미 말해준다. 일자만 쓴다.
   function fmtDate(iso) {
-    var m = parseInt(iso.slice(5, 7), 10);
-    var d = parseInt(iso.slice(8, 10), 10);
-    var dow = "일월화수목금토".charAt(new Date(iso + "T00:00:00").getDay());
-    return m + "." + d + ".(" + dow + ")";
+    return parseInt(iso.slice(8, 10), 10) + "일";
+  }
+
+  // 010은 전원 공통이라 머리글로 빼고 뒤 8자리만 보여준다.
+  function fmtPhone(t) {
+    if (!t) return "—";
+    return t.replace(/^010[-\s]?/, "");
   }
 
   function fmtTime(t) {
@@ -774,8 +813,8 @@ const script = `
   function fmtTotal(n) { return n == null ? "미정" : n + "명"; }
 
   function fmtTotalDetail(r) {
-    if (r.total == null) return r.detail || "미정";
-    return fmtTotal(r.total) + (r.detail ? " (" + r.detail + ")" : "");
+    if (r.total == null) return "미정";
+    return fmtTotal(r.total) + (r.adults == null ? "" : " (" + r.adults + "/" + r.kids + ")");
   }
 
   function esc(s) {
@@ -842,13 +881,13 @@ const script = `
     var list = visible();
 
     head.innerHTML = showDetails
-      ? "<tr><th>이름</th><th>연락처</th><th>날짜</th><th>시간</th><th>총인원</th><th>비고</th></tr>"
+      ? "<tr><th>이름</th><th>연락처<br>(010-)</th><th>날짜</th><th>시간</th><th>총인원<br>(성인/아동)</th><th>비고</th></tr>"
       : "<tr><th>이름</th><th>날짜</th><th>시간</th><th>총인원</th></tr>";
 
     var html = "";
     list.forEach(function (r) {
       if (showDetails) {
-        html += "<tr><td>" + esc(r.name) + "</td><td class=\\"num\\">" + esc(r.phone || "—") +
+        html += "<tr><td>" + esc(r.name) + "</td><td class=\\"num\\">" + esc(fmtPhone(r.phone)) +
           "</td><td class=\\"num\\">" + fmtDate(r.date) + "</td><td class=\\"num" + timeCls(r.time) + "\\">" + fmtTime(r.time) +
           "</td><td>" + esc(fmtTotalDetail(r)) + "</td><td class=\\"note\\">" + esc(r.note || "—") + "</td></tr>";
       } else {
@@ -875,9 +914,9 @@ const script = `
   function isUndecidedCol(c) { return c === "AM" || c === "PM" || c === "NA"; }
 
   function congLabel(c) {
-    if (c === "AM") return "오전(미정)";
-    if (c === "PM") return "오후(미정)";
-    if (c === "NA") return "시간 미정";
+    if (c === "AM") return "오전<br>미정";
+    if (c === "PM") return "오후<br>미정";
+    if (c === "NA") return "시간<br>미정";
     return (c < 10 ? "0" + c : c) + ":00~";
   }
 
@@ -889,7 +928,7 @@ const script = `
     CONG_COLUMNS.forEach(function (c) {
       html += "<th class=\\"" + (isUndecidedCol(c) ? "th-na" : "") + "\\">" + congLabel(c) + "</th>";
     });
-    html += "<th>하루 합계</th></tr></thead><tbody>";
+    html += "<th>하루<br>합계</th></tr></thead><tbody>";
 
     EVENT_DAYS.forEach(function (d) {
       var iso = "2026-09-" + (d < 10 ? "0" + d : d);
@@ -912,12 +951,16 @@ const script = `
           // 시각이 안 잡힌 칸은 시간대 혼잡도로 읽히면 안 되므로 히트맵에서 빼둔다.
           cls = isUndecidedCol(c)
             ? "cg-na"
-            : (people > 14 ? "cg-over" : (people > 6 ? "cg-mid" : "cg-low"));
-          label = (people > 0 ? people + "명" : "") + (unknown ? (people > 0 ? " +" : "") + unknown + "건 미정" : "");
+            : (people > 22 ? "cg-over"
+              : (people > 16 ? "cg-high"
+                : (people > 8 ? "cg-mid" : "cg-low")));
+          label = people > 0
+            ? people + "명" + (unknown ? " +" + unknown + "건" : "")
+            : unknown + "건 미정";
         }
         html += "<td class=\\"cg-cell " + cls + "\\">" + label + "</td>";
       });
-      html += "<td class=\\"cg-cell\\">" + dayPeople + "명" + (dayUnknown ? " (+" + dayUnknown + "건 미정)" : "") + "</td></tr>";
+      html += "<td class=\\"cg-cell\\">" + dayPeople + "명" + (dayUnknown ? " +" + dayUnknown + "건" : "") + "</td></tr>";
     });
 
     html += "</tbody>";
