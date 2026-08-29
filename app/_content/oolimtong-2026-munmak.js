@@ -636,9 +636,9 @@ const body = `
 
   <div class="venue-section">
     <p class="venue-heading">현장 배치 &amp; 혼잡도</p>
-    <p class="venue-sub">동화마을수목원 잔디광장 작업 구역은 두 곳으로 나뉩니다. 각 구역은 <strong>최대 6명</strong>이 함께 작업하기 좋은 크기입니다.</p>
+    <p class="venue-sub">동화마을수목원 잔디광장 작업 구역은 두 곳으로 나뉩니다. 울림통 주위는 둘러서서 <strong>최대 6명</strong>, 테이블은 긴 변에 3명씩·짧은 변에 1명씩 <strong>최대 8명</strong>이 함께 작업할 수 있습니다.</p>
 
-    <svg class="venue-diagram" viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="울림통 구역과 테이블 구역 각각 최대 6명 배치도">
+    <svg class="venue-diagram" viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="울림통 구역 최대 6명, 테이블 구역 최대 8명 배치도">
       <circle cx="150" cy="140" r="50" fill="var(--bg3)" stroke="var(--accent)" stroke-width="2"></circle>
       <text x="150" y="145" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent2)">울림통</text>
       <circle cx="150" cy="45" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
@@ -649,26 +649,28 @@ const body = `
       <circle cx="67.7" cy="92.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
       <text x="150" y="266" text-anchor="middle" font-size="12" fill="var(--text-dim)">최대 6명</text>
 
-      <rect x="395" y="95" width="150" height="90" rx="6" fill="var(--bg3)" stroke="var(--line)" stroke-width="2"></rect>
-      <text x="470" y="145" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent2)">테이블</text>
-      <circle cx="470" cy="45" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="552.3" cy="92.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="552.3" cy="187.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="470" cy="235" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="387.7" cy="187.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="387.7" cy="92.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <text x="470" y="266" text-anchor="middle" font-size="12" fill="var(--text-dim)">최대 6명</text>
+      <rect x="390" y="105" width="170" height="70" rx="6" fill="var(--bg3)" stroke="var(--line)" stroke-width="2"></rect>
+      <text x="475" y="146" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent2)">테이블</text>
+      <circle cx="424" cy="83" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="475" cy="83" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="526" cy="83" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="424" cy="197" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="475" cy="197" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="526" cy="197" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="368" cy="140" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="582" cy="140" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <text x="475" y="266" text-anchor="middle" font-size="12" fill="var(--text-dim)">최대 8명 (긴 변 3명씩 · 짧은 변 1명씩)</text>
     </svg>
 
-    <p class="venue-note">두 구역을 합치면 같은 시간대에 <strong>최대 12명</strong>까지 여유 있게 작업할 수 있습니다. 아래 표는 신청서에 적힌 시간을 기준으로, 날짜·시간대별 예상 인원이 이 기준을 넘는지 자동으로 보여줍니다.</p>
+    <p class="venue-note">두 구역을 합치면 같은 시간대에 <strong>최대 14명</strong>까지 여유 있게 작업할 수 있습니다. 아래 표는 신청서에 적힌 시간을 기준으로, 날짜·시간대별 예상 인원이 이 기준을 넘는지 자동으로 보여줍니다.</p>
 
     <div class="cong-wrap">
       <table class="cong" id="cong-table"></table>
     </div>
     <p class="cong-legend">
-      <span><span class="cg-swatch cg-low"></span>여유 (1~6명)</span>
-      <span><span class="cg-swatch cg-mid"></span>혼잡 (7~12명, 두 구역 모두 필요)</span>
-      <span><span class="cg-swatch cg-over"></span>초과 (12명 초과 · 시간 분산 필요)</span>
+      <span><span class="cg-swatch cg-low"></span>여유 (1~6명 · 한 구역으로 충분)</span>
+      <span><span class="cg-swatch cg-mid"></span>혼잡 (7~14명 · 두 구역 모두 필요)</span>
+      <span><span class="cg-swatch cg-over"></span>초과 (14명 초과 · 시간 분산 필요)</span>
     </p>
   </div>
 </section>
@@ -694,7 +696,7 @@ const script = `
 (function () {
   var EVENT_DAYS = [5, 12, 19];
   var PW = "1661";
-  var PACKED = "W3siaWQiOiJyMSIsIm5hbWUiOiLsnbTsp4TtnawiLCJwaG9uZSI6IjAxMC05MzE4LTA5OTEiLCJkYXRlIjoiMjAyNi0wOS0xOSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjozLCJkZXRhaWwiOiLshLHsnbggMuuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDHrqoUifSx7ImlkIjoicjIiLCJuYW1lIjoi7ZeI7Z2s6rK9IiwicGhvbmUiOiIwMTAtOTkwNy02MDcyIiwiZGF0ZSI6IjIwMjYtMDktMTkiLCJ0aW1lIjoiMTQ6MDAiLCJ0b3RhbCI6bnVsbCwiZGV0YWlsIjoi7J247JuQIOuvuOyglSJ9LHsiaWQiOiJyMyIsIm5hbWUiOiLsnbTrj5ntnawiLCJwaG9uZSI6IjAxMC04ODU3LTgzNDkiLCJkYXRlIjoiMjAyNi0wOS0xMiIsInRpbWUiOiIxMDowMCIsInRvdGFsIjo2LCJkZXRhaWwiOiLshLHsnbggNOuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUifSx7ImlkIjoicjQiLCJuYW1lIjoi7JeE7YOc66a8IiwicGhvbmUiOiIwMTAtOTA1Ny03OTE4IiwiZGF0ZSI6IjIwMjYtMDktMTkiLCJ0aW1lIjoiMTM6MDAiLCJ0b3RhbCI6NCwiZGV0YWlsIjoi7ISx7J24IDLrqoUgLyDslYTrj5nCt+yyreyGjOuFhCAy66qFIn0seyJpZCI6InI1IiwibmFtZSI6IuuwleyVhOumhCIsInBob25lIjoiMDEwLTQ4NTEtNDU1MCIsImRhdGUiOiIyMDI2LTA5LTA1IiwidGltZSI6IjEwOjAwIiwidG90YWwiOjQsImRldGFpbCI6IuyEseyduCAy66qFIC8g7JWE64+Zwrfssq3shozrhYQgMuuqhSJ9LHsiaWQiOiJyNiIsIm5hbWUiOiLquYDshKDsmIEiLCJwaG9uZSI6IjAxMC00MjEwLTY1ODgiLCJkYXRlIjoiMjAyNi0wOS0wNSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjozLCJkZXRhaWwiOiIifSx7ImlkIjoicjciLCJuYW1lIjoi64KY7JiB7IukIiwicGhvbmUiOiIwMTAtMzAwMi02NTQzIiwiZGF0ZSI6IjIwMjYtMDktMTIiLCJ0aW1lIjoiMTA6MzAiLCJ0b3RhbCI6MywiZGV0YWlsIjoi7ISx7J24IDLrqoUgLyDslYTrj5nCt+yyreyGjOuFhCAx66qFIn0seyJpZCI6InI4IiwibmFtZSI6IuqwleuvvOyngCIsInBob25lIjoiMDEwLTcxODgtNDk2MyIsImRhdGUiOiIyMDI2LTA5LTE5IiwidGltZSI6IlBNIiwidG90YWwiOjQsImRldGFpbCI6IuyYpO2bhCDtnazrp50gKOyLnOqwhCDrr7jsoJUpIn0seyJpZCI6InI5IiwibmFtZSI6IuydtOydgOyjvCIsInBob25lIjoiMDEwLTMzMzYtMzQ2NSIsImRhdGUiOiIyMDI2LTA5LTE5IiwidGltZSI6IkFNIiwidG90YWwiOjMsImRldGFpbCI6IuyEseyduCAy66qFIC8g7JWE64+Zwrfssq3shozrhYQgMeuqhSAo7LSIMiDrgqjslYQsIOu2gCwg66qoKSDCtyDsmKTsoIQg7Z2s66edIn0seyJpZCI6InIxMCIsIm5hbWUiOiLsnbTrr7zsiJkiLCJwaG9uZSI6IjAxMC00MTQ1LTA5OTAiLCJkYXRlIjoiMjAyNi0wOS0xOSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjo0LCJkZXRhaWwiOiLshLHsnbggMuuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUgwrcgMTM6MDAg7J207ZuEIO2drOunnSJ9LHsiaWQiOiJyMTEiLCJuYW1lIjoi7J207IOB7JWEIiwicGhvbmUiOiIwMTAtMzM5NS01NjY4IiwiZGF0ZSI6IjIwMjYtMDktMTIiLCJ0aW1lIjoiMTA6MDAiLCJ0b3RhbCI6NCwiZGV0YWlsIjoi7ISx7J24IDLrqoUgLyDslYTrj5nCt+yyreyGjOuFhCAy66qFIn0seyJpZCI6InIxMiIsIm5hbWUiOiLsnKDsp4DtmJwiLCJwaG9uZSI6IjAxMC00NjI3LTg1MTYiLCJkYXRlIjoiMjAyNi0wOS0wNSIsInRpbWUiOiIxMTowMCIsInRvdGFsIjo0LCJkZXRhaWwiOiLshLHsnbggMuuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUgKDjshLgsIDbshLgpIn0seyJpZCI6InIxMyIsIm5hbWUiOiLtmY3sp4DsnYAiLCJwaG9uZSI6IjAxMC02NDg5LTMyMjIiLCJkYXRlIjoiMjAyNi0wOS0xMiIsInRpbWUiOiIxMzowMCIsInRvdGFsIjozLCJkZXRhaWwiOiLshLHsnbggMeuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUgwrcgMTM6MDB+MTU6MzAifSx7ImlkIjoicjE0IiwibmFtZSI6Iu2ZjeyngOydgCIsInBob25lIjoiMDEwLTY0ODktMzIyMiIsImRhdGUiOiIyMDI2LTA5LTE5IiwidGltZSI6IjEzOjAwIiwidG90YWwiOjMsImRldGFpbCI6IuyEseyduCAx66qFIC8g7JWE64+Zwrfssq3shozrhYQgMuuqhSDCtyAxMzowMH4xNTozMCJ9LHsiaWQiOiJyMTUiLCJuYW1lIjoi7LWc7Jew7Z2sIiwicGhvbmUiOiIwMTAtNjM4OC0wMDA3IiwiZGF0ZSI6IjIwMjYtMDktMTIiLCJ0aW1lIjoiMTA6MDAiLCJ0b3RhbCI6MywiZGV0YWlsIjoiMTA6MDB+MTE6MDAg67Cp66y4IOyYiOyglSJ9LHsiaWQiOiJyMTYiLCJuYW1lIjoi6rmA7KCV66+4IiwicGhvbmUiOiIwMTAtNzEwNS0xNTcwIiwiZGF0ZSI6IjIwMjYtMDktMTIiLCJ0aW1lIjpudWxsLCJ0b3RhbCI6MiwiZGV0YWlsIjoi7LSIMiDsl6zslYQgMuuqhSDCtyDsi5zqsIQg66+47KCVIn1d";
+  var PACKED = "W3siaWQiOiJyMSIsIm5hbWUiOiLsnbTsp4TtnawiLCJwaG9uZSI6IjAxMC05MzE4LTA5OTEiLCJkYXRlIjoiMjAyNi0wOS0xOSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjozLCJkZXRhaWwiOiLshLHsnbggMuuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDHrqoUifSx7ImlkIjoicjIiLCJuYW1lIjoi7ZeI7Z2s6rK9IiwicGhvbmUiOiIwMTAtOTkwNy02MDcyIiwiZGF0ZSI6IjIwMjYtMDktMTkiLCJ0aW1lIjoiMTQ6MDAiLCJ0b3RhbCI6bnVsbCwiZGV0YWlsIjoi7J247JuQIOuvuOyglSJ9LHsiaWQiOiJyMyIsIm5hbWUiOiLsnbTrj5ntnawiLCJwaG9uZSI6IjAxMC04ODU3LTgzNDkiLCJkYXRlIjoiMjAyNi0wOS0xMiIsInRpbWUiOiIxMDowMCIsInRvdGFsIjo2LCJkZXRhaWwiOiLshLHsnbggNOuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUifSx7ImlkIjoicjQiLCJuYW1lIjoi7JeE7YOc66a8IiwicGhvbmUiOiIwMTAtOTA1Ny03OTE4IiwiZGF0ZSI6IjIwMjYtMDktMTkiLCJ0aW1lIjoiMTM6MDAiLCJ0b3RhbCI6NCwiZGV0YWlsIjoi7ISx7J24IDLrqoUgLyDslYTrj5nCt+yyreyGjOuFhCAy66qFIn0seyJpZCI6InI1IiwibmFtZSI6IuuwleyVhOumhCIsInBob25lIjoiMDEwLTQ4NTEtNDU1MCIsImRhdGUiOiIyMDI2LTA5LTA1IiwidGltZSI6IjEwOjAwIiwidG90YWwiOjQsImRldGFpbCI6IuyEseyduCAy66qFIC8g7JWE64+Zwrfssq3shozrhYQgMuuqhSJ9LHsiaWQiOiJyNiIsIm5hbWUiOiLquYDshKDsmIEiLCJwaG9uZSI6IjAxMC00MjEwLTY1ODgiLCJkYXRlIjoiMjAyNi0wOS0wNSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjozLCJkZXRhaWwiOiIifSx7ImlkIjoicjciLCJuYW1lIjoi64KY7JiB7IukIiwicGhvbmUiOiIwMTAtMzAwMi02NTQzIiwiZGF0ZSI6IjIwMjYtMDktMTIiLCJ0aW1lIjoiMTA6MzAiLCJ0b3RhbCI6MywiZGV0YWlsIjoi7ISx7J24IDLrqoUgLyDslYTrj5nCt+yyreyGjOuFhCAx66qFIn0seyJpZCI6InI4IiwibmFtZSI6IuqwleuvvOyngCIsInBob25lIjoiMDEwLTcxODgtNDk2MyIsImRhdGUiOiIyMDI2LTA5LTE5IiwidGltZSI6IlBNIiwidG90YWwiOjQsImRldGFpbCI6IuyYpO2bhCDtnazrp50gKOyLnOqwhCDrr7jsoJUpIn0seyJpZCI6InI5IiwibmFtZSI6IuydtOydgOyjvCIsInBob25lIjoiMDEwLTMzMzYtMzQ2NSIsImRhdGUiOiIyMDI2LTA5LTE5IiwidGltZSI6IkFNIiwidG90YWwiOjMsImRldGFpbCI6IuyEseyduCAy66qFIC8g7JWE64+Zwrfssq3shozrhYQgMeuqhSAo7LSIMiDrgqjslYQsIOu2gCwg66qoKSDCtyDsmKTsoIQg7Z2s66edIn0seyJpZCI6InIxMCIsIm5hbWUiOiLsnbTrr7zsiJkiLCJwaG9uZSI6IjAxMC00MTQ1LTA5OTAiLCJkYXRlIjoiMjAyNi0wOS0xOSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjo0LCJkZXRhaWwiOiLshLHsnbggMuuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUgwrcgMTM6MDAg7J207ZuEIO2drOunnSJ9LHsiaWQiOiJyMTEiLCJuYW1lIjoi7J207IOB7JWEIiwicGhvbmUiOiIwMTAtMzM5NS01NjY4IiwiZGF0ZSI6IjIwMjYtMDktMTIiLCJ0aW1lIjoiMTA6MDAiLCJ0b3RhbCI6NCwiZGV0YWlsIjoi7ISx7J24IDLrqoUgLyDslYTrj5nCt+yyreyGjOuFhCAy66qFIn0seyJpZCI6InIxMiIsIm5hbWUiOiLsnKDsp4DtmJwiLCJwaG9uZSI6IjAxMC00NjI3LTg1MTYiLCJkYXRlIjoiMjAyNi0wOS0wNSIsInRpbWUiOiIxMTowMCIsInRvdGFsIjo0LCJkZXRhaWwiOiLshLHsnbggMuuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUgKDjshLgsIDbshLgpIn0seyJpZCI6InIxMyIsIm5hbWUiOiLtmY3sp4DsnYAiLCJwaG9uZSI6IjAxMC02NDg5LTMyMjIiLCJkYXRlIjoiMjAyNi0wOS0xMiIsInRpbWUiOiIxMzowMCIsInRvdGFsIjozLCJkZXRhaWwiOiLshLHsnbggMeuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUgwrcgMTM6MDB+MTU6MzAifSx7ImlkIjoicjE0IiwibmFtZSI6Iu2ZjeyngOydgCIsInBob25lIjoiMDEwLTY0ODktMzIyMiIsImRhdGUiOiIyMDI2LTA5LTE5IiwidGltZSI6IjEzOjAwIiwidG90YWwiOjMsImRldGFpbCI6IuyEseyduCAx66qFIC8g7JWE64+Zwrfssq3shozrhYQgMuuqhSDCtyAxMzowMH4xNTozMCJ9LHsiaWQiOiJyMTUiLCJuYW1lIjoi7LWc7Jew7Z2sIiwicGhvbmUiOiIwMTAtNjM4OC0wMDA3IiwiZGF0ZSI6IjIwMjYtMDktMTIiLCJ0aW1lIjoiMTA6MDAiLCJ0b3RhbCI6MywiZGV0YWlsIjoiMTA6MDB+MTE6MDAg67Cp66y4IOyYiOyglSJ9LHsiaWQiOiJyMTYiLCJuYW1lIjoi6rmA7KCV66+4IiwicGhvbmUiOiIwMTAtNzEwNS0xNTcwIiwiZGF0ZSI6IjIwMjYtMDktMTIiLCJ0aW1lIjpudWxsLCJ0b3RhbCI6MiwiZGV0YWlsIjoi7LSIMiDsl6zslYQgMuuqhSDCtyDsi5zqsIQg66+47KCVIn0seyJpZCI6InIxNyIsIm5hbWUiOiLsnKDrr7jrgpgiLCJwaG9uZSI6bnVsbCwiZGF0ZSI6IjIwMjYtMDktMDUiLCJ0aW1lIjoiMTM6MDAiLCJ0b3RhbCI6NSwiZGV0YWlsIjoiMTM6MDAg7KCE7ZuEIn1d";
 
   var rows = [];
   var showDetails = false;
@@ -824,7 +826,7 @@ const script = `
     var html = "";
     list.forEach(function (r) {
       if (showDetails) {
-        html += "<tr><td>" + esc(r.name) + "</td><td class=\\"num\\">" + esc(r.phone) +
+        html += "<tr><td>" + esc(r.name) + "</td><td class=\\"num\\">" + esc(r.phone || "—") +
           "</td><td class=\\"num\\">" + fmtDate(r.date) + "</td><td class=\\"num\\">" + fmtTime(r.time) +
           "</td><td>" + esc(fmtTotalDetail(r)) + "</td></tr>";
       } else {
@@ -881,7 +883,7 @@ const script = `
 
         var cls = "cg-empty", label = "–";
         if (people > 0 || unknown > 0) {
-          cls = people > 12 ? "cg-over" : (people > 6 ? "cg-mid" : "cg-low");
+          cls = people > 14 ? "cg-over" : (people > 6 ? "cg-mid" : "cg-low");
           label = (people > 0 ? people + "명" : "") + (unknown ? (people > 0 ? " +" : "") + unknown + "건 미정" : "");
         }
         html += "<td class=\\"cg-cell " + cls + "\\">" + label + "</td>";
