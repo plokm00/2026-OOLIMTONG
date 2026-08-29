@@ -11,6 +11,9 @@ const styles = `
     --text-dim:  #7a6852;
     --white:     #fdfaf3;
     --cover-title-size: clamp(38px, 8vw, 84px);
+    /* 시간 미정 신청을 주황 히트맵과 갈라 보이게 하는 청회색 */
+    --undecided:  #6f7b8a;
+    --undecided2: #47535f;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -354,7 +357,10 @@ const styles = `
   table.booking th,
   table.booking td {
     text-align: left;
-    padding: 12px 14px;
+    /* 신청 건수가 늘어 한 화면에 최대한 많이 들어오도록 행을 조인다.
+       본문 line-height 1.75를 그대로 쓰면 행이 너무 벌어진다. */
+    padding: 7px 14px;
+    line-height: 1.5;
     border-bottom: 1px solid var(--line);
     white-space: nowrap;
   }
@@ -422,7 +428,7 @@ const styles = `
   .detail-msg:empty { margin-top: 0; min-height: 0; }
 
   /* ── 현장 배치 & 혼잡도 ── */
-  .venue-section { margin-top: 52px; max-width: 720px; }
+  .venue-section { margin-top: 52px; max-width: 960px; }
   .venue-heading {
     font-family: 'IBM Plex Sans KR', sans-serif;
     font-size: 15px;
@@ -445,7 +451,8 @@ const styles = `
   table.cong th,
   table.cong td {
     text-align: center;
-    padding: 9px 6px;
+    padding: 7px 6px;
+    line-height: 1.5;
     border-bottom: 1px solid var(--line);
     border-right: 1px solid var(--line);
     white-space: nowrap;
@@ -467,6 +474,12 @@ const styles = `
   .cg-low { background: rgba(226, 87, 30, 0.12); }
   .cg-mid { background: rgba(226, 87, 30, 0.32); color: var(--accent2); font-weight: 600; }
   .cg-over { background: var(--accent2); color: var(--white); font-weight: 700; }
+
+  /* 시간을 정하지 않은 신청은 주황 히트맵과 아예 다른 청회색 계열로 빼서,
+     시각이 잡힌 신청과 한눈에 갈라 보이게 한다. */
+  .cg-na { background: rgba(107, 122, 138, 0.20); color: var(--undecided2); font-weight: 600; }
+  table.cong th.th-na { color: var(--undecided2); }
+  table.booking td.t-na { color: var(--undecided2); }
 
   .cong-legend {
     margin-top: 12px;
@@ -636,18 +649,16 @@ const body = `
 
   <div class="venue-section">
     <p class="venue-heading">현장 배치 &amp; 혼잡도</p>
-    <p class="venue-sub">동화마을수목원 잔디광장 작업 구역은 두 곳으로 나뉩니다. 울림통 주위는 둘러서서 <strong>최대 6명</strong>, 테이블은 긴 변에 3명씩·짧은 변에 1명씩 <strong>최대 8명</strong>이 함께 작업할 수 있습니다.</p>
-
     <svg class="venue-diagram" viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="울림통 구역 최대 6명, 테이블 구역 최대 8명 배치도">
-      <circle cx="150" cy="140" r="50" fill="var(--bg3)" stroke="var(--accent)" stroke-width="2"></circle>
-      <text x="150" y="145" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent2)">울림통</text>
-      <circle cx="150" cy="45" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="232.3" cy="92.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="232.3" cy="187.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="150" cy="235" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="67.7" cy="187.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <circle cx="67.7" cy="92.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
-      <text x="150" y="266" text-anchor="middle" font-size="12" fill="var(--text-dim)">최대 6명</text>
+      <ellipse cx="150" cy="140" rx="72" ry="38" fill="var(--bg3)" stroke="var(--accent)" stroke-width="2"></ellipse>
+      <text x="150" y="146" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent2)">울림통</text>
+      <circle cx="114" cy="80" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="186" cy="80" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="114" cy="200" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="186" cy="200" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="56" cy="140" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="244" cy="140" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <text x="150" y="266" text-anchor="middle" font-size="12" fill="var(--text-dim)">최대 6명 (긴 변 2명씩 · 짧은 변 1명씩)</text>
 
       <rect x="390" y="105" width="170" height="70" rx="6" fill="var(--bg3)" stroke="var(--line)" stroke-width="2"></rect>
       <text x="475" y="146" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent2)">테이블</text>
@@ -671,6 +682,7 @@ const body = `
       <span><span class="cg-swatch cg-low"></span>여유 (1~6명 · 한 구역으로 충분)</span>
       <span><span class="cg-swatch cg-mid"></span>혼잡 (7~14명 · 두 구역 모두 필요)</span>
       <span><span class="cg-swatch cg-over"></span>초과 (14명 초과 · 시간 분산 필요)</span>
+      <span><span class="cg-swatch cg-na"></span>시간 미정 (시간대별 혼잡도에 안 잡힘)</span>
     </p>
   </div>
 </section>
@@ -741,6 +753,10 @@ const script = `
     if (!t) return "NA";
     return parseInt(t.slice(0, 2), 10);
   }
+
+  function isUndecided(t) { return !t || t === "AM" || t === "PM"; }
+
+  function timeCls(t) { return isUndecided(t) ? " t-na" : ""; }
 
   function timeSortKey(t) {
     if (!t) return "9-NA";
@@ -827,11 +843,11 @@ const script = `
     list.forEach(function (r) {
       if (showDetails) {
         html += "<tr><td>" + esc(r.name) + "</td><td class=\\"num\\">" + esc(r.phone || "—") +
-          "</td><td class=\\"num\\">" + fmtDate(r.date) + "</td><td class=\\"num\\">" + fmtTime(r.time) +
+          "</td><td class=\\"num\\">" + fmtDate(r.date) + "</td><td class=\\"num" + timeCls(r.time) + "\\">" + fmtTime(r.time) +
           "</td><td>" + esc(fmtTotalDetail(r)) + "</td></tr>";
       } else {
         html += "<tr><td>" + esc(mask(r.name)) + "</td><td class=\\"num\\">" + fmtDate(r.date) +
-          "</td><td class=\\"num\\">" + fmtTime(r.time) + "</td><td class=\\"num\\">" + fmtTotal(r.total) + "</td></tr>";
+          "</td><td class=\\"num" + timeCls(r.time) + "\\">" + fmtTime(r.time) + "</td><td class=\\"num\\">" + fmtTotal(r.total) + "</td></tr>";
       }
     });
     bodyEl.innerHTML = html;
@@ -850,6 +866,8 @@ const script = `
   var CONG_COLUMNS = ["AM", 10, 11, 12, 13, 14, 15, "PM", "NA"];
 
   // 한 칸은 그 시각부터 한 시간을 묶는다(10:00~ 칸에 10:30 신청도 들어간다).
+  function isUndecidedCol(c) { return c === "AM" || c === "PM" || c === "NA"; }
+
   function congLabel(c) {
     if (c === "AM") return "오전(미정)";
     if (c === "PM") return "오후(미정)";
@@ -862,7 +880,9 @@ const script = `
     if (!table) return;
 
     var html = "<thead><tr><th>날짜</th>";
-    CONG_COLUMNS.forEach(function (c) { html += "<th>" + congLabel(c) + "</th>"; });
+    CONG_COLUMNS.forEach(function (c) {
+      html += "<th class=\\"" + (isUndecidedCol(c) ? "th-na" : "") + "\\">" + congLabel(c) + "</th>";
+    });
     html += "<th>하루 합계</th></tr></thead><tbody>";
 
     EVENT_DAYS.forEach(function (d) {
@@ -883,7 +903,10 @@ const script = `
 
         var cls = "cg-empty", label = "–";
         if (people > 0 || unknown > 0) {
-          cls = people > 14 ? "cg-over" : (people > 6 ? "cg-mid" : "cg-low");
+          // 시각이 안 잡힌 칸은 시간대 혼잡도로 읽히면 안 되므로 히트맵에서 빼둔다.
+          cls = isUndecidedCol(c)
+            ? "cg-na"
+            : (people > 14 ? "cg-over" : (people > 6 ? "cg-mid" : "cg-low"));
           label = (people > 0 ? people + "명" : "") + (unknown ? (people > 0 ? " +" : "") + unknown + "건 미정" : "");
         }
         html += "<td class=\\"cg-cell " + cls + "\\">" + label + "</td>";
