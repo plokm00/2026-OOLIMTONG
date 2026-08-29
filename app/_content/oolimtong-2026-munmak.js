@@ -644,7 +644,6 @@ const body = `
 
 <!-- ── 사전신청 현황 ── -->
 <section id="booking" style="border-bottom:none;">
-  <p class="section-label">Reservations</p>
   <h2 class="section-title">사전신청 현황</h2>
 
   <div class="booking-layout">
