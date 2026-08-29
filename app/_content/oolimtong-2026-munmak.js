@@ -421,6 +421,71 @@ const styles = `
   .detail-msg { font-size: 11px; color: var(--accent2); text-align: right; margin-top: 4px; min-height: 16px; }
   .detail-msg:empty { margin-top: 0; min-height: 0; }
 
+  /* ── 현장 배치 & 혼잡도 ── */
+  .venue-section { margin-top: 52px; max-width: 720px; }
+  .venue-heading {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .venue-sub { font-size: 12.5px; color: var(--text-dim); margin-bottom: 18px; line-height: 1.7; }
+  .venue-diagram { display: block; width: 100%; max-width: 480px; height: auto; margin-bottom: 14px; }
+  .venue-note {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    margin-bottom: 22px;
+  }
+  .venue-note strong { color: var(--accent2); }
+
+  .cong-wrap { overflow-x: auto; }
+  table.cong { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 620px; }
+  table.cong th,
+  table.cong td {
+    text-align: center;
+    padding: 9px 6px;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  table.cong th:last-child,
+  table.cong td:last-child { border-right: none; }
+  table.cong th {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--accent2);
+    border-bottom: 1px solid var(--accent);
+    font-weight: 600;
+  }
+  table.cong th:first-child,
+  table.cong td:first-child { text-align: left; font-weight: 600; color: var(--text); }
+  .cg-cell { font-variant-numeric: tabular-nums; }
+  .cg-empty { color: var(--line); }
+  .cg-low { background: rgba(226, 87, 30, 0.12); }
+  .cg-mid { background: rgba(226, 87, 30, 0.32); color: var(--accent2); font-weight: 600; }
+  .cg-over { background: var(--accent2); color: var(--white); font-weight: 700; }
+
+  .cong-legend {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 6px 16px;
+    flex-wrap: wrap;
+  }
+  .cg-swatch {
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    border-radius: 2px;
+    margin-right: 5px;
+    vertical-align: -1px;
+  }
+
   /* ── 푸터 ── */
   .site-footer {
     padding: 40px 60px;
@@ -568,6 +633,44 @@ const body = `
       <p class="booking-empty" id="booking-empty" style="display:none;">해당 날짜에는 아직 사전신청이 없습니다.</p>
     </div>
   </div>
+
+  <div class="venue-section">
+    <p class="venue-heading">현장 배치 &amp; 혼잡도</p>
+    <p class="venue-sub">동화마을수목원 잔디광장 작업 구역은 두 곳으로 나뉩니다. 각 구역은 <strong>최대 6명</strong>이 함께 작업하기 좋은 크기입니다.</p>
+
+    <svg class="venue-diagram" viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="울림통 구역과 테이블 구역 각각 최대 6명 배치도">
+      <circle cx="150" cy="140" r="50" fill="var(--bg3)" stroke="var(--accent)" stroke-width="2"></circle>
+      <text x="150" y="145" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent2)">울림통</text>
+      <circle cx="150" cy="45" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="232.3" cy="92.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="232.3" cy="187.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="150" cy="235" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="67.7" cy="187.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="67.7" cy="92.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <text x="150" y="266" text-anchor="middle" font-size="12" fill="var(--text-dim)">최대 6명</text>
+
+      <rect x="395" y="95" width="150" height="90" rx="6" fill="var(--bg3)" stroke="var(--line)" stroke-width="2"></rect>
+      <text x="470" y="145" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent2)">테이블</text>
+      <circle cx="470" cy="45" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="552.3" cy="92.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="552.3" cy="187.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="470" cy="235" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="387.7" cy="187.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <circle cx="387.7" cy="92.5" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="1.5"></circle>
+      <text x="470" y="266" text-anchor="middle" font-size="12" fill="var(--text-dim)">최대 6명</text>
+    </svg>
+
+    <p class="venue-note">두 구역을 합치면 같은 시간대에 <strong>최대 12명</strong>까지 여유 있게 작업할 수 있습니다. 아래 표는 신청서에 적힌 시간을 기준으로, 날짜·시간대별 예상 인원이 이 기준을 넘는지 자동으로 보여줍니다.</p>
+
+    <div class="cong-wrap">
+      <table class="cong" id="cong-table"></table>
+    </div>
+    <p class="cong-legend">
+      <span><span class="cg-swatch cg-low"></span>여유 (1~6명)</span>
+      <span><span class="cg-swatch cg-mid"></span>혼잡 (7~12명, 두 구역 모두 필요)</span>
+      <span><span class="cg-swatch cg-over"></span>초과 (12명 초과 · 시간 분산 필요)</span>
+    </p>
+  </div>
 </section>
 
 <!-- ── 푸터 ── -->
@@ -591,7 +694,7 @@ const script = `
 (function () {
   var EVENT_DAYS = [5, 12, 19];
   var PW = "1661";
-  var PACKED = "W3siaWQiOiJyMSIsIm5hbWUiOiLsnbTsp4TtnawiLCJwaG9uZSI6IjAxMC05MzE4LTA5OTEiLCJkYXRlIjoiMjAyNi0wOS0xOSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjozLCJkZXRhaWwiOiLshLHsnbggMuuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDHrqoUifSx7ImlkIjoicjIiLCJuYW1lIjoi7ZeI7Z2s6rK9IiwicGhvbmUiOiIwMTAtOTkwNy02MDcyIiwiZGF0ZSI6IjIwMjYtMDktMTkiLCJ0aW1lIjoiMTQ6MDAiLCJ0b3RhbCI6bnVsbCwiZGV0YWlsIjoi7J247JuQIOuvuOyglSJ9LHsiaWQiOiJyMyIsIm5hbWUiOiLsnbTrj5ntnawiLCJwaG9uZSI6IjAxMC04ODU3LTgzNDkiLCJkYXRlIjoiMjAyNi0wOS0xMiIsInRpbWUiOiIxMDowMCIsInRvdGFsIjo2LCJkZXRhaWwiOiLshLHsnbggNOuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUifV0=";
+  var PACKED = "W3siaWQiOiJyMSIsIm5hbWUiOiLsnbTsp4TtnawiLCJwaG9uZSI6IjAxMC05MzE4LTA5OTEiLCJkYXRlIjoiMjAyNi0wOS0xOSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjozLCJkZXRhaWwiOiLshLHsnbggMuuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDHrqoUifSx7ImlkIjoicjIiLCJuYW1lIjoi7ZeI7Z2s6rK9IiwicGhvbmUiOiIwMTAtOTkwNy02MDcyIiwiZGF0ZSI6IjIwMjYtMDktMTkiLCJ0aW1lIjoiMTQ6MDAiLCJ0b3RhbCI6bnVsbCwiZGV0YWlsIjoi7J247JuQIOuvuOyglSJ9LHsiaWQiOiJyMyIsIm5hbWUiOiLsnbTrj5ntnawiLCJwaG9uZSI6IjAxMC04ODU3LTgzNDkiLCJkYXRlIjoiMjAyNi0wOS0xMiIsInRpbWUiOiIxMDowMCIsInRvdGFsIjo2LCJkZXRhaWwiOiLshLHsnbggNOuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUifSx7ImlkIjoicjQiLCJuYW1lIjoi7JeE7YOc66a8IiwicGhvbmUiOiIwMTAtOTA1Ny03OTE4IiwiZGF0ZSI6IjIwMjYtMDktMTkiLCJ0aW1lIjoiMTM6MDAiLCJ0b3RhbCI6NCwiZGV0YWlsIjoi7ISx7J24IDLrqoUgLyDslYTrj5nCt+yyreyGjOuFhCAy66qFIn0seyJpZCI6InI1IiwibmFtZSI6IuuwleyVhOumhCIsInBob25lIjoiMDEwLTQ4NTEtNDU1MCIsImRhdGUiOiIyMDI2LTA5LTA1IiwidGltZSI6IjEwOjAwIiwidG90YWwiOjQsImRldGFpbCI6IuyEseyduCAy66qFIC8g7JWE64+Zwrfssq3shozrhYQgMuuqhSJ9LHsiaWQiOiJyNiIsIm5hbWUiOiLquYDshKDsmIEiLCJwaG9uZSI6IjAxMC00MjEwLTY1ODgiLCJkYXRlIjoiMjAyNi0wOS0wNSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjozLCJkZXRhaWwiOiIifSx7ImlkIjoicjciLCJuYW1lIjoi64KY7JiB7IukIiwicGhvbmUiOiIwMTAtMzAwMi02NTQzIiwiZGF0ZSI6IjIwMjYtMDktMTIiLCJ0aW1lIjoiMTA6MzAiLCJ0b3RhbCI6MywiZGV0YWlsIjoi7ISx7J24IDLrqoUgLyDslYTrj5nCt+yyreyGjOuFhCAx66qFIn0seyJpZCI6InI4IiwibmFtZSI6IuqwleuvvOyngCIsInBob25lIjoiMDEwLTcxODgtNDk2MyIsImRhdGUiOiIyMDI2LTA5LTE5IiwidGltZSI6IlBNIiwidG90YWwiOjQsImRldGFpbCI6IuyYpO2bhCDtnazrp50gKOyLnOqwhCDrr7jsoJUpIn0seyJpZCI6InI5IiwibmFtZSI6IuydtOydgOyjvCIsInBob25lIjoiMDEwLTMzMzYtMzQ2NSIsImRhdGUiOiIyMDI2LTA5LTE5IiwidGltZSI6IkFNIiwidG90YWwiOjMsImRldGFpbCI6IuyEseyduCAy66qFIC8g7JWE64+Zwrfssq3shozrhYQgMeuqhSAo7LSIMiDrgqjslYQsIOu2gCwg66qoKSDCtyDsmKTsoIQg7Z2s66edIn0seyJpZCI6InIxMCIsIm5hbWUiOiLsnbTrr7zsiJkiLCJwaG9uZSI6IjAxMC00MTQ1LTA5OTAiLCJkYXRlIjoiMjAyNi0wOS0xOSIsInRpbWUiOiIxMzowMCIsInRvdGFsIjo0LCJkZXRhaWwiOiLshLHsnbggMuuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUgwrcg7Jik7ZuEIDHsi5wg7J207ZuEIO2drOunnSJ9LHsiaWQiOiJyMTEiLCJuYW1lIjoi7J207IOB7JWEIiwicGhvbmUiOiIwMTAtMzM5NS01NjY4IiwiZGF0ZSI6IjIwMjYtMDktMTIiLCJ0aW1lIjoiMTA6MDAiLCJ0b3RhbCI6NCwiZGV0YWlsIjoi7ISx7J24IDLrqoUgLyDslYTrj5nCt+yyreyGjOuFhCAy66qFIn0seyJpZCI6InIxMiIsIm5hbWUiOiLsnKDsp4DtmJwiLCJwaG9uZSI6IjAxMC00NjI3LTg1MTYiLCJkYXRlIjoiMjAyNi0wOS0wNSIsInRpbWUiOiIxMTowMCIsInRvdGFsIjo0LCJkZXRhaWwiOiLshLHsnbggMuuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUgKDjshLgsIDbshLgpIn0seyJpZCI6InIxMyIsIm5hbWUiOiLtmY3sp4DsnYAiLCJwaG9uZSI6IjAxMC02NDg5LTMyMjIiLCJkYXRlIjoiMjAyNi0wOS0xMiIsInRpbWUiOiIxMzowMCIsInRvdGFsIjozLCJkZXRhaWwiOiLshLHsnbggMeuqhSAvIOyVhOuPmcK37LKt7IaM64WEIDLrqoUgwrcg7Jik7ZuEIDE6MDB+MzozMCJ9LHsiaWQiOiJyMTQiLCJuYW1lIjoi7ZmN7KeA7J2AIiwicGhvbmUiOiIwMTAtNjQ4OS0zMjIyIiwiZGF0ZSI6IjIwMjYtMDktMTkiLCJ0aW1lIjoiMTM6MDAiLCJ0b3RhbCI6MywiZGV0YWlsIjoi7ISx7J24IDHrqoUgLyDslYTrj5nCt+yyreyGjOuFhCAy66qFIMK3IOyYpO2bhCAxOjAwfjM6MzAifSx7ImlkIjoicjE1IiwibmFtZSI6Iuy1nOyXsO2drCIsInBob25lIjoiMDEwLTYzODgtMDAwNyIsImRhdGUiOiIyMDI2LTA5LTEyIiwidGltZSI6IjEwOjAwIiwidG90YWwiOjMsImRldGFpbCI6IuyYpOyghCAxMH4xMeyLnCDrsKnrrLgg7JiI7KCVIn0seyJpZCI6InIxNiIsIm5hbWUiOiLquYDsoJXrr7giLCJwaG9uZSI6IjAxMC03MTA1LTE1NzAiLCJkYXRlIjoiMjAyNi0wOS0xMiIsInRpbWUiOm51bGwsInRvdGFsIjoyLCJkZXRhaWwiOiLstIgyIOyXrOyVhCAy66qFIMK3IOyLnOqwhCDrr7jsoJUifV0=";
 
   var rows = [];
   var showDetails = false;
@@ -623,8 +726,27 @@ const script = `
   }
 
   function fmtTime(t) {
+    if (!t) return "시간 미정";
+    if (t === "AM") return "오전 (미정)";
+    if (t === "PM") return "오후 (미정)";
     var h = parseInt(t.slice(0, 2), 10);
-    return h + "시";
+    var m = parseInt(t.slice(3, 5), 10);
+    return m ? (h + "시 " + m + "분") : (h + "시");
+  }
+
+  // 혼잡도 표에서 같은 칸으로 묶을 때 쓰는 키. 정확한 시각은 그 시(hour)로, "오전/오후"만
+  // 적힌 신청은 AM/PM 칸으로, 시간을 아예 안 적은 신청은 NA 칸으로 모은다.
+  function timeBucket(t) {
+    if (t === "AM" || t === "PM") return t;
+    if (!t) return "NA";
+    return parseInt(t.slice(0, 2), 10);
+  }
+
+  function timeSortKey(t) {
+    if (!t) return "9-NA";
+    if (t === "AM") return "0-AM";
+    if (t === "PM") return "8-PM";
+    return "1-" + t;
   }
 
   function fmtTotal(n) { return n == null ? "미정" : n + "명"; }
@@ -641,7 +763,8 @@ const script = `
   function sorted() {
     return rows.slice().sort(function (a, b) {
       if (a.date !== b.date) return a.date < b.date ? -1 : 1;
-      return a.time < b.time ? -1 : 1;
+      var ta = timeSortKey(a.time), tb = timeSortKey(b.time);
+      return ta === tb ? 0 : (ta < tb ? -1 : 1);
     });
   }
 
@@ -724,9 +847,57 @@ const script = `
     }
   }
 
+  var CONG_COLUMNS = ["AM", 10, 11, 12, 13, 14, 15, "PM", "NA"];
+
+  function congLabel(c) {
+    if (c === "AM") return "오전(미정)";
+    if (c === "PM") return "오후(미정)";
+    if (c === "NA") return "시간 미정";
+    return c + "시";
+  }
+
+  function renderCongestion() {
+    var table = document.getElementById("cong-table");
+    if (!table) return;
+
+    var html = "<thead><tr><th>날짜</th>";
+    CONG_COLUMNS.forEach(function (c) { html += "<th>" + congLabel(c) + "</th>"; });
+    html += "<th>하루 합계</th></tr></thead><tbody>";
+
+    EVENT_DAYS.forEach(function (d) {
+      var iso = "2026-09-" + (d < 10 ? "0" + d : d);
+      var dayRows = rows.filter(function (r) { return r.date === iso; });
+      var dayPeople = 0, dayUnknown = 0;
+
+      html += "<tr><td>9." + d + ".</td>";
+      CONG_COLUMNS.forEach(function (c) {
+        var cellRows = dayRows.filter(function (r) { return timeBucket(r.time) === c; });
+        var people = 0, unknown = 0;
+        cellRows.forEach(function (r) {
+          if (r.total == null) unknown++;
+          else people += r.total;
+        });
+        dayPeople += people;
+        dayUnknown += unknown;
+
+        var cls = "cg-empty", label = "–";
+        if (people > 0 || unknown > 0) {
+          cls = people > 12 ? "cg-over" : (people > 6 ? "cg-mid" : "cg-low");
+          label = (people > 0 ? people + "명" : "") + (unknown ? (people > 0 ? " +" : "") + unknown + "건 미정" : "");
+        }
+        html += "<td class=\\"cg-cell " + cls + "\\">" + label + "</td>";
+      });
+      html += "<td class=\\"cg-cell\\">" + dayPeople + "명" + (dayUnknown ? " (+" + dayUnknown + "건 미정)" : "") + "</td></tr>";
+    });
+
+    html += "</tbody>";
+    table.innerHTML = html;
+  }
+
   function render() {
     renderCalendar();
     renderTable();
+    renderCongestion();
   }
 
   window.toggleNav = function () {
