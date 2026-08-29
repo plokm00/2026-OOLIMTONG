@@ -955,12 +955,12 @@ const script = `
               : (people > 16 ? "cg-high"
                 : (people > 8 ? "cg-mid" : "cg-low")));
           label = people > 0
-            ? people + "명" + (unknown ? " +" + unknown + "건" : "")
+            ? people + "명" + (unknown ? " +" + unknown + "건 미정" : "")
             : unknown + "건 미정";
         }
         html += "<td class=\\"cg-cell " + cls + "\\">" + label + "</td>";
       });
-      html += "<td class=\\"cg-cell\\">" + dayPeople + "명" + (dayUnknown ? " +" + dayUnknown + "건" : "") + "</td></tr>";
+      html += "<td class=\\"cg-cell\\">" + dayPeople + "명" + (dayUnknown ? " +" + dayUnknown + "건 미정" : "") + "</td></tr>";
     });
 
     html += "</tbody>";
