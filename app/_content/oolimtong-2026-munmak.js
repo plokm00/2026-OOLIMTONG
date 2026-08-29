@@ -496,9 +496,11 @@ const styles = `
 
   /* 시간을 정하지 않은 신청은 주황 히트맵과 아예 다른 청회색 계열로 빼서,
      시각이 잡힌 신청과 한눈에 갈라 보이게 한다. */
-  .cg-na { background: rgba(107, 122, 138, 0.20); color: var(--undecided2); font-weight: 600; }
+  .cg-na { background: rgba(107, 122, 138, 0.18); color: var(--undecided2); }
   table.cong th.th-na { color: var(--undecided2); }
-  table.booking td.t-na { color: var(--undecided2); }
+  /* 미정은 확정된 값보다 한 단계 물러나 보이게 한다. 시간 미정과 인원
+     미정에 같은 스타일을 쓴다. */
+  table.booking td.t-na { color: var(--undecided); opacity: 0.8; }
 
   .cong-legend {
     margin-top: 12px;
@@ -674,7 +676,7 @@ const body = `
     <p class="venue-heading">현장 배치 &amp; 혼잡도</p>
 
     <div class="venue-grid">
-    <svg class="venue-diagram" viewBox="0 0 440 365" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="울림통 최대 6명, 돗자리 두 장 각 8명 배치도">
+    <svg class="venue-diagram" viewBox="0 0 440 450" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="울림통 둘레 최대 6명, 돗자리 두 장에 각 8명, 보조 테이블 배치도">
       <ellipse cx="220" cy="75" rx="60" ry="28" fill="var(--bg3)" stroke="var(--accent)" stroke-width="2"></ellipse>
       <text x="220" y="82" text-anchor="middle" font-size="20" font-weight="700" fill="var(--accent2)">울림통</text>
       <circle cx="190" cy="27" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
@@ -685,29 +687,32 @@ const body = `
       <circle cx="300" cy="75" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
       <text x="220" y="157" text-anchor="middle" font-size="17" fill="var(--text-dim)">둘러서서 최대 6명</text>
 
-      <rect x="40" y="225" width="110" height="55" rx="4" fill="var(--bg3)" stroke="var(--line)" stroke-width="2"></rect>
-      <text x="95" y="258" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent2)">돗자리 1</text>
-      <circle cx="62" cy="205" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <circle cx="95" cy="205" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <circle cx="128" cy="205" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <circle cx="62" cy="300" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <circle cx="95" cy="300" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <circle cx="128" cy="300" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <circle cx="20" cy="252" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <circle cx="170" cy="252" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <text x="95" y="340" text-anchor="middle" font-size="17" fill="var(--text-dim)">앉아서 8명</text>
+      <rect x="25" y="205" width="160" height="110" rx="4" fill="var(--bg3)" stroke="var(--line)" stroke-width="2"></rect>
+      <circle cx="60" cy="229" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="105" cy="229" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="150" cy="229" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="60" cy="291" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="105" cy="291" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="150" cy="291" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="49" cy="260" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="161" cy="260" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <text x="105" y="266" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent2)">돗자리 1</text>
+      <text x="105" y="347" text-anchor="middle" font-size="17" fill="var(--text-dim)">앉아서 8명</text>
 
-      <rect x="290" y="225" width="110" height="55" rx="4" fill="var(--bg3)" stroke="var(--line)" stroke-width="2"></rect>
-      <text x="345" y="258" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent2)">돗자리 2</text>
-      <circle cx="312" cy="205" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <circle cx="345" cy="205" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <circle cx="378" cy="205" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <circle cx="312" cy="300" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <circle cx="345" cy="300" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <circle cx="378" cy="300" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <circle cx="270" cy="252" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <circle cx="420" cy="252" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
-      <text x="345" y="340" text-anchor="middle" font-size="17" fill="var(--text-dim)">앉아서 8명</text>
+      <rect x="255" y="205" width="160" height="110" rx="4" fill="var(--bg3)" stroke="var(--line)" stroke-width="2"></rect>
+      <circle cx="290" cy="229" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="335" cy="229" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="380" cy="229" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="290" cy="291" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="335" cy="291" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="380" cy="291" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="279" cy="260" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <circle cx="391" cy="260" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
+      <text x="335" y="266" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent2)">돗자리 2</text>
+      <text x="335" y="347" text-anchor="middle" font-size="17" fill="var(--text-dim)">앉아서 8명</text>
+
+      <rect x="155" y="382" width="130" height="44" rx="4" fill="var(--bg2)" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 4"></rect>
+      <text x="220" y="410" text-anchor="middle" font-size="16" fill="var(--text-dim)">보조 테이블</text>
     </svg>
 
     <div>
@@ -722,6 +727,7 @@ const body = `
       <span><span class="cg-swatch cg-high"></span>빠듯 (17~22명 · 세 구역 전부)</span>
       <span><span class="cg-swatch cg-over"></span>초과 (22명 초과 · 시간 분산 필요)</span>
       <span><span class="cg-swatch cg-na"></span>시간 미정 (시간대별 혼잡도에 안 잡힘)</span>
+      <span><strong>+?</strong> 인원을 안 적으신 신청</span>
     </p>
     </div>
     </div>
@@ -889,10 +895,10 @@ const script = `
       if (showDetails) {
         html += "<tr><td>" + esc(r.name) + "</td><td class=\\"num\\">" + esc(fmtPhone(r.phone)) +
           "</td><td class=\\"num\\">" + fmtDate(r.date) + "</td><td class=\\"num" + timeCls(r.time) + "\\">" + fmtTime(r.time) +
-          "</td><td>" + esc(fmtTotalDetail(r)) + "</td><td class=\\"note\\">" + esc(r.note || "—") + "</td></tr>";
+          "</td><td class=\\"" + (r.total == null ? "t-na" : "") + "\\">" + esc(fmtTotalDetail(r)) + "</td><td class=\\"note\\">" + esc(r.note || "—") + "</td></tr>";
       } else {
         html += "<tr><td>" + esc(mask(r.name)) + "</td><td class=\\"num\\">" + fmtDate(r.date) +
-          "</td><td class=\\"num" + timeCls(r.time) + "\\">" + fmtTime(r.time) + "</td><td class=\\"num\\">" + fmtTotal(r.total) + "</td></tr>";
+          "</td><td class=\\"num" + timeCls(r.time) + "\\">" + fmtTime(r.time) + "</td><td class=\\"num" + (r.total == null ? " t-na" : "") + "\\">" + fmtTotal(r.total) + "</td></tr>";
       }
     });
     bodyEl.innerHTML = html;
@@ -954,13 +960,14 @@ const script = `
             : (people > 22 ? "cg-over"
               : (people > 16 ? "cg-high"
                 : (people > 8 ? "cg-mid" : "cg-low")));
-          label = people > 0
-            ? people + "명" + (unknown ? " +" + unknown + "건 미정" : "")
-            : unknown + "건 미정";
+          // 인원을 안 적은 신청은 합계에 못 넣으므로 "+?"로 따로 붙인다.
+          // 두 건 이상이면 개수를 붙여 조용히 묻히지 않게 한다.
+          var q = unknown ? (unknown > 1 ? "+?" + unknown : "+?") : "";
+          label = people > 0 ? people + "명" + q : (q || "–");
         }
         html += "<td class=\\"cg-cell " + cls + "\\">" + label + "</td>";
       });
-      html += "<td class=\\"cg-cell\\">" + dayPeople + "명" + (dayUnknown ? " +" + dayUnknown + "건 미정" : "") + "</td></tr>";
+      html += "<td class=\\"cg-cell\\">" + dayPeople + "명" + (dayUnknown ? (dayUnknown > 1 ? "+?" + dayUnknown : "+?") : "") + "</td></tr>";
     });
 
     html += "</tbody>";
