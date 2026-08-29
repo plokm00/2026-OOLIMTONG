@@ -562,6 +562,11 @@ const styles = `
     .cover-meta { grid-template-columns: 60px 1fr; font-size: 14px; }
     /* 폰에서는 한 줄에 둘 다 넣으면 요약 문구가 좁게 접히므로 아랫줄로 내린다. */
     .booking-summary-row { flex-wrap: wrap; }
+    /* 폰에서는 브라우저 자체 확대로 충분하므로 라이트박스를 끈다.
+       눌러도 아무 일이 없으면 안 되니 버튼 성격 자체를 없앤다. */
+    .poster-caption { display: none; }
+    .poster-thumb { pointer-events: none; cursor: default; }
+    .poster-thumb:hover { border-color: var(--line); box-shadow: none; transform: none; }
     .site-footer { padding: 30px 22px; flex-direction: column; text-align: center; }
   }
 `;
@@ -990,6 +995,9 @@ const script = `
   };
 
   window.openPoster = function () {
+    // 폰에서는 브라우저 확대로 충분해 라이트박스를 쓰지 않는다.
+    // CSS(pointer-events)로도 막지만, 동작 자체를 여기서 확실히 끊는다.
+    if (window.matchMedia("(max-width: 720px)").matches) return;
     var lb = document.getElementById("poster-lightbox");
     if (!lb) return;
     var full = document.getElementById("poster-full");
