@@ -929,6 +929,13 @@ const script = `
 
   function sorted() {
     return rows.slice().sort(function (a, b) {
+      // 시간 정렬은 하루 안에서만 한다. 날짜는 늘 5 → 12 → 19 순으로 묶여 있어야
+      // 어느 회차 이야기인지 놓치지 않는다.
+      if (sortKey === "time") {
+        var dd = cmpBy("date", a, b);
+        if (dd) return dd;
+      }
+
       var na = isBlankFor(sortKey, a), nb = isBlankFor(sortKey, b);
       if (na !== nb) return na ? 1 : -1;
       if (!na) {
