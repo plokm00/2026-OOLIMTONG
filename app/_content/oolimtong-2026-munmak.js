@@ -379,6 +379,12 @@ const styles = `
   table.booking td.num { font-variant-numeric: tabular-nums; }
   /* 비고만 자유 문구라 줄바꿈을 허용하고, 나머지 칸은 nowrap을 유지한다. */
   table.booking td.note { white-space: normal; color: var(--text-dim); font-size: 13px; min-width: 150px; }
+  table.booking th.sortable { cursor: pointer; user-select: none; transition: color 0.15s; }
+  table.booking th.sortable:hover { color: var(--accent); }
+  table.booking th.sortable:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  table.booking th.on { color: var(--accent); }
+  .arw { font-size: 9px; margin-left: 3px; opacity: 0.45; }
+  th.on .arw { opacity: 1; }
   .visit { color: var(--accent); font-size: 11.5px; vertical-align: 1px; }
   .visit-note { margin-top: 10px; font-size: 12px; color: var(--text-dim); }
   table.booking tr.dim td { opacity: 0.35; }
@@ -798,6 +804,9 @@ const script = `
   var rows = [];
   var showDetails = false;
   var selectedDay = null;
+  // 이름과 시간만 정렬 대상이다. 기본은 날짜 → 시간 순서.
+  var sortKey = "date";
+  var sortDir = 1;
   // 한 팀이 얼마나 머무느냐에 따라 같은 신청도 겹치는 정도가 달라진다.
   // 1시간이면 도착 시각 칸에만, 2시간이면 다음 칸까지 함께 차지한다.
   var dwell = 1;
@@ -900,11 +909,36 @@ const script = `
     return mk ? " <span class=\\"visit\\" title=\\"여러 날 신청하신 분\\">" + mk + "</span>" : "";
   }
 
+  // 이름이나 시간이 미정인 행은 정렬 방향과 상관없이 늘 뒤로 보낸다.
+  // 오름차순에서만 뒤로 가면 내림차순일 때 목록 맨 위가 미정으로 차 버린다.
+  function isBlankFor(k, r) {
+    if (k === "name") return !r.name;
+    if (k === "time") return !r.time;
+    return false;
+  }
+
+  function cmpBy(k, a, b) {
+    if (k === "name") return a.name.localeCompare(b.name, "ko");
+    if (k === "date") return a.date < b.date ? -1 : (a.date > b.date ? 1 : 0);
+    if (k === "time") {
+      var ta = timeSortKey(a.time), tb = timeSortKey(b.time);
+      return ta < tb ? -1 : (ta > tb ? 1 : 0);
+    }
+    return 0;
+  }
+
   function sorted() {
     return rows.slice().sort(function (a, b) {
-      if (a.date !== b.date) return a.date < b.date ? -1 : 1;
-      var ta = timeSortKey(a.time), tb = timeSortKey(b.time);
-      return ta === tb ? 0 : (ta < tb ? -1 : 1);
+      var na = isBlankFor(sortKey, a), nb = isBlankFor(sortKey, b);
+      if (na !== nb) return na ? 1 : -1;
+      if (!na) {
+        var c = cmpBy(sortKey, a, b) * sortDir;
+        if (c) return c;
+      }
+      // 같은 값이면 날짜 → 시간으로 갈라 늘 같은 차례가 나오게 한다
+      var d = cmpBy("date", a, b);
+      if (d) return d;
+      return cmpBy("time", a, b);
     });
   }
 
@@ -959,9 +993,35 @@ const script = `
 
     var list = visible();
 
-    head.innerHTML = showDetails
-      ? "<tr><th>이름</th><th>연락처<br>(010-)</th><th>날짜</th><th>시간</th><th>총인원<br>(성인/아동)</th><th>비고</th></tr>"
-      : "<tr><th>이름</th><th>날짜</th><th>시간</th><th>총인원</th></tr>";
+    var cols = showDetails
+      ? [["name", "이름"], [null, "연락처<br>(010-)"], [null, "날짜"], ["time", "시간"], [null, "총인원<br>(성인/아동)"], [null, "비고"]]
+      : [["name", "이름"], [null, "날짜"], ["time", "시간"], [null, "총인원"]];
+
+    head.innerHTML = "<tr>" + cols.map(function (c) {
+      if (!c[0]) return "<th>" + c[1] + "</th>";
+      var on = sortKey === c[0];
+      var arrow = on ? (sortDir > 0 ? "▲" : "▼") : "↕";
+      return "<th class=\\"sortable" + (on ? " on" : "") + "\\" data-k=\\"" + c[0] +
+        "\\" role=\\"button\\" tabindex=\\"0\\" title=\\"눌러서 정렬\\">" + c[1] +
+        "<span class=\\"arw\\">" + arrow + "</span></th>";
+    }).join("") + "</tr>";
+
+    // innerHTML로 다시 그렸으므로 매번 새로 연결한다
+    Array.prototype.forEach.call(head.querySelectorAll("th.sortable"), function (th) {
+      function pick() {
+        var k = th.getAttribute("data-k");
+        // 오름 → 내림 → 기본(날짜순). 날짜 칸은 누를 수 없으므로
+        // 세 번째 누름이 원래 순서로 돌아오는 유일한 길이다.
+        if (sortKey !== k) { sortKey = k; sortDir = 1; }
+        else if (sortDir === 1) { sortDir = -1; }
+        else { sortKey = "date"; sortDir = 1; }
+        renderTable();
+      }
+      th.addEventListener("click", pick);
+      th.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); }
+      });
+    });
 
     var html = "";
     list.forEach(function (r) {
