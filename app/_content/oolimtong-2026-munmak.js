@@ -921,7 +921,6 @@ const body = `
 
 <!-- ── 운영 OT (운영진 전용) ── -->
 <section id="ops" style="border-bottom:none;">
-  <p class="section-label">Staff only</p>
   <h2 class="section-title">현장 운영 OT</h2>
   <div class="ops-lock" id="ops-gate">
     <p class="ops-lock-text">운영진(작가·보조)만 보는 현장 운영 안내입니다. 비밀번호를 넣어 주세요.</p>
