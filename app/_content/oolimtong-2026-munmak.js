@@ -692,7 +692,7 @@ const styles = `
   .flow-branch .tag { font-size: 10.5px; color: var(--text-dim); display: block; margin-bottom: 2px; }
 
   /* 운영 OT로 편입된 배치 & 혼잡도 */
-  #ops-venue { max-width: 980px; margin-top: 44px; }
+  #ops-venue { max-width: 980px; margin: 46px 0; }
   #ops-venue .venue-heading {
     font-family: 'IBM Plex Sans KR', sans-serif;
     font-size: 15px; font-weight: 700; color: var(--accent2); margin-bottom: 12px;
@@ -874,7 +874,7 @@ const body = `
     <p class="venue-heading">동시 정원 &amp; 혼잡도</p>
 
     <div class="venue-grid">
-    <svg class="venue-diagram" viewBox="0 0 440 450" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="울림통 둘레 최대 6명, 돗자리 두 장에 각 8명, 보조 테이블 배치도">
+    <svg class="venue-diagram" viewBox="0 0 440 434" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="울림통 둘레 최대 6명, 돗자리 두 장에 각 8명, 보조 테이블 배치도">
       <ellipse cx="220" cy="75" rx="60" ry="28" fill="var(--bg3)" stroke="var(--accent)" stroke-width="2"></ellipse>
       <text x="220" y="82" text-anchor="middle" font-size="20" font-weight="700" fill="var(--accent2)">울림통</text>
       <circle cx="190" cy="27" r="9" fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"></circle>
