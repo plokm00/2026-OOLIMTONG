@@ -36,22 +36,11 @@ const styles = `
     border-bottom: 1px solid var(--line);
   }
 
-  .section-label {
-    font-size: 11px;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 14px;
-    font-weight: 500;
-  }
-
   h2.section-title {
     font-size: clamp(26px, 4vw, 44px);
     font-weight: 700;
     color: var(--text);
     margin-bottom: 36px;
-    border-left: 3px solid var(--accent);
-    padding-left: 20px;
   }
 
   /* ── 고정 네비게이션 ── */
@@ -130,12 +119,7 @@ const styles = `
     color: var(--text-dim);
     line-height: 1.9;
   }
-  .cover-divider {
-    width: 72px;
-    height: 3px;
-    background: var(--accent);
-    margin: 34px 0 26px;
-  }
+  .cover-divider { height: 26px; }
   .cover-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 300px;
@@ -616,8 +600,7 @@ const styles = `
     line-height: 1.9;
     padding: 16px 20px;
     background: var(--bg2);
-    border-left: 3px solid var(--accent);
-    border-radius: 0 2px 2px 0;
+    border-radius: 3px;
     margin-bottom: 32px;
   }
   .ops-block { margin-bottom: 40px; }
@@ -626,8 +609,6 @@ const styles = `
     font-size: 18px;
     font-weight: 700;
     color: var(--text);
-    border-left: 3px solid var(--accent);
-    padding-left: 14px;
     margin-bottom: 16px;
   }
   .ops-p { font-size: 14px; color: var(--text); line-height: 1.9; margin-bottom: 14px; }
@@ -699,9 +680,7 @@ const styles = `
   }
   .ops-callout > strong {
     display: block;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    font-size: 13px;
     color: var(--accent2);
     margin-bottom: 4px;
   }
