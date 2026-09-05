@@ -1,10 +1,11 @@
-// 문막-흙으로 잇다 2026 현장 체크인 (테스트 버전)
+// 문막-흙으로 잇다 2026 현장 체크인 · 방명록 (테스트 버전)
 // 사전신청 명단은 /oolimtong_2026_munmak 페이지의 PACKED 값을 그대로 fetch해서 읽어오므로
-// 예약이 추가/변경되면 이 페이지에도 자동 반영된다. 체크인 상태는 지금은
-// 이 기기의 localStorage에만 저장된다 — 여러 폰이 동시에 보는 실시간 버전이 아니다.
+// 예약이 추가/변경되면 이 페이지에도 자동 반영된다. 체크인은 신청자 1명이 아니라
+// 그 자리에 실제로 온 사람 전원의 이름을 받는 방명록 역할을 한다(인원수 집계가 아님).
+// 기록은 지금은 이 기기의 localStorage에만 저장된다 — 여러 폰이 동시에 보는 실시간 버전이 아니다.
 
 const metadata = {
-  title: "현장 체크인(테스트) | 문막-흙으로 잇다 2026",
+  title: "현장 체크인 · 방명록(테스트) | 문막-흙으로 잇다 2026",
 };
 
 const styles = [
@@ -108,7 +109,7 @@ const styles = [
   .row.checked { background: var(--ok-bg); border-color: var(--ok); }
   .row .check {
     flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
-    border: 2px solid var(--line); background: #fff; cursor: pointer;
+    border: 2px solid var(--line); background: #fff;
     display: flex; align-items: center; justify-content: center;
     font-size: 15px; color: #fff; margin-top: 1px;
   }
@@ -129,23 +130,30 @@ const styles = [
   }
   .row .del-btn:hover { color: var(--accent); }
 
-  /* ── 워크인 추가 폼 ── */
-  .walkin-form {
-    background: var(--bg2); border-radius: 6px; padding: 14px; margin-top: 8px;
+  /* ── 방명록 이름 입력 ── */
+  .guest-wrap { margin-top: 8px; }
+  .guest-input {
+    display: block; width: 100%; min-height: 46px; resize: vertical;
+    border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px;
+    font-family: inherit; font-size: 13.5px; color: var(--text); background: #fff;
   }
-  .walkin-form .fields { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
-  .walkin-form input {
-    border: 1px solid var(--line); border-radius: 4px; padding: 9px 10px;
-    font-size: 14px; background: #fff; color: var(--text);
+  .guest-input:focus { outline: none; border-color: var(--accent); }
+  .guest-count { font-size: 11px; color: var(--text-dim); margin-top: 3px; text-align: right; }
+  .row.checked .guest-count { color: var(--ok); font-weight: 600; }
+
+  .walkin-note-input {
+    display: block; width: 100%; margin-top: 6px;
+    border: 1px solid var(--line); border-radius: 4px; padding: 7px 9px;
+    font-size: 12.5px; color: var(--text-dim); background: #fff;
   }
-  .walkin-form input[name="name"] { flex: 2; min-width: 120px; }
-  .walkin-form input[name="total"] { flex: 1; min-width: 70px; }
-  .walkin-form input[name="note"] { flex: 3; min-width: 140px; }
-  .walkin-form button {
+  .walkin-note-input:focus { outline: none; border-color: var(--accent); }
+
+  .add-walkin-btn {
     width: 100%; padding: 11px; font-size: 14px; font-weight: 700;
     background: var(--accent); color: #fff; border: none; border-radius: 4px; cursor: pointer;
+    margin-top: 8px;
   }
-  .walkin-form button:hover { background: var(--accent2); }
+  .add-walkin-btn:hover { background: var(--accent2); }
 
   .reset-row { text-align: center; margin-top: 28px; }
   .reset-row button {
@@ -161,14 +169,14 @@ const styles = [
 const body = `
 <div class="wrap">
   <div class="top">
-    <h1>현장 체크인</h1>
+    <h1>현장 체크인 · 방명록</h1>
     <span class="test-badge">테스트 버전 · 이 기기에만 저장</span>
   </div>
 
   <div class="notice">
-    지금은 <b>이 폰(브라우저)에만</b> 체크인 여부가 저장되는 시험판입니다. 다른 사람 폰과 실시간으로 공유되진 않아요.
-    사전신청 명단은 <b>문막 페이지와 자동으로 같은 데이터</b>를 불러오므로, 예약이 바뀌면 새로고침 시 반영됩니다.
-    써보시고 여러 명이 동시에 봐야 한다는 게 확인되면, 그다음 실시간 공유 버전(Firebase)으로 업그레이드합니다.
+    체크인은 <b>신청자 1명</b>이 아니라 그 자리에 <b>실제로 온 사람 전원의 이름</b>을 적는 방명록입니다.
+    인원수만 세지 말고, 각 줄에 그날 온 사람 이름을 쉼표(,)로 구분해 적어 주세요.
+    지금은 이 폰(브라우저)에만 저장되는 시험판입니다 — 다른 사람 폰과 실시간으로 공유되진 않아요.
   </div>
 
   <div class="gate" id="gate">
@@ -189,20 +197,10 @@ const body = `
 
     <div class="section-label">현장 워크인</div>
     <div id="walkin-list"></div>
-
-    <div class="walkin-form">
-      <form id="walkin-form">
-        <div class="fields">
-          <input type="text" name="name" placeholder="이름 (선택)" autocomplete="off">
-          <input type="number" name="total" placeholder="인원" min="1" inputmode="numeric" autocomplete="off">
-          <input type="text" name="note" placeholder="비고 (선택)" autocomplete="off">
-        </div>
-        <button type="submit">현장 워크인으로 추가 + 체크인</button>
-      </form>
-    </div>
+    <button type="button" id="add-walkin-btn" class="add-walkin-btn">+ 새 워크인 추가</button>
 
     <div class="reset-row">
-      <button type="button" id="reset-btn">이 기기의 체크인 기록 초기화</button>
+      <button type="button" id="reset-btn">이 기기의 방명록 기록 초기화</button>
     </div>
   </div>
 </div>
@@ -211,22 +209,23 @@ const body = `
 const script = `
 (function () {
   var PW = "1661";
-  var STORAGE_KEY = "munmak2026-checkin-v1";
+  var STORAGE_KEY = "munmak2026-checkin-v2";
   var reservations = null;
   var selectedDate = null;
   var state = loadState();
+  var currentItems = [];
 
   function loadState() {
     try {
       var raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return { checked: {}, walkins: [] };
+      if (!raw) return { guestbook: {}, walkins: [] };
       var parsed = JSON.parse(raw);
       return {
-        checked: parsed.checked || {},
+        guestbook: parsed.guestbook || {},
         walkins: parsed.walkins || [],
       };
     } catch (e) {
-      return { checked: {}, walkins: [] };
+      return { guestbook: {}, walkins: [] };
     }
   }
 
@@ -341,32 +340,53 @@ const script = `
     });
   }
 
-  function isChecked(id) { return !!state.checked[id]; }
+  function namesFor(id) {
+    var entry = state.guestbook[id];
+    return (entry && entry.names) || [];
+  }
 
-  function toggleChecked(id) {
-    if (state.checked[id]) delete state.checked[id];
-    else state.checked[id] = Date.now();
+  function parseNames(raw) {
+    return raw
+      .split(/[,\\n]/)
+      .map(function (s) { return s.trim(); })
+      .filter(function (s) { return s.length > 0; });
+  }
+
+  function setNames(id, names) {
+    state.guestbook[id] = { names: names, updatedAt: Date.now() };
     saveState();
-    render();
   }
 
   function removeWalkin(id) {
     state.walkins = state.walkins.filter(function (w) { return w.id !== id; });
-    delete state.checked[id];
+    delete state.guestbook[id];
     saveState();
     render();
+  }
+
+  function updateSummary() {
+    var teams = currentItems.length;
+    var expected = 0;
+    currentItems.forEach(function (it) { if (it.total != null) expected += it.total; });
+    var recorded = 0;
+    currentItems.forEach(function (it) { recorded += namesFor(it.id).length; });
+    var summary = document.getElementById("summary");
+    summary.innerHTML =
+      "예약+워크인 <b>" + teams + "팀</b>" +
+      (expected ? " · 예상 인원 약 <b>" + expected + "명</b>" : "") +
+      '<span class="done">방명록 기록 ' + recorded + "명</span>";
   }
 
   function renderRow(container, item, opts) {
     opts = opts || {};
     var row = document.createElement("div");
-    row.className = "row" + (isChecked(item.id) ? " checked" : "");
+    var currentNames = namesFor(item.id);
+    row.className = "row" + (currentNames.length > 0 ? " checked" : "");
 
-    var check = document.createElement("div");
-    check.className = "check";
-    check.textContent = isChecked(item.id) ? "\\u2713" : "";
-    check.addEventListener("click", function () { toggleChecked(item.id); });
-    row.appendChild(check);
+    var indicator = document.createElement("div");
+    indicator.className = "check";
+    indicator.textContent = currentNames.length > 0 ? "\\u2713" : "";
+    row.appendChild(indicator);
 
     var info = document.createElement("div");
     info.className = "info";
@@ -375,7 +395,7 @@ const script = `
     nameLine.className = "name-line";
     var nameSpan = document.createElement("span");
     nameSpan.className = "name";
-    nameSpan.textContent = item.name || "이름 미정";
+    nameSpan.textContent = item.name || (opts.isWalkin ? "워크인" : "이름 미정");
     nameLine.appendChild(nameSpan);
     if (opts.isWalkin) {
       var tag = document.createElement("span");
@@ -389,16 +409,57 @@ const script = `
     nameLine.appendChild(timeSpan);
     info.appendChild(nameLine);
 
-    var meta = document.createElement("div");
-    meta.className = "meta";
-    meta.textContent = fmtHeadcount(item) + (item.phone ? " · " + item.phone : "");
-    info.appendChild(meta);
+    if (!opts.isWalkin) {
+      var meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = "예상 " + fmtHeadcount(item) + (item.phone ? " · " + item.phone : "");
+      info.appendChild(meta);
+    }
 
     if (item.note) {
-      var note = document.createElement("div");
-      note.className = "note";
-      note.textContent = item.note;
-      info.appendChild(note);
+      var noteLine = document.createElement("div");
+      noteLine.className = "note";
+      noteLine.textContent = item.note;
+      info.appendChild(noteLine);
+    }
+
+    var guestWrap = document.createElement("div");
+    guestWrap.className = "guest-wrap";
+
+    var textarea = document.createElement("textarea");
+    textarea.className = "guest-input";
+    textarea.rows = 2;
+    textarea.placeholder = "실제 방문한 사람 이름을 쉼표로 구분해 입력 (예: 김민준, 이서연, 박도윤)";
+    textarea.value = currentNames.join(", ");
+
+    var countLabel = document.createElement("div");
+    countLabel.className = "guest-count";
+    countLabel.textContent = currentNames.length + "명 기록됨";
+
+    textarea.addEventListener("input", function () {
+      var names = parseNames(textarea.value);
+      setNames(item.id, names);
+      row.classList.toggle("checked", names.length > 0);
+      indicator.textContent = names.length > 0 ? "\\u2713" : "";
+      countLabel.textContent = names.length + "명 기록됨";
+      updateSummary();
+    });
+
+    guestWrap.appendChild(textarea);
+    guestWrap.appendChild(countLabel);
+    info.appendChild(guestWrap);
+
+    if (opts.isWalkin) {
+      var noteInput = document.createElement("input");
+      noteInput.type = "text";
+      noteInput.className = "walkin-note-input";
+      noteInput.placeholder = "비고 (선택)";
+      noteInput.value = item.note || "";
+      noteInput.addEventListener("input", function () {
+        item.note = noteInput.value;
+        saveState();
+      });
+      info.appendChild(noteInput);
     }
 
     row.appendChild(info);
@@ -432,6 +493,8 @@ const script = `
       .filter(function (w) { return w.date === selectedDate; })
       .sort(function (a, b) { return (b.addedAt || 0) - (a.addedAt || 0); });
 
+    currentItems = dayReservations.concat(dayWalkins);
+
     var reservedList = document.getElementById("reserved-list");
     reservedList.innerHTML = "";
     if (!dayReservations.length) {
@@ -448,41 +511,22 @@ const script = `
       dayWalkins.forEach(function (w) { renderRow(walkinList, w, { isWalkin: true }); });
     }
 
-    var totalPeople = 0, checkedPeople = 0;
-    dayReservations.concat(dayWalkins).forEach(function (item) {
-      var count = item.total == null ? 1 : item.total;
-      totalPeople += count;
-      if (isChecked(item.id)) checkedPeople += count;
-    });
-    var summary = document.getElementById("summary");
-    summary.innerHTML =
-      "예약+워크인 <b>" + (dayReservations.length + dayWalkins.length) + "팀</b> · 예상 인원 약 <b>" + totalPeople + "명</b>" +
-      '<span class="done">체크인 ' + checkedPeople + "명</span>";
+    updateSummary();
   }
 
-  function handleWalkinSubmit(e) {
-    e.preventDefault();
-    var form = e.target;
-    var name = form.name.value.trim();
-    var total = form.total.value ? +form.total.value : null;
-    var note = form.note.value.trim();
+  function addWalkin() {
     var id = "walkin_" + Date.now() + "_" + Math.random().toString(36).slice(2, 7);
     var walkin = {
       id: id,
-      name: name,
-      total: total,
-      adults: null,
-      kids: null,
+      name: "",
       phone: "",
-      note: note,
+      note: "",
       date: selectedDate,
       time: null,
       addedAt: Date.now(),
     };
     state.walkins.push(walkin);
-    state.checked[id] = Date.now();
     saveState();
-    form.reset();
     render();
   }
 
@@ -505,11 +549,11 @@ const script = `
     if (e.key === "Enter") document.getElementById("gate-btn").click();
   });
 
-  document.getElementById("walkin-form").addEventListener("submit", handleWalkinSubmit);
+  document.getElementById("add-walkin-btn").addEventListener("click", addWalkin);
 
   document.getElementById("reset-btn").addEventListener("click", function () {
-    if (!confirm("이 기기에 저장된 체크인 기록을 모두 지울까요?")) return;
-    state = { checked: {}, walkins: [] };
+    if (!confirm("이 기기에 저장된 방명록 기록을 모두 지울까요?")) return;
+    state = { guestbook: {}, walkins: [] };
     saveState();
     render();
   });
