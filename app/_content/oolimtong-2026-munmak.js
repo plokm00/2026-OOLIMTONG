@@ -859,6 +859,7 @@ const body = `
         <p class="cal-legend">
           <span class="swatch"></span>워크숍 진행일 · 날짜를 누르면 해당 회차만 볼 수 있습니다.
         </p>
+        <a href="/oolimtong_2026_munmak_checkin" target="_blank" rel="noopener noreferrer" class="ops-btn ghost" style="margin-top:12px;">현장 체크인 열기 ↗</a>
       </div>
     </div>
 
