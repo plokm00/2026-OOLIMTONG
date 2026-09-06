@@ -115,10 +115,10 @@ const styles = [
   }
   .row.checked .check { background: var(--ok); border-color: var(--ok); }
   .row .info { flex: 1; min-width: 0; }
-  .row .name-line { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-  .row .name { font-weight: 700; font-size: 15px; }
-  .row .time { font-size: 12.5px; color: var(--accent2); font-weight: 600; }
-  .row .meta { font-size: 12.5px; color: var(--text-dim); margin-top: 2px; }
+  .row .name-line { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .row .name { font-weight: 700; font-size: 15px; flex-shrink: 0; }
+  .row .time { color: var(--accent2); font-weight: 600; }
+  .row .meta { font-size: 12.5px; color: var(--text-dim); margin-top: 4px; }
   .row .note { font-size: 12px; color: var(--text-dim); margin-top: 2px; font-style: italic; }
   .row .walkin-tag {
     font-size: 10.5px; font-weight: 700; color: var(--accent);
@@ -131,8 +131,7 @@ const styles = [
   .row .del-btn:hover { color: var(--accent); }
 
   /* ── 방명록 이름 입력 ── */
-  .guest-wrap { margin-top: 8px; }
-  .name-slots { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 4px; }
+  .name-slots { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
   .name-slot { display: flex; align-items: center; gap: 1px; flex-shrink: 0; }
   .name-slot-input {
     width: 78px; flex-shrink: 0; border: 1px solid var(--line); border-radius: 4px;
@@ -407,32 +406,9 @@ const script = `
       tag.textContent = "워크인";
       nameLine.appendChild(tag);
     }
-    var timeSpan = document.createElement("span");
-    timeSpan.className = "time";
-    timeSpan.textContent = fmtTime(item.time);
-    nameLine.appendChild(timeSpan);
-    info.appendChild(nameLine);
-
-    if (!opts.isWalkin) {
-      var meta = document.createElement("div");
-      meta.className = "meta";
-      meta.textContent = "예상 " + fmtHeadcount(item) + (item.phone ? " · " + item.phone : "");
-      info.appendChild(meta);
-    }
-
-    if (item.note) {
-      var noteLine = document.createElement("div");
-      noteLine.className = "note";
-      noteLine.textContent = item.note;
-      info.appendChild(noteLine);
-    }
-
-    var guestWrap = document.createElement("div");
-    guestWrap.className = "guest-wrap";
 
     var slotsWrap = document.createElement("div");
     slotsWrap.className = "name-slots";
-    guestWrap.appendChild(slotsWrap);
 
     var countLabel = document.createElement("div");
     countLabel.className = "guest-count";
@@ -490,10 +466,30 @@ const script = `
 
     var initialNames = currentNames.length ? currentNames : [""];
     initialNames.forEach(function (n) { addSlot(n); });
-
-    guestWrap.appendChild(countLabel);
     countLabel.textContent = currentNames.length + "명 기록됨";
-    info.appendChild(guestWrap);
+
+    nameLine.appendChild(slotsWrap);
+    info.appendChild(nameLine);
+
+    var meta = document.createElement("div");
+    meta.className = "meta";
+    var metaTimeSpan = document.createElement("span");
+    metaTimeSpan.className = "time";
+    metaTimeSpan.textContent = fmtTime(item.time);
+    meta.appendChild(metaTimeSpan);
+    if (!opts.isWalkin) {
+      meta.appendChild(document.createTextNode(" · 예상 " + fmtHeadcount(item) + (item.phone ? " · " + item.phone : "")));
+    }
+    info.appendChild(meta);
+
+    if (item.note) {
+      var noteLine = document.createElement("div");
+      noteLine.className = "note";
+      noteLine.textContent = item.note;
+      info.appendChild(noteLine);
+    }
+
+    info.appendChild(countLabel);
 
     if (opts.isWalkin) {
       var noteInput = document.createElement("input");
