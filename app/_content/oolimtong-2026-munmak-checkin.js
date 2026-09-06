@@ -36,7 +36,7 @@ const styles = [
     -webkit-tap-highlight-color: transparent;
   }
 
-  .wrap { max-width: 640px; margin: 0 auto; padding: 20px 16px 80px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 20px 16px 80px; }
 
   .top {
     display: flex; align-items: baseline; justify-content: space-between;
@@ -132,24 +132,24 @@ const styles = [
 
   /* ── 방명록 이름 입력 ── */
   .guest-wrap { margin-top: 8px; }
-  .name-slots { display: flex; flex-direction: column; gap: 6px; margin-bottom: 6px; }
-  .name-slot { display: flex; align-items: center; gap: 6px; }
+  .name-slots { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 4px; }
+  .name-slot { display: flex; align-items: center; gap: 1px; flex-shrink: 0; }
   .name-slot-input {
-    flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 4px;
-    padding: 8px 10px; font-family: inherit; font-size: 13.5px; color: var(--text); background: #fff;
+    width: 78px; flex-shrink: 0; border: 1px solid var(--line); border-radius: 4px;
+    padding: 6px 7px; font-family: inherit; font-size: 13px; color: var(--text); background: #fff;
   }
   .name-slot-input:focus { outline: none; border-color: var(--accent); }
   .name-slot-remove {
-    flex-shrink: 0; width: 26px; height: 26px; border: none; background: none;
-    color: var(--text-dim); font-size: 16px; cursor: pointer; line-height: 1;
+    flex-shrink: 0; width: 20px; height: 20px; border: none; background: none;
+    color: var(--text-dim); font-size: 15px; cursor: pointer; line-height: 1; padding: 0;
   }
   .name-slot-remove:hover { color: var(--accent); }
   .name-slot-add {
-    width: 100%; border: 1px dashed var(--line); background: none; color: var(--text-dim);
-    font-size: 12.5px; padding: 7px 10px; border-radius: 4px; cursor: pointer;
+    flex-shrink: 0; border: 1px dashed var(--line); background: none; color: var(--text-dim);
+    font-size: 12px; padding: 6px 10px; border-radius: 4px; cursor: pointer; white-space: nowrap;
   }
   .name-slot-add:hover { border-color: var(--accent2); color: var(--accent2); }
-  .guest-count { font-size: 11px; color: var(--text-dim); margin-top: 4px; text-align: right; }
+  .guest-count { font-size: 11px; color: var(--text-dim); margin-top: 2px; text-align: right; }
   .row.checked .guest-count { color: var(--ok); font-weight: 600; }
 
   .walkin-note-input {
@@ -186,7 +186,7 @@ const body = `
 
   <div class="notice">
     체크인은 <b>신청자 1명</b>이 아니라 그 자리에 <b>실제로 온 사람 전원의 이름</b>을 적는 방명록입니다.
-    인원수만 세지 말고, 이름 칸 하나에 한 명씩 적고 인원이 더 있으면 "+ 이름 추가"로 칸을 늘려 주세요.
+    인원수만 세지 말고, 이름 칸 하나에 한 명씩 적고 인원이 더 있으면 "+ 추가"로 칸을 늘려 주세요.
     지금은 이 폰(브라우저)에만 저장되는 시험판입니다 — 다른 사람 폰과 실시간으로 공유되진 않아요.
   </div>
 
@@ -474,23 +474,23 @@ const script = `
       });
       slotRow.appendChild(removeBtn);
 
-      slotsWrap.appendChild(slotRow);
+      slotsWrap.insertBefore(slotRow, addBtn);
       return input;
     }
 
     var addBtn = document.createElement("button");
     addBtn.type = "button";
     addBtn.className = "name-slot-add";
-    addBtn.textContent = "+ 이름 추가";
+    addBtn.textContent = "+ 추가";
     addBtn.addEventListener("click", function () {
       var input = addSlot("");
       input.focus();
     });
+    slotsWrap.appendChild(addBtn);
 
     var initialNames = currentNames.length ? currentNames : [""];
     initialNames.forEach(function (n) { addSlot(n); });
 
-    guestWrap.appendChild(addBtn);
     guestWrap.appendChild(countLabel);
     countLabel.textContent = currentNames.length + "명 기록됨";
     info.appendChild(guestWrap);
