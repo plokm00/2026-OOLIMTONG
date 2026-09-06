@@ -115,7 +115,7 @@ const styles = [
   }
   .row.checked .check { background: var(--ok); border-color: var(--ok); }
   .row .info { flex: 1; min-width: 0; }
-  .row .name-line { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .row .name-line { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
   .row .name { font-weight: 700; font-size: 15px; flex-shrink: 0; }
   .row .time { color: var(--accent2); font-weight: 600; }
   .row .meta { font-size: 12.5px; color: var(--text-dim); margin-top: 4px; }
@@ -132,17 +132,11 @@ const styles = [
 
   /* ── 방명록 이름 입력 ── */
   .name-slots { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-  .name-slot { display: flex; align-items: center; gap: 1px; flex-shrink: 0; }
   .name-slot-input {
     width: 78px; flex-shrink: 0; border: 1px solid var(--line); border-radius: 4px;
     padding: 6px 7px; font-family: inherit; font-size: 13px; color: var(--text); background: #fff;
   }
   .name-slot-input:focus { outline: none; border-color: var(--accent); }
-  .name-slot-remove {
-    flex-shrink: 0; width: 20px; height: 20px; border: none; background: none;
-    color: var(--text-dim); font-size: 15px; cursor: pointer; line-height: 1; padding: 0;
-  }
-  .name-slot-remove:hover { color: var(--accent); }
   .name-slot-add {
     flex-shrink: 0; border: 1px dashed var(--line); background: none; color: var(--text-dim);
     font-size: 12px; padding: 6px 10px; border-radius: 4px; cursor: pointer; white-space: nowrap;
@@ -426,31 +420,23 @@ const script = `
       updateSummary();
     }
 
+    // 칸 사이에 삭제(×) 버튼을 두면 이름 칸을 나누는 구분자처럼 보여서 두지 않는다.
+    // 대신 비운 칸은 포커스가 빠질 때 스스로 사라진다(마지막 한 칸은 남긴다).
     function addSlot(value) {
-      var slotRow = document.createElement("div");
-      slotRow.className = "name-slot";
-
       var input = document.createElement("input");
       input.type = "text";
       input.className = "name-slot-input";
       input.placeholder = "이름";
       input.value = value || "";
       input.addEventListener("input", commitNames);
-      slotRow.appendChild(input);
-
-      var removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.className = "name-slot-remove";
-      removeBtn.setAttribute("aria-label", "이 칸 삭제");
-      removeBtn.textContent = "\\u00d7";
-      removeBtn.addEventListener("click", function () {
-        slotRow.remove();
-        if (!slotsWrap.querySelector(".name-slot-input")) addSlot("");
+      input.addEventListener("blur", function () {
+        if (input.value.trim()) return;
+        if (slotsWrap.querySelectorAll(".name-slot-input").length <= 1) return;
+        input.remove();
         commitNames();
       });
-      slotRow.appendChild(removeBtn);
 
-      slotsWrap.insertBefore(slotRow, addBtn);
+      slotsWrap.insertBefore(input, addBtn);
       return input;
     }
 
