@@ -1,7 +1,16 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Firebase Authentication을 붙이기 전에는 브라우저의 모든 읽기·쓰기를 차단합니다.
+    // 문막 흙으로 잇다 2026 현장 체크인 · 방명록.
+    // 운영진 여러 명이 각자 폰에서 동시에 이름을 적고 서로 실시간으로 봐야 하므로
+    // 이 컬렉션만 연다. 클라이언트는 익명 인증(Anonymous)으로 로그인한 뒤 접근한다.
+    // 페이지 비밀번호는 겉보기 가림일 뿐 Firestore 쪽 방어선이 아니므로,
+    // 여기에는 행사 당일 방명록(이름·인원) 외의 정보를 넣지 않는다.
+    match /munmak2026_checkins/{docId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Firebase Authentication을 붙이기 전에는 그 외 모든 읽기·쓰기를 차단합니다.
     match /{document=**} {
       allow read, write: if false;
     }
