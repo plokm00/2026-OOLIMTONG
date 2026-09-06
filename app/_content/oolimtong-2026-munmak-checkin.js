@@ -119,7 +119,7 @@ const styles = [
   .row .name { font-weight: 700; font-size: 15px; flex-shrink: 0; }
   .row .time { color: var(--accent2); font-weight: 600; }
   .row .meta { font-size: 12.5px; color: var(--text-dim); margin-top: 4px; }
-  .row .note { font-size: 12px; color: var(--text-dim); margin-top: 2px; font-style: italic; }
+  .row .note { font-style: italic; }
   .row .walkin-tag {
     font-size: 10.5px; font-weight: 700; color: var(--accent);
     border: 1px solid var(--accent); border-radius: 3px; padding: 1px 5px;
@@ -465,15 +465,15 @@ const script = `
     meta.appendChild(metaTimeSpan);
     if (!opts.isWalkin) {
       meta.appendChild(document.createTextNode(" · 예상 " + fmtHeadcount(item) + (item.phone ? " · " + item.phone : "")));
+      // 비고는 줄을 따로 쓰지 않고 예약정보 뒤에 이어 붙인다(카드 높이 최소화).
+      if (item.note) {
+        var noteSpan = document.createElement("span");
+        noteSpan.className = "note";
+        noteSpan.textContent = " · " + item.note;
+        meta.appendChild(noteSpan);
+      }
     }
     info.appendChild(meta);
-
-    if (item.note) {
-      var noteLine = document.createElement("div");
-      noteLine.className = "note";
-      noteLine.textContent = item.note;
-      info.appendChild(noteLine);
-    }
 
     info.appendChild(countLabel);
 
