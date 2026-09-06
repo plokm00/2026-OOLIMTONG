@@ -132,13 +132,24 @@ const styles = [
 
   /* ── 방명록 이름 입력 ── */
   .guest-wrap { margin-top: 8px; }
-  .guest-input {
-    display: block; width: 100%; min-height: 46px; resize: vertical;
-    border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px;
-    font-family: inherit; font-size: 13.5px; color: var(--text); background: #fff;
+  .name-slots { display: flex; flex-direction: column; gap: 6px; margin-bottom: 6px; }
+  .name-slot { display: flex; align-items: center; gap: 6px; }
+  .name-slot-input {
+    flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 4px;
+    padding: 8px 10px; font-family: inherit; font-size: 13.5px; color: var(--text); background: #fff;
   }
-  .guest-input:focus { outline: none; border-color: var(--accent); }
-  .guest-count { font-size: 11px; color: var(--text-dim); margin-top: 3px; text-align: right; }
+  .name-slot-input:focus { outline: none; border-color: var(--accent); }
+  .name-slot-remove {
+    flex-shrink: 0; width: 26px; height: 26px; border: none; background: none;
+    color: var(--text-dim); font-size: 16px; cursor: pointer; line-height: 1;
+  }
+  .name-slot-remove:hover { color: var(--accent); }
+  .name-slot-add {
+    width: 100%; border: 1px dashed var(--line); background: none; color: var(--text-dim);
+    font-size: 12.5px; padding: 7px 10px; border-radius: 4px; cursor: pointer;
+  }
+  .name-slot-add:hover { border-color: var(--accent2); color: var(--accent2); }
+  .guest-count { font-size: 11px; color: var(--text-dim); margin-top: 4px; text-align: right; }
   .row.checked .guest-count { color: var(--ok); font-weight: 600; }
 
   .walkin-note-input {
@@ -175,7 +186,7 @@ const body = `
 
   <div class="notice">
     체크인은 <b>신청자 1명</b>이 아니라 그 자리에 <b>실제로 온 사람 전원의 이름</b>을 적는 방명록입니다.
-    인원수만 세지 말고, 각 줄에 그날 온 사람 이름을 쉼표(,)로 구분해 적어 주세요.
+    인원수만 세지 말고, 이름 칸 하나에 한 명씩 적고 인원이 더 있으면 "+ 이름 추가"로 칸을 늘려 주세요.
     지금은 이 폰(브라우저)에만 저장되는 시험판입니다 — 다른 사람 폰과 실시간으로 공유되진 않아요.
   </div>
 
@@ -345,13 +356,6 @@ const script = `
     return (entry && entry.names) || [];
   }
 
-  function parseNames(raw) {
-    return raw
-      .split(/[,\\n]/)
-      .map(function (s) { return s.trim(); })
-      .filter(function (s) { return s.length > 0; });
-  }
-
   function setNames(id, names) {
     state.guestbook[id] = { names: names, updatedAt: Date.now() };
     saveState();
@@ -426,27 +430,69 @@ const script = `
     var guestWrap = document.createElement("div");
     guestWrap.className = "guest-wrap";
 
-    var textarea = document.createElement("textarea");
-    textarea.className = "guest-input";
-    textarea.rows = 2;
-    textarea.placeholder = "실제 방문한 사람 이름을 쉼표로 구분해 입력 (예: 김민준, 이서연, 박도윤)";
-    textarea.value = currentNames.join(", ");
+    var slotsWrap = document.createElement("div");
+    slotsWrap.className = "name-slots";
+    guestWrap.appendChild(slotsWrap);
 
     var countLabel = document.createElement("div");
     countLabel.className = "guest-count";
-    countLabel.textContent = currentNames.length + "명 기록됨";
 
-    textarea.addEventListener("input", function () {
-      var names = parseNames(textarea.value);
+    function commitNames() {
+      var names = [];
+      Array.prototype.forEach.call(slotsWrap.querySelectorAll(".name-slot-input"), function (inp) {
+        var v = inp.value.trim();
+        if (v) names.push(v);
+      });
       setNames(item.id, names);
       row.classList.toggle("checked", names.length > 0);
       indicator.textContent = names.length > 0 ? "\\u2713" : "";
       countLabel.textContent = names.length + "명 기록됨";
       updateSummary();
+    }
+
+    function addSlot(value) {
+      var slotRow = document.createElement("div");
+      slotRow.className = "name-slot";
+
+      var input = document.createElement("input");
+      input.type = "text";
+      input.className = "name-slot-input";
+      input.placeholder = "이름";
+      input.value = value || "";
+      input.addEventListener("input", commitNames);
+      slotRow.appendChild(input);
+
+      var removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "name-slot-remove";
+      removeBtn.setAttribute("aria-label", "이 칸 삭제");
+      removeBtn.textContent = "\\u00d7";
+      removeBtn.addEventListener("click", function () {
+        slotRow.remove();
+        if (!slotsWrap.querySelector(".name-slot-input")) addSlot("");
+        commitNames();
+      });
+      slotRow.appendChild(removeBtn);
+
+      slotsWrap.appendChild(slotRow);
+      return input;
+    }
+
+    var addBtn = document.createElement("button");
+    addBtn.type = "button";
+    addBtn.className = "name-slot-add";
+    addBtn.textContent = "+ 이름 추가";
+    addBtn.addEventListener("click", function () {
+      var input = addSlot("");
+      input.focus();
     });
 
-    guestWrap.appendChild(textarea);
+    var initialNames = currentNames.length ? currentNames : [""];
+    initialNames.forEach(function (n) { addSlot(n); });
+
+    guestWrap.appendChild(addBtn);
     guestWrap.appendChild(countLabel);
+    countLabel.textContent = currentNames.length + "명 기록됨";
     info.appendChild(guestWrap);
 
     if (opts.isWalkin) {
