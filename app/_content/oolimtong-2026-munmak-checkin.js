@@ -147,6 +147,9 @@ const styles = [
   .name-slot-input:focus { outline: none; border-color: var(--accent); }
   /* 첫 칸에 뜨는 신청자 이름은 "아직 안 적힌 상태"로 보여야 한다. */
   .name-slot-input::placeholder { color: #c3a494; }
+  /* 미리 채워 둔 신청자 이름 — 아직 확정 전이라 placeholder 와 같은 톤으로 둔다. */
+  .name-slot-input.seeded { color: #c3a494; }
+  .name-slot-input.seeded:focus { color: var(--text); }
   .name-slot-add {
     flex-shrink: 0; border: 1px dashed var(--line); background: none; color: var(--text-dim);
     font-size: 12px; padding: 6px 10px; border-radius: 4px; cursor: pointer; white-space: nowrap;
@@ -154,6 +157,13 @@ const styles = [
   .name-slot-add:hover { border-color: var(--accent2); color: var(--accent2); }
   .guest-count { font-size: 11px; color: var(--text-dim); margin-top: 2px; text-align: right; }
   .row.checked .guest-count { color: var(--ok); font-weight: 600; }
+  .guest-count .missing-host { color: var(--accent); font-weight: 700; }
+
+  .walkin-time-select {
+    font-family: inherit; font-size: 12.5px; font-weight: 600; color: var(--accent2);
+    background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 3px 6px;
+  }
+  .walkin-time-select:focus { outline: none; border-color: var(--accent); }
 
   .walkin-note-input {
     display: block; width: 100%; margin-top: 6px;
@@ -190,8 +200,8 @@ const body = `
   <div class="notice">
     체크인은 <b>신청자 1명</b>이 아니라 그 자리에 <b>실제로 온 사람 전원의 이름</b>을 적는 방명록입니다.
     인원수만 세지 말고, 이름 칸 하나에 한 명씩 적고 인원이 더 있으면 "+ 추가"로 칸을 늘려 주세요.
-    <b>신청자 본인도 한 칸</b>을 차지합니다. 동그라미(○)를 누르면 신청자 이름이 첫 칸에 자동으로 들어가니,
-    같이 온 사람만 이어서 적으면 됩니다.
+    <b>신청자 본인도 한 칸</b>을 차지합니다. 첫 칸에는 신청자 이름이 미리 들어가 있으니 같이 온 사람만
+    이어서 적으면 되고, 본인이 안 왔으면 그 칸을 지워 주세요. 현장 워크인은 참여 회차(시간)를 골라 주세요.
     <span id="sync-note">연결 상태를 확인하는 중입니다.</span>
   </div>
 
@@ -311,6 +321,41 @@ const script = `
     var s = r.total + "명";
     if (r.adults != null && r.kids != null) s += " (성인 " + r.adults + "·아동 " + r.kids + ")";
     return s;
+  }
+
+  var BASE_TIME_SLOTS = [
+    "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
+    "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
+  ];
+
+  // 워크인 회차 선택지. 고정 회차에 그날 실제 예약 시간을 합쳐 둬서
+  // 명단에만 있는 회차(오전/오후 미정 포함)도 고를 수 있게 한다.
+  function timeSlotOptions() {
+    var set = {};
+    BASE_TIME_SLOTS.forEach(function (t) { set[t] = true; });
+    (reservations || []).forEach(function (r) {
+      if (r.date === selectedDate && r.time) set[r.time] = true;
+    });
+    var opts = [{ value: "", label: "시간 미정" }];
+    Object.keys(set)
+      .sort(function (a, b) { return timeSortKey(a) - timeSortKey(b); })
+      .forEach(function (t) { opts.push({ value: t, label: fmtTime(t) }); });
+    return opts;
+  }
+
+  // 워크인은 지금 이 자리에서 등록하는 것이므로, 오늘 날짜면 현재 시각이 속한
+  // 회차를 미리 골라 둔다. 틀리면 그 자리에서 바꾸면 된다.
+  function defaultWalkinTime() {
+    if (selectedDate !== todayStr()) return null;
+    var now = new Date();
+    var mins = now.getHours() * 60 + now.getMinutes();
+    var best = null;
+    timeSlotOptions().forEach(function (o) {
+      if (o.value.indexOf(":") === -1) return;  // "", 오전/오후 미정 회차는 제외
+      var k = timeSortKey(o.value);
+      if (k <= mins + 15 && (best === null || k > timeSortKey(best))) best = o.value;
+    });
+    return best;
   }
 
   function timeSortKey(t) {
@@ -567,17 +612,10 @@ const script = `
     indicator.textContent = currentNames.length > 0 ? "\\u2713" : "";
     indicator.title = "이름 적기";
     // 눌러도 아무 일이 없으면 고장난 것처럼 보인다. 빈 이름칸으로 보내 준다.
-    // 인원수에는 신청자 본인도 들어간다. 아직 아무도 안 적힌 예약 행이면 신청자 이름을
-    // 첫 칸에 대신 넣어 주고(= 본인 도착), 동행을 적을 빈 칸으로 넘어간다.
+    // 인원수에는 신청자 본인도 들어간다. 첫 칸에 미리 채워 둔 이름을 여기서 확정한다(= 본인 도착).
     indicator.addEventListener("click", function () {
+      if (!namesFor(item.id).length && collectNames().length) commitNames();
       var inputs = slotsWrap.querySelectorAll(".name-slot-input");
-      if (!opts.isWalkin && item.name && !namesFor(item.id).length &&
-          inputs.length && !inputs[0].value.trim()) {
-        inputs[0].value = item.name;
-        commitNames();
-        addSlot("").focus();
-        return;
-      }
       for (var i = 0; i < inputs.length; i++) {
         if (!inputs[i].value.trim()) { inputs[i].focus(); return; }
       }
@@ -604,16 +642,36 @@ const script = `
     var countLabel = document.createElement("div");
     countLabel.className = "guest-count";
 
-    function commitNames() {
+    function collectNames() {
       var names = [];
       Array.prototype.forEach.call(slotsWrap.querySelectorAll(".name-slot-input"), function (inp) {
         var v = inp.value.trim();
         if (v) names.push(v);
       });
+      return names;
+    }
+
+    // 신청자 본인이 빠진 채 동행만 적히는 게 인원수가 틀리는 가장 흔한 경로다.
+    // 예전에 그렇게 적힌 행도 있으므로 조용히 표시해 준다.
+    function updateCountLabel(names) {
+      countLabel.textContent = names.length + "명 기록됨";
+      if (!opts.isWalkin && item.name && names.length && names.indexOf(item.name) === -1) {
+        var warn = document.createElement("span");
+        warn.className = "missing-host";
+        warn.textContent = " · 신청자 본인 빠짐?";
+        countLabel.appendChild(warn);
+      }
+    }
+
+    function commitNames() {
+      var names = collectNames();
+      Array.prototype.forEach.call(slotsWrap.querySelectorAll(".name-slot-input"), function (inp) {
+        inp.classList.remove("seeded");
+      });
       setNames(item.id, names);
       row.classList.toggle("checked", names.length > 0);
       indicator.textContent = names.length > 0 ? "\\u2713" : "";
-      countLabel.textContent = names.length + "명 기록됨";
+      updateCountLabel(names);
       updateSummary();
     }
 
@@ -658,19 +716,45 @@ const script = `
     });
     slotsWrap.appendChild(addBtn);
 
-    var initialNames = currentNames.length ? currentNames : [""];
-    initialNames.forEach(function (n) { addSlot(n); });
-    countLabel.textContent = currentNames.length + "명 기록됨";
+    // 아직 아무도 안 적힌 예약 행은 첫 칸에 신청자 이름을 미리 넣어 둔다.
+    // placeholder 로만 두면 운영진이 그 칸에 동행 이름을 적어 버려 본인이 인원수에서 빠진다.
+    // 아직 '기록'은 아니므로 seeded 로 흐리게 두고, 뭐라도 확정되는 순간 같이 올라간다.
+    var seeded = !currentNames.length && !opts.isWalkin && !!item.name;
+    var initialNames = currentNames.length ? currentNames : [seeded ? item.name : ""];
+    initialNames.forEach(function (n) {
+      var input = addSlot(n);
+      if (seeded) input.classList.add("seeded");
+    });
+    updateCountLabel(currentNames);
 
     nameLine.appendChild(slotsWrap);
     info.appendChild(nameLine);
 
     var meta = document.createElement("div");
     meta.className = "meta";
-    var metaTimeSpan = document.createElement("span");
-    metaTimeSpan.className = "time";
-    metaTimeSpan.textContent = fmtTime(item.time);
-    meta.appendChild(metaTimeSpan);
+    if (opts.isWalkin) {
+      // 워크인도 어느 회차에 들어갔는지 남아야 나중에 회차별 인원을 셀 수 있다.
+      var timeSelect = document.createElement("select");
+      timeSelect.className = "walkin-time-select";
+      timeSlotOptions().forEach(function (slot) {
+        var opt = document.createElement("option");
+        opt.value = slot.value;
+        opt.textContent = slot.label;
+        if ((item.time || "") === slot.value) opt.selected = true;
+        timeSelect.appendChild(opt);
+      });
+      timeSelect.addEventListener("change", function () {
+        item.time = timeSelect.value || null;
+        saveState();
+        queueRemoteSave(item.id);
+      });
+      meta.appendChild(timeSelect);
+    } else {
+      var metaTimeSpan = document.createElement("span");
+      metaTimeSpan.className = "time";
+      metaTimeSpan.textContent = fmtTime(item.time);
+      meta.appendChild(metaTimeSpan);
+    }
     if (!opts.isWalkin) {
       meta.appendChild(document.createTextNode(" · 예상 " + fmtHeadcount(item) + (item.phone ? " · " + item.phone : "")));
       // 비고는 줄을 따로 쓰지 않고 예약정보 뒤에 이어 붙인다(카드 높이 최소화).
@@ -759,7 +843,7 @@ const script = `
       phone: "",
       note: "",
       date: selectedDate,
-      time: null,
+      time: defaultWalkinTime(),
       addedAt: Date.now(),
     };
     state.walkins.push(walkin);
