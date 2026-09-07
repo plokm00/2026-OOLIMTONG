@@ -101,6 +101,7 @@ const styles = [
   /* ── 요약 ── */
   .summary {
     display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 4px 12px;
     background: var(--bg2); border-radius: 5px; padding: 10px 14px;
     font-size: 13px; color: var(--text-dim); margin-bottom: 14px;
   }
@@ -592,16 +593,28 @@ const script = `
     render();
   }
 
-  // 예상 인원은 사전신청분만 더해지는 값이라 워크인이 섞인 현장 인원과 나란히 두면
-  // 서로 비교되는 숫자처럼 보인다(예상 76 < 현장 79). 여기서는 빼고,
-  // 팀별 예상 인원은 각 줄에 그대로 남겨 둔다.
+  // 세는 대상은 '실제로 온 팀'이다. 이름이 하나도 안 적힌 사전신청은 노쇼로 빠지고,
+  // 아직 이름을 안 적은 빈 워크인 칸도 현장참여로 세지 않는다.
+  // 팀별 예상 인원은 각 줄에 그대로 있으므로 요약줄에서는 다루지 않는다.
   function updateSummary() {
-    var teams = currentItems.length;
-    var recorded = 0;
-    currentItems.forEach(function (it) { recorded += namesFor(it.id).length; });
+    var reservedTotal = 0, reservedCame = 0, walkinCame = 0, recorded = 0;
+    currentItems.forEach(function (it) {
+      var count = namesFor(it.id).length;
+      recorded += count;
+      if (findWalkin(it.id)) {
+        if (count) walkinCame += 1;
+      } else {
+        reservedTotal += 1;
+        if (count) reservedCame += 1;
+      }
+    });
+    // 행사 당일 아침에 "노쇼 17팀"이 떠 있으면 사실과 다르다. 아직 안 온 것뿐이므로
+    // 지난 날짜에만 노쇼라고 쓰고, 오늘이나 앞으로의 날짜는 미도착으로 둔다.
+    var missLabel = selectedDate < todayStr() ? "노쇼" : "미도착";
     var summary = document.getElementById("summary");
     summary.innerHTML =
-      "예약+워크인 <b>" + teams + "팀</b>" +
+      "<span>사전신청 <b>" + reservedCame + "</b>팀 (" + missLabel + " <b>" + (reservedTotal - reservedCame) + "</b>팀)" +
+      " · 현장참여 <b>" + walkinCame + "</b>팀</span>" +
       '<span class="done">현장 인원 <b>' + recorded + "</b>명</span>";
   }
 
