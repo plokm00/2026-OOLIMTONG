@@ -808,7 +808,13 @@ const script = `
       .sort(function (a, b) { return timeSortKey(a.time) - timeSortKey(b.time); });
     var dayWalkins = state.walkins
       .filter(function (w) { return w.date === selectedDate; })
-      .sort(function (a, b) { return (b.addedAt || 0) - (a.addedAt || 0); });
+      // 사전신청과 같이 회차 순으로 쌓이게 한다. 새로 추가한 워크인이 위로 끼어들면
+      // 방금 적던 자리를 놓친다. 같은 회차 안에서는 추가한 순서대로 아래로 붙는다.
+      .sort(function (a, b) {
+        var d = timeSortKey(a.time) - timeSortKey(b.time);
+        if (d !== 0) return d;
+        return (a.addedAt || 0) - (b.addedAt || 0);
+      });
 
     currentItems = dayReservations.concat(dayWalkins);
 
