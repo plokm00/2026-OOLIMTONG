@@ -592,16 +592,16 @@ const script = `
     render();
   }
 
+  // 예상 인원은 사전신청분만 더해지는 값이라 워크인이 섞인 현장 인원과 나란히 두면
+  // 서로 비교되는 숫자처럼 보인다(예상 76 < 현장 79). 여기서는 빼고,
+  // 팀별 예상 인원은 각 줄에 그대로 남겨 둔다.
   function updateSummary() {
     var teams = currentItems.length;
-    var expected = 0;
-    currentItems.forEach(function (it) { if (it.total != null) expected += it.total; });
     var recorded = 0;
     currentItems.forEach(function (it) { recorded += namesFor(it.id).length; });
     var summary = document.getElementById("summary");
     summary.innerHTML =
       "예약+워크인 <b>" + teams + "팀</b>" +
-      (expected ? " · 예상 인원 약 <b>" + expected + "명</b>" : "") +
       '<span class="done">현장 인원 <b>' + recorded + "</b>명</span>";
   }
 
