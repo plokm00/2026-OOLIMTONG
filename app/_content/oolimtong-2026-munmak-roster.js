@@ -83,11 +83,12 @@ const styles = [
   table.roster { width: 100%; border-collapse: collapse; font-size: 13.5px; }
   table.roster th, table.roster td { border: 1px solid var(--line); padding: 6px 9px; text-align: left; }
   table.roster th { background: var(--bg2); font-weight: 700; font-size: 12.5px; white-space: nowrap; }
+  table.roster th:first-child, table.roster th:last-child { text-align: center; }
   table.roster td.num { width: 44px; text-align: center; color: var(--text-dim); }
   table.roster td.name { font-weight: 600; }
-  table.roster td.team { width: 42%; color: var(--text-dim); font-size: 12.5px; }
+  table.roster td.team { width: 42%; text-align: center; color: var(--text-dim); font-size: 12.5px; }
   /* 이어받는 줄은 따옴표만 가운데에 — 종이 방명록에서 같은 팀을 묶는 표시. */
-  table.roster td.team.ditto { text-align: center; color: var(--text-dim); letter-spacing: 1px; }
+  table.roster td.team.ditto { color: var(--text-dim); letter-spacing: 1px; }
   /* 함께 온 단위가 바뀌는 자리에 선을 굵게 둬서 팀 경계가 보이게 한다. */
   table.roster tr.team-start td { border-top: 2px solid var(--line); }
   table.roster tr.slot-head td {
