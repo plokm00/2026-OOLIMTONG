@@ -860,8 +860,9 @@ const body = `
           <span class="swatch"></span>워크숍 진행일 · 날짜를 누르면 해당 회차만 볼 수 있습니다.
         </p>
       </div>
-      <div style="text-align:center; margin-top:16px;">
+      <div style="text-align:center; margin-top:16px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
         <a href="/oolimtong_2026_munmak_checkin" target="_blank" rel="noopener noreferrer" class="ops-btn" style="font-size:15px; padding:14px 32px;">현장 체크인 열기 ↗</a>
+        <a href="/oolimtong_2026_munmak_roster" target="_blank" rel="noopener noreferrer" class="ops-btn" style="font-size:15px; padding:14px 32px;">명단인쇄 ↗</a>
       </div>
     </div>
 

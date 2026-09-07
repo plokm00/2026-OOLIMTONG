@@ -50,6 +50,12 @@ const styles = [
     font-family: 'IBM Plex Sans KR', sans-serif;
     font-size: 19px; font-weight: 700; margin: 0;
   }
+  .top-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .print-link {
+    font-size: 11px; font-weight: 700; color: var(--accent2); text-decoration: none;
+    border: 1px solid var(--accent2); border-radius: 3px; padding: 3px 8px; white-space: nowrap;
+  }
+  .print-link:hover { background: var(--accent2); color: #fff; }
   .sync-badge {
     font-size: 11px; font-weight: 600; color: var(--accent2);
     background: #f5e0da; border: 1px solid var(--accent2);
@@ -157,7 +163,9 @@ const styles = [
   .name-slot-add:hover { border-color: var(--accent2); color: var(--accent2); }
   .guest-count { font-size: 11px; color: var(--text-dim); margin-top: 2px; text-align: right; }
   .row.checked .guest-count { color: var(--ok); font-weight: 600; }
-  .guest-count .missing-host { color: var(--accent); font-weight: 700; }
+  /* 명단 대조할 때만 필요한 정보라 눈에 덜 띄는 톤으로 둔다. */
+  .guest-count .missing-host { color: var(--text-dim); font-weight: 400; }
+  .row.checked .guest-count .missing-host { color: var(--text-dim); font-weight: 400; }
 
   .walkin-time-select {
     font-family: inherit; font-size: 12.5px; font-weight: 600; color: var(--accent2);
@@ -194,7 +202,10 @@ const body = `
 <div class="wrap">
   <div class="top">
     <h1>현장 체크인 · 방명록</h1>
-    <span class="sync-badge" id="sync-badge">연결 중…</span>
+    <span class="top-right">
+      <a class="print-link" href="/oolimtong_2026_munmak_roster" target="_blank" rel="noopener noreferrer">명단인쇄 ↗</a>
+      <span class="sync-badge" id="sync-badge">연결 중…</span>
+    </span>
   </div>
 
   <div class="notice">
@@ -658,7 +669,7 @@ const script = `
       if (!opts.isWalkin && item.name && names.length && names.indexOf(item.name) === -1) {
         var warn = document.createElement("span");
         warn.className = "missing-host";
-        warn.textContent = " · 신청자 본인 빠짐?";
+        warn.textContent = " · 신청자 본인 빠짐";
         countLabel.appendChild(warn);
       }
     }
