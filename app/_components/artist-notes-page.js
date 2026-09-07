@@ -22,6 +22,132 @@ const artists = [
   { id: "heoyang", name: "허양", team: "네모", photo: "/artist-profiles/heoyang.webp" },
 ];
 
+const introPrompts = [
+  "나를 한 줄로 소개해주세요. 사는 곳, 하는 일 — 직업이 아니어도 좋습니다.",
+  "울림통-변주에 참여하게 된 계기는 무엇이었나요? 누구의 권유, 우연히 본 공고, 오래 품어온 마음 무엇이든 좋습니다.",
+  "요즘 나의 하루는 어떤가요? 지금 내 삶이 놓여 있는 자리를 한두 문장으로 적어주세요.",
+  "흙, 혹은 손으로 무언가 만드는 일과 나의 거리는 어느 정도였나요? 처음이었는지, 오랜만이었는지.",
+  "이 작업이 끝난 뒤 나에게 무엇이 남기를 바라나요?",
+];
+
+const interviewGroups = [
+  {
+    title: "처음 · 흙과 만난 시간",
+    source: "1–2회차",
+    questions: [
+      "나에게 흙은 어떤 재료였나요? 처음 흙을 만졌을 때 손에 남은 감각을 떠올려 적어주세요.",
+      "‘울림통’이라는 말을 처음 들었을 때 무엇이 떠올랐나요? 지금은 그 이미지가 달라졌나요?",
+      "처음 그린 드로잉과 완성된 모뉴먼트는 얼마나 달라졌나요? 무엇이 그 변화를 만들었나요?",
+    ],
+  },
+  {
+    title: "나의 모뉴먼트",
+    source: "2–3 · 10회차",
+    questions: [
+      "내 모뉴먼트의 이름은 무엇인가요? 그 이름에 담은 뜻을 알려주세요.",
+      "작업 중 가장 낯설었던 감각, 혹은 예상과 가장 달랐던 순간은 언제였나요?",
+      "NFC 칩을 어느 자리에 심었나요? 왜 그 자리를 골랐나요?",
+      "손의 흔적이 남는 것과 매끄럽게 다듬어진 마감 중, 나는 어느 쪽으로 기울었나요?",
+      "기름을 먹인 뒤 작품의 얼굴이 달라졌습니다. 그때 어떤 마음이 들었나요?",
+    ],
+  },
+  {
+    title: "함께 만든 대형 울림통",
+    source: "4–9회차",
+    questions: [
+      "내 타래가 옆 사람의 타래와 한 줄로 이어질 때 어떤 기분이 들었나요?",
+      "반죽하기와 타래 쌓기 중 나에게 더 편안했던 작업은 무엇이었고, 왜 그랬을까요?",
+      "내가 만든 부분이 구분되는 것과 누가 만들었는지 모르게 섞이는 것, 어느 쪽이 좋았나요?",
+      "돌로 벽을 다지던 시간을 이야기해주세요. 소리, 힘, 벽에 남은 무늬 중 무엇이 기억에 남나요?",
+      "소리를 녹음하고 몸을 움직여 본 시간에서 가장 기억에 남는 장면은 무엇인가요?",
+      "우리 팀 울림통의 이름은 어떻게 정해졌나요? 그 이름을 나는 어떻게 생각하나요?",
+      "작업 중 서로 영향을 주고받는다고 느낀 순간이 있었나요?",
+    ],
+  },
+  {
+    title: "전체를 돌아보며",
+    source: "6 · 11회차",
+    questions: [
+      "혼자 만드는 것과 함께 만드는 것은 나에게 어떻게 다르게 느껴졌나요?",
+      "가장 어려웠던 일과 가장 즐거웠던 순간을 하나씩 꼽는다면?",
+      "‘참여자’가 아니라 ‘작가’가 되었다고 느낀 순간이 있었나요? 언제였나요?",
+      "이 작품은 굽지 않아 언젠가 흙으로 돌아갑니다. 그 사실을 어떻게 받아들이고 계신가요?",
+      "완성된 울림통이 전시장에 놓인 모습을 상상하면 어떤 감정이 드나요?",
+      "다시 한 번 참여한다면 꼭 해보고 싶은 것, 그리고 프로그램에 바라는 점을 적어주세요.",
+    ],
+  },
+];
+
+const nfcCandidates = [
+  "내 모뉴먼트 소개 모바일 페이지 — 사진 · 작가 노트 · 제작 과정 (가장 기본, 제작 지원 가능)",
+  "작업장에서 녹음한 소리 — 돌로 벽 다지는 소리, 함께 부른 노래, 니닉어 따라 하기",
+  "제작 과정 영상 또는 8회차에 촬영한 퍼포먼스 영상",
+  "내가 쓴 짧은 글이나 시, 목소리로 남긴 낭독",
+  "이 작가 노트 페이지의 내 자리 (주소 뒤에 #내이름 을 붙이면 바로 열립니다)",
+  "〈울림통-변주〉 전시 안내 페이지 — 전시장으로 오시라는 초대",
+  "설치 장소의 이야기 — 우리 가게, 우리 동네, 우리 집을 소개하는 페이지",
+];
+
+const planRows = [
+  {
+    key: "언제",
+    en: "When",
+    fixed: "2026. 11. 21.(토) ~ 12. 13.(일) · 〈울림통-변주〉 전시 기간과 동일",
+    body: "기본값은 전시 기간과 같습니다. 더 일찍 시작하거나 더 오래 두고 싶다면 그렇게 적어주세요.",
+  },
+  {
+    key: "어디서",
+    en: "Where",
+    body: "사람들과 소통할 수 있는 공간이어야 합니다. 허락을 받을 수 있는 자리인지, 비·바람·서리를 피할 수 있는지도 함께 살펴주세요.",
+    examples: [
+      "집 마당 · 거실 창가",
+      "일터 — 가게 입구, 사무실 로비, 공방",
+      "동네 공원 · 산책로",
+      "단골 카페",
+      "어린이집 · 학교",
+      "텃밭 어귀",
+      "아파트 화단 · 공동 현관",
+    ],
+  },
+  {
+    key: "무엇을",
+    en: "What",
+    body: "설치할 작품을 알려주세요. 작품 이름과 대략의 크기, 좌대나 받침이 필요한지, 설명 카드를 함께 둘지.",
+  },
+  {
+    key: "누가",
+    en: "Who",
+    body: "누가 설치하고 누가 돌보나요? 함께해 줄 사람이 있나요? 그리고 이 작품을 누가 만나기를 바라나요?",
+  },
+  {
+    key: "어떻게",
+    en: "How",
+    body: "배치 방식과 운영 방식을 정합니다. 매일 지킬 수 있는 정도로만 정하는 것이 좋습니다.",
+    examples: [
+      "기간 내내 상시 배치",
+      "매일 11시~17시 내놓았다가 저녁에 수거",
+      "주말에만 내놓기",
+      "작품 설명 카드와 NFC 안내문을 함께 부착",
+      "NFC 칩을 찾아 열어본 분께 작은 혜택 — 음료 할인, 엽서, 스티커 (이벤트성)",
+      "SNS에 설치 위치를 공개해 여러 모뉴먼트를 스탬프처럼 돌아보게 하기",
+    ],
+  },
+  {
+    key: "왜",
+    en: "Why",
+    body: "가장 중요한 칸입니다. 왜 하필 그 자리인가요? 그곳의 사람들에게 무엇을 건네고 싶은가요? 이 설치로 내가 얻고 싶은 것은 무엇인가요?",
+  },
+];
+
+const planChecklist = [
+  "장소 사용 허락을 받았는가 (집 밖이라면 반드시)",
+  "받침 · 좌대 · 고정 방법이 있는가",
+  "굽지 않은 흙입니다. 비 · 눈 · 서리 · 강한 바람을 피할 수 있는가",
+  "파손이나 분실이 생겼을 때 어떻게 할지 정해두었는가",
+  "전시가 끝난 뒤 — 회수해 보관할지, 그 자리에 두어 자연으로 돌아가게 할지",
+  "설치한 모습을 사진으로 남겨 아카이브에 보내주기",
+];
+
 function initialArtist() {
   if (typeof window === "undefined") return artists[0];
   const id = window.location.hash.slice(1);
@@ -50,7 +176,7 @@ export default function ArtistNotesPage() {
   return (
     <main className="artist-notes-page">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
 
         :root { --an-bg:#f6ede6; --an-bg2:#eee0d6; --an-bg3:#e4d0c4; --an-line:#ceb0a0; --an-accent:#c03828; --an-accent2:#8c2418; --an-text:#261410; --an-dim:#7a4c3c; }
         * { box-sizing:border-box; }
@@ -82,16 +208,57 @@ export default function ArtistNotesPage() {
         .artist-note-label { margin:0 0 12px; color:var(--an-accent); font-size:11px; font-weight:700; letter-spacing:.14em; }
         .artist-note-name { margin:0; font-family:'IBM Plex Sans KR', sans-serif; font-size:clamp(38px,5vw,62px); line-height:1.15; letter-spacing:-.05em; }
         .artist-note-team { margin:12px 0 0; color:var(--an-dim); font-size:14px; }
-        .artist-note-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; border-left:1px solid var(--an-line); }
-        .artist-note-block { min-height:255px; padding:30px; border-right:1px solid var(--an-line); border-bottom:1px solid var(--an-line); }
-        .artist-note-block:nth-child(1) { background:var(--an-bg2); }
-        .artist-note-block:last-child { grid-column:1 / -1; }
-        .artist-note-block h2 { margin:0 0 14px; font-family:'IBM Plex Sans KR', sans-serif; font-size:23px; line-height:1.25; }
-        .artist-note-block p { margin:0; color:var(--an-dim); font-size:14px; line-height:1.9; }
-        .artist-note-block .note-hint { margin-top:20px; color:var(--an-accent2); font-size:12px; font-weight:600; }
+
+        .note-howto { margin-top:34px; padding:26px 28px; border:1px solid var(--an-line); border-left:4px solid var(--an-accent); background:var(--an-bg2); }
+        .note-howto h2 { margin:0 0 12px; font-family:'IBM Plex Sans KR', sans-serif; font-size:19px; }
+        .note-howto > p { margin:0 0 16px; color:var(--an-dim); font-size:14px; line-height:1.9; }
+        .note-howto dl { margin:0; display:grid; grid-template-columns:74px minmax(0,1fr); gap:8px 16px; }
+        .note-howto dt { color:var(--an-accent2); font-size:12px; font-weight:700; letter-spacing:.04em; line-height:1.9; }
+        .note-howto dd { margin:0; color:var(--an-text); font-size:14px; line-height:1.9; }
+
+        .note-section { padding:44px 0 40px; border-bottom:1px solid var(--an-line); }
+        .note-section:last-of-type { border-bottom:0; }
+        .note-section-no { display:block; margin-bottom:10px; color:var(--an-accent); font-family:'IBM Plex Sans KR', sans-serif; font-size:12px; font-weight:700; letter-spacing:.16em; }
+        .note-section h2 { margin:0 0 16px; font-family:'IBM Plex Sans KR', sans-serif; font-size:29px; line-height:1.25; letter-spacing:-.02em; }
+        .note-lead { max-width:720px; margin:0 0 26px; color:var(--an-dim); font-size:15px; line-height:1.95; }
+        .note-lead strong { color:var(--an-text); font-weight:600; }
+        .note-sub { margin:34px 0 12px; font-family:'IBM Plex Sans KR', sans-serif; font-size:15px; font-weight:600; letter-spacing:.02em; }
+        .note-sub .note-src { margin-left:9px; padding:2px 8px; border-radius:2px; background:var(--an-bg3); color:var(--an-dim); font-size:11px; font-weight:500; letter-spacing:.02em; vertical-align:middle; }
+
+        .prompt-list { margin:0; padding:0; list-style:none; counter-reset:prompt; }
+        .prompt-list li { position:relative; padding:11px 0 11px 34px; border-bottom:1px dotted var(--an-line); font-size:14px; line-height:1.85; counter-increment:prompt; }
+        .prompt-list li:last-child { border-bottom:0; }
+        .prompt-list li::before { content:counter(prompt,decimal-leading-zero); position:absolute; top:13px; left:0; color:var(--an-accent); font-size:11px; font-weight:700; letter-spacing:.04em; }
+
+        .note-example { margin:24px 0 0; padding:20px 22px; border-left:3px solid var(--an-accent); background:var(--an-bg2); }
+        .note-example strong { display:block; margin-bottom:10px; color:var(--an-accent2); font-size:11px; font-weight:700; letter-spacing:.1em; }
+        .note-example p { margin:0; color:var(--an-text); font-size:14px; line-height:1.95; }
+        .note-example p + p { margin-top:9px; }
+        .note-example em { color:var(--an-accent2); font-style:normal; font-weight:600; }
+
+        .note-fill { margin-top:24px; padding:16px 18px; border:1px dashed var(--an-line); color:var(--an-dim); font-size:12px; letter-spacing:.02em; }
+
+        .tag-list { display:flex; flex-wrap:wrap; gap:7px; margin:14px 0 0; padding:0; list-style:none; }
+        .tag-list li { padding:6px 11px; border:1px solid var(--an-line); border-radius:14px; background:var(--an-bg); color:var(--an-dim); font-size:12.5px; }
+
+        .check-list { margin:12px 0 0; padding:0; list-style:none; }
+        .check-list li { position:relative; padding:8px 0 8px 24px; font-size:14px; line-height:1.85; }
+        .check-list li::before { content:'☐'; position:absolute; left:0; color:var(--an-accent); font-size:14px; }
+
+        .plan-row { padding:20px 0; border-top:1px solid var(--an-line); }
+        .plan-row:first-of-type { border-top:2px solid var(--an-text); }
+        .plan-key { display:flex; align-items:baseline; gap:9px; margin:0 0 8px; font-family:'IBM Plex Sans KR', sans-serif; font-size:18px; font-weight:600; }
+        .plan-key span { color:var(--an-accent); font-size:11px; font-weight:700; letter-spacing:.12em; }
+        .plan-fixed { display:inline-block; margin:0 0 10px; padding:5px 11px; background:var(--an-accent); color:var(--an-bg); font-size:12.5px; font-weight:600; }
+        .plan-row p { margin:0; color:var(--an-dim); font-size:14px; line-height:1.9; }
+
+        .note-support { margin-top:26px; padding:20px 22px; border:1px solid var(--an-accent); background:var(--an-bg2); font-size:14px; line-height:1.9; }
+        .note-support strong { color:var(--an-accent2); }
+
         .artist-note-foot { margin-top:34px; display:flex; justify-content:space-between; gap:20px; color:var(--an-dim); font-size:12px; }
         .artist-note-foot a { color:var(--an-accent); text-decoration:none; }
-        @media (max-width:700px) { .artist-notes-nav { padding:0 20px; } .artist-notes-brand { font-size:11px; } .artist-notes-nav-title { display:none; } .artist-notes-links { gap:10px; } .artist-notes-links a { font-size:11px; } .artist-picker, .artist-note { padding-right:20px; padding-left:20px; } .artist-picker { padding-top:28px; } .artist-note { padding-top:32px; padding-bottom:64px; } .artist-note-header, .artist-note-grid { grid-template-columns:1fr; } .profile-photo { max-width:150px; } .artist-note-block { min-height:auto; } .artist-note-foot { flex-direction:column; } }
+        @media (max-width:700px) { .artist-notes-nav { padding:0 20px; } .artist-notes-brand { font-size:11px; } .artist-notes-nav-title { display:none; } .artist-notes-links { gap:10px; } .artist-notes-links a { font-size:11px; } .artist-picker, .artist-note { padding-right:20px; padding-left:20px; } .artist-picker { padding-top:28px; } .artist-note { padding-top:32px; padding-bottom:64px; } .artist-note-header { grid-template-columns:1fr; } .profile-photo { max-width:150px; } .note-howto { padding:22px 20px; } .note-howto dl { grid-template-columns:1fr; gap:2px; } .note-howto dd { margin-bottom:10px; } .note-section h2 { font-size:24px; } .artist-note-foot { flex-direction:column; } }
+        @media print { .artist-notes-nav, .artist-picker, .artist-note-foot { display:none; } .artist-notes-page { padding-top:0; } .note-section { break-inside:avoid; } }
       `}</style>
 
       <nav className="artist-notes-nav" aria-label="울림통-변주 2026 탐색">
@@ -121,7 +288,8 @@ export default function ArtistNotesPage() {
           ))}
         </div>
         <p className="artist-notes-summary">
-          참여 작가들의 인터뷰와 울림통-변주를 통해 선보일 전시 계획을 담은 노트입니다.
+          참여 작가 17인의 소개와 리뷰 인터뷰, 그리고 각자의 모뉴먼트를 어디에 어떻게 놓을지 담은 전시 계획을 모으는 페이지입니다.
+          아래는 작가 노트를 직접 쓰실 수 있도록 만든 작성 가이드입니다.
         </p>
       </section>
 
@@ -144,23 +312,148 @@ export default function ArtistNotesPage() {
           </div>
         </header>
 
-        <div className="artist-note-grid">
-          <section className="artist-note-block">
-            <h2>작가 소개</h2>
-            <p>{selected.name} 작가의 짧은 소개를 이곳에 싣습니다. 작업의 출발점이나 현재 관심사를 두세 문장으로 적어주세요.</p>
-            <p className="note-hint">소개글 입력 예정</p>
-          </section>
-          <section className="artist-note-block">
-            <h2>리뷰 인터뷰</h2>
-            <p>프로젝트를 통과하며 남은 장면, 공동 작업에서 새롭게 발견한 감각, 자신의 모뉴먼트를 다시 바라보는 질문과 답을 담습니다.</p>
-            <p className="note-hint">인터뷰 입력 예정</p>
-          </section>
-          <section className="artist-note-block">
-            <h2>이후의 작업계획</h2>
-            <p>설치 장소, 전시 방식, 다음 작업으로 이어갈 생각처럼 이후 실천할 계획을 자유롭게 정리합니다.</p>
-            <p className="note-hint">작업계획 입력 예정</p>
-          </section>
-        </div>
+        <section className="note-howto" aria-label="작성 안내">
+          <h2>작가 노트 작성 안내</h2>
+          <p>
+            잘 쓴 글이 아니라 나다운 문장을 찾는 일입니다. 말하듯 편하게 적어주세요.
+            맞춤법과 문장 정리는 저희가 다듬어 전시 자료와 NFC 콘텐츠에 싣습니다.
+          </p>
+          <dl>
+            <dt>분량</dt>
+            <dd>작가 소개 3~5문장 · 리뷰 인터뷰는 마음이 가는 질문 3~5개 · 전시 계획은 여섯 칸을 각 1~2문장씩</dd>
+            <dt>함께</dt>
+            <dd>모뉴먼트 사진, 설치하려는 장소 사진을 1~2장 같이 보내주시면 좋습니다</dd>
+            <dt>제출</dt>
+            <dd>구글폼 작성이 기본입니다. 어려우시면 카톡 음성메시지나 손글씨 사진도 좋고, 11회차 당일 현장에서 대신 받아 적어드립니다</dd>
+            <dt>마감</dt>
+            <dd>11회차(가을 예정) 전까지 · 세부 일정은 별도 공지</dd>
+          </dl>
+        </section>
+
+        <section className="note-section" aria-labelledby="sec-intro">
+          <span className="note-section-no">01</span>
+          <h2 id="sec-intro">작가 소개</h2>
+          <p className="note-lead">
+            이 프로젝트에 참여하게 된 동기와 지금 내 삶의 현주소를 나누는 자리입니다.
+            경력을 나열하는 칸이 아닙니다. 아래 다섯 가지 중 마음이 가는 것들을 골라 이어 쓰면 그대로 소개글이 됩니다.
+          </p>
+          <ol className="prompt-list">
+            {introPrompts.map((prompt) => (
+              <li key={prompt}>{prompt}</li>
+            ))}
+          </ol>
+          <div className="note-example">
+            <strong>보기</strong>
+            <p>
+              문막에서 25년째 미용실을 하고 있습니다. 손으로 하는 일은 오래 해왔지만 흙은 처음이었습니다.
+              단골손님이 “같이 가보자”고 해서 얼떨결에 신청했는데, 첫날 흙을 만지고 나서 이건 내가 계속 하고 싶은 일이구나 싶었습니다.
+              요즘은 가게 문을 닫고 나면 손이 심심해서 자꾸 무언가를 주무르게 됩니다.
+              이 작업이 끝나도 뭔가를 계속 만드는 사람으로 남고 싶습니다.
+            </p>
+          </div>
+          <p className="note-fill">{selected.name} 작가 소개 작성 예정</p>
+        </section>
+
+        <section className="note-section" aria-labelledby="sec-interview">
+          <span className="note-section-no">02</span>
+          <h2 id="sec-interview">리뷰 인터뷰</h2>
+          <p className="note-lead">
+            개인 모뉴먼트와 대형 울림통 <strong>두 작업 모두</strong>에 대한 리뷰입니다.
+            지난 회차에서 함께 나눴던 질문들을 모아두었습니다. 전부 답하실 필요는 없습니다.
+            마음에 걸리는 질문 3~5개를 골라, 그날의 장면을 떠올리며 적어주세요.
+          </p>
+          {interviewGroups.map((group) => (
+            <div key={group.title}>
+              <h3 className="note-sub">
+                {group.title}
+                <span className="note-src">{group.source}</span>
+              </h3>
+              <ol className="prompt-list">
+                {group.questions.map((question) => (
+                  <li key={question}>{question}</li>
+                ))}
+              </ol>
+            </div>
+          ))}
+          <div className="note-example">
+            <strong>보기 · 답변은 이 정도면 충분합니다</strong>
+            <p><em>내 타래가 옆 사람의 타래와 이어질 때 어떤 기분이 들었나요?</em></p>
+            <p>
+              처음엔 내 것만 잘 만들면 된다고 생각했는데, 어느 순간 내 타래 끝이 어디였는지 모르겠더라고요.
+              그게 좀 서운하기도 하고 시원하기도 했습니다. 지금 울림통을 보면 어디가 내 자리인지 못 찾겠는데, 그래서 더 우리 것 같습니다.
+            </p>
+          </div>
+          <p className="note-fill">{selected.name} 인터뷰 작성 예정</p>
+        </section>
+
+        <section className="note-section" aria-labelledby="sec-nfc">
+          <span className="note-section-no">03</span>
+          <h2 id="sec-nfc">NFC 콘텐츠</h2>
+          <p className="note-lead">
+            3회차에 모뉴먼트 안에 심은 NFC 칩에는 주소(URL) 하나를 담을 수 있습니다.
+            관람자가 휴대폰을 가까이 대면 그 주소가 열립니다. <strong>어떤 콘텐츠를 연결할 것인가</strong>를 정하는 칸입니다.
+            칩은 작품 안에 봉인되어 있지만 연결되는 주소는 나중에 얼마든지 바꿀 수 있으니, 지금은 방향만 정하면 됩니다.
+          </p>
+          <h3 className="note-sub">연결할 수 있는 것들<span className="note-src">3 · 7 · 8 · 11회차</span></h3>
+          <ol className="prompt-list">
+            {nfcCandidates.map((candidate) => (
+              <li key={candidate}>{candidate}</li>
+            ))}
+          </ol>
+          <h3 className="note-sub">이 세 가지만 적어주세요</h3>
+          <ul className="check-list">
+            <li>연결하고 싶은 콘텐츠 — 한 줄로</li>
+            <li>이미 가지고 있는 자료 — 사진, 녹음, 영상, 글 무엇이든</li>
+            <li>제작 지원이 필요한 부분</li>
+          </ul>
+          <p className="note-support">
+            <strong>페이지 제작은 지원해 드립니다.</strong> 사진·글·소리 자료만 주시면 AI 기술 지원으로 모바일 페이지를 만들어
+            그 주소를 칩에 연결해 드립니다. 직접 운영하시는 블로그나 인스타그램 주소를 쓰셔도 됩니다.
+          </p>
+          <p className="note-fill">{selected.name} NFC 콘텐츠 작성 예정</p>
+        </section>
+
+        <section className="note-section" aria-labelledby="sec-plan">
+          <span className="note-section-no">04</span>
+          <h2 id="sec-plan">전시 계획</h2>
+          <p className="note-lead">
+            설치 장소, 전시 방식, 다음 작업으로 이어갈 생각처럼 이후 실천할 계획을 자유롭게 정리합니다.
+            각자의 모뉴먼트가 놓인 자리 하나하나가 전시장 밖으로 퍼지는 분산형 네트워크 전시의 한 점이 됩니다.
+            아래 육하원칙 여섯 칸을 채우면 그대로 계획이 됩니다.
+          </p>
+          {planRows.map((row) => (
+            <div className="plan-row" key={row.key}>
+              <p className="plan-key">
+                {row.key}<span>{row.en}</span>
+              </p>
+              {row.fixed ? <span className="plan-fixed">{row.fixed}</span> : null}
+              <p>{row.body}</p>
+              {row.examples ? (
+                <ul className="tag-list">
+                  {row.examples.map((example) => (
+                    <li key={example}>{example}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+          ))}
+          <h3 className="note-sub">설치 전 확인</h3>
+          <ul className="check-list">
+            {planChecklist.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <div className="note-example">
+            <strong>보기 · 작성 예시</strong>
+            <p><em>언제</em> — 11월 21일부터 12월 13일까지, 전시 기간과 같게 합니다.</p>
+            <p><em>어디서</em> — 제가 일하는 문막 미용실 입구 창가. 오가는 분들이 매일 지나는 자리입니다.</p>
+            <p><em>무엇을</em> — 모뉴먼트 〈숨자리〉, 높이 40cm. 작은 나무 좌대에 올리고 설명 카드를 함께 둡니다.</p>
+            <p><em>누가</em> — 제가 아침에 내놓고 저녁에 들입니다. 딸이 사진을 찍어주기로 했습니다.</p>
+            <p><em>어떻게</em> — 영업시간 10시~19시 동안 밖에 두고 문 닫을 때 안으로 들입니다. “휴대폰을 대보세요”라고 안내문을 붙이고, 칩을 찾아 열어본 분께는 니닉 스티커를 드립니다.</p>
+            <p><em>왜</em> — 손님들과 20년 넘게 이야기를 나눈 자리라서요. 이번엔 제가 만든 것으로 먼저 말을 걸어보고 싶었습니다.</p>
+          </div>
+          <p className="note-fill">{selected.name} 전시 계획 작성 예정</p>
+        </section>
 
         <footer className="artist-note-foot">
           <span>다른 작가를 선택하면 해당 작가의 노트로 전환됩니다.</span>
