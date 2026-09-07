@@ -132,10 +132,10 @@ const styles = [
   .row .info { flex: 1; min-width: 0; }
   .row .name-line { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
   .row .name { font-weight: 700; font-size: 15px; flex-shrink: 0; }
-  .row .time { color: var(--accent2); font-weight: 600; }
+  .row .time { color: var(--accent2); font-weight: 500; }
   .row .meta { font-size: 12.5px; color: var(--text-dim); margin-top: 4px; }
   .row .note { font-style: italic; }
-  .row .phone-link { color: var(--accent2); font-weight: 600; text-decoration: none; border-bottom: 1px dotted var(--accent2); }
+  .row .phone-link { color: var(--accent2); font-weight: 700; text-decoration: none; border-bottom: 1px dotted var(--accent2); }
   .row .phone-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
   .row .sms-link {
     margin-left: 5px; font-size: 11px; font-weight: 700; color: var(--accent2); text-decoration: none;
@@ -173,7 +173,7 @@ const styles = [
   .row.checked .guest-count { color: var(--ok); font-weight: 600; }
 
   .walkin-time-select {
-    font-family: inherit; font-size: 12.5px; font-weight: 600; color: var(--accent2);
+    font-family: inherit; font-size: 12.5px; font-weight: 500; color: var(--accent2);
     background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 3px 6px;
   }
   .walkin-time-select:focus { outline: none; border-color: var(--accent); }
