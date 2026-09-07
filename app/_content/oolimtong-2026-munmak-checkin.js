@@ -786,7 +786,7 @@ const script = `
       meta.appendChild(metaTimeSpan);
     }
     if (!opts.isWalkin) {
-      meta.appendChild(document.createTextNode(" · 예상 " + fmtHeadcount(item)));
+      // 맞이할 때 쓰는 순서대로 늘어놓는다: 회차 → 연락처 → 예상 인원 → 비고.
       // 현장에서 안 온 팀에 연락할 일이 생긴다. 번호를 눌러 바로 걸거나 문자로 넘어가게 한다.
       if (item.phone) {
         var digits = item.phone.split("-").join("").split(" ").join("");
@@ -802,6 +802,7 @@ const script = `
         smsLink.textContent = "문자";
         meta.appendChild(smsLink);
       }
+      meta.appendChild(document.createTextNode(" · 예상 " + fmtHeadcount(item)));
       // 비고는 줄을 따로 쓰지 않고 예약정보 뒤에 이어 붙인다(카드 높이 최소화).
       if (item.note) {
         var noteSpan = document.createElement("span");
