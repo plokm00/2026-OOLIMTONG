@@ -170,10 +170,11 @@ const styles = [
   }
   .walkin-time-select:focus { outline: none; border-color: var(--accent); }
 
+  .row .meta.walkin-meta { display: flex; align-items: center; gap: 6px; }
   .walkin-note-input {
-    display: block; width: 100%; margin-top: 6px;
-    border: 1px solid var(--line); border-radius: 4px; padding: 7px 9px;
-    font-size: 12.5px; color: var(--text-dim); background: #fff;
+    flex: 1; min-width: 0;
+    border: 1px solid var(--line); border-radius: 4px; padding: 5px 9px;
+    font-family: inherit; font-size: 12.5px; color: var(--text-dim); background: #fff;
   }
   .walkin-note-input:focus { outline: none; border-color: var(--accent); }
 
@@ -206,10 +207,9 @@ const body = `
   </div>
 
   <div class="notice">
-    체크인은 <b>신청자 1명</b>이 아니라 그 자리에 <b>실제로 온 사람 전원의 이름</b>을 적는 방명록입니다.
-    인원수만 세지 말고, 이름 칸 하나에 한 명씩 적고 인원이 더 있으면 "+ 추가"로 칸을 늘려 주세요.
-    <b>신청자 본인도 한 칸</b>을 차지합니다. 첫 칸에는 신청자 이름이 미리 들어가 있으니 같이 온 사람만
-    이어서 적으면 되고, 본인이 안 왔으면 그 칸을 지워 주세요. 현장 워크인은 참여 회차(시간)를 골라 주세요.
+    그 자리에 <b>실제로 온 사람 전원</b>의 이름을 한 칸에 한 명씩 적는 방명록입니다(<b>신청자 본인 포함</b>).
+    첫 칸에 신청자 이름이 미리 들어가 있으니 같이 온 사람만 "+ 추가"로 이어 적고, 본인이 안 왔으면 그 칸을 지워 주세요.
+    워크인은 참여 회차도 골라 주세요.
     <span id="sync-note">연결 상태를 확인하는 중입니다.</span>
   </div>
 
@@ -727,7 +727,7 @@ const script = `
     info.appendChild(nameLine);
 
     var meta = document.createElement("div");
-    meta.className = "meta";
+    meta.className = "meta" + (opts.isWalkin ? " walkin-meta" : "");
     if (opts.isWalkin) {
       // 워크인도 어느 회차에 들어갔는지 남아야 나중에 회차별 인원을 셀 수 있다.
       var timeSelect = document.createElement("select");
@@ -745,6 +745,20 @@ const script = `
         queueRemoteSave(item.id);
       });
       meta.appendChild(timeSelect);
+
+      // 비고를 아래 줄에 따로 두면 워크인 한 칸이 세 줄이 돼 스크롤이 길어진다.
+      // 회차 오른쪽에 붙여 한 줄로 만든다.
+      var noteInput = document.createElement("input");
+      noteInput.type = "text";
+      noteInput.className = "walkin-note-input";
+      noteInput.placeholder = "비고 (선택)";
+      noteInput.value = item.note || "";
+      noteInput.addEventListener("input", function () {
+        item.note = noteInput.value;
+        saveState();
+        queueRemoteSave(item.id);
+      });
+      meta.appendChild(noteInput);
     } else {
       var metaTimeSpan = document.createElement("span");
       metaTimeSpan.className = "time";
@@ -764,20 +778,6 @@ const script = `
     info.appendChild(meta);
 
     info.appendChild(countLabel);
-
-    if (opts.isWalkin) {
-      var noteInput = document.createElement("input");
-      noteInput.type = "text";
-      noteInput.className = "walkin-note-input";
-      noteInput.placeholder = "비고 (선택)";
-      noteInput.value = item.note || "";
-      noteInput.addEventListener("input", function () {
-        item.note = noteInput.value;
-        saveState();
-        queueRemoteSave(item.id);
-      });
-      info.appendChild(noteInput);
-    }
 
     row.appendChild(info);
 
