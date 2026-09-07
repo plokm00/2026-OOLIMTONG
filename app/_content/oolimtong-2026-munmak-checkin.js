@@ -145,6 +145,8 @@ const styles = [
     padding: 6px 7px; font-family: inherit; font-size: 13px; color: var(--text); background: #fff;
   }
   .name-slot-input:focus { outline: none; border-color: var(--accent); }
+  /* 첫 칸에 뜨는 신청자 이름은 "아직 안 적힌 상태"로 보여야 한다. */
+  .name-slot-input::placeholder { color: #c3a494; }
   .name-slot-add {
     flex-shrink: 0; border: 1px dashed var(--line); background: none; color: var(--text-dim);
     font-size: 12px; padding: 6px 10px; border-radius: 4px; cursor: pointer; white-space: nowrap;
@@ -188,6 +190,8 @@ const body = `
   <div class="notice">
     체크인은 <b>신청자 1명</b>이 아니라 그 자리에 <b>실제로 온 사람 전원의 이름</b>을 적는 방명록입니다.
     인원수만 세지 말고, 이름 칸 하나에 한 명씩 적고 인원이 더 있으면 "+ 추가"로 칸을 늘려 주세요.
+    <b>신청자 본인도 한 칸</b>을 차지합니다. 동그라미(○)를 누르면 신청자 이름이 첫 칸에 자동으로 들어가니,
+    같이 온 사람만 이어서 적으면 됩니다.
     <span id="sync-note">연결 상태를 확인하는 중입니다.</span>
   </div>
 
@@ -545,7 +549,7 @@ const script = `
     summary.innerHTML =
       "예약+워크인 <b>" + teams + "팀</b>" +
       (expected ? " · 예상 인원 약 <b>" + expected + "명</b>" : "") +
-      '<span class="done">방명록 기록 ' + recorded + "명</span>";
+      '<span class="done">현장 인원 <b>' + recorded + "</b>명</span>";
   }
 
   function renderRow(container, item, opts) {
@@ -563,8 +567,17 @@ const script = `
     indicator.textContent = currentNames.length > 0 ? "\\u2713" : "";
     indicator.title = "이름 적기";
     // 눌러도 아무 일이 없으면 고장난 것처럼 보인다. 빈 이름칸으로 보내 준다.
+    // 인원수에는 신청자 본인도 들어간다. 아직 아무도 안 적힌 예약 행이면 신청자 이름을
+    // 첫 칸에 대신 넣어 주고(= 본인 도착), 동행을 적을 빈 칸으로 넘어간다.
     indicator.addEventListener("click", function () {
       var inputs = slotsWrap.querySelectorAll(".name-slot-input");
+      if (!opts.isWalkin && item.name && !namesFor(item.id).length &&
+          inputs.length && !inputs[0].value.trim()) {
+        inputs[0].value = item.name;
+        commitNames();
+        addSlot("").focus();
+        return;
+      }
       for (var i = 0; i < inputs.length; i++) {
         if (!inputs[i].value.trim()) { inputs[i].focus(); return; }
       }
@@ -604,6 +617,15 @@ const script = `
       updateSummary();
     }
 
+    // 첫 칸은 신청자 본인 자리다. 빈 칸에 본인 이름이 흐리게 떠 있어야
+    // "동행만 적는 칸"으로 오해하지 않는다.
+    function refreshPlaceholders() {
+      var inputs = slotsWrap.querySelectorAll(".name-slot-input");
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].placeholder = (i === 0 && !opts.isWalkin && item.name) ? item.name : "이름";
+      }
+    }
+
     // 칸 사이에 삭제(×) 버튼을 두면 이름 칸을 나누는 구분자처럼 보여서 두지 않는다.
     // 대신 비운 칸은 포커스가 빠질 때 스스로 사라진다(마지막 한 칸은 남긴다).
     function addSlot(value) {
@@ -617,10 +639,12 @@ const script = `
         if (input.value.trim()) return;
         if (slotsWrap.querySelectorAll(".name-slot-input").length <= 1) return;
         input.remove();
+        refreshPlaceholders();
         commitNames();
       });
 
       slotsWrap.insertBefore(input, addBtn);
+      refreshPlaceholders();
       return input;
     }
 
