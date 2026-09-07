@@ -132,7 +132,7 @@ const styles = [
   .row .info { flex: 1; min-width: 0; }
   .row .name-line { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
   .row .name { font-weight: 700; font-size: 15px; flex-shrink: 0; }
-  .row .time { color: var(--accent2); font-weight: 500; }
+  .row .time { color: var(--text-dim); font-weight: 500; }
   .row .meta { font-size: 12.5px; color: var(--text-dim); margin-top: 4px; }
   .row .note { font-style: italic; }
   .row .phone-link { color: var(--accent2); font-weight: 700; text-decoration: none; border-bottom: 1px dotted var(--accent2); }
@@ -173,7 +173,7 @@ const styles = [
   .row.checked .guest-count { color: var(--ok); font-weight: 600; }
 
   .walkin-time-select {
-    font-family: inherit; font-size: 12.5px; font-weight: 500; color: var(--accent2);
+    font-family: inherit; font-size: 12.5px; font-weight: 500; color: var(--text-dim);
     background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 3px 6px;
   }
   .walkin-time-select:focus { outline: none; border-color: var(--accent); }
@@ -215,7 +215,7 @@ const body = `
   </div>
 
   <div class="notice">
-    그 자리에 <b>실제로 온 사람 전원</b>의 이름을 한 칸에 한 명씩 적는 방명록입니다(<b>신청자 본인 포함</b>).
+    그 자리에 <b>실제로 온 사람 전원</b>의 이름을 한 칸에 한 명씩 적는 방명록입니다.
     첫 칸에 신청자 이름이 미리 들어가 있으니 같이 온 사람만 "+ 추가"로 이어 적고, 신청자 본인이 참여하지 않을 경우 그 칸을 지워 주세요.
     워크인은 참여 회차도 골라 주세요.
     <span id="sync-note">연결 상태를 확인하는 중입니다.</span>
