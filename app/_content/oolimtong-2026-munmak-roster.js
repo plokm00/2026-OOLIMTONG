@@ -82,13 +82,19 @@ const styles = [
 
   table.roster { width: 100%; border-collapse: collapse; font-size: 13.5px; }
   table.roster th, table.roster td { border: 1px solid var(--line); padding: 6px 9px; text-align: left; }
-  table.roster th { background: var(--bg2); font-weight: 700; font-size: 12.5px; }
-  table.roster td.num { width: 46px; text-align: center; color: var(--text-dim); }
+  table.roster th { background: var(--bg2); font-weight: 700; font-size: 12.5px; white-space: nowrap; }
+  table.roster td.num { width: 44px; text-align: center; color: var(--text-dim); }
   table.roster td.name { font-weight: 600; }
+  table.roster td.team { width: 42%; color: var(--text-dim); font-size: 12.5px; }
+  /* 이어받는 줄은 따옴표만 가운데에 — 종이 방명록에서 같은 팀을 묶는 표시. */
+  table.roster td.team.ditto { text-align: center; color: var(--text-dim); letter-spacing: 1px; }
+  /* 함께 온 단위가 바뀌는 자리에 선을 굵게 둬서 팀 경계가 보이게 한다. */
+  table.roster tr.team-start td { border-top: 2px solid var(--line); }
   table.roster tr.slot-head td {
     background: var(--bg2); font-weight: 700; font-size: 12.5px; color: var(--accent2);
   }
-  table.roster td.dim { color: var(--text-dim); font-size: 12.5px; }
+  .roster-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; align-items: start; }
+  @media (max-width: 700px) { .roster-2col { grid-template-columns: 1fr; gap: 14px 0; } }
 
   .empty-msg { font-size: 13px; color: var(--text-dim); text-align: center; padding: 24px 0; margin: 0; }
   .load-msg { text-align: center; padding: 30px 0; color: var(--text-dim); font-size: 13px; }
@@ -101,7 +107,8 @@ const styles = [
     .no-print { display: none !important; }
     .sheet { border: none; border-radius: 0; padding: 0; margin: 0 0 10mm; }
     .sheet + .sheet { page-break-before: always; }
-    table.roster { font-size: 10pt; }
+    table.roster { font-size: 9.5pt; }
+    .roster-2col { gap: 0 7mm; }
     table.roster th, table.roster td { border: 1px solid #999; padding: 4px 6px; }
     table.roster th, table.roster tr.slot-head td { background: #eee !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     table.roster tr { page-break-inside: avoid; }
@@ -147,6 +154,7 @@ const script = `
   var reservations = null;
   var entries = null;
   var selectedDate = "all";
+  var DITTO = "〃";
 
   // ── 명단 읽기 ──
 
@@ -275,10 +283,8 @@ const script = `
       return html;
     }
 
-    html += '<table class="roster"><thead><tr>';
-    html += "<th>번호</th><th>이름</th><th>팀</th><th>비고</th>";
-    html += "</tr></thead><tbody>";
-
+    // 회차 머리줄과 이름줄을 한 줄기로 늘어놓는다. 좌우로 자르기 쉬우라고.
+    var items = [];
     var no = 0;
     var lastTime = null;
     teams.forEach(function (t) {
@@ -287,23 +293,65 @@ const script = `
         lastTime = timeKey;
         var slotCount = 0;
         teams.forEach(function (o) { if ((o.time || "") === timeKey) slotCount += o.names.length; });
-        html += '<tr class="slot-head"><td colspan="4">' + esc(fmtTime(t.time)) + " 회차 · " + slotCount + "명</td></tr>";
+        items.push({ type: "slot", label: fmtTime(t.time) + " 회차 · " + slotCount + "명" });
       }
       t.names.forEach(function (name, i) {
         no += 1;
-        var team = t.isWalkin ? "워크인" : t.host;
-        // 비고는 팀 단위 정보라 같은 팀에서 한 번만 적는다(줄마다 반복하면 표가 지저분해진다).
-        var memo = i === 0 ? (t.note || "") : "";
-        html += "<tr>";
-        html += '<td class="num">' + no + "</td>";
-        html += '<td class="name">' + esc(name) + "</td>";
-        html += '<td class="dim">' + esc(team) + "</td>";
-        html += '<td class="dim">' + esc(memo) + "</td>";
-        html += "</tr>";
+        items.push({
+          type: "name",
+          no: no,
+          name: name,
+          // 함께 온 단위의 첫 줄에만 소속을 적고, 나머지는 따옴표로 이어 받는다(종이 방명록과 같은 방식).
+          team: i === 0 ? (t.isWalkin ? "현장" : t.host + "(사전신청)") : DITTO,
+          first: i === 0,
+        });
       });
     });
 
-    html += "</tbody></table></div>";
+    // 좌우 두 열. 이름 줄 수의 절반에서 자르고, 오른쪽 열이 회차 중간에서
+    // 시작하면 무슨 회차인지 몰라 헤매므로 이어짐 머리줄을 다시 얹는다.
+    var half = Math.ceil(no / 2);
+    var left = [], right = [];
+    var seen = 0, curSlot = null, splitSlot = null;
+    items.forEach(function (it) {
+      if (it.type === "slot") curSlot = it.label;
+      if (seen < half) {
+        left.push(it);
+        if (it.type === "name") {
+          seen += 1;
+          if (seen === half) splitSlot = curSlot;
+        }
+      } else {
+        if (!right.length && it.type !== "slot" && splitSlot) {
+          right.push({ type: "slot", label: splitSlot + " (이어서)" });
+        }
+        right.push(it);
+      }
+    });
+
+    html += right.length ? '<div class="roster-2col">' : '<div class="roster-1col">';
+    html += tableHtml(left);
+    if (right.length) html += tableHtml(right);
+    html += "</div></div>";
+    return html;
+  }
+
+  function tableHtml(rows) {
+    var html = '<table class="roster"><thead><tr>';
+    html += "<th>번호</th><th>이름</th><th>구분</th>";
+    html += "</tr></thead><tbody>";
+    rows.forEach(function (it) {
+      if (it.type === "slot") {
+        html += '<tr class="slot-head"><td colspan="3">' + esc(it.label) + "</td></tr>";
+        return;
+      }
+      html += '<tr' + (it.first ? ' class="team-start"' : "") + ">";
+      html += '<td class="num">' + it.no + "</td>";
+      html += '<td class="name">' + esc(it.name) + "</td>";
+      html += '<td class="team' + (it.first ? "" : " ditto") + '">' + esc(it.team) + "</td>";
+      html += "</tr>";
+    });
+    html += "</tbody></table>";
     return html;
   }
 
