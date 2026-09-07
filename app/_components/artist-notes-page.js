@@ -84,11 +84,11 @@ export default function ArtistNotesPage() {
         .artist-note-team { margin:12px 0 0; color:var(--an-dim); font-size:14px; }
         .artist-note-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; border-left:1px solid var(--an-line); }
         .artist-note-block { min-height:255px; padding:30px; border-right:1px solid var(--an-line); border-bottom:1px solid var(--an-line); }
-        .artist-note-block:nth-child(1), .artist-note-block:nth-child(4) { background:var(--an-bg2); }
+        .artist-note-block:nth-child(1) { background:var(--an-bg2); }
+        .artist-note-block:last-child { grid-column:1 / -1; }
         .artist-note-block h2 { margin:0 0 14px; font-family:'IBM Plex Sans KR', sans-serif; font-size:23px; line-height:1.25; }
         .artist-note-block p { margin:0; color:var(--an-dim); font-size:14px; line-height:1.9; }
         .artist-note-block .note-hint { margin-top:20px; color:var(--an-accent2); font-size:12px; font-weight:600; }
-        .work-photo-slot { min-height:145px; display:flex; align-items:center; justify-content:center; margin-top:20px; border:1px dashed var(--an-line); background:var(--an-bg); color:var(--an-dim); font-size:12px; }
         .artist-note-foot { margin-top:34px; display:flex; justify-content:space-between; gap:20px; color:var(--an-dim); font-size:12px; }
         .artist-note-foot a { color:var(--an-accent); text-decoration:none; }
         @media (max-width:700px) { .artist-notes-nav { padding:0 20px; } .artist-notes-brand { font-size:11px; } .artist-notes-nav-title { display:none; } .artist-notes-links { gap:10px; } .artist-notes-links a { font-size:11px; } .artist-picker, .artist-note { padding-right:20px; padding-left:20px; } .artist-picker { padding-top:28px; } .artist-note { padding-top:32px; padding-bottom:64px; } .artist-note-header, .artist-note-grid { grid-template-columns:1fr; } .profile-photo { max-width:150px; } .artist-note-block { min-height:auto; } .artist-note-foot { flex-direction:column; } }
@@ -154,11 +154,6 @@ export default function ArtistNotesPage() {
             <h2>리뷰 인터뷰</h2>
             <p>프로젝트를 통과하며 남은 장면, 공동 작업에서 새롭게 발견한 감각, 자신의 모뉴먼트를 다시 바라보는 질문과 답을 담습니다.</p>
             <p className="note-hint">인터뷰 입력 예정</p>
-          </section>
-          <section className="artist-note-block">
-            <h2>작업사진</h2>
-            <p>작가의 모뉴먼트 혹은 이후 작업을 보여주는 사진을 한두 장 넣습니다.</p>
-            <div className="work-photo-slot">작업사진 준비 중</div>
           </section>
           <section className="artist-note-block">
             <h2>이후의 작업계획</h2>
