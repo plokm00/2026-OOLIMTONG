@@ -15,7 +15,7 @@ const artists = [
   { id: "lee-an", name: "이안", team: "고리", photo: "/artist-profiles/lee-an.webp" },
   { id: "lee-jaehong", name: "이재홍", team: "네모", photo: "/artist-profiles/lee-jaehong.webp" },
   { id: "lee-chaemyeong", name: "이채명", team: "고리", photo: "/artist-profiles/lee-chaemyeong.webp" },
-  { id: "in-donguk", name: "인동욱", team: "미로" },
+  { id: "in-donguk", name: "인동욱", team: "미로", photo: "/artist-profiles/in-donguk.webp" },
   { id: "im-gyehwa", name: "임계화", team: "네모", photo: "/artist-profiles/im-gyehwa.webp" },
   { id: "cho-youngbeom", name: "조영범", team: "네모 · 미로", photo: "/artist-profiles/cho-youngbeom.webp" },
   { id: "joo-jangseok", name: "주장석", team: "미로", photo: "/artist-profiles/joo-jangseok.webp" },
