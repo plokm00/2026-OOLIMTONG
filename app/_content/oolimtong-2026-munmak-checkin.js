@@ -163,9 +163,6 @@ const styles = [
   .name-slot-add:hover { border-color: var(--accent2); color: var(--accent2); }
   .guest-count { font-size: 11px; color: var(--text-dim); margin-top: 2px; text-align: right; }
   .row.checked .guest-count { color: var(--ok); font-weight: 600; }
-  /* 명단 대조할 때만 필요한 정보라 눈에 덜 띄는 톤으로 둔다. */
-  .guest-count .missing-host { color: var(--text-dim); font-weight: 400; }
-  .row.checked .guest-count .missing-host { color: var(--text-dim); font-weight: 400; }
 
   .walkin-time-select {
     font-family: inherit; font-size: 12.5px; font-weight: 600; color: var(--accent2);
@@ -662,18 +659,6 @@ const script = `
       return names;
     }
 
-    // 신청자 본인이 빠진 채 동행만 적히는 게 인원수가 틀리는 가장 흔한 경로다.
-    // 예전에 그렇게 적힌 행도 있으므로 조용히 표시해 준다.
-    function updateCountLabel(names) {
-      countLabel.textContent = names.length + "명 기록됨";
-      if (!opts.isWalkin && item.name && names.length && names.indexOf(item.name) === -1) {
-        var warn = document.createElement("span");
-        warn.className = "missing-host";
-        warn.textContent = " · 신청자 본인 빠짐";
-        countLabel.appendChild(warn);
-      }
-    }
-
     function commitNames() {
       var names = collectNames();
       Array.prototype.forEach.call(slotsWrap.querySelectorAll(".name-slot-input"), function (inp) {
@@ -682,7 +667,7 @@ const script = `
       setNames(item.id, names);
       row.classList.toggle("checked", names.length > 0);
       indicator.textContent = names.length > 0 ? "\\u2713" : "";
-      updateCountLabel(names);
+      countLabel.textContent = names.length + "명 기록됨";
       updateSummary();
     }
 
@@ -736,7 +721,7 @@ const script = `
       var input = addSlot(n);
       if (seeded) input.classList.add("seeded");
     });
-    updateCountLabel(currentNames);
+    countLabel.textContent = currentNames.length + "명 기록됨";
 
     nameLine.appendChild(slotsWrap);
     info.appendChild(nameLine);
