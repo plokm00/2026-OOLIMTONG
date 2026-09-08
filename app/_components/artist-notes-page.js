@@ -241,7 +241,7 @@ export default function ArtistNotesPage() {
         .note-fill { margin-top:24px; padding:16px 18px; border:1px dashed var(--an-line); color:var(--an-dim); font-size:12px; letter-spacing:.02em; }
 
         .tag-list { display:flex; flex-wrap:wrap; gap:7px; margin:14px 0 0; padding:0; list-style:none; }
-        .tag-list li { padding:6px 11px; border-radius:14px; background:#f0e4da; color:#8a6552; font-size:12.5px; }
+        .tag-list li { padding:6px 12px; border:1px solid #e3d3c7; border-radius:14px; color:#96786a; font-size:12.5px; }
 
         .check-list { margin:12px 0 0; padding:0; list-style:none; }
         .check-list li { position:relative; padding:6px 0 6px 24px; font-size:14px; line-height:1.65; }
@@ -349,10 +349,10 @@ export default function ArtistNotesPage() {
           <div className="note-example">
             <strong>보기</strong>
             <p>
-              문막에서 25년째 미용실을 하고 있습니다. 손으로 하는 일은 오래 해왔지만 흙은 처음이었습니다.
-              단골손님이 “같이 가보자”고 해서 얼떨결에 신청했는데, 첫날 흙을 만지고 나서 이건 내가 계속 하고 싶은 일이구나 싶었습니다.
-              요즘은 가게 문을 닫고 나면 손이 심심해서 자꾸 무언가를 주무르게 됩니다.
-              이 작업이 끝나도 뭔가를 계속 만드는 사람으로 남고 싶습니다.
+              저는 문막에서 니닉크라프트 공방을 운영하며 개념공상예술을 펼치는 작가입니다.
+              흙에서 시작해 회화와 영상, 이야기까지 니닉이라는 세계를 20년 넘게 지어 왔습니다.
+              이번 울림통-변주는 그 세계를 혼자가 아니라 열일곱 분과 함께 지어 보는 일이었습니다.
+              작업이 끝난 뒤에도 각자의 자리에서 울림통이 계속 울렸으면 합니다.
             </p>
           </div>
           <p className="note-fill">{selected.name} 작가 소개 작성 예정</p>
@@ -447,11 +447,11 @@ export default function ArtistNotesPage() {
           <div className="note-example">
             <strong>보기 · 작성 예시</strong>
             <p><em>언제</em> — 11월 21일부터 12월 13일까지, 전시 기간과 같게 합니다.</p>
-            <p><em>어디서</em> — 제가 일하는 문막 미용실 입구 창가. 오가는 분들이 매일 지나는 자리입니다.</p>
+            <p><em>어디서</em> — 문막 니닉크라프트 공방 입구, 길에서 바로 보이는 자리입니다.</p>
             <p><em>무엇을</em> — 모뉴먼트 〈숨자리〉, 높이 40cm. 작은 나무 좌대에 올리고 설명 카드를 함께 둡니다.</p>
-            <p><em>누가</em> — 제가 아침에 내놓고 저녁에 들입니다. 딸이 사진을 찍어주기로 했습니다.</p>
-            <p><em>어떻게</em> — 영업시간 10시~19시 동안 밖에 두고 문 닫을 때 안으로 들입니다. “휴대폰을 대보세요”라고 안내문을 붙이고, 칩을 찾아 열어본 분께는 니닉 스티커를 드립니다.</p>
-            <p><em>왜</em> — 손님들과 20년 넘게 이야기를 나눈 자리라서요. 이번엔 제가 만든 것으로 먼저 말을 걸어보고 싶었습니다.</p>
+            <p><em>누가</em> — 공방을 지키며 제가 직접 내놓고 들입니다.</p>
+            <p><em>어떻게</em> — 공방 문을 여는 동안 밖에 두고, 문 닫을 때 안으로 들입니다. “휴대폰을 대보세요”라고 안내문을 붙이고, 칩을 찾아 열어본 분께는 니닉 스티커를 드립니다.</p>
+            <p><em>왜</em> — 공방 앞을 지나가면서도 안으로는 들어오지 못하던 분들에게, 문 앞에서 먼저 말을 걸어보고 싶었습니다.</p>
           </div>
           <p className="note-fill">{selected.name} 전시 계획 작성 예정</p>
         </section>

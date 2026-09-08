@@ -15,7 +15,7 @@ const FORM = [
             id: "who",
             type: "text",
             label: "사는 곳과 하는 일",
-            placeholder: "예) 문막에서 미용실을 합니다",
+            placeholder: "예) 문막에서 니닉크라프트 공방을 운영합니다",
           },
           {
             id: "motive",
@@ -366,7 +366,7 @@ const FORM = [
               "마을회관",
             ],
           },
-          { id: "whereDetail", type: "text", label: "구체적인 자리", placeholder: "예) 미용실 입구 창가" },
+          { id: "whereDetail", type: "text", label: "구체적인 자리", placeholder: "예) 공방 입구, 길에서 바로 보이는 자리" },
         ],
       },
       {
@@ -447,7 +447,7 @@ const FORM = [
               "누군가 쉬어 가라고",
             ],
           },
-          { id: "whyDetail", type: "text", label: "한 문장으로", placeholder: "예) 20년 넘게 이야기를 나눈 자리라서요" },
+          { id: "whyDetail", type: "text", label: "한 문장으로", placeholder: "예) 지나가면서도 들어오지 못하던 분들에게 먼저 말을 걸고 싶어서요" },
         ],
       },
     ],
@@ -580,10 +580,12 @@ export default function ArtistNoteWorkbench({ artist }) {
         .wb-field { margin-top:20px; }
         .wb-label { display:block; margin-bottom:9px; color:var(--an-text); font-size:13.5px; font-weight:600; }
         .wb-note { display:block; margin:-4px 0 9px; color:var(--an-dim); font-size:12px; }
-        .wb-chips { display:flex; flex-wrap:wrap; gap:7px; }
-        .wb-chip { padding:7px 13px; border:1px solid transparent; border-radius:16px; background:#f5ece5; color:#8a6552; cursor:pointer; font:400 13px 'Noto Sans KR', sans-serif; transition:background .15s,color .15s,border-color .15s; }
-        .wb-chip:hover { background:#ecdfd4; color:var(--an-text); }
-        .wb-chip[aria-pressed='true'] { border-color:rgba(192,56,40,.3); background:rgba(192,56,40,.09); color:var(--an-accent2); font-weight:500; }
+        .wb-chips { display:flex; flex-wrap:wrap; gap:8px 7px; }
+        .wb-chip { display:inline-flex; align-items:center; gap:6px; padding:7px 14px; border:1px solid #e3d3c7; border-radius:16px; background:transparent; color:#96786a; cursor:pointer; font:400 13px 'Noto Sans KR', sans-serif; transition:color .15s,border-color .15s,box-shadow .15s; }
+        .wb-chip::before { content:'✓'; font-size:11px; line-height:1; opacity:0; transition:opacity .15s; }
+        .wb-chip:hover { border-color:#c0a492; color:var(--an-text); }
+        .wb-chip.is-on { border-color:#261410; box-shadow:inset 0 0 0 1px #261410; color:#261410; }
+        .wb-chip.is-on::before { opacity:1; }
         .wb-input { width:100%; max-width:520px; padding:10px 13px; border:1px solid #e3d2c5; border-radius:2px; background:#faf4ee; color:var(--an-text); font:400 14px 'Noto Sans KR', sans-serif; }
         .wb-input:focus { border-color:var(--an-accent); outline:none; }
         .wb-input::placeholder { color:var(--an-line); }
@@ -641,7 +643,7 @@ export default function ArtistNoteWorkbench({ artist }) {
                           <button
                             key={option}
                             type="button"
-                            className="wb-chip"
+                            className={isOn ? "wb-chip is-on" : "wb-chip"}
                             aria-pressed={isOn}
                             onClick={() => toggleChip(field.id, option)}
                           >
