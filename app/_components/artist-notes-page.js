@@ -27,6 +27,18 @@ const artists = [
   { id: "heoyang", name: "허양", team: "네모", photo: "/artist-profiles/heoyang.webp" },
 ];
 
+// 팀별 대형 울림통의 원제목. 9회차 이름짓기 결과가 나오면 이 값을 바꾼다.
+const teamWorkTitles = {
+  "네모": "원제목",
+  "고리": "원제목",
+  "미로": "원제목",
+};
+
+function teamLine(team) {
+  const first = team.split("·")[0].trim();
+  return `팀 ${team} “${teamWorkTitles[first] ?? "원제목"}”`;
+}
+
 const introPrompts = [
   "나를 한 줄로 소개해주세요. 사는 곳, 하는 일 — 직업이 아니어도 좋습니다.",
   "울림통-변주에 참여하게 된 계기는 무엇이었나요? 누구의 권유, 우연히 본 공고, 오래 품어온 마음 무엇이든 좋습니다.",
@@ -309,7 +321,7 @@ export default function ArtistNotesPage() {
           <div>
             <p className="artist-note-label">ARTIST NOTE</p>
             <h1 className="artist-note-name">{selected.name}</h1>
-            <p className="artist-note-team">참여 팀 · {selected.team}</p>
+            <p className="artist-note-team">{teamLine(selected.team)}</p>
           </div>
         </header>
 

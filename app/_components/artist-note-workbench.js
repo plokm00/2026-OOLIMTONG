@@ -581,11 +581,9 @@ export default function ArtistNoteWorkbench({ artist }) {
         .wb-label { display:block; margin-bottom:9px; color:var(--an-text); font-size:13.5px; font-weight:600; }
         .wb-note { display:block; margin:-4px 0 9px; color:var(--an-dim); font-size:12px; }
         .wb-chips { display:flex; flex-wrap:wrap; gap:8px 7px; }
-        .wb-chip { display:inline-flex; align-items:center; gap:6px; padding:7px 14px; border:1px solid #e3d3c7; border-radius:16px; background:transparent; color:#96786a; cursor:pointer; font:400 13px 'Noto Sans KR', sans-serif; transition:color .15s,border-color .15s,box-shadow .15s; }
-        .wb-chip::before { content:'✓'; font-size:11px; line-height:1; opacity:0; transition:opacity .15s; }
+        .wb-chip { display:inline-block; padding:7px 15px; border:1px solid #e3d3c7; border-radius:16px; background:transparent; color:#96786a; cursor:pointer; font:400 13px 'Noto Sans KR', sans-serif; line-height:1.5; transition:color .15s,border-color .15s,background .15s; }
         .wb-chip:hover { border-color:#c0a492; color:var(--an-text); }
-        .wb-chip.is-on { border-color:#261410; box-shadow:inset 0 0 0 1px #261410; color:#261410; }
-        .wb-chip.is-on::before { opacity:1; }
+        .wb-chip.is-on { border-color:#261410; background:#ece0d5; color:#261410; font-weight:700; }
         .wb-input { width:100%; max-width:520px; padding:10px 13px; border:1px solid #e3d2c5; border-radius:2px; background:#faf4ee; color:var(--an-text); font:400 14px 'Noto Sans KR', sans-serif; }
         .wb-input:focus { border-color:var(--an-accent); outline:none; }
         .wb-input::placeholder { color:var(--an-line); }
