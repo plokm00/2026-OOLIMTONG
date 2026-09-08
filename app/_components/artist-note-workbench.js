@@ -5,7 +5,6 @@ import { useMemo, useState } from "react";
 const FORM = [
   {
     id: "review",
-    no: "01",
     title: "리뷰 인터뷰",
     sub: "작가 소개 포함",
     lead: "해당하는 것을 눌러 고르시면 됩니다. 여러 개 골라도 되고, 건너뛰어도 됩니다. 빈칸에 한두 단어만 적어도 충분합니다.",
@@ -306,7 +305,6 @@ const FORM = [
   },
   {
     id: "plan",
-    no: "02",
     title: "NFC 콘텐츠 및 전시 계획",
     sub: "육하원칙",
     lead: "모뉴먼트를 어디에 어떻게 놓을지, 칩에는 무엇을 연결할지 정하는 칸입니다. 고른 것만으로 계획서가 만들어집니다.",
@@ -572,18 +570,16 @@ export default function ArtistNoteWorkbench({ artist }) {
     <div className="workbench">
       <style>{`
         .workbench { margin-top:34px; }
-        .wb-howto { padding:24px 26px; border:1px solid var(--an-line); border-left:4px solid var(--an-accent); background:var(--an-bg2); }
+        .wb-howto { padding:24px 26px; background:var(--an-bg2); }
         .wb-howto h2 { margin:0 0 10px; font-family:'IBM Plex Sans KR', sans-serif; font-size:19px; }
-        .wb-howto p { margin:0; color:var(--an-dim); font-size:14px; line-height:1.9; }
+        .wb-howto p { margin:0; color:var(--an-dim); font-size:14px; line-height:1.7; }
 
         .wb-section { padding:44px 0 40px; border-bottom:1px solid var(--an-line); }
-        .wb-no { display:block; margin-bottom:10px; color:var(--an-accent); font-family:'IBM Plex Sans KR', sans-serif; font-size:12px; font-weight:700; letter-spacing:.16em; }
         .wb-section h2 { margin:0 0 6px; font-family:'IBM Plex Sans KR', sans-serif; font-size:29px; line-height:1.25; letter-spacing:-.02em; }
         .wb-section h2 small { margin-left:10px; color:var(--an-dim); font-size:13px; font-weight:400; letter-spacing:0; }
-        .wb-lead { max-width:720px; margin:14px 0 0; color:var(--an-dim); font-size:15px; line-height:1.95; }
+        .wb-lead { max-width:720px; margin:12px 0 0; color:var(--an-dim); font-size:15px; line-height:1.7; }
 
         .wb-group { margin-top:34px; padding-top:22px; border-top:1px solid var(--an-line); }
-        .wb-group:first-of-type { border-top:2px solid var(--an-text); }
         .wb-group-title { margin:0 0 4px; font-family:'IBM Plex Sans KR', sans-serif; font-size:17px; font-weight:600; }
         .wb-group-title span { margin-left:9px; padding:2px 8px; border-radius:2px; background:var(--an-bg3); color:var(--an-dim); font-size:11px; font-weight:500; vertical-align:middle; }
 
@@ -605,15 +601,15 @@ export default function ArtistNoteWorkbench({ artist }) {
         .wb-run:disabled { background:var(--an-bg3); color:var(--an-dim); cursor:default; }
         .wb-count { color:var(--an-dim); font-size:13px; }
         .wb-reset { border:0; background:none; color:var(--an-dim); cursor:pointer; font:400 13px 'Noto Sans KR', sans-serif; text-decoration:underline; }
-        .wb-hint { margin:12px 0 0; color:var(--an-dim); font-size:12.5px; line-height:1.8; }
+        .wb-hint { margin:12px 0 0; color:var(--an-dim); font-size:12.5px; line-height:1.65; }
 
         .wb-result { margin-top:26px; padding:26px 28px; border:1px solid var(--an-line); background:var(--an-bg); }
         .wb-result-head { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
         .wb-result-head strong { color:var(--an-accent2); font-size:12px; font-weight:700; letter-spacing:.1em; }
         .wb-copy { padding:7px 14px; border:1px solid var(--an-line); border-radius:2px; background:var(--an-bg); color:var(--an-dim); cursor:pointer; font:400 12px 'Noto Sans KR', sans-serif; }
         .wb-copy:hover { border-color:var(--an-accent); color:var(--an-accent); }
-        .wb-text { margin:0; color:var(--an-text); font-family:'Noto Sans KR', sans-serif; font-size:14.5px; line-height:2.05; white-space:pre-wrap; }
-        .wb-notice { margin:0 0 14px; padding:11px 14px; border-left:3px solid var(--an-accent); background:var(--an-bg2); color:var(--an-dim); font-size:12.5px; line-height:1.8; }
+        .wb-text { margin:0; color:var(--an-text); font-family:'Noto Sans KR', sans-serif; font-size:14.5px; line-height:1.85; white-space:pre-wrap; }
+        .wb-notice { margin:0 0 14px; padding:11px 14px; background:var(--an-bg2); color:var(--an-dim); font-size:12.5px; line-height:1.65; }
 
         @media (max-width:700px) { .wb-section h2 { font-size:24px; } .wb-actions { padding:20px; } .wb-run { width:100%; } .wb-result { padding:20px; } }
         @media print { .wb-chips, .wb-actions { break-inside:avoid; } }
@@ -630,7 +626,6 @@ export default function ArtistNoteWorkbench({ artist }) {
 
       {FORM.map((section) => (
         <section className="wb-section" key={section.id}>
-          <span className="wb-no">{section.no}</span>
           <h2>
             {section.title}
             <small>{section.sub}</small>

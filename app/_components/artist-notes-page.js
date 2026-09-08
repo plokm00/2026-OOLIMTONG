@@ -196,7 +196,7 @@ export default function ArtistNotesPage() {
         .artist-notes-links a:hover { color:var(--an-accent); }
         .artist-notes-record-link { padding:5px 12px; border:1px solid var(--an-line); border-radius:2px; letter-spacing:.06em; }
         .artist-notes-record-link:hover { background:var(--an-bg3); }
-        .artist-notes-summary { max-width:680px; margin:24px 0 0; color:var(--an-dim); font-size:15px; line-height:1.9; }
+        .artist-notes-summary { max-width:680px; margin:24px 0 0; color:var(--an-dim); font-size:15px; line-height:1.7; }
         .artist-picker { max-width:940px; margin:0 auto; padding:40px 40px; }
         .artist-picker-label { display:block; margin-bottom:14px; color:var(--an-accent2); font-size:12px; font-weight:700; letter-spacing:.08em; }
         .artist-picker-list { display:flex; flex-wrap:wrap; gap:8px; }
@@ -205,7 +205,7 @@ export default function ArtistNotesPage() {
         .artist-picker-button:hover, .artist-picker-button[aria-selected='true'] { background:var(--an-accent); border-color:var(--an-accent); color:var(--an-bg); }
         .artist-picker-button[aria-selected='true'] small { color:rgba(246,237,230,.8); }
         .artist-note { max-width:940px; margin:0 auto; padding:36px 40px 100px; }
-        .artist-note-header { display:grid; grid-template-columns:150px minmax(0,1fr); gap:clamp(32px,6vw,64px); align-items:end; padding-bottom:46px; border-bottom:2px solid var(--an-text); }
+        .artist-note-header { display:grid; grid-template-columns:150px minmax(0,1fr); gap:clamp(32px,6vw,64px); align-items:end; padding-bottom:40px; }
         .profile-photo { aspect-ratio:4/5; display:flex; align-items:center; justify-content:center; overflow:hidden; background:var(--an-bg3); border:1px dashed var(--an-line); color:var(--an-dim); font-size:12px; text-align:center; }
         .profile-photo span { display:block; padding:12px; }
         .profile-photo.has-photo { border:1px solid var(--an-line); }
@@ -214,30 +214,29 @@ export default function ArtistNotesPage() {
         .artist-note-name { margin:0; font-family:'IBM Plex Sans KR', sans-serif; font-size:clamp(38px,5vw,62px); line-height:1.15; letter-spacing:-.05em; }
         .artist-note-team { margin:12px 0 0; color:var(--an-dim); font-size:14px; }
 
-        .note-howto { margin-top:34px; padding:26px 28px; border:1px solid var(--an-line); border-left:4px solid var(--an-accent); background:var(--an-bg2); }
+        .note-howto { margin-top:30px; padding:24px 26px; background:var(--an-bg2); }
         .note-howto h2 { margin:0 0 12px; font-family:'IBM Plex Sans KR', sans-serif; font-size:19px; }
-        .note-howto > p { margin:0 0 16px; color:var(--an-dim); font-size:14px; line-height:1.9; }
+        .note-howto > p { margin:0 0 14px; color:var(--an-dim); font-size:14px; line-height:1.7; }
         .note-howto dl { margin:0; display:grid; grid-template-columns:74px minmax(0,1fr); gap:8px 16px; }
-        .note-howto dt { color:var(--an-accent2); font-size:12px; font-weight:700; letter-spacing:.04em; line-height:1.9; }
-        .note-howto dd { margin:0; color:var(--an-text); font-size:14px; line-height:1.9; }
+        .note-howto dt { color:var(--an-accent2); font-size:12px; font-weight:700; letter-spacing:.04em; line-height:1.7; }
+        .note-howto dd { margin:0; color:var(--an-text); font-size:14px; line-height:1.7; }
 
         .note-section { padding:44px 0 40px; border-bottom:1px solid var(--an-line); }
         .note-section:last-of-type { border-bottom:0; }
-        .note-section-no { display:block; margin-bottom:10px; color:var(--an-accent); font-family:'IBM Plex Sans KR', sans-serif; font-size:12px; font-weight:700; letter-spacing:.16em; }
-        .note-section h2 { margin:0 0 16px; font-family:'IBM Plex Sans KR', sans-serif; font-size:29px; line-height:1.25; letter-spacing:-.02em; }
-        .note-lead { max-width:720px; margin:0 0 26px; color:var(--an-dim); font-size:15px; line-height:1.95; }
+        .note-section h2 { margin:0 0 14px; font-family:'IBM Plex Sans KR', sans-serif; font-size:29px; line-height:1.25; letter-spacing:-.02em; }
+        .note-lead { max-width:720px; margin:0 0 24px; color:var(--an-dim); font-size:15px; line-height:1.7; }
         .note-lead strong { color:var(--an-text); font-weight:600; }
-        .note-sub { margin:34px 0 12px; font-family:'IBM Plex Sans KR', sans-serif; font-size:15px; font-weight:600; letter-spacing:.02em; }
+        .note-sub { margin:30px 0 10px; font-family:'IBM Plex Sans KR', sans-serif; font-size:15px; font-weight:600; letter-spacing:.02em; }
         .note-sub .note-src { margin-left:9px; padding:2px 8px; border-radius:2px; background:var(--an-bg3); color:var(--an-dim); font-size:11px; font-weight:500; letter-spacing:.02em; vertical-align:middle; }
 
         .prompt-list { margin:0; padding:0; list-style:none; counter-reset:prompt; }
-        .prompt-list li { position:relative; padding:11px 0 11px 34px; border-bottom:1px dotted var(--an-line); font-size:14px; line-height:1.85; counter-increment:prompt; }
+        .prompt-list li { position:relative; padding:9px 0 9px 34px; border-bottom:1px dotted var(--an-line); font-size:14px; line-height:1.65; counter-increment:prompt; }
         .prompt-list li:last-child { border-bottom:0; }
-        .prompt-list li::before { content:counter(prompt,decimal-leading-zero); position:absolute; top:13px; left:0; color:var(--an-accent); font-size:11px; font-weight:700; letter-spacing:.04em; }
+        .prompt-list li::before { content:counter(prompt,decimal-leading-zero); position:absolute; top:11px; left:0; color:var(--an-accent); font-size:11px; font-weight:700; letter-spacing:.04em; }
 
-        .note-example { margin:24px 0 0; padding:20px 22px; border-left:3px solid var(--an-accent); background:var(--an-bg2); }
+        .note-example { margin:22px 0 0; padding:20px 22px; background:var(--an-bg2); }
         .note-example strong { display:block; margin-bottom:10px; color:var(--an-accent2); font-size:11px; font-weight:700; letter-spacing:.1em; }
-        .note-example p { margin:0; color:var(--an-text); font-size:14px; line-height:1.95; }
+        .note-example p { margin:0; color:var(--an-text); font-size:14px; line-height:1.75; }
         .note-example p + p { margin-top:9px; }
         .note-example em { color:var(--an-accent2); font-style:normal; font-weight:600; }
 
@@ -247,17 +246,16 @@ export default function ArtistNotesPage() {
         .tag-list li { padding:6px 11px; border:1px solid var(--an-line); border-radius:14px; background:var(--an-bg); color:var(--an-dim); font-size:12.5px; }
 
         .check-list { margin:12px 0 0; padding:0; list-style:none; }
-        .check-list li { position:relative; padding:8px 0 8px 24px; font-size:14px; line-height:1.85; }
+        .check-list li { position:relative; padding:6px 0 6px 24px; font-size:14px; line-height:1.65; }
         .check-list li::before { content:'☐'; position:absolute; left:0; color:var(--an-accent); font-size:14px; }
 
         .plan-row { padding:20px 0; border-top:1px solid var(--an-line); }
-        .plan-row:first-of-type { border-top:2px solid var(--an-text); }
         .plan-key { display:flex; align-items:baseline; gap:9px; margin:0 0 8px; font-family:'IBM Plex Sans KR', sans-serif; font-size:18px; font-weight:600; }
         .plan-key span { color:var(--an-accent); font-size:11px; font-weight:700; letter-spacing:.12em; }
         .plan-fixed { display:inline-block; margin:0 0 10px; padding:5px 11px; background:var(--an-accent); color:var(--an-bg); font-size:12.5px; font-weight:600; }
-        .plan-row p { margin:0; color:var(--an-dim); font-size:14px; line-height:1.9; }
+        .plan-row p { margin:0; color:var(--an-dim); font-size:14px; line-height:1.7; }
 
-        .note-support { margin-top:26px; padding:20px 22px; border:1px solid var(--an-accent); background:var(--an-bg2); font-size:14px; line-height:1.9; }
+        .note-support { margin-top:24px; padding:20px 22px; background:var(--an-bg2); font-size:14px; line-height:1.7; }
         .note-support strong { color:var(--an-accent2); }
 
         .artist-note-foot { margin-top:34px; display:flex; justify-content:space-between; gap:20px; color:var(--an-dim); font-size:12px; }
@@ -340,7 +338,6 @@ export default function ArtistNotesPage() {
         </section>
 
         <section className="note-section" aria-labelledby="sec-intro">
-          <span className="note-section-no">01</span>
           <h2 id="sec-intro">작가 소개</h2>
           <p className="note-lead">
             이 프로젝트에 참여하게 된 동기와 지금 내 삶의 현주소를 나누는 자리입니다.
@@ -364,7 +361,6 @@ export default function ArtistNotesPage() {
         </section>
 
         <section className="note-section" aria-labelledby="sec-interview">
-          <span className="note-section-no">02</span>
           <h2 id="sec-interview">리뷰 인터뷰</h2>
           <p className="note-lead">
             개인 모뉴먼트와 대형 울림통 <strong>두 작업 모두</strong>에 대한 리뷰입니다.
@@ -396,7 +392,6 @@ export default function ArtistNotesPage() {
         </section>
 
         <section className="note-section" aria-labelledby="sec-nfc">
-          <span className="note-section-no">03</span>
           <h2 id="sec-nfc">NFC 콘텐츠</h2>
           <p className="note-lead">
             3회차에 모뉴먼트 안에 심은 NFC 칩에는 주소(URL) 하나를 담을 수 있습니다.
@@ -423,7 +418,6 @@ export default function ArtistNotesPage() {
         </section>
 
         <section className="note-section" aria-labelledby="sec-plan">
-          <span className="note-section-no">04</span>
           <h2 id="sec-plan">전시 계획</h2>
           <p className="note-lead">
             설치 장소, 전시 방식, 다음 작업으로 이어갈 생각처럼 이후 실천할 계획을 자유롭게 정리합니다.
