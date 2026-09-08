@@ -221,8 +221,7 @@ export default function ArtistNotesPage() {
         .note-howto dt { color:var(--an-accent2); font-size:12px; font-weight:700; letter-spacing:.04em; line-height:1.7; }
         .note-howto dd { margin:0; color:var(--an-text); font-size:14px; line-height:1.7; }
 
-        .note-section { padding:44px 0 40px; border-bottom:1px solid var(--an-line); }
-        .note-section:last-of-type { border-bottom:0; }
+        .note-section { padding:42px 0 38px; }
         .note-section h2 { margin:0 0 14px; font-family:'IBM Plex Sans KR', sans-serif; font-size:29px; line-height:1.25; letter-spacing:-.02em; }
         .note-lead { max-width:720px; margin:0 0 24px; color:var(--an-dim); font-size:15px; line-height:1.7; }
         .note-lead strong { color:var(--an-text); font-weight:600; }
@@ -230,9 +229,8 @@ export default function ArtistNotesPage() {
         .note-sub .note-src { margin-left:9px; padding:2px 8px; border-radius:2px; background:var(--an-bg3); color:var(--an-dim); font-size:11px; font-weight:500; letter-spacing:.02em; vertical-align:middle; }
 
         .prompt-list { margin:0; padding:0; list-style:none; counter-reset:prompt; }
-        .prompt-list li { position:relative; padding:9px 0 9px 34px; border-bottom:1px dotted var(--an-line); font-size:14px; line-height:1.65; counter-increment:prompt; }
-        .prompt-list li:last-child { border-bottom:0; }
-        .prompt-list li::before { content:counter(prompt,decimal-leading-zero); position:absolute; top:11px; left:0; color:var(--an-accent); font-size:11px; font-weight:700; letter-spacing:.04em; }
+        .prompt-list li { position:relative; padding:7px 0 7px 34px; font-size:14px; line-height:1.65; counter-increment:prompt; }
+        .prompt-list li::before { content:counter(prompt,decimal-leading-zero); position:absolute; top:9px; left:0; color:var(--an-accent); font-size:11px; font-weight:700; letter-spacing:.04em; }
 
         .note-example { margin:22px 0 0; padding:20px 22px; background:var(--an-bg2); }
         .note-example strong { display:block; margin-bottom:10px; color:var(--an-accent2); font-size:11px; font-weight:700; letter-spacing:.1em; }
@@ -249,7 +247,7 @@ export default function ArtistNotesPage() {
         .check-list li { position:relative; padding:6px 0 6px 24px; font-size:14px; line-height:1.65; }
         .check-list li::before { content:'☐'; position:absolute; left:0; color:var(--an-accent); font-size:14px; }
 
-        .plan-row { padding:20px 0; border-top:1px solid var(--an-line); }
+        .plan-row { padding:18px 0; }
         .plan-key { display:flex; align-items:baseline; gap:9px; margin:0 0 8px; font-family:'IBM Plex Sans KR', sans-serif; font-size:18px; font-weight:600; }
         .plan-key span { color:var(--an-accent); font-size:11px; font-weight:700; letter-spacing:.12em; }
         .plan-fixed { display:inline-block; margin:0 0 10px; padding:5px 11px; background:var(--an-accent); color:var(--an-bg); font-size:12.5px; font-weight:600; }

@@ -569,17 +569,17 @@ export default function ArtistNoteWorkbench({ artist }) {
   return (
     <div className="workbench">
       <style>{`
-        .workbench { margin-top:34px; }
+        .workbench { margin-top:34px; --wb-paper:#fffcf8; --wb-paper-line:#e7d5c8; }
         .wb-howto { padding:24px 26px; background:var(--an-bg2); }
         .wb-howto h2 { margin:0 0 10px; font-family:'IBM Plex Sans KR', sans-serif; font-size:19px; }
         .wb-howto p { margin:0; color:var(--an-dim); font-size:14px; line-height:1.7; }
 
-        .wb-section { padding:44px 0 40px; border-bottom:1px solid var(--an-line); }
+        .wb-section { margin-top:26px; padding:46px 48px 44px; border:1px solid var(--wb-paper-line); background:var(--wb-paper); box-shadow:0 2px 12px rgba(38,20,16,.05); }
         .wb-section h2 { margin:0 0 6px; font-family:'IBM Plex Sans KR', sans-serif; font-size:29px; line-height:1.25; letter-spacing:-.02em; }
         .wb-section h2 small { margin-left:10px; color:var(--an-dim); font-size:13px; font-weight:400; letter-spacing:0; }
         .wb-lead { max-width:720px; margin:12px 0 0; color:var(--an-dim); font-size:15px; line-height:1.7; }
 
-        .wb-group { margin-top:34px; padding-top:22px; border-top:1px solid var(--an-line); }
+        .wb-group { margin-top:36px; }
         .wb-group-title { margin:0 0 4px; font-family:'IBM Plex Sans KR', sans-serif; font-size:17px; font-weight:600; }
         .wb-group-title span { margin-left:9px; padding:2px 8px; border-radius:2px; background:var(--an-bg3); color:var(--an-dim); font-size:11px; font-weight:500; vertical-align:middle; }
 
@@ -594,7 +594,7 @@ export default function ArtistNoteWorkbench({ artist }) {
         .wb-input:focus { border-color:var(--an-accent); outline:none; }
         .wb-input::placeholder { color:var(--an-line); }
 
-        .wb-actions { margin-top:44px; padding:26px; border:1px solid var(--an-accent); background:var(--an-bg2); }
+        .wb-actions { margin-top:30px; padding:26px; border:1px solid var(--an-accent); background:var(--an-bg2); }
         .wb-actions-row { display:flex; flex-wrap:wrap; align-items:center; gap:14px; }
         .wb-run { padding:14px 26px; border:0; border-radius:2px; background:var(--an-accent); color:var(--an-bg); cursor:pointer; font:700 15px 'IBM Plex Sans KR', sans-serif; letter-spacing:.02em; }
         .wb-run:hover:enabled { background:var(--an-accent2); }
@@ -603,7 +603,7 @@ export default function ArtistNoteWorkbench({ artist }) {
         .wb-reset { border:0; background:none; color:var(--an-dim); cursor:pointer; font:400 13px 'Noto Sans KR', sans-serif; text-decoration:underline; }
         .wb-hint { margin:12px 0 0; color:var(--an-dim); font-size:12.5px; line-height:1.65; }
 
-        .wb-result { margin-top:26px; padding:26px 28px; border:1px solid var(--an-line); background:var(--an-bg); }
+        .wb-result { margin-top:26px; padding:40px 48px; border:1px solid var(--wb-paper-line); background:var(--wb-paper); box-shadow:0 2px 12px rgba(38,20,16,.05); }
         .wb-result-head { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
         .wb-result-head strong { color:var(--an-accent2); font-size:12px; font-weight:700; letter-spacing:.1em; }
         .wb-copy { padding:7px 14px; border:1px solid var(--an-line); border-radius:2px; background:var(--an-bg); color:var(--an-dim); cursor:pointer; font:400 12px 'Noto Sans KR', sans-serif; }
@@ -611,8 +611,8 @@ export default function ArtistNoteWorkbench({ artist }) {
         .wb-text { margin:0; color:var(--an-text); font-family:'Noto Sans KR', sans-serif; font-size:14.5px; line-height:1.85; white-space:pre-wrap; }
         .wb-notice { margin:0 0 14px; padding:11px 14px; background:var(--an-bg2); color:var(--an-dim); font-size:12.5px; line-height:1.65; }
 
-        @media (max-width:700px) { .wb-section h2 { font-size:24px; } .wb-actions { padding:20px; } .wb-run { width:100%; } .wb-result { padding:20px; } }
-        @media print { .wb-chips, .wb-actions { break-inside:avoid; } }
+        @media (max-width:700px) { .wb-section { padding:26px 20px 24px; } .wb-section h2 { font-size:24px; } .wb-actions { padding:20px; } .wb-run { width:100%; } .wb-result { padding:24px 20px; } }
+        @media print { .wb-section { break-inside:avoid; box-shadow:none; } .wb-actions { display:none; } }
       `}</style>
 
       <section className="wb-howto">
