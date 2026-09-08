@@ -614,7 +614,7 @@ export default function ArtistNoteWorkbench({ artist }) {
       <section className="wb-howto">
         <h2>작가 노트 작성</h2>
         <p>
-          해당 항목을 선택하고 빈칸을 채운 후 아래 <strong>AI 취합</strong> 버튼을 누르면 하나의 완성된 글이 정리되어 나옵니다.
+          해당 항목을 선택하고 빈칸을 채운 후 아래 <strong>AI 취합</strong> 버튼을 누르면 하나의 완성된 글이 정리되어 나옵니다. (복수 선택 가능)
         </p>
       </section>
 
