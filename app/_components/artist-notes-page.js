@@ -2,6 +2,11 @@
 
 import { useEffect, useState } from "react";
 
+import ArtistNoteWorkbench from "./artist-note-workbench";
+
+// 김주원 작가부터 키워드 선택 + AI 취합 방식으로 먼저 적용한다.
+const WORKBENCH_ARTIST_IDS = new Set(["kim-juwon"]);
+
 const artists = [
   { id: "kim-juwon", name: "김주원", team: "미로", photo: "/artist-profiles/kim-juwon.webp" },
   { id: "kim-hyeonguk", name: "김현국", team: "미로", photo: "/artist-profiles/kim-hyeonguk.webp" },
@@ -312,6 +317,10 @@ export default function ArtistNotesPage() {
           </div>
         </header>
 
+        {WORKBENCH_ARTIST_IDS.has(selected.id) ? (
+          <ArtistNoteWorkbench artist={selected} />
+        ) : (
+          <>
         <section className="note-howto" aria-label="작성 안내">
           <h2>작가 노트 작성 안내</h2>
           <p>
@@ -454,6 +463,8 @@ export default function ArtistNotesPage() {
           </div>
           <p className="note-fill">{selected.name} 전시 계획 작성 예정</p>
         </section>
+          </>
+        )}
 
         <footer className="artist-note-foot">
           <span>다른 작가를 선택하면 해당 작가의 노트로 전환됩니다.</span>
