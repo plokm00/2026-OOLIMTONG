@@ -6,8 +6,6 @@ const FORM = [
   {
     id: "review",
     title: "리뷰 인터뷰",
-    sub: "작가 소개 포함",
-    lead: "해당하는 것을 눌러 고르시면 됩니다. 여러 개 골라도 되고, 건너뛰어도 됩니다. 빈칸에 한두 단어만 적어도 충분합니다.",
     groups: [
       {
         title: "나는 이런 사람",
@@ -306,8 +304,6 @@ const FORM = [
   {
     id: "plan",
     title: "NFC 콘텐츠 및 전시 계획",
-    sub: "육하원칙",
-    lead: "모뉴먼트를 어디에 어떻게 놓을지, 칩에는 무엇을 연결할지 정하는 칸입니다. 고른 것만으로 계획서가 만들어집니다.",
     groups: [
       {
         title: "NFC 콘텐츠",
@@ -575,9 +571,7 @@ export default function ArtistNoteWorkbench({ artist }) {
         .wb-howto p { margin:0; color:var(--an-dim); font-size:14px; line-height:1.7; }
 
         .wb-section { margin-top:26px; padding:46px 48px 44px; border:1px solid var(--wb-paper-line); background:var(--wb-paper); box-shadow:0 2px 12px rgba(38,20,16,.05); }
-        .wb-section h2 { margin:0 0 6px; font-family:'IBM Plex Sans KR', sans-serif; font-size:29px; line-height:1.25; letter-spacing:-.02em; }
-        .wb-section h2 small { margin-left:10px; color:var(--an-dim); font-size:13px; font-weight:400; letter-spacing:0; }
-        .wb-lead { max-width:720px; margin:12px 0 0; color:var(--an-dim); font-size:15px; line-height:1.7; }
+        .wb-section h2 { margin:0 0 4px; font-family:'IBM Plex Sans KR', sans-serif; font-size:29px; line-height:1.25; letter-spacing:-.02em; }
 
         .wb-group { margin-top:36px; }
         .wb-group-title { margin:0 0 4px; font-family:'IBM Plex Sans KR', sans-serif; font-size:17px; font-weight:600; }
@@ -618,19 +612,13 @@ export default function ArtistNoteWorkbench({ artist }) {
       <section className="wb-howto">
         <h2>작가 노트 작성</h2>
         <p>
-          해당하는 항목을 눌러 고르고, 빈칸에는 짧게만 적어주세요.
-          다 고르신 뒤 아래 <strong>AI로 취합</strong> 버튼을 누르면 고른 내용이 하나의 완성된 글로 정리되어 나옵니다.
-          나온 글은 그대로 고쳐 쓰셔도 됩니다.
+          해당 항목을 선택하고 빈칸을 채운 후 아래 <strong>AI 취합</strong> 버튼을 누르면 하나의 완성된 글이 정리되어 나옵니다.
         </p>
       </section>
 
       {FORM.map((section) => (
         <section className="wb-section" key={section.id}>
-          <h2>
-            {section.title}
-            <small>{section.sub}</small>
-          </h2>
-          <p className="wb-lead">{section.lead}</p>
+          <h2>{section.title}</h2>
 
           {section.groups.map((group) => (
             <div className="wb-group" key={group.title}>
