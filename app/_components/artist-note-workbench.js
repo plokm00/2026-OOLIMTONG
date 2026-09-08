@@ -671,7 +671,7 @@ export default function ArtistNoteWorkbench({ artist }) {
       <div className="wb-actions">
         <div className="wb-actions-row">
           <button type="button" className="wb-run" onClick={compose} disabled={!answeredCount || status === "loading"}>
-            {status === "loading" ? "취합 중…" : "AI로 취합"}
+            {status === "loading" ? "취합 중…" : "AI 취합"}
           </button>
           <span className="wb-count">선택한 항목 {answeredCount}개</span>
           {answeredCount ? (
