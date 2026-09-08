@@ -226,7 +226,7 @@ export default function ArtistNotesPage() {
         .note-lead { max-width:720px; margin:0 0 24px; color:var(--an-dim); font-size:15px; line-height:1.7; }
         .note-lead strong { color:var(--an-text); font-weight:600; }
         .note-sub { margin:30px 0 10px; font-family:'IBM Plex Sans KR', sans-serif; font-size:15px; font-weight:600; letter-spacing:.02em; }
-        .note-sub .note-src { margin-left:9px; padding:2px 8px; border-radius:2px; background:var(--an-bg3); color:var(--an-dim); font-size:11px; font-weight:500; letter-spacing:.02em; vertical-align:middle; }
+        .note-sub .note-src { margin-left:9px; padding:2px 8px; border-radius:2px; background:#f0e4da; color:#9a7460; font-size:11px; font-weight:400; letter-spacing:.02em; vertical-align:middle; }
 
         .prompt-list { margin:0; padding:0; list-style:none; counter-reset:prompt; }
         .prompt-list li { position:relative; padding:7px 0 7px 34px; font-size:14px; line-height:1.65; counter-increment:prompt; }
@@ -241,7 +241,7 @@ export default function ArtistNotesPage() {
         .note-fill { margin-top:24px; padding:16px 18px; border:1px dashed var(--an-line); color:var(--an-dim); font-size:12px; letter-spacing:.02em; }
 
         .tag-list { display:flex; flex-wrap:wrap; gap:7px; margin:14px 0 0; padding:0; list-style:none; }
-        .tag-list li { padding:6px 11px; border:1px solid var(--an-line); border-radius:14px; background:var(--an-bg); color:var(--an-dim); font-size:12.5px; }
+        .tag-list li { padding:6px 11px; border-radius:14px; background:#f0e4da; color:#8a6552; font-size:12.5px; }
 
         .check-list { margin:12px 0 0; padding:0; list-style:none; }
         .check-list li { position:relative; padding:6px 0 6px 24px; font-size:14px; line-height:1.65; }

@@ -581,16 +581,16 @@ export default function ArtistNoteWorkbench({ artist }) {
 
         .wb-group { margin-top:36px; }
         .wb-group-title { margin:0 0 4px; font-family:'IBM Plex Sans KR', sans-serif; font-size:17px; font-weight:600; }
-        .wb-group-title span { margin-left:9px; padding:2px 8px; border-radius:2px; background:var(--an-bg3); color:var(--an-dim); font-size:11px; font-weight:500; vertical-align:middle; }
+        .wb-group-title span { margin-left:9px; padding:2px 8px; border-radius:2px; background:#f2e7de; color:#9a7460; font-size:11px; font-weight:400; vertical-align:middle; }
 
         .wb-field { margin-top:20px; }
         .wb-label { display:block; margin-bottom:9px; color:var(--an-text); font-size:13.5px; font-weight:600; }
         .wb-note { display:block; margin:-4px 0 9px; color:var(--an-dim); font-size:12px; }
         .wb-chips { display:flex; flex-wrap:wrap; gap:7px; }
-        .wb-chip { padding:7px 13px; border:1px solid var(--an-line); border-radius:16px; background:var(--an-bg); color:var(--an-dim); cursor:pointer; font:400 13px 'Noto Sans KR', sans-serif; transition:background .15s,color .15s,border-color .15s; }
-        .wb-chip:hover { border-color:var(--an-accent); color:var(--an-accent); }
-        .wb-chip[aria-pressed='true'] { border-color:var(--an-accent); background:var(--an-accent); color:var(--an-bg); font-weight:500; }
-        .wb-input { width:100%; max-width:520px; padding:10px 13px; border:1px solid var(--an-line); border-radius:2px; background:var(--an-bg); color:var(--an-text); font:400 14px 'Noto Sans KR', sans-serif; }
+        .wb-chip { padding:7px 13px; border:1px solid transparent; border-radius:16px; background:#f5ece5; color:#8a6552; cursor:pointer; font:400 13px 'Noto Sans KR', sans-serif; transition:background .15s,color .15s,border-color .15s; }
+        .wb-chip:hover { background:#ecdfd4; color:var(--an-text); }
+        .wb-chip[aria-pressed='true'] { border-color:rgba(192,56,40,.3); background:rgba(192,56,40,.09); color:var(--an-accent2); font-weight:500; }
+        .wb-input { width:100%; max-width:520px; padding:10px 13px; border:1px solid #e3d2c5; border-radius:2px; background:#faf4ee; color:var(--an-text); font:400 14px 'Noto Sans KR', sans-serif; }
         .wb-input:focus { border-color:var(--an-accent); outline:none; }
         .wb-input::placeholder { color:var(--an-line); }
 
