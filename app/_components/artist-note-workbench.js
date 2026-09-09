@@ -176,7 +176,7 @@ const FORM = [
           {
             id: "finish",
             type: "chips",
-            label: "작품의 표면은…",
+            label: "내 작품의 마무리 방법",
             options: [
               "손자국을 그대로 남겼다",
               "매끈하게 다듬었다",
