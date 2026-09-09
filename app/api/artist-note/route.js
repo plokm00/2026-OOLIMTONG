@@ -6,6 +6,11 @@ export const maxDuration = 60;
 const MAX_SECTIONS = 8;
 const MAX_ITEMS = 40;
 const MAX_CHARS = 6000;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX = 5;
+
+const rateBuckets = globalThis.__artistNoteRateBuckets ?? new Map();
+globalThis.__artistNoteRateBuckets = rateBuckets;
 
 const SYSTEM_PROMPT = `당신은 원주 니닉크라프트의 협력창작 프로젝트 〈울림통-변주 2026〉의 작가 노트를 대신 써 주는 사람입니다.
 
@@ -29,10 +34,37 @@ const SYSTEM_PROMPT = `당신은 원주 니닉크라프트의 협력창작 프�
 출력 형식 — 아래 두 제목만 그대로 쓰고, 각 아래에 문단을 이어 씁니다:
 
 작가 노트
-(4~6문단, 각 4~6문장. 지금의 나와 이 프로젝트에 오게 된 자리에서 시작해, 흙을 처음 만진 시간, 내 모뉴먼트, 함께 만든 대형 울림통, 그리고 지금 돌아보는 마음으로 자연스럽게 흘러가게 씁니다. 문단마다 소제목을 달지 않습니다.)
+(답변의 양에 맞춰 3~5문단, 각 2~4문장. 지금의 나와 이 프로젝트에 오게 된 자리에서 시작해, 흙을 처음 만진 시간, 내 모뉴먼트, 함께 만든 대형 울림통, 그리고 지금 돌아보는 마음으로 자연스럽게 흘러가게 씁니다. 문단마다 소제목을 달지 않습니다. 자료가 적으면 억지로 분량을 늘리지 않습니다.)
 
 전시 계획
-(2~3문단. 칩에 무엇을 연결할지, 그리고 작품을 언제 어디에 어떻게 두고 왜 그 자리인지가 문장 속에 녹아들게 씁니다. 표나 항목이 아니라 계획을 이야기하듯 씁니다.)`;
+(1~2문단. 칩에 무엇을 연결할지, 그리고 작품을 언제 어디에 어떻게 두고 왜 그 자리인지가 문장 속에 녹아들게 씁니다. 표나 항목이 아니라 계획을 이야기하듯 씁니다. 답하지 않은 내용은 추측하지 않습니다.)`;
+
+function json(body, init = {}) {
+  return Response.json(body, {
+    ...init,
+    headers: { ...init.headers, "Cache-Control": "no-store" },
+  });
+}
+
+function requestKey(request) {
+  const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  return forwarded || request.headers.get("x-real-ip") || "unknown";
+}
+
+function hasQuota(request) {
+  const now = Date.now();
+  const key = requestKey(request);
+  const recent = (rateBuckets.get(key) || []).filter((time) => now - time < RATE_LIMIT_WINDOW_MS);
+
+  if (recent.length >= RATE_LIMIT_MAX) {
+    rateBuckets.set(key, recent);
+    return false;
+  }
+
+  recent.push(now);
+  rateBuckets.set(key, recent);
+  return true;
+}
 
 function sanitize(value, limit) {
   if (typeof value !== "string") return "";
@@ -87,20 +119,39 @@ function parseBody(body) {
 }
 
 export async function POST(request) {
+  const requestUrl = new URL(request.url);
+  const origin = request.headers.get("origin");
+  const fetchSite = request.headers.get("sec-fetch-site");
+  if ((origin && origin !== requestUrl.origin) || (fetchSite && fetchSite !== "same-origin")) {
+    return json({ error: "forbidden_origin" }, { status: 403 });
+  }
+
+  const contentLength = Number(request.headers.get("content-length") || 0);
+  if (contentLength > 20_000) {
+    return json({ error: "payload_too_large" }, { status: 413 });
+  }
+
+  if (!hasQuota(request)) {
+    return json(
+      { error: "rate_limited" },
+      { status: 429, headers: { "Retry-After": String(RATE_LIMIT_WINDOW_MS / 1000) } },
+    );
+  }
+
   if (!process.env.ANTHROPIC_API_KEY) {
-    return Response.json({ error: "no_api_key" }, { status: 501 });
+    return json({ error: "no_api_key" }, { status: 501 });
   }
 
   let body;
   try {
     body = await request.json();
   } catch {
-    return Response.json({ error: "invalid_json" }, { status: 400 });
+    return json({ error: "invalid_json" }, { status: 400 });
   }
 
   const parsed = parseBody(body);
   if (!parsed) {
-    return Response.json({ error: "empty_selection" }, { status: 400 });
+    return json({ error: "empty_selection" }, { status: 400 });
   }
 
   const client = new Anthropic();
@@ -108,14 +159,14 @@ export async function POST(request) {
   try {
     const response = await client.messages.create({
       model: "claude-sonnet-5",
-      max_tokens: 8000,
-      output_config: { effort: "high" },
+      max_tokens: 3500,
+      output_config: { effort: "low" },
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: buildUserMessage(parsed.artist, parsed.sections) }],
     });
 
     if (response.stop_reason === "refusal") {
-      return Response.json({ error: "refused" }, { status: 502 });
+      return json({ error: "refused" }, { status: 502 });
     }
 
     const text = response.content
@@ -125,20 +176,20 @@ export async function POST(request) {
       .trim();
 
     if (!text) {
-      return Response.json({ error: "empty_response" }, { status: 502 });
+      return json({ error: "empty_response" }, { status: 502 });
     }
 
-    return Response.json({ text, model: response.model });
+    return json({ text, model: response.model });
   } catch (error) {
     if (error instanceof Anthropic.AuthenticationError) {
-      return Response.json({ error: "bad_api_key" }, { status: 502 });
+      return json({ error: "bad_api_key" }, { status: 502 });
     }
     if (error instanceof Anthropic.RateLimitError) {
-      return Response.json({ error: "rate_limited" }, { status: 429 });
+      return json({ error: "rate_limited" }, { status: 429 });
     }
     if (error instanceof Anthropic.APIError) {
-      return Response.json({ error: `api_error_${error.status}` }, { status: 502 });
+      return json({ error: `api_error_${error.status}` }, { status: 502 });
     }
-    return Response.json({ error: "unknown" }, { status: 500 });
+    return json({ error: "unknown" }, { status: 500 });
   }
 }
