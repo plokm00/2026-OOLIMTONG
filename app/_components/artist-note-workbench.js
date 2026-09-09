@@ -584,9 +584,11 @@ export default function ArtistNoteWorkbench({ artist }) {
         .wb-chip { display:inline-block; padding:7px 15px; border:1px solid #e3d3c7; border-radius:16px; background:transparent; color:#96786a; cursor:pointer; font:400 13px 'Noto Sans KR', sans-serif; line-height:1.5; transition:color .15s,border-color .15s,background .15s; }
         .wb-chip:hover { border-color:#c0a492; color:var(--an-text); }
         .wb-chip.is-on { border-color:#261410; background:#ece0d5; color:#261410; font-weight:700; }
-        .wb-input { width:100%; max-width:520px; padding:10px 13px; border:1px solid #e3d2c5; border-radius:2px; background:#faf4ee; color:var(--an-text); font:400 14px 'Noto Sans KR', sans-serif; }
-        .wb-input:focus { border-color:var(--an-accent); outline:none; }
-        .wb-input::placeholder { color:var(--an-line); }
+        .wb-input { width:100%; max-width:520px; padding:7px 15px; border:1px solid #e3d3c7; border-radius:16px; background:transparent; color:#261410; font:400 13px 'Noto Sans KR', sans-serif; line-height:1.5; transition:color .15s,border-color .15s,background .15s; }
+        .wb-input:hover { border-color:#c0a492; }
+        .wb-input:focus { border-color:#261410; outline:none; }
+        .wb-input::placeholder { color:#96786a; font-weight:400; }
+        .wb-input.is-on { border-color:#261410; background:#ece0d5; font-weight:700; }
 
         .wb-actions { margin-top:30px; padding:26px; border:1px solid var(--an-accent); background:var(--an-bg2); }
         .wb-actions-row { display:flex; flex-wrap:wrap; align-items:center; gap:14px; }
@@ -653,7 +655,11 @@ export default function ArtistNoteWorkbench({ artist }) {
                   ) : (
                     <input
                       id={`f-${field.id}`}
-                      className="wb-input"
+                      className={
+                        typeof answers[field.id] === "string" && answers[field.id].trim()
+                          ? "wb-input is-on"
+                          : "wb-input"
+                      }
                       type="text"
                       maxLength={120}
                       value={typeof answers[field.id] === "string" ? answers[field.id] : ""}
