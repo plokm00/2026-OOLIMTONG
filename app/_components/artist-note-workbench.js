@@ -232,7 +232,6 @@ const FORM = [
             id: "mixOrMark",
             type: "chips",
             label: "내가 만든 부분은…",
-            single: true,
             options: ["눈에 띄는 나만의 표현이 드러난다", "구분되면 좋겠다", "섞이는 게 좋다", "구분은 안 되지만 내가 안다", "상관없다"],
           },
           {
