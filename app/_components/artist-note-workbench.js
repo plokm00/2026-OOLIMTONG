@@ -346,7 +346,7 @@ const FORM = [
     title: "NFC 콘텐츠 및 모뉴먼트 전시 계획",
     groups: [
       {
-        title: "NFC 콘텐츠",
+        title: "무엇을 · NFC 콘텐츠",
         source: "3 · 11회차",
         fields: [
           {
@@ -435,16 +435,9 @@ const FORM = [
         ],
       },
       {
-        title: "무엇을 · 누가",
-        source: "What · Who",
+        title: "누가",
+        source: "Who",
         fields: [
-          {
-            id: "whatWith",
-            type: "chips",
-            label: "작품과 함께 둘 것은…",
-            options: ["나무 좌대", "돌 받침", "작품 설명 카드", "NFC 안내문", "QR 코드 안내", "고정 장치", "비·바람을 막는 덮개", "조명", "특별히 없음"],
-            exclusiveOptions: ["특별히 없음"],
-          },
           {
             id: "installWho",
             type: "chips",
@@ -465,6 +458,13 @@ const FORM = [
         title: "어떻게",
         source: "How",
         fields: [
+          {
+            id: "whatWith",
+            type: "chips",
+            label: "작품과 함께 둘 것은…",
+            options: ["나무 좌대", "돌 받침", "작품 설명 카드", "NFC 안내문", "QR 코드 안내", "고정 장치", "비·바람을 막는 덮개", "조명", "특별히 없음"],
+            exclusiveOptions: ["특별히 없음"],
+          },
           {
             id: "howPlace",
             type: "chips",
