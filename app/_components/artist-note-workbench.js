@@ -525,69 +525,6 @@ const FORM = [
   },
 ];
 
-// 실제 작가의 답변과 섞이지 않도록, 기능 확인용 예시는 완전히 가상의 인물 설정으로 둔다.
-const SAMPLE_ANSWERS = {
-  who: "원주에 살며 작은 서점에서 일합니다.",
-  motive: ["공고를 보고", "흙을 배우고 싶어서"],
-  life: ["일이 바쁘다", "조용한 시간이 필요하다"],
-  distance: ["흙은 이번이 처음"],
-  wish: ["계속 만드는 사람으로 남기", "나를 위한 시간이었다는 기억"],
-  firstTouch: ["차가웠다", "묵직했다", "낯설었다"],
-  whyClay: ["손자국이 그대로 남아서", "굽지 않아 언젠가 사라져서"],
-  resonance: ["사람이 모이는 방", "가슴속 울림"],
-  drawingChange: ["흙이 형태를 정해줬다", "만들면서 계속 바뀌었다"],
-  workName: "숨고리",
-  workMeaning: "숨을 고르고 다른 사람의 소리를 기다리는 작은 방이라는 뜻입니다.",
-  strange: ["생각과 다른 형태가 나왔을 때"],
-  nfcWhy: ["손이 닿기 쉬워서", "찾는 재미가 있으라고"],
-  finish: ["반은 남기고 반은 다듬었다", "기름을 발라 색을 깊게 했다"],
-  connect: ["신기했다", "책임감이 생겼다"],
-  favoriteWork: ["타래 밀기", "이야기 나누기"],
-  mixOrMark: ["섞이는 게 좋다"],
-  tamping: ["소리가 좋았다", "명상 같았다"],
-  scene: ["간식 · 새참 시간", "형태가 서기 시작할 때", "다 같이 웃던 순간"],
-  teamOpinion: "여럿이 함께 쌓다 보니 속도는 더뎠지만, 그만큼 서로의 손을 살피게 되어 좋았습니다.",
-  teamName: ["오래 논의해서 정했다", "내 마음에 든다"],
-  hard: ["흙의 성질", "다 같이 정하기"],
-  becameArtist: ["작품 이름을 지을 때", "남에게 설명해줄 때"],
-  returnToEarth: ["그래서 더 소중하다"],
-  nextTry: "다음에는 울림통 안에서 소리를 내보고, 그 소리를 녹음해 남겨보고 싶습니다.",
-  freeWord: "완성된 모양보다 함께 손을 움직인 시간을 오래 기억하고 싶습니다.",
-  nfcContent: ["작업 과정 사진 모음", "작업장에서 녹음한 소리"],
-  nfcAssets: ["작업 중 사진", "녹음 파일"],
-  nfcNeed: ["글로 옮기는 게 어렵다", "작가님 도움이 필요하다"],
-  nfcNote: "방문자가 작업장의 소리를 들은 뒤 짧은 감상을 남길 수 있으면 좋겠습니다.",
-  when: ["전시 기간과 동일"],
-  where: ["가게 입구"],
-  whereDetail: "서점 입구 안쪽, 비를 맞지 않고 길에서도 보이는 낮은 나무 좌대 위에 둡니다.",
-  whatWith: ["나무 좌대", "작품 설명 카드", "NFC 안내문"],
-  installWho: ["직장 동료와"],
-  forWhom: ["우리 손님들", "지나가는 누구든"],
-  howPlace: ["영업시간에만 밖에", "날씨 보고 조절"],
-  howEvent: ["설명 카드 붙이기", "‘휴대폰을 대보세요’ 안내문", "방명록 두기"],
-  howDetail: "서점 영업시간인 오전 11시부터 오후 7시까지 두고, 마감 뒤에는 안쪽으로 옮깁니다.",
-  why: ["사람들과 나누고 싶어서", "오가는 사람이 많아서", "누군가 쉬어 가라고"],
-  whyDetail: "책을 고르듯 잠시 멈춰 낯선 사람의 손과 소리를 만나게 하고 싶습니다.",
-};
-
-const SAMPLE_RESULT = `작가 노트
-
-저는 원주에 살며 작은 서점에서 일합니다. 일이 바쁜 날에도 잠깐 조용히 숨을 고를 시간이 필요했습니다. 공고를 보고 울림통-변주에 참여한 것은 흙을 처음부터 배워 보고 싶다는 마음 때문이었습니다. 이 시간이 끝난 뒤에도 계속 무언가를 만드는 사람으로 남고 싶었습니다.
-
-처음 만진 흙은 차갑고 묵직했으며 낯설었습니다. 손자국이 그대로 남고, 굽지 않으면 언젠가 다시 흙으로 돌아간다는 점이 울림통과 잘 어울린다고 느꼈습니다. 저에게 울림통은 사람이 모이는 방이면서 각자의 가슴속 울림을 잠시 내어놓는 자리였습니다. 처음 그린 모양을 고집하기보다 흙이 정해 주는 방향을 따라가면서 형태도 계속 달라졌습니다.
-
-제 모뉴먼트의 이름은 〈숨고리〉입니다. 숨을 고르고 다른 사람의 소리를 기다리는 작은 방이라는 뜻을 담았습니다. 타래가 끊어지고 생각과 다른 모양이 나올 때가 가장 낯설었지만, 손자국을 반은 남기고 반은 다듬으면서 그 차이까지 작품의 일부로 받아들였습니다. 기름을 먹인 뒤 색이 깊어지자 비로소 제 앞에 하나의 물건이 서 있다는 느낌이 들었습니다.
-
-제 타래가 다른 사람의 타래와 이어질 때는 신기하면서도 책임감이 생겼습니다. 누가 만든 부분인지 나뉘기보다 서로 섞이는 편이 좋았습니다. 돌로 벽을 다지는 소리는 일정한 리듬이 되어 잠시 명상하는 시간처럼 느껴졌고, 함께 노래하고 웃던 장면이 오래 남았습니다. 흙의 성질을 익히고 모두의 의견을 모으는 일은 어려웠지만, 형태가 서기 시작하고 사람들과 이야기를 나눌 때 가장 즐거웠습니다.
-
-작품에 이름을 붙이고 다른 사람에게 설명하면서 조금씩 작가가 되었다는 감각을 얻었습니다. 이 작품이 언젠가 흙으로 돌아간다는 사실은 그래서 더 소중합니다. 완성된 모양만 남기기보다 함께 손을 움직인 시간을 오래 기억하고 싶습니다.
-
-전시 계획
-
-NFC 칩에는 작업 과정 사진과 작업장에서 녹음한 소리를 연결하려고 합니다. 칩은 손이 닿기 쉽고 찾는 재미도 있는 입구 옆에 두었습니다. 가지고 있는 사진과 녹음 파일을 바탕으로 소개 글을 다듬는 데 도움을 받고, 방문자가 소리를 들은 뒤 짧은 감상을 남길 수 있게 하고 싶습니다.
-
-전시 기간에는 서점 입구 안쪽의 낮은 나무 좌대에 〈숨고리〉를 놓습니다. 길에서도 보이되 비는 맞지 않는 자리로 정하고, 작품 설명 카드와 NFC 안내문을 함께 둡니다. 동료와 함께 영업시간 동안 돌본 뒤 마감하면 안쪽으로 옮기고, 방명록으로 방문자의 말을 모으겠습니다. 책을 고르듯 잠시 멈춘 사람이 낯선 손과 소리를 만나는 자리가 되기를 바랍니다.`;
-
 function textAnswer(answers, key) {
   const value = answers[key];
   return typeof value === "string" ? value.trim() : "";
@@ -601,6 +538,8 @@ function valueOf(answers, field) {
   }
   return textAnswer(answers, field.id);
 }
+
+const MAX_RUNS = 5;
 
 const ALL_FIELDS = FORM.flatMap((section) =>
   section.groups.flatMap((group) =>
@@ -649,6 +588,7 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
   const [copied, setCopied] = useState(false);
   const [aiConsent, setAiConsent] = useState(false);
   const [attempted, setAttempted] = useState(false);
+  const [usedCount, setUsedCount] = useState(0);
 
   const resolveLabel = useMemo(() => makeLabelResolver(works), [works]);
   const sections = useMemo(() => buildSections(answers, resolveLabel), [answers, resolveLabel]);
@@ -721,6 +661,13 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
       return;
     }
 
+    if (usedCount >= MAX_RUNS) {
+      setNotice(`AI 초안 만들기는 ${MAX_RUNS}번까지 쓸 수 있습니다. 지금까지 만든 초안을 직접 고쳐 완성해주세요.`);
+      return;
+    }
+
+    setUsedCount((count) => count + 1);
+
     setStatus("loading");
     setAttempted(false);
     setNotice("");
@@ -765,16 +712,6 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
     }
   };
 
-  const loadSample = () => {
-    setAnswers(SAMPLE_ANSWERS);
-    setResult(SAMPLE_RESULT);
-    setResultKind("sample");
-    setStatus("done");
-    setNotice("아래 글은 화면과 문장 흐름을 확인하기 위한 가상 예시입니다. 김주원 작가의 실제 답변이 아닙니다.");
-    setCopied(false);
-    setAttempted(false);
-  };
-
   const copyResult = async () => {
     try {
       await navigator.clipboard.writeText(result);
@@ -793,6 +730,7 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
     setCopied(false);
     setAiConsent(false);
     setAttempted(false);
+    setUsedCount(0);
   };
 
   return (
@@ -802,10 +740,6 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
         .wb-howto { padding:24px 26px; background:var(--an-bg2); }
         .wb-howto h2 { margin:0 0 10px; font-family:'IBM Plex Sans KR', sans-serif; font-size:19px; }
         .wb-howto p { margin:0; color:var(--an-dim); font-size:14px; line-height:1.7; }
-        .wb-howto-actions { display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; margin-top:16px; padding-top:16px; border-top:1px solid var(--an-line); }
-        .wb-sample { padding:8px 14px; border:1px solid var(--an-accent); border-radius:2px; background:transparent; color:var(--an-accent2); cursor:pointer; font:600 13px 'Noto Sans KR', sans-serif; }
-        .wb-sample:hover { background:var(--an-bg3); }
-        .wb-sample-note { color:var(--an-dim); font-size:12px; line-height:1.5; }
 
         .wb-section { margin-top:26px; padding:46px 48px 44px; border:1px solid var(--wb-paper-line); background:var(--wb-paper); box-shadow:0 2px 12px rgba(38,20,16,.05); }
         .wb-section h2 { margin:0 0 4px; font-family:'IBM Plex Sans KR', sans-serif; font-size:29px; line-height:1.25; letter-spacing:-.02em; }
@@ -844,6 +778,7 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
         .wb-run:hover:enabled { background:var(--an-accent2); }
         .wb-run:disabled { background:var(--an-bg3); color:var(--an-dim); cursor:default; }
         .wb-count { color:var(--an-dim); font-size:13px; }
+        .wb-runs { color:#a5412b; }
         .wb-reset { border:0; background:none; color:var(--an-dim); cursor:pointer; font:400 13px 'Noto Sans KR', sans-serif; text-decoration:underline; }
         .wb-hint { margin:12px 0 0; color:var(--an-dim); font-size:12.5px; line-height:1.65; }
         .wb-consent { display:flex; align-items:flex-start; gap:9px; margin:0 0 16px; color:var(--an-text); font-size:12.5px; line-height:1.65; }
@@ -869,10 +804,6 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
           41개 항목을 모두 답한 뒤 아래 <strong>AI 초안 만들기</strong>를 누르세요. 별도 표시가 없으면 복수 선택이 가능합니다.
           해당되는 보기가 없으면 <strong>직접 입력</strong>을 쓰고, 경험하지 않았거나 아직 정하지 못한 내용은 ‘없음·미정’ 보기를 골라주세요.
         </p>
-        <div className="wb-howto-actions">
-          <button type="button" className="wb-sample" onClick={loadSample}>가상 참여자 예시로 모두 채우기</button>
-          <span className="wb-sample-note">기능 확인용 예시이며, 이 작가의 실제 답변이 아닙니다.</span>
-        </div>
       </section>
 
       {FORM.map((section) => (
@@ -978,10 +909,13 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
           </span>
         </label>
         <div className="wb-actions-row">
-          <button type="button" className="wb-run" onClick={compose} disabled={status === "loading"}>
+          <button type="button" className="wb-run" onClick={compose} disabled={status === "loading" || usedCount >= MAX_RUNS}>
             {status === "loading" ? "초안 만드는 중…" : "AI 초안 만들기"}
           </button>
           <span className="wb-count">답변 {answeredCount} / {totalCount}</span>
+          <span className="wb-count wb-runs">
+            초안 만들기 {usedCount} / {MAX_RUNS}회 — {MAX_RUNS}번까지 쓸 수 있습니다
+          </span>
           {answeredCount ? (
             <button type="button" className="wb-reset" onClick={reset}>
               전부 지우기
@@ -998,7 +932,7 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
       {result ? (
         <div className="wb-result">
           <div className="wb-result-head">
-            <strong>{resultKind === "sample" ? "가상 참여자 작성 예시" : "작가 노트 초안"}</strong>
+            <strong>작가 노트 초안</strong>
             <button type="button" className="wb-copy" onClick={copyResult}>
               {copied ? "복사했습니다" : "전체 복사"}
             </button>
