@@ -15,7 +15,7 @@ const FORM = [
             id: "who",
             type: "text",
             label: "사는 지역과 요즘 하는 일 (공개 가능한 범위)",
-            placeholder: "예) 원주에서 책과 관련된 일을 합니다 / 밝히고 싶지 않음",
+            placeholder: "예) 원주에서 책과 관련된 일을 합니다",
           },
           {
             id: "motive",
