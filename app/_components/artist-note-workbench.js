@@ -20,7 +20,7 @@ const FORM = [
           {
             id: "motive",
             type: "chips",
-            label: "울림통-변주에 참여하게 된 것은…",
+            label: "울림통-변주에 참여하게 된 경로와 동기",
             options: [
               "지인의 권유로",
               "공고를 보고",
@@ -50,7 +50,7 @@ const FORM = [
           {
             id: "distance",
             type: "chips",
-            label: "흙과 나 사이는…",
+            label: "흙과 나의 사이는…",
             options: [
               "흙은 이번이 처음",
               "아주 오래전에 해봤다",
@@ -81,7 +81,7 @@ const FORM = [
           {
             id: "firstTouch",
             type: "chips",
-            label: "처음 흙을 만졌을 때 흙은…",
+            label: "처음 만져본 흙은…",
             options: [
               "차가웠다",
               "축축했다",
@@ -97,7 +97,7 @@ const FORM = [
           {
             id: "whyClay",
             type: "chips",
-            label: "흙이 이 작업의 재료가 된 것은…",
+            label: "흙이 울림통의 재료로 어울리는 이유는…",
             options: [
               "땅에서 나와 땅으로 돌아가서",
               "손자국이 그대로 남아서",
@@ -110,7 +110,7 @@ const FORM = [
           {
             id: "resonance",
             type: "chips",
-            label: "‘울림통’이라는 말에서 제가 떠올린 것은…",
+            label: "‘울림통’이라는 말에서 내가 떠올린 것은…",
             options: [
               "악기의 몸통",
               "기억을 담는 그릇",
@@ -158,13 +158,13 @@ const FORM = [
           {
             id: "nfcSpot",
             type: "chips",
-            label: "NFC 칩을 심은 자리는…",
+            label: "NFC 칩을 심은 자리",
             options: ["입구 옆", "몸통 한가운데", "뒤쪽", "바닥 가까이", "창 옆", "지붕 아래"],
           },
           {
             id: "nfcWhy",
             type: "chips",
-            label: "그 자리를 고른 것은…",
+            label: "그 자리를 고른 이유는…",
             options: [
               "손이 닿기 쉬워서",
               "눈에 잘 안 띄게 하고 싶어서",
@@ -194,7 +194,7 @@ const FORM = [
           {
             id: "connect",
             type: "chips",
-            label: "내 타래가 옆 사람 타래와 이어질 때 저는…",
+            label: "내 타래가 옆 사람 타래와 이어질 때 나는…",
             options: [
               "뿌듯했다",
               "내 것이 사라지는 것 같았다",
@@ -233,7 +233,7 @@ const FORM = [
           {
             id: "scene",
             type: "chips",
-            label: "가장 기억에 남는 장면은…",
+            label: "가장 기억에 남는 장면",
             options: [
               "다 같이 노래 부르던 때",
               "소리를 녹음하던 때",
@@ -245,7 +245,18 @@ const FORM = [
               "완성한 날",
             ],
           },
-          { id: "teamName", type: "text", label: "우리 팀 울림통의 이름", placeholder: "예) 큰숨" },
+          {
+            id: "teamName",
+            type: "chips",
+            label: "우리 팀 울림통의 이름을 지을 때…",
+            options: [
+              "금방 정해졌다",
+              "오래 논의해서 정했다",
+              "누군가 제안한 말이 그대로 됐다",
+              "여러 후보 중에 골랐다",
+              "아직 잘 기억나지 않는다",
+            ],
+          },
         ],
       },
       {
@@ -296,14 +307,14 @@ const FORM = [
               "생각해본 적 없다",
             ],
           },
-          { id: "freeWord", type: "text", label: "그밖에 남기고 싶은 말", placeholder: "한 문장이면 충분합니다" },
+          { id: "freeWord", type: "text", label: "그밖에 남기고 싶은 말", placeholder: "마음을 충분히 표현해주세요." },
         ],
       },
     ],
   },
   {
     id: "plan",
-    title: "NFC 콘텐츠 및 전시 계획",
+    title: "NFC 콘텐츠 및 모뉴먼트 전시 계획",
     groups: [
       {
         title: "NFC 콘텐츠",
@@ -329,10 +340,23 @@ const FORM = [
           {
             id: "nfcAssets",
             type: "chips",
-            label: "지금 가지고 있는 자료는…",
+            label: "자료 준비 상황",
             options: ["작업 중 사진", "완성 사진", "영상", "녹음 파일", "손으로 쓴 글", "아직 없다 (도움 필요)"],
           },
-          { id: "nfcNote", type: "text", label: "직접 적고 싶은 것", placeholder: "자유롭게" },
+          {
+            id: "nfcNeed",
+            type: "chips",
+            label: "자료를 준비하는 어려운 부분이나 필요한 것은…",
+            options: [
+              "사진 찍는 법을 모르겠다",
+              "녹음 방법을 알고 싶다",
+              "글로 옮기는 게 어렵다",
+              "시간이 부족하다",
+              "작가님 도움이 필요하다",
+              "특별히 어려운 점 없다",
+            ],
+          },
+          { id: "nfcNote", type: "text", label: "기타 내용", placeholder: "자유롭게" },
         ],
       },
       {
@@ -343,7 +367,7 @@ const FORM = [
             id: "when",
             type: "chips",
             label: "설치 기간은…",
-            note: "기본값 — 2026. 11. 21.(토) ~ 12. 13.(일) · 전시 기간과 동일",
+            note: "기본값 — 2026. 11. 21.(토) ~ 12. 13.(일)",
             options: ["전시 기간과 동일", "조금 일찍 시작", "전시 후에도 계속", "주말에만", "아직 미정"],
           },
           {
@@ -366,14 +390,13 @@ const FORM = [
               "마을회관",
             ],
           },
-          { id: "whereDetail", type: "text", label: "구체적인 자리", placeholder: "예) 공방 입구, 길에서 바로 보이는 자리" },
+          { id: "whereDetail", type: "text", label: "구체적인 자리와 설치 방법", placeholder: "예) 공방 입구, 길에서 바로 보이는 자리" },
         ],
       },
       {
         title: "무엇을 · 누가",
         source: "What · Who",
         fields: [
-          { id: "whatWork", type: "text", label: "설치할 작품과 크기", placeholder: "예) 〈숨자리〉, 높이 40cm" },
           {
             id: "whatWith",
             type: "chips",
@@ -381,7 +404,7 @@ const FORM = [
             options: ["나무 좌대", "돌 받침", "작품 설명 카드", "NFC 안내문", "조명", "특별히 없음"],
           },
           {
-            id: "who",
+            id: "installWho",
             type: "chips",
             label: "설치하고 돌볼 사람은…",
             options: ["나 혼자", "가족과 함께", "직장 동료와", "이웃과", "작가님 도움이 필요하다"],
@@ -414,7 +437,7 @@ const FORM = [
           {
             id: "howEvent",
             type: "chips",
-            label: "함께 해볼 것은… (선택)",
+            label: "홍보 방식",
             options: [
               "설명 카드 붙이기",
               "‘휴대폰을 대보세요’ 안내문",
@@ -425,7 +448,7 @@ const FORM = [
               "여러 작품 돌아보기 지도",
             ],
           },
-          { id: "howDetail", type: "text", label: "직접 적고 싶은 운영 방식", placeholder: "예) 매일 10시~19시" },
+          { id: "howDetail", type: "text", label: "운영 방식", placeholder: "예) 매일 10시~19시" },
         ],
       },
       {
@@ -447,7 +470,7 @@ const FORM = [
               "누군가 쉬어 가라고",
             ],
           },
-          { id: "whyDetail", type: "text", label: "한 문장으로", placeholder: "예) 지나가면서도 들어오지 못하던 분들에게 먼저 말을 걸고 싶어서요" },
+          { id: "whyDetail", type: "text", label: "한 문장으로 표현한 작업", placeholder: "예) 지나가면서도 들어오지 못하던 분들에게 먼저 말을 걸고 싶어서요" },
         ],
       },
     ],
@@ -467,6 +490,12 @@ function valueOf(answers, field) {
   }
   return textAnswer(answers, field.id);
 }
+
+const ALL_FIELDS = FORM.flatMap((section) =>
+  section.groups.flatMap((group) =>
+    group.fields.map((field) => ({ field, groupTitle: group.title, sectionTitle: section.title })),
+  ),
+);
 
 function buildSections(answers) {
   return FORM.map((section) => ({
@@ -500,9 +529,15 @@ export default function ArtistNoteWorkbench({ artist }) {
   const [result, setResult] = useState("");
   const [notice, setNotice] = useState("");
   const [copied, setCopied] = useState(false);
+  const [attempted, setAttempted] = useState(false);
 
   const sections = useMemo(() => buildSections(answers), [answers]);
-  const answeredCount = sections.reduce((total, section) => total + section.items.length, 0);
+  const missingFields = useMemo(
+    () => ALL_FIELDS.filter(({ field }) => !valueOf(answers, field)),
+    [answers],
+  );
+  const totalCount = ALL_FIELDS.length;
+  const answeredCount = totalCount - missingFields.length;
 
   const toggleChip = (fieldId, option) => {
     setAnswers((prev) => {
@@ -519,7 +554,15 @@ export default function ArtistNoteWorkbench({ artist }) {
   };
 
   const compose = async () => {
-    if (!answeredCount) return;
+    if (missingFields.length > 0) {
+      setAttempted(true);
+      setNotice(`아직 답하지 않은 항목이 ${missingFields.length}개 있습니다. 모든 항목에 답해야 취합할 수 있습니다.`);
+      const firstMissing = document.getElementById(`f-${missingFields[0].field.id}`);
+      if (firstMissing) firstMissing.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    setAttempted(false);
     setStatus("loading");
     setNotice("");
     setCopied(false);
@@ -568,6 +611,7 @@ export default function ArtistNoteWorkbench({ artist }) {
     setStatus("idle");
     setNotice("");
     setCopied(false);
+    setAttempted(false);
   };
 
   return (
@@ -582,12 +626,15 @@ export default function ArtistNoteWorkbench({ artist }) {
         .wb-section h2 { margin:0 0 4px; font-family:'IBM Plex Sans KR', sans-serif; font-size:29px; line-height:1.25; letter-spacing:-.02em; }
 
         .wb-group { margin-top:42px; }
-        .wb-group-title { position:relative; margin:0 0 6px; padding-left:18px; font-family:'IBM Plex Sans KR', sans-serif; font-size:17.5px; font-weight:600; color:var(--an-accent2); letter-spacing:-.01em; }
-        .wb-group-title::before { content:''; position:absolute; top:.66em; left:0; width:9px; height:9px; background:var(--an-accent); }
-        .wb-group-title span { margin-left:9px; padding:2px 8px; border-radius:2px; background:#f2e7de; color:#9a7460; font-size:11px; font-weight:400; vertical-align:middle; }
+        .wb-group-title { display:flex; align-items:center; gap:9px; margin:0 0 6px; font-family:'IBM Plex Sans KR', sans-serif; font-size:17.5px; font-weight:600; color:var(--an-accent2); letter-spacing:-.01em; }
+        .wb-group-title::before { content:''; flex:none; width:7px; height:7px; border-radius:50%; background:var(--an-accent); }
+        .wb-group-title span { padding:2px 8px; border-radius:2px; background:#f2e7de; color:#9a7460; font-size:11px; font-weight:400; }
 
         .wb-field { margin-top:20px; }
         .wb-label { display:block; margin-bottom:9px; color:var(--an-text); font-size:13.5px; font-weight:600; }
+        .wb-required { margin-left:3px; color:var(--an-accent); }
+        .wb-field.is-missing .wb-label { color:var(--an-accent2); }
+        .wb-field-warn { margin:8px 0 0; color:var(--an-accent2); font-size:12px; }
         .wb-note { display:block; margin:-4px 0 9px; color:var(--an-dim); font-size:12px; }
         .wb-chips { display:flex; flex-wrap:wrap; gap:8px 7px; }
         .wb-chip { display:inline-block; padding:7px 15px; border:1px solid #f3ebe3; border-radius:16px; background:transparent; color:#b7a091; cursor:pointer; font:400 13px 'Noto Sans KR', sans-serif; line-height:1.5; transition:color .15s,border-color .15s,background .15s; }
@@ -620,6 +667,7 @@ export default function ArtistNoteWorkbench({ artist }) {
         .wb-copy:hover { border-color:var(--an-accent); color:var(--an-accent); }
         .wb-text { margin:0; color:var(--an-text); font-family:'Noto Sans KR', sans-serif; font-size:14.5px; line-height:1.85; white-space:pre-wrap; }
         .wb-notice { margin:0 0 14px; padding:11px 14px; background:var(--an-bg2); color:var(--an-dim); font-size:12.5px; line-height:1.65; }
+        .wb-notice-inline { margin:14px 0 0; }
 
         @media (max-width:700px) { .wb-section { padding:26px 20px 24px; } .wb-section h2 { font-size:24px; } .wb-actions { padding:20px; } .wb-run { width:100%; } .wb-result { padding:24px 20px; } }
         @media print { .wb-section { break-inside:avoid; box-shadow:none; } .wb-actions { display:none; } }
@@ -629,6 +677,7 @@ export default function ArtistNoteWorkbench({ artist }) {
         <h2>작가 노트 작성 방법</h2>
         <p>
           해당 항목을 선택하고 빈칸을 채운 후 아래 <strong>AI 취합</strong> 버튼을 누르면 하나의 완성된 글이 정리되어 나옵니다. (복수 선택 가능)
+          모든 항목은 필수이며, 보기에 없으면 맨 뒤 <strong>직접 입력</strong>에 적어주세요.
         </p>
       </section>
 
@@ -642,10 +691,13 @@ export default function ArtistNoteWorkbench({ artist }) {
                 {group.title}
                 <span>{group.source}</span>
               </p>
-              {group.fields.map((field) => (
-                <div className="wb-field" key={field.id}>
+              {group.fields.map((field) => {
+                const isMissing = attempted && !valueOf(answers, field);
+                return (
+                <div className={isMissing ? "wb-field is-missing" : "wb-field"} key={field.id}>
                   <label className="wb-label" htmlFor={`f-${field.id}`}>
                     {field.label}
+                    <span className="wb-required" aria-hidden="true">*</span>
                   </label>
                   {field.note ? <span className="wb-note">{field.note}</span> : null}
                   {field.type === "chips" ? (
@@ -692,8 +744,10 @@ export default function ArtistNoteWorkbench({ artist }) {
                       onChange={(event) => setText(field.id, event.target.value)}
                     />
                   )}
+                  {isMissing ? <p className="wb-field-warn">이 항목에 답해주세요.</p> : null}
                 </div>
-              ))}
+                );
+              })}
             </div>
           ))}
         </section>
@@ -701,10 +755,10 @@ export default function ArtistNoteWorkbench({ artist }) {
 
       <div className="wb-actions">
         <div className="wb-actions-row">
-          <button type="button" className="wb-run" onClick={compose} disabled={!answeredCount || status === "loading"}>
+          <button type="button" className="wb-run" onClick={compose} disabled={status === "loading"}>
             {status === "loading" ? "취합 중…" : "AI 취합"}
           </button>
-          <span className="wb-count">선택한 항목 {answeredCount}개</span>
+          <span className="wb-count">답변 {answeredCount} / {totalCount}</span>
           {answeredCount ? (
             <button type="button" className="wb-reset" onClick={reset}>
               전부 지우기
@@ -712,9 +766,10 @@ export default function ArtistNoteWorkbench({ artist }) {
           ) : null}
         </div>
         <p className="wb-hint">
-          고르신 내용만으로 글을 씁니다. 없는 이야기는 지어내지 않으니, 담고 싶은 것은 꼭 골라주세요.
-          취합에는 20초쯤 걸립니다.
+          고르신 내용만으로 글을 씁니다. 없는 이야기는 지어내지 않습니다.
+          모든 항목에 답해야 취합됩니다 — 하나라도 비어 있으면 눌러도 알려드립니다. 취합에는 20초쯤 걸립니다.
         </p>
+        {notice && !result ? <p className="wb-notice wb-notice-inline">{notice}</p> : null}
       </div>
 
       {result ? (
