@@ -481,7 +481,7 @@ function buildSections(answers) {
 
 function composeLocally(artist, sections) {
   const lines = [
-    `${artist.name} 작가가 고른 내용을 정리했습니다. (AI 취합이 아직 연결되지 않아 선택 항목만 모았습니다)`,
+    `AI 취합이 연결되기 전이라, ${artist.name} 작가가 고르신 내용만 정리해 두었습니다. 연결되면 이 자리에 한 편의 글이 들어옵니다.`,
     "",
   ];
   for (const section of sections) {
