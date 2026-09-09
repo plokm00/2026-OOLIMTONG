@@ -274,14 +274,14 @@ const FORM = [
           {
             id: "teamName",
             type: "chips",
-            label: "우리 팀 울림통의 이름을 지을 때…",
+            label: "우리 팀 울림통에 {work} 라고 이름 붙일 때…",
             single: true,
             options: [
               "금방 정해졌다",
               "오래 논의해서 정했다",
               "누군가 제안한 말이 그대로 됐다",
               "여러 후보 중에 골랐다",
-              "어떻게 정했는지 잘 기억나지 않는다",
+              "어떻게 정했는지 잘 모른다",
             ],
           },
         ],
@@ -617,12 +617,18 @@ const ALL_FIELDS = FORM.flatMap((section) =>
   ),
 );
 
-function buildSections(answers) {
+// 문항 라벨의 {work} 자리에 그 작가가 속한 팀의 작품명을 넣는다.
+function makeLabelResolver(works) {
+  const titles = works.length ? works.map((work) => `〈${work.title}〉`).join(" · ") : "우리 작품";
+  return (field) => field.label.replace("{work}", titles);
+}
+
+function buildSections(answers, resolveLabel) {
   return FORM.map((section) => ({
     title: section.title,
     items: section.groups.flatMap((group) =>
       group.fields
-        .map((field) => ({ label: `${group.title} — ${field.label}`, value: valueOf(answers, field) }))
+        .map((field) => ({ label: `${group.title} — ${resolveLabel(field)}`, value: valueOf(answers, field) }))
         .filter((item) => item.value),
     ),
   })).filter((section) => section.items.length);
@@ -653,7 +659,8 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
   const [aiConsent, setAiConsent] = useState(false);
   const [attempted, setAttempted] = useState(false);
 
-  const sections = useMemo(() => buildSections(answers), [answers]);
+  const resolveLabel = useMemo(() => makeLabelResolver(works), [works]);
+  const sections = useMemo(() => buildSections(answers, resolveLabel), [answers, resolveLabel]);
   const totalCount = ALL_FIELDS.length;
   const missingFields = useMemo(
     () => ALL_FIELDS.filter(({ field }) => !valueOf(answers, field)),
@@ -891,13 +898,13 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
                 return (
                 <div className={isMissing ? "wb-field is-missing" : "wb-field"} key={field.id}>
                   <label className="wb-label" htmlFor={`f-${field.id}`}>
-                    {field.label}
+                    {resolveLabel(field)}
                     <span className="wb-required" aria-label="필수">*</span>
                     {field.single ? <span className="wb-choice-note">하나만 선택</span> : null}
                   </label>
                   {field.note ? <span className="wb-note">{field.note}</span> : null}
                   {field.type === "chips" ? (
-                    <div className="wb-chips" id={`f-${field.id}`} role="group" aria-label={field.label}>
+                    <div className="wb-chips" id={`f-${field.id}`} role="group" aria-label={resolveLabel(field)}>
                       {field.options.map((option) => {
                         const selectedChips = answers[field.id];
                         const isOn = Array.isArray(selectedChips) && selectedChips.includes(option);
@@ -919,7 +926,7 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
                         }
                         type="text"
                         maxLength={60}
-                        aria-label={`${field.label} 직접 입력`}
+                        aria-label={`${resolveLabel(field)} 직접 입력`}
                         placeholder="직접 입력"
                         value={typeof answers[`${field.id}__etc`] === "string" ? answers[`${field.id}__etc`] : ""}
                         onChange={(event) => setOwnText(field, event.target.value)}
