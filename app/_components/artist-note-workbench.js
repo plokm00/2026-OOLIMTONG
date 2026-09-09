@@ -153,8 +153,8 @@ const FORM = [
         title: "나의 모뉴먼트",
         source: "2–3 · 10회차",
         fields: [
-          { id: "workName", type: "text", label: "내 모뉴먼트의 이름", placeholder: "예) 숨자리 / 아직 이름 없음" },
-          { id: "workMeaning", type: "textarea", label: "이름에 담은 뜻", placeholder: "예) 숨 돌리는 자리라는 뜻 / 아직 정하지 못함" },
+          { id: "workName", type: "text", label: "내 모뉴먼트의 이름", placeholder: "예) 숨자리" },
+          { id: "workMeaning", type: "textarea", label: "이름에 담은 뜻", placeholder: "예) 숨 돌리는 자리라는 뜻" },
           {
             id: "strange",
             type: "chips",
