@@ -107,9 +107,9 @@ export async function POST(request) {
 
   try {
     const response = await client.messages.create({
-      model: "claude-opus-5",
+      model: "claude-sonnet-5",
       max_tokens: 8000,
-      output_config: { effort: "medium" },
+      output_config: { effort: "high" },
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: buildUserMessage(parsed.artist, parsed.sections) }],
     });
