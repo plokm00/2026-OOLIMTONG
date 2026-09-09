@@ -14,7 +14,7 @@ const FORM = [
           {
             id: "who",
             type: "text",
-            label: "사는 지역과 요즘 하는 일 (공개 가능한 범위)",
+            label: "사는 지역과 요즘 하는 일 (공개 가능한 범위에서의 자기소개)",
             placeholder: "예) 원주에서 책과 관련된 일을 합니다",
           },
           {
@@ -159,7 +159,7 @@ const FORM = [
           {
             id: "strange",
             type: "chips",
-            label: "작업 중 가장 난감했던 순간은…",
+            label: "작업 중 난감했던 순간은…",
             options: [
               "반죽이 뜻대로 안 될 때",
               "갈라진 자국을 봤을 때",
@@ -170,11 +170,10 @@ const FORM = [
               "특별히 난감한 순간은 없었다",
             ],
           },
-          { id: "nfcSpot", type: "text", label: "NFC 칩을 심은 자리", placeholder: "예) 입구 옆 / 몸통 한가운데" },
           {
             id: "nfcWhy",
             type: "chips",
-            label: "그 자리를 고른 이유는…",
+            label: "NFC 칩을 심은 자리를 고른 이유는…",
             options: [
               "손이 닿기 쉬워서",
               "눈에 잘 안 띄게 하고 싶어서",
@@ -189,6 +188,7 @@ const FORM = [
             id: "finish",
             type: "chips",
             label: "내 작품의 마무리 방법",
+            optional: true,
             options: [
               "손자국을 그대로 남겼다",
               "매끈하게 다듬었다",
@@ -262,6 +262,7 @@ const FORM = [
               "재료와 도구 탐색",
               "손이 흙에 익어갈 때",
               "형태가 서기 시작할 때",
+              "기름칠하기",
               "소리 녹음",
               "니닉어를 따라 하던 때",
               "작품에 대한 토론",
@@ -272,6 +273,12 @@ const FORM = [
               "다 같이 웃던 순간",
               "완성한 날",
             ],
+          },
+          {
+            id: "teamOpinion",
+            type: "textarea",
+            label: "울림통 작업 전반에 대한 의견",
+            placeholder: "좋았던 점, 아쉬웠던 점, 바라는 점 무엇이든 좋습니다. 없다면 ‘없음’이라고 적어주세요.",
           },
           {
             id: "teamName",
@@ -535,7 +542,6 @@ const SAMPLE_ANSWERS = {
   workName: "숨고리",
   workMeaning: "숨을 고르고 다른 사람의 소리를 기다리는 작은 방이라는 뜻입니다.",
   strange: ["생각과 다른 형태가 나왔을 때"],
-  nfcSpot: "입구 옆",
   nfcWhy: ["손이 닿기 쉬워서", "찾는 재미가 있으라고"],
   finish: ["반은 남기고 반은 다듬었다", "기름을 발라 색을 깊게 했다"],
   connect: ["신기했다", "책임감이 생겼다"],
@@ -543,6 +549,7 @@ const SAMPLE_ANSWERS = {
   mixOrMark: ["섞이는 게 좋다"],
   tamping: ["소리가 좋았다", "명상 같았다"],
   scene: ["간식 · 새참 시간", "형태가 서기 시작할 때", "다 같이 웃던 순간"],
+  teamOpinion: "여럿이 함께 쌓다 보니 속도는 더뎠지만, 그만큼 서로의 손을 살피게 되어 좋았습니다.",
   teamName: ["오래 논의해서 정했다"],
   hard: ["흙의 성질", "다 같이 정하기"],
   becameArtist: ["작품 이름을 지을 때", "남에게 설명해줄 때"],
@@ -648,9 +655,10 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
 
   const resolveLabel = useMemo(() => makeLabelResolver(works), [works]);
   const sections = useMemo(() => buildSections(answers, resolveLabel), [answers, resolveLabel]);
-  const totalCount = ALL_FIELDS.length;
+  const requiredFields = ALL_FIELDS.filter(({ field }) => !field.optional);
+  const totalCount = requiredFields.length;
   const missingFields = useMemo(
-    () => ALL_FIELDS.filter(({ field }) => !valueOf(answers, field)),
+    () => requiredFields.filter(({ field }) => !valueOf(answers, field)),
     [answers],
   );
   const answeredCount = totalCount - missingFields.length;
@@ -703,7 +711,7 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
   const compose = async () => {
     if (missingFields.length) {
       setAttempted(true);
-      setNotice(`아직 답하지 않은 항목이 ${missingFields.length}개 있습니다. 41개를 모두 답해야 초안을 만들 수 있습니다.`);
+      setNotice(`아직 답하지 않은 항목이 ${missingFields.length}개 있습니다. 필수 40개를 모두 답해야 초안을 만들 수 있습니다.`);
       document.getElementById(`f-${missingFields[0].field.id}`)?.scrollIntoView({
         behavior: "smooth",
         block: "center",
@@ -861,11 +869,11 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
       <section className="wb-howto">
         <h2>작가 노트 작성 방법</h2>
         <p>
-          41개 항목을 모두 답한 뒤 아래 <strong>AI 초안 만들기</strong>를 누르세요. 별도 표시가 없으면 복수 선택이 가능합니다.
+          필수 40개 항목을 답한 뒤 아래 <strong>AI 초안 만들기</strong>를 누르세요. 별도 표시가 없으면 복수 선택이 가능합니다.
           해당되는 보기가 없으면 <strong>직접 입력</strong>을 쓰고, 경험하지 않았거나 아직 정하지 못한 내용은 ‘없음·미정’ 보기를 골라주세요.
         </p>
         <div className="wb-howto-actions">
-          <button type="button" className="wb-sample" onClick={loadSample}>가상 참여자 예시로 41개 채우기</button>
+          <button type="button" className="wb-sample" onClick={loadSample}>가상 참여자 예시로 모두 채우기</button>
           <span className="wb-sample-note">기능 확인용 예시이며, 이 작가의 실제 답변이 아닙니다.</span>
         </div>
       </section>
@@ -886,7 +894,11 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
                 <div className={isMissing ? "wb-field is-missing" : "wb-field"} key={field.id}>
                   <label className="wb-label" htmlFor={`f-${field.id}`}>
                     {resolveLabel(field)}
-                    <span className="wb-required" aria-label="필수">*</span>
+                    {field.optional ? (
+                      <span className="wb-choice-note">선택</span>
+                    ) : (
+                      <span className="wb-required" aria-label="필수">*</span>
+                    )}
                     {field.single ? <span className="wb-choice-note">하나만 선택</span> : null}
                   </label>
                   {field.note ? <span className="wb-note">{field.note}</span> : null}
@@ -981,7 +993,7 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
         </div>
         <p className="wb-hint">
           답하신 내용만으로 초안을 쓰고, 없는 이야기는 지어내지 않습니다.
-          41개 항목을 모두 답해야 만들 수 있으며 보통 20초 안팎이 걸립니다. 완성된 글은 반드시 본인이 읽고 고쳐주세요.
+          필수 40개 항목을 모두 답해야 만들 수 있으며 보통 20초 안팎이 걸립니다. 완성된 글은 반드시 본인이 읽고 고쳐주세요.
         </p>
         {notice && !result ? <p className="wb-notice wb-notice-inline">{notice}</p> : null}
       </div>
