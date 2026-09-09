@@ -188,15 +188,14 @@ const FORM = [
             id: "finish",
             type: "chips",
             label: "내 작품의 마무리 방법",
-            optional: true,
             options: [
               "손자국을 그대로 남겼다",
               "매끈하게 다듬었다",
               "반은 남기고 반은 다듬었다",
               "기름을 발라 색을 깊게 했다",
-              "물감으로 조금 발색했다",
+              "물감, 안료 등으로 색을 더했다",
               "갈라짐과 거친 표면을 그대로 살렸다",
-              "마감하지 않고 흙 그대로 두었다",
+              "마감하지 않고 맨흙 그대로 두었다",
               "아직 마무리 전이다",
             ],
           },
@@ -711,7 +710,7 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
   const compose = async () => {
     if (missingFields.length) {
       setAttempted(true);
-      setNotice(`아직 답하지 않은 항목이 ${missingFields.length}개 있습니다. 필수 40개를 모두 답해야 초안을 만들 수 있습니다.`);
+      setNotice(`아직 답하지 않은 항목이 ${missingFields.length}개 있습니다. 41개를 모두 답해야 초안을 만들 수 있습니다.`);
       document.getElementById(`f-${missingFields[0].field.id}`)?.scrollIntoView({
         behavior: "smooth",
         block: "center",
@@ -869,7 +868,7 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
       <section className="wb-howto">
         <h2>작가 노트 작성 방법</h2>
         <p>
-          필수 40개 항목을 답한 뒤 아래 <strong>AI 초안 만들기</strong>를 누르세요. 별도 표시가 없으면 복수 선택이 가능합니다.
+          41개 항목을 모두 답한 뒤 아래 <strong>AI 초안 만들기</strong>를 누르세요. 별도 표시가 없으면 복수 선택이 가능합니다.
           해당되는 보기가 없으면 <strong>직접 입력</strong>을 쓰고, 경험하지 않았거나 아직 정하지 못한 내용은 ‘없음·미정’ 보기를 골라주세요.
         </p>
         <div className="wb-howto-actions">
@@ -993,7 +992,7 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
         </div>
         <p className="wb-hint">
           답하신 내용만으로 초안을 쓰고, 없는 이야기는 지어내지 않습니다.
-          필수 40개 항목을 모두 답해야 만들 수 있으며 보통 20초 안팎이 걸립니다. 완성된 글은 반드시 본인이 읽고 고쳐주세요.
+          41개 항목을 모두 답해야 만들 수 있으며 보통 20초 안팎이 걸립니다. 완성된 글은 반드시 본인이 읽고 고쳐주세요.
         </p>
         {notice && !result ? <p className="wb-notice wb-notice-inline">{notice}</p> : null}
       </div>
