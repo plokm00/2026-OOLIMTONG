@@ -27,16 +27,29 @@ const artists = [
   { id: "heoyang", name: "허양", team: "네모", photo: "/artist-profiles/heoyang.webp" },
 ];
 
-// 팀별 대형 울림통의 원제목. 9회차 이름짓기 결과가 나오면 이 값을 바꾼다.
-const teamWorkTitles = {
-  "네모": "원제목",
-  "고리": "원제목",
-  "미로": "원제목",
+// 팀별 대형 울림통의 작품명과 뜻. 9회차 이름짓기에서 정해졌다.
+const teamWorks = {
+  "고리": {
+    title: "코아 COA",
+    note: "코가 제일 마지막에 만들어진 이 작품은 포근한 느낌을 줍니다. 영어로 core를 연상시켜, 사람에게 가장 중요한 사랑의 마음을 상징하는 듯합니다. 두 아이들이 떠오르는 대로 말하여 함께 지은 이름입니다.",
+  },
+  "네모": {
+    title: "Co-Ark (합주, 合舟)",
+    note: "피라미드와 같은 이국의 유적을 떠올리게 하는 이 작품은 모두의 소리를 조화롭게 모으는 공간입니다. 팀원 모두가 신앙이 깊으셨고, 네모난 배, 방주로부터 발상을 시작하여 이러한 뜻에 도달했습니다.",
+  },
+  "미로": {
+    title: "나리움 NARIUM",
+    note: "한 아이는 우리가 한 일을 “나르고, 붙이고의 반복”이라고 말합니다. ‘나름’과 ‘이음’을 합쳐서 말을 만드니, 아직 이름 붙지 않은 세계의 광물이나 고대의 영험한 자연물의 이름처럼 들립니다.",
+  },
 };
 
-function teamLine(team) {
-  const first = team.split("·")[0].trim();
-  return `팀 ${team} “${teamWorkTitles[first] ?? "원제목"}”`;
+// 조영범 작가처럼 두 팀에 참여한 경우 두 작품을 모두 싣는다.
+function worksOf(team) {
+  return team
+    .split("·")
+    .map((name) => name.trim())
+    .filter((name) => teamWorks[name])
+    .map((name) => ({ team: name, ...teamWorks[name] }));
 }
 
 const introPrompts = [
@@ -224,7 +237,13 @@ export default function ArtistNotesPage() {
         .profile-photo img { display:block; width:100%; height:100%; object-fit:cover; }
         .artist-note-label { margin:0 0 12px; color:var(--an-accent); font-size:11px; font-weight:700; letter-spacing:.14em; }
         .artist-note-name { margin:0; font-family:'IBM Plex Sans KR', sans-serif; font-size:clamp(38px,5vw,62px); line-height:1.15; letter-spacing:-.05em; }
-        .artist-note-team { margin:12px 0 0; color:var(--an-dim); font-size:14px; }
+        .artist-note-main { display:flex; flex-wrap:wrap; align-items:flex-end; gap:24px 44px; }
+        .artist-note-id { flex:0 0 auto; }
+        .artist-note-works { flex:1 1 330px; min-width:0; }
+        .artist-note-work + .artist-note-work { margin-top:18px; }
+        .artist-note-team { margin:0 0 6px; font-family:'IBM Plex Sans KR', sans-serif; font-size:15px; font-weight:600; letter-spacing:-.01em; }
+        .artist-note-team-name { margin-right:8px; color:var(--an-dim); font-size:12px; font-weight:400; letter-spacing:0; }
+        .artist-note-work-note { margin:0; color:var(--an-dim); font-size:13px; line-height:1.75; }
 
         .note-howto { margin-top:30px; padding:24px 26px; background:var(--an-bg2); }
         .note-howto h2 { margin:0 0 12px; font-family:'IBM Plex Sans KR', sans-serif; font-size:19px; }
@@ -319,10 +338,22 @@ export default function ArtistNotesPage() {
               <span>프로필 사진<br />준비 중</span>
             )}
           </div>
-          <div>
-            <p className="artist-note-label">ARTIST NOTE</p>
-            <h1 className="artist-note-name">{selected.name}</h1>
-            <p className="artist-note-team">{teamLine(selected.team)}</p>
+          <div className="artist-note-main">
+            <div className="artist-note-id">
+              <p className="artist-note-label">ARTIST NOTE</p>
+              <h1 className="artist-note-name">{selected.name}</h1>
+            </div>
+            <div className="artist-note-works">
+              {worksOf(selected.team).map((work) => (
+                <div className="artist-note-work" key={work.team}>
+                  <p className="artist-note-team">
+                    <span className="artist-note-team-name">팀 {work.team}</span>
+                    〈{work.title}〉
+                  </p>
+                  <p className="artist-note-work-note">{work.note}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </header>
 

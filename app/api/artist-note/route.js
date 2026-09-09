@@ -5,7 +5,8 @@ export const maxDuration = 60;
 
 const MAX_SECTIONS = 8;
 const MAX_ITEMS = 40;
-const MAX_CHARS = 6000;
+const MAX_CHARS = 24_000;
+const EXPECTED_ITEMS = 41;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX = 5;
 
@@ -34,7 +35,7 @@ const SYSTEM_PROMPT = `당신은 원주 니닉크라프트의 협력창작 프�
 출력 형식 — 아래 두 제목만 그대로 쓰고, 각 아래에 문단을 이어 씁니다:
 
 작가 노트
-(답변의 양에 맞춰 3~5문단, 각 2~4문장. 지금의 나와 이 프로젝트에 오게 된 자리에서 시작해, 흙을 처음 만진 시간, 내 모뉴먼트, 함께 만든 대형 울림통, 그리고 지금 돌아보는 마음으로 자연스럽게 흘러가게 씁니다. 문단마다 소제목을 달지 않습니다. 자료가 적으면 억지로 분량을 늘리지 않습니다.)
+(41개 답변을 모두 반영해 4~6문단, 각 2~4문장으로 씁니다. 지금의 나와 이 프로젝트에 오게 된 자리에서 시작해, 흙을 처음 만진 시간, 내 모뉴먼트, 함께 만든 대형 울림통, 그리고 지금 돌아보는 마음으로 자연스럽게 흘러가게 씁니다. 모든 답을 한 번씩 나열하려 하지 말고, 서로 가까운 답변을 묶어 글의 흐름을 만듭니다. 문단마다 소제목을 달지 않습니다.)
 
 전시 계획
 (1~2문단. 칩에 무엇을 연결할지, 그리고 작품을 언제 어디에 어떻게 두고 왜 그 자리인지가 문장 속에 녹아들게 씁니다. 표나 항목이 아니라 계획을 이야기하듯 씁니다. 답하지 않은 내용은 추측하지 않습니다.)`;
@@ -114,7 +115,8 @@ function parseBody(body) {
     if (title && items.length) sections.push({ title, items });
   }
 
-  if (!sections.length) return null;
+  const itemCount = sections.reduce((sum, section) => sum + section.items.length, 0);
+  if (!sections.length || itemCount !== EXPECTED_ITEMS) return null;
   return { artist: { name, team }, sections };
 }
 
@@ -127,7 +129,7 @@ export async function POST(request) {
   }
 
   const contentLength = Number(request.headers.get("content-length") || 0);
-  if (contentLength > 20_000) {
+  if (contentLength > 60_000) {
     return json({ error: "payload_too_large" }, { status: 413 });
   }
 

@@ -14,8 +14,8 @@ const FORM = [
           {
             id: "who",
             type: "text",
-            label: "사는 곳과 하는 일",
-            placeholder: "예) 문막에서 니닉크라프트 공방을 운영합니다",
+            label: "사는 지역과 요즘 하는 일 (공개 가능한 범위)",
+            placeholder: "예) 원주에서 책과 관련된 일을 합니다 / 밝히고 싶지 않음",
           },
           {
             id: "motive",
@@ -31,6 +31,8 @@ const FORM = [
               "은퇴 후 할 일을 찾다가",
               "우연히",
               "작가님이 궁금해서",
+              "지역에서 열리는 작업이라서",
+              "여럿이 함께 만드는 작업이 궁금해서",
             ],
           },
           {
@@ -45,6 +47,8 @@ const FORM = [
               "몸이 예전 같지 않다",
               "혼자 있는 시간이 많다",
               "조용한 시간이 필요하다",
+              "일상에 변화가 필요하다",
+              "사람들과 어울릴 시간이 필요하다",
             ],
           },
           {
@@ -57,6 +61,7 @@ const FORM = [
               "도예를 배운 적 있다",
               "손으로 만드는 일은 익숙하다",
               "그림·공예 등 다른 분야 경험",
+              "지금도 흙 작업을 하고 있다",
             ],
           },
           {
@@ -70,6 +75,7 @@ const FORM = [
               "손에 익은 감각",
               "가족에게 보여줄 것",
               "나를 위한 시간이었다는 기억",
+              "내 이야기를 표현해 본 경험",
             ],
           },
         ],
@@ -81,7 +87,7 @@ const FORM = [
           {
             id: "firstTouch",
             type: "chips",
-            label: "처음 만져본 흙은…",
+            label: "이 작업에서 처음 만진 흙은…",
             options: [
               "차가웠다",
               "축축했다",
@@ -92,6 +98,8 @@ const FORM = [
               "낯설었다",
               "편안했다",
               "어릴 때가 떠올랐다",
+              "거칠었다",
+              "흙냄새가 인상적이었다",
             ],
           },
           {
@@ -105,6 +113,7 @@ const FORM = [
               "살아 있는 것 같아서",
               "누구나 만질 수 있어서",
               "굽지 않아 언젠가 사라져서",
+              "여럿의 손이 한 형태로 이어져서",
             ],
           },
           {
@@ -118,12 +127,14 @@ const FORM = [
               "동굴 같은 공간",
               "가슴속 울림",
               "다른 세상으로 가는 통로",
+              "사람 사이에 번지는 소리",
             ],
           },
           {
             id: "drawingChange",
             type: "chips",
             label: "완성된 모뉴먼트는 처음 드로잉에 비해…",
+            exclusiveOptions: ["처음 드로잉이 잘 기억나지 않는다"],
             options: [
               "거의 그대로다",
               "더 단순해졌다",
@@ -131,6 +142,9 @@ const FORM = [
               "완전히 달라졌다",
               "흙이 형태를 정해줬다",
               "만들면서 계속 바뀌었다",
+              "더 복잡해졌다",
+              "더 작아졌다",
+              "처음 드로잉이 잘 기억나지 않는다",
             ],
           },
         ],
@@ -139,8 +153,8 @@ const FORM = [
         title: "나의 모뉴먼트",
         source: "2–3 · 10회차",
         fields: [
-          { id: "workName", type: "text", label: "내 모뉴먼트의 이름", placeholder: "예) 숨자리" },
-          { id: "workMeaning", type: "text", label: "이름에 담은 뜻", placeholder: "예) 숨 돌리는 자리라는 뜻" },
+          { id: "workName", type: "text", label: "내 모뉴먼트의 이름", placeholder: "예) 숨자리 / 아직 이름 없음" },
+          { id: "workMeaning", type: "textarea", label: "이름에 담은 뜻", placeholder: "예) 숨 돌리는 자리라는 뜻 / 아직 정하지 못함" },
           {
             id: "strange",
             type: "chips",
@@ -151,26 +165,32 @@ const FORM = [
               "갈라진 자국을 봤을 때",
               "마르는 속도가 빨랐을 때",
               "생각과 다른 형태가 나왔을 때",
-              "손끝에 힘이 들어갈 때",
+              "손끝의 힘을 조절하기 어려울 때",
               "무너질까 조마조마할 때",
+              "특별히 난감한 순간은 없었다",
             ],
           },
           {
             id: "nfcSpot",
             type: "chips",
             label: "NFC 칩을 심은 자리",
-            options: ["입구 옆", "몸통 한가운데", "뒤쪽", "바닥 가까이", "창 옆", "지붕 아래"],
+            single: true,
+            options: ["입구 옆", "몸통 한가운데", "뒤쪽", "바닥 가까이", "창 옆", "지붕 아래", "아직 심지 않았다", "기억나지 않는다"],
           },
           {
             id: "nfcWhy",
             type: "chips",
-            label: "그 자리를 고른 이유는…",
+            label: "그 자리를 고른 이유 또는 아직 정하지 못한 까닭은…",
+            exclusiveOptions: ["아직 자리를 정하지 못했다"],
             options: [
               "손이 닿기 쉬워서",
               "눈에 잘 안 띄게 하고 싶어서",
               "심장 자리 같아서",
               "표면이 평평해서",
               "찾는 재미가 있으라고",
+              "작가와 상의해 정해서",
+              "작품 구조상 가능한 자리라서",
+              "아직 자리를 정하지 못했다",
             ],
           },
           {
@@ -181,8 +201,11 @@ const FORM = [
               "손자국을 그대로 남겼다",
               "매끈하게 다듬었다",
               "반은 남기고 반은 다듬었다",
-              "기름을 먹이니 색이 깊어졌다",
+              "기름을 발라 색을 깊게 했다",
               "물감으로 조금 발색했다",
+              "갈라짐과 거친 표면을 그대로 살렸다",
+              "마감하지 않고 흙 그대로 두었다",
+              "아직 마무리 전이다",
             ],
           },
         ],
@@ -203,18 +226,21 @@ const FORM = [
               "조금 서운했다",
               "마음이 편안해졌다",
               "책임감이 생겼다",
+              "처음에는 조금 어색했다",
+              "별다른 느낌은 없었다",
             ],
           },
           {
             id: "favoriteWork",
             type: "chips",
             label: "나에게 편했던 작업은…",
-            options: ["반죽하기", "타래 밀기", "타래 쌓기", "이음새 메우기", "돌로 다지기", "정리·보관", "이야기 나누기"],
+            options: ["반죽하기", "타래 밀기", "타래 쌓기", "이음새 메우기", "돌로 다지기", "정리·보관", "이야기 나누기", "형태를 바라보고 기다리기", "아직 잘 모르겠다"],
           },
           {
             id: "mixOrMark",
             type: "chips",
             label: "내가 만든 부분은…",
+            single: true,
             options: ["구분되면 좋겠다", "섞이는 게 좋다", "구분은 안 되지만 내가 안다", "상관없다"],
           },
           {
@@ -228,6 +254,8 @@ const FORM = [
               "명상 같았다",
               "힘 조절이 어려웠다",
               "석회 실험이 재미있었다",
+              "손에 전해지는 진동이 기억난다",
+              "이 작업에는 참여하지 못했다",
             ],
           },
           {
@@ -243,18 +271,22 @@ const FORM = [
               "아이들이 찾아왔을 때",
               "입구를 뚫던 날",
               "완성한 날",
+              "서로의 작업을 도와주던 순간",
+              "아직 하나를 고르기 어렵다",
             ],
           },
           {
             id: "teamName",
             type: "chips",
             label: "우리 팀 울림통의 이름을 지을 때…",
+            single: true,
             options: [
               "금방 정해졌다",
               "오래 논의해서 정했다",
               "누군가 제안한 말이 그대로 됐다",
               "여러 후보 중에 골랐다",
-              "아직 잘 기억나지 않는다",
+              "아직 이름을 정하지 않았다",
+              "어떻게 정했는지 잘 기억나지 않는다",
             ],
           },
         ],
@@ -267,7 +299,8 @@ const FORM = [
             id: "hard",
             type: "chips",
             label: "가장 어려웠던 것은…",
-            options: ["체력", "시간 내기", "흙의 성질", "높이 쌓기", "다 같이 정하기", "기다리는 일", "특별히 없었다"],
+            exclusiveOptions: ["특별히 없었다"],
+            options: ["체력", "시간 내기", "흙의 성질", "높이 쌓기", "다 같이 정하기", "기다리는 일", "내 생각을 말로 꺼내기", "특별히 없었다"],
           },
           {
             id: "joy",
@@ -280,6 +313,7 @@ const FORM = [
               "새참 먹던 시간",
               "완성한 날",
               "이름을 짓던 날",
+              "서로의 작업을 도와줄 때",
             ],
           },
           {
@@ -291,8 +325,10 @@ const FORM = [
               "내 작품이 혼자 서 있는 걸 봤을 때",
               "남에게 설명해줄 때",
               "처음 흙을 만졌을 때",
+              "작품을 전시할 자리를 상상했을 때",
               "아직 잘 모르겠다",
             ],
+            exclusiveOptions: ["아직 잘 모르겠다"],
           },
           {
             id: "returnToEarth",
@@ -305,9 +341,10 @@ const FORM = [
               "다시 만들면 된다",
               "사람도 그렇다는 생각이 든다",
               "생각해본 적 없다",
+              "변해 가는 모습을 지켜보고 싶다",
             ],
           },
-          { id: "freeWord", type: "text", label: "그밖에 남기고 싶은 말", placeholder: "마음을 충분히 표현해주세요." },
+          { id: "freeWord", type: "textarea", label: "그밖에 남기고 싶은 말", placeholder: "없다면 ‘없음’이라고 적어주세요." },
         ],
       },
     ],
@@ -335,13 +372,17 @@ const FORM = [
               "이 작가 노트 페이지",
               "전시 안내 페이지",
               "설치한 장소 이야기",
+              "관람객이 감상을 남기는 페이지",
+              "아직 정하지 못했다",
             ],
+            exclusiveOptions: ["아직 정하지 못했다"],
           },
           {
             id: "nfcAssets",
             type: "chips",
             label: "자료 준비 상황",
-            options: ["작업 중 사진", "완성 사진", "영상", "녹음 파일", "손으로 쓴 글", "아직 없다 (도움 필요)"],
+            options: ["작업 중 사진", "완성 사진", "영상", "녹음 파일", "손으로 쓴 글", "가지고 있는 자료를 확인해 봐야 한다", "아직 없다 (도움 필요)"],
+            exclusiveOptions: ["아직 없다 (도움 필요)"],
           },
           {
             id: "nfcNeed",
@@ -353,10 +394,13 @@ const FORM = [
               "글로 옮기는 게 어렵다",
               "시간이 부족하다",
               "작가님 도움이 필요하다",
+              "영상 편집이 어렵다",
+              "저작권·초상권 확인이 필요하다",
               "특별히 어려운 점 없다",
             ],
+            exclusiveOptions: ["특별히 어려운 점 없다"],
           },
-          { id: "nfcNote", type: "text", label: "기타 내용", placeholder: "자유롭게" },
+          { id: "nfcNote", type: "textarea", label: "NFC 콘텐츠에 더 바라는 점", placeholder: "없다면 ‘없음’이라고 적어주세요." },
         ],
       },
       {
@@ -368,13 +412,15 @@ const FORM = [
             type: "chips",
             label: "설치 기간은…",
             note: "기본값 — 2026. 11. 21.(토) ~ 12. 13.(일)",
-            options: ["전시 기간과 동일", "조금 일찍 시작", "전시 후에도 계속", "주말에만", "아직 미정"],
+            single: true,
+            options: ["전시 기간과 동일", "전시보다 일찍 시작해 기간 끝까지", "전시 이후에도 계속", "특정 날짜·주말에만", "아직 미정"],
           },
           {
             id: "where",
             type: "chips",
             label: "설치할 곳은…",
             note: "사람들과 소통할 수 있는 자리여야 합니다.",
+            single: true,
             options: [
               "집 마당",
               "거실 창가",
@@ -388,9 +434,12 @@ const FORM = [
               "텃밭 어귀",
               "아파트 화단",
               "마을회관",
+              "도서관·책방",
+              "복지관·문화공간",
+              "아직 미정",
             ],
           },
-          { id: "whereDetail", type: "text", label: "구체적인 자리와 설치 방법", placeholder: "예) 공방 입구, 길에서 바로 보이는 자리" },
+          { id: "whereDetail", type: "textarea", label: "구체적인 위치와 그곳의 환경", placeholder: "예) 공방 입구 안쪽, 길에서 보이고 비를 피할 수 있으며 장소 사용 허락을 받은 자리" },
         ],
       },
       {
@@ -401,19 +450,22 @@ const FORM = [
             id: "whatWith",
             type: "chips",
             label: "작품과 함께 둘 것은…",
-            options: ["나무 좌대", "돌 받침", "작품 설명 카드", "NFC 안내문", "조명", "특별히 없음"],
+            options: ["나무 좌대", "돌 받침", "작품 설명 카드", "NFC 안내문", "QR 코드 안내", "고정 장치", "비·바람을 막는 덮개", "조명", "특별히 없음"],
+            exclusiveOptions: ["특별히 없음"],
           },
           {
             id: "installWho",
             type: "chips",
             label: "설치하고 돌볼 사람은…",
-            options: ["나 혼자", "가족과 함께", "직장 동료와", "이웃과", "작가님 도움이 필요하다"],
+            options: ["나 혼자", "가족과 함께", "직장 동료와", "이웃과", "장소 관리자와", "작가님 도움이 필요하다", "아직 정하지 못했다"],
+            exclusiveOptions: ["아직 정하지 못했다"],
           },
           {
             id: "forWhom",
             type: "chips",
             label: "이 작품을 만났으면 하는 사람은…",
-            options: ["동네 사람들", "우리 손님들", "아이들", "지나가는 누구든", "가족", "같이 작업한 분들"],
+            options: ["동네 사람들", "우리 손님들", "아이들", "지나가는 누구든", "가족", "같이 작업한 분들", "특정 대상을 정하지 않았다"],
+            exclusiveOptions: ["특정 대상을 정하지 않았다"],
           },
         ],
       },
@@ -432,23 +484,27 @@ const FORM = [
               "주말에만",
               "실내에 계속",
               "날씨 보고 조절",
+              "행사 시간에만",
+              "보호 케이스 안에",
+              "아직 미정",
             ],
+            exclusiveOptions: ["아직 미정"],
           },
           {
             id: "howEvent",
             type: "chips",
-            label: "홍보 방식",
+            label: "관람객 안내·참여 방식",
             options: [
               "설명 카드 붙이기",
               "‘휴대폰을 대보세요’ 안내문",
-              "칩을 찾은 분께 스티커",
-              "음료 할인 등 작은 혜택",
               "방명록 두기",
-              "SNS에 위치 공개",
+              "공개 가능한 범위에서 SNS에 위치 안내",
               "여러 작품 돌아보기 지도",
+              "작은 안내 카드 나누기",
+              "별도 홍보 없이 자연스럽게 만나기",
             ],
           },
-          { id: "howDetail", type: "text", label: "운영 방식", placeholder: "예) 매일 10시~19시" },
+          { id: "howDetail", type: "textarea", label: "공개 시간과 비·분실 시 관리 방법", placeholder: "예) 매일 10시~19시에 내놓고, 비 예보가 있거나 문을 닫을 때는 실내로 옮깁니다." },
         ],
       },
       {
@@ -459,6 +515,7 @@ const FORM = [
             id: "why",
             type: "chips",
             label: "그 자리에 두는 것은…",
+            exclusiveOptions: ["아직 정하지 못했다"],
             options: [
               "사람들과 나누고 싶어서",
               "나에게 특별한 자리라서",
@@ -468,16 +525,16 @@ const FORM = [
               "내 작업을 기록하고 싶어서",
               "매일 볼 수 있어서",
               "누군가 쉬어 가라고",
+              "그 장소의 기억을 남기고 싶어서",
+              "아직 정하지 못했다",
             ],
           },
-          { id: "whyDetail", type: "text", label: "한 문장으로 표현한 작업", placeholder: "예) 지나가면서도 들어오지 못하던 분들에게 먼저 말을 걸고 싶어서요" },
+          { id: "whyDetail", type: "textarea", label: "왜 이곳인지 한 문장으로", placeholder: "예) 지나가면서도 들어오지 못하던 분들에게 문 앞에서 먼저 말을 걸고 싶어서요. / 아직 미정" },
         ],
       },
     ],
   },
 ];
-
-const MIN_ANSWERS = 10;
 
 // 실제 작가의 답변과 섞이지 않도록, 기능 확인용 예시는 완전히 가상의 인물 설정으로 둔다.
 const SAMPLE_ANSWERS = {
@@ -495,7 +552,7 @@ const SAMPLE_ANSWERS = {
   strange: ["타래가 자꾸 끊어질 때", "생각과 다른 형태가 나왔을 때"],
   nfcSpot: ["입구 옆"],
   nfcWhy: ["손이 닿기 쉬워서", "찾는 재미가 있으라고"],
-  finish: ["반은 남기고 반은 다듬었다", "기름을 먹이니 색이 깊어졌다"],
+  finish: ["반은 남기고 반은 다듬었다", "기름을 발라 색을 깊게 했다"],
   connect: ["신기했다", "책임감이 생겼다"],
   favoriteWork: ["타래 밀기", "이야기 나누기"],
   mixOrMark: ["섞이는 게 좋다"],
@@ -596,21 +653,39 @@ export default function ArtistNoteWorkbench({ artist }) {
   const [notice, setNotice] = useState("");
   const [copied, setCopied] = useState(false);
   const [aiConsent, setAiConsent] = useState(false);
+  const [attempted, setAttempted] = useState(false);
 
   const sections = useMemo(() => buildSections(answers), [answers]);
   const totalCount = ALL_FIELDS.length;
-  const answeredCount = useMemo(
-    () => ALL_FIELDS.filter(({ field }) => valueOf(answers, field)).length,
+  const missingFields = useMemo(
+    () => ALL_FIELDS.filter(({ field }) => !valueOf(answers, field)),
     [answers],
   );
+  const answeredCount = totalCount - missingFields.length;
 
-  const toggleChip = (fieldId, option) => {
+  const toggleChip = (field, option) => {
     setAnswers((prev) => {
-      const current = Array.isArray(prev[fieldId]) ? prev[fieldId] : [];
-      const next = current.includes(option)
-        ? current.filter((item) => item !== option)
-        : [...current, option];
-      return { ...prev, [fieldId]: next };
+      const current = Array.isArray(prev[field.id]) ? prev[field.id] : [];
+      let next;
+
+      if (current.includes(option)) {
+        next = current.filter((item) => item !== option);
+      } else if (field.single || field.exclusiveOptions?.includes(option)) {
+        next = [option];
+      } else {
+        next = [
+          ...current.filter((item) => !field.exclusiveOptions?.includes(item)),
+          option,
+        ];
+      }
+
+      return {
+        ...prev,
+        [field.id]: next,
+        ...(field.single || field.exclusiveOptions?.includes(option)
+          ? { [`${field.id}__etc`]: "" }
+          : {}),
+      };
     });
   };
 
@@ -618,9 +693,29 @@ export default function ArtistNoteWorkbench({ artist }) {
     setAnswers((prev) => ({ ...prev, [fieldId]: value }));
   };
 
+  const setOwnText = (field, value) => {
+    setAnswers((prev) => {
+      const current = Array.isArray(prev[field.id]) ? prev[field.id] : [];
+      return {
+        ...prev,
+        [field.id]: value
+          ? field.single
+            ? []
+            : current.filter((item) => !field.exclusiveOptions?.includes(item))
+          : current,
+        [`${field.id}__etc`]: value,
+      };
+    });
+  };
+
   const compose = async () => {
-    if (answeredCount < MIN_ANSWERS) {
-      setNotice(`초안을 만들려면 최소 ${MIN_ANSWERS}개 항목에 답해주세요. 지금 ${answeredCount}개를 답했습니다.`);
+    if (missingFields.length) {
+      setAttempted(true);
+      setNotice(`아직 답하지 않은 항목이 ${missingFields.length}개 있습니다. 41개를 모두 답해야 초안을 만들 수 있습니다.`);
+      document.getElementById(`f-${missingFields[0].field.id}`)?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
       return;
     }
 
@@ -630,6 +725,7 @@ export default function ArtistNoteWorkbench({ artist }) {
     }
 
     setStatus("loading");
+    setAttempted(false);
     setNotice("");
     setCopied(false);
     setResultKind("");
@@ -675,6 +771,7 @@ export default function ArtistNoteWorkbench({ artist }) {
     setStatus("done");
     setNotice("아래 글은 화면과 문장 흐름을 확인하기 위한 가상 예시입니다. 김주원 작가의 실제 답변이 아닙니다.");
     setCopied(false);
+    setAttempted(false);
   };
 
   const copyResult = async () => {
@@ -694,6 +791,7 @@ export default function ArtistNoteWorkbench({ artist }) {
     setNotice("");
     setCopied(false);
     setAiConsent(false);
+    setAttempted(false);
   };
 
   return (
@@ -717,7 +815,11 @@ export default function ArtistNoteWorkbench({ artist }) {
         .wb-group-title span { padding:2px 8px; border-radius:2px; background:#f2e7de; color:#9a7460; font-size:11px; font-weight:400; }
 
         .wb-field { margin-top:20px; }
+        .wb-field.is-missing { margin-right:-12px; margin-left:-12px; padding:12px; border-left:3px solid #b9543c; background:#fff5f0; }
         .wb-label { display:block; margin-bottom:9px; color:var(--an-text); font-size:13.5px; font-weight:600; }
+        .wb-required { margin-left:4px; color:#b9543c; }
+        .wb-choice-note { margin-left:8px; color:var(--an-dim); font-size:11px; font-weight:400; }
+        .wb-field-warn { display:block; margin-top:8px; color:#a5412b; font-size:12px; }
         .wb-note { display:block; margin:-4px 0 9px; color:var(--an-dim); font-size:12px; }
         .wb-chips { display:flex; flex-wrap:wrap; gap:8px 7px; }
         .wb-chip { display:inline-block; padding:7px 15px; border:1px solid #f3ebe3; border-radius:16px; background:transparent; color:#b7a091; cursor:pointer; font:400 13px 'Noto Sans KR', sans-serif; line-height:1.5; transition:color .15s,border-color .15s,background .15s; }
@@ -733,6 +835,7 @@ export default function ArtistNoteWorkbench({ artist }) {
         .wb-input:focus { border-color:#d8c4b4; background:#faf4ee; outline:none; }
         .wb-input::placeholder { color:#b7a091; font-weight:400; }
         .wb-input.is-on { border-color:#eee3da; background:#f4ebe2; font-weight:500; }
+        .wb-textarea { min-height:88px; border-radius:10px; resize:vertical; }
 
         .wb-actions { margin-top:30px; padding:26px; border:1px solid var(--an-accent); background:var(--an-bg2); }
         .wb-actions-row { display:flex; flex-wrap:wrap; align-items:center; gap:14px; }
@@ -762,11 +865,11 @@ export default function ArtistNoteWorkbench({ artist }) {
       <section className="wb-howto">
         <h2>작가 노트 작성 방법</h2>
         <p>
-          마음이 가는 항목을 고르고 짧은 문장을 더한 뒤 아래 <strong>AI 초안 만들기</strong>를 누르세요. 복수 선택도 가능합니다.
-          전부 답할 필요는 없으며, 최소 {MIN_ANSWERS}개만 답하면 됩니다. 보기에 없으면 맨 뒤 <strong>직접 입력</strong>에 적어주세요.
+          41개 항목을 모두 답한 뒤 아래 <strong>AI 초안 만들기</strong>를 누르세요. 별도 표시가 없으면 복수 선택이 가능합니다.
+          해당되는 보기가 없으면 <strong>직접 입력</strong>을 쓰고, 경험하지 않았거나 아직 정하지 못한 내용은 ‘없음·미정’ 보기를 골라주세요.
         </p>
         <div className="wb-howto-actions">
-          <button type="button" className="wb-sample" onClick={loadSample}>가상 예시로 채워보기</button>
+          <button type="button" className="wb-sample" onClick={loadSample}>가상 참여자 예시로 41개 채우기</button>
           <span className="wb-sample-note">기능 확인용 예시이며, 이 작가의 실제 답변이 아닙니다.</span>
         </div>
       </section>
@@ -782,10 +885,13 @@ export default function ArtistNoteWorkbench({ artist }) {
                 <span>{group.source}</span>
               </p>
               {group.fields.map((field) => {
+                const isMissing = attempted && !valueOf(answers, field);
                 return (
-                <div className="wb-field" key={field.id}>
+                <div className={isMissing ? "wb-field is-missing" : "wb-field"} key={field.id}>
                   <label className="wb-label" htmlFor={`f-${field.id}`}>
                     {field.label}
+                    <span className="wb-required" aria-label="필수">*</span>
+                    {field.single ? <span className="wb-choice-note">하나만 선택</span> : null}
                   </label>
                   {field.note ? <span className="wb-note">{field.note}</span> : null}
                   {field.type === "chips" ? (
@@ -799,7 +905,7 @@ export default function ArtistNoteWorkbench({ artist }) {
                             type="button"
                             className={isOn ? "wb-chip is-on" : "wb-chip"}
                             aria-pressed={isOn}
-                            onClick={() => toggleChip(field.id, option)}
+                            onClick={() => toggleChip(field, option)}
                           >
                             {option}
                           </button>
@@ -814,9 +920,22 @@ export default function ArtistNoteWorkbench({ artist }) {
                         aria-label={`${field.label} 직접 입력`}
                         placeholder="직접 입력"
                         value={typeof answers[`${field.id}__etc`] === "string" ? answers[`${field.id}__etc`] : ""}
-                        onChange={(event) => setText(`${field.id}__etc`, event.target.value)}
+                        onChange={(event) => setOwnText(field, event.target.value)}
                       />
                     </div>
+                  ) : field.type === "textarea" ? (
+                    <textarea
+                      id={`f-${field.id}`}
+                      className={
+                        typeof answers[field.id] === "string" && answers[field.id].trim()
+                          ? "wb-input wb-textarea is-on"
+                          : "wb-input wb-textarea"
+                      }
+                      maxLength={300}
+                      value={typeof answers[field.id] === "string" ? answers[field.id] : ""}
+                      placeholder={field.placeholder}
+                      onChange={(event) => setText(field.id, event.target.value)}
+                    />
                   ) : (
                     <input
                       id={`f-${field.id}`}
@@ -832,6 +951,7 @@ export default function ArtistNoteWorkbench({ artist }) {
                       onChange={(event) => setText(field.id, event.target.value)}
                     />
                   )}
+                  {isMissing ? <span className="wb-field-warn">이 항목에 답해주세요.</span> : null}
                 </div>
                 );
               })}
@@ -865,7 +985,7 @@ export default function ArtistNoteWorkbench({ artist }) {
         </div>
         <p className="wb-hint">
           답하신 내용만으로 초안을 쓰고, 없는 이야기는 지어내지 않습니다.
-          최소 {MIN_ANSWERS}개 항목에 답하면 만들 수 있으며 보통 20초 안팎이 걸립니다. 완성된 글은 반드시 본인이 읽고 고쳐주세요.
+          41개 항목을 모두 답해야 만들 수 있으며 보통 20초 안팎이 걸립니다. 완성된 글은 반드시 본인이 읽고 고쳐주세요.
         </p>
         {notice && !result ? <p className="wb-notice wb-notice-inline">{notice}</p> : null}
       </div>
@@ -873,7 +993,7 @@ export default function ArtistNoteWorkbench({ artist }) {
       {result ? (
         <div className="wb-result">
           <div className="wb-result-head">
-            <strong>{resultKind === "sample" ? "가상의 작성 예시" : "작가 노트 초안"}</strong>
+            <strong>{resultKind === "sample" ? "가상 참여자 작성 예시" : "작가 노트 초안"}</strong>
             <button type="button" className="wb-copy" onClick={copyResult}>
               {copied ? "복사했습니다" : "전체 복사"}
             </button>
