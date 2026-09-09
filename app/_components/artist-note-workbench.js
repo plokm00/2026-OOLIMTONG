@@ -253,33 +253,22 @@ const FORM = [
           {
             id: "scene",
             type: "chips",
-            label: "가장 기억에 남는 장면",
-            options: [
-              "다 같이 노래 부르던 때",
-              "소리를 녹음하던 때",
-              "니닉어를 따라 하던 때",
-              "다 같이 웃던 순간",
-              "비 오던 날",
-              "아이들이 찾아왔을 때",
-              "입구를 뚫던 날",
-              "완성한 날",
-              "서로의 작업을 도와주던 순간",
-              "아직 하나를 고르기 어렵다",
-            ],
-          },
-          {
-            id: "sideEvent",
-            type: "chips",
-            label: "작업 중에 흥미로웠던 일은…",
+            label: "작업 중에 기억에 남는 흥미로웠던 일은…",
             options: [
               "간식 · 새참 시간",
-              "아이들의 놀이",
+              "아이들의 흙놀이",
+              "아이들이 찾아왔을 때",
               "자유체험 참여자들과의 만남",
-              "소리 녹음",
-              "작품에 대한 토론",
               "재료와 도구 탐색",
+              "소리 녹음",
+              "니닉어를 따라 하던 때",
+              "작품에 대한 토론",
               "작품 이름 짓기",
               "서로의 작업 구경하기",
+              "입구를 뚫던 날",
+              "비 오던 날",
+              "다 같이 웃던 순간",
+              "완성한 날",
             ],
           },
           {
@@ -566,8 +555,7 @@ const SAMPLE_ANSWERS = {
   favoriteWork: ["타래 밀기", "이야기 나누기"],
   mixOrMark: ["섞이는 게 좋다"],
   tamping: ["소리가 좋았다", "명상 같았다"],
-  scene: ["다 같이 노래 부르던 때", "다 같이 웃던 순간"],
-  sideEvent: ["간식 · 새참 시간", "자유체험 참여자들과의 만남"],
+  scene: ["간식 · 새참 시간", "자유체험 참여자들과의 만남", "다 같이 웃던 순간"],
   teamName: ["오래 논의해서 정했다"],
   hard: ["흙의 성질", "다 같이 정하기"],
   joy: ["형태가 서기 시작할 때", "사람들과 이야기할 때"],
@@ -722,7 +710,7 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
   const compose = async () => {
     if (missingFields.length) {
       setAttempted(true);
-      setNotice(`아직 답하지 않은 항목이 ${missingFields.length}개 있습니다. 43개를 모두 답해야 초안을 만들 수 있습니다.`);
+      setNotice(`아직 답하지 않은 항목이 ${missingFields.length}개 있습니다. 42개를 모두 답해야 초안을 만들 수 있습니다.`);
       document.getElementById(`f-${missingFields[0].field.id}`)?.scrollIntoView({
         behavior: "smooth",
         block: "center",
@@ -880,11 +868,11 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
       <section className="wb-howto">
         <h2>작가 노트 작성 방법</h2>
         <p>
-          43개 항목을 모두 답한 뒤 아래 <strong>AI 초안 만들기</strong>를 누르세요. 별도 표시가 없으면 복수 선택이 가능합니다.
+          42개 항목을 모두 답한 뒤 아래 <strong>AI 초안 만들기</strong>를 누르세요. 별도 표시가 없으면 복수 선택이 가능합니다.
           해당되는 보기가 없으면 <strong>직접 입력</strong>을 쓰고, 경험하지 않았거나 아직 정하지 못한 내용은 ‘없음·미정’ 보기를 골라주세요.
         </p>
         <div className="wb-howto-actions">
-          <button type="button" className="wb-sample" onClick={loadSample}>가상 참여자 예시로 43개 채우기</button>
+          <button type="button" className="wb-sample" onClick={loadSample}>가상 참여자 예시로 42개 채우기</button>
           <span className="wb-sample-note">기능 확인용 예시이며, 이 작가의 실제 답변이 아닙니다.</span>
         </div>
       </section>
@@ -1000,7 +988,7 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
         </div>
         <p className="wb-hint">
           답하신 내용만으로 초안을 쓰고, 없는 이야기는 지어내지 않습니다.
-          43개 항목을 모두 답해야 만들 수 있으며 보통 20초 안팎이 걸립니다. 완성된 글은 반드시 본인이 읽고 고쳐주세요.
+          42개 항목을 모두 답해야 만들 수 있으며 보통 20초 안팎이 걸립니다. 완성된 글은 반드시 본인이 읽고 고쳐주세요.
         </p>
         {notice && !result ? <p className="wb-notice wb-notice-inline">{notice}</p> : null}
       </div>
