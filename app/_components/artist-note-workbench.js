@@ -333,7 +333,7 @@ const FORM = [
               "변해 가는 모습을 지켜보고 싶다",
             ],
           },
-          { id: "nextTry", type: "textarea", label: "다음에 해보고 싶은 것", placeholder: "오늘의 작업에서 이어지는, 다음에 해보고 싶은 것을 한 가지 적어주세요." },
+          { id: "nextTry", type: "textarea", label: "다음에 해보고 싶은 것", placeholder: "예) 우리 집 마당에 작은 울림통을 하나 만들어보고 싶습니다. / 이번에 못 해본 색 입히기를 해보고 싶습니다." },
           { id: "freeWord", type: "textarea", label: "그밖에 남기고 싶은 말", placeholder: "없다면 ‘없음’이라고 적어주세요." },
         ],
       },
