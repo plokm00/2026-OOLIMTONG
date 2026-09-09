@@ -581,8 +581,9 @@ export default function ArtistNoteWorkbench({ artist }) {
         .wb-section { margin-top:26px; padding:46px 48px 44px; border:1px solid var(--wb-paper-line); background:var(--wb-paper); box-shadow:0 2px 12px rgba(38,20,16,.05); }
         .wb-section h2 { margin:0 0 4px; font-family:'IBM Plex Sans KR', sans-serif; font-size:29px; line-height:1.25; letter-spacing:-.02em; }
 
-        .wb-group { margin-top:36px; }
-        .wb-group-title { margin:0 0 4px; font-family:'IBM Plex Sans KR', sans-serif; font-size:17px; font-weight:600; }
+        .wb-group { margin-top:42px; }
+        .wb-group-title { position:relative; margin:0 0 6px; padding-left:18px; font-family:'IBM Plex Sans KR', sans-serif; font-size:17.5px; font-weight:600; color:var(--an-accent2); letter-spacing:-.01em; }
+        .wb-group-title::before { content:''; position:absolute; top:.66em; left:0; width:9px; height:9px; background:var(--an-accent); }
         .wb-group-title span { margin-left:9px; padding:2px 8px; border-radius:2px; background:#f2e7de; color:#9a7460; font-size:11px; font-weight:400; vertical-align:middle; }
 
         .wb-field { margin-top:20px; }

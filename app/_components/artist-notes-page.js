@@ -237,7 +237,8 @@ export default function ArtistNotesPage() {
         .note-section h2 { margin:0 0 14px; font-family:'IBM Plex Sans KR', sans-serif; font-size:29px; line-height:1.25; letter-spacing:-.02em; }
         .note-lead { max-width:720px; margin:0 0 24px; color:var(--an-dim); font-size:15px; line-height:1.7; }
         .note-lead strong { color:var(--an-text); font-weight:600; }
-        .note-sub { margin:30px 0 10px; font-family:'IBM Plex Sans KR', sans-serif; font-size:15px; font-weight:600; letter-spacing:.02em; }
+        .note-sub { position:relative; margin:32px 0 10px; padding-left:17px; font-family:'IBM Plex Sans KR', sans-serif; font-size:16px; font-weight:600; color:var(--an-accent2); letter-spacing:-.01em; }
+        .note-sub::before { content:''; position:absolute; top:.62em; left:0; width:8px; height:8px; background:var(--an-accent); }
         .note-sub .note-src { margin-left:9px; padding:2px 8px; border-radius:2px; background:#f0e4da; color:#9a7460; font-size:11px; font-weight:400; letter-spacing:.02em; vertical-align:middle; }
 
         .prompt-list { margin:0; padding:0; list-style:none; counter-reset:prompt; }
