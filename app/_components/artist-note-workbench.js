@@ -390,7 +390,7 @@ const FORM = [
             ],
             exclusiveOptions: ["특별히 어려운 점 없다"],
           },
-          { id: "nfcNote", type: "textarea", label: "NFC 콘텐츠에 더 바라는 점", placeholder: "예) 휴대폰을 대면 제 목소리로 작품 이야기가 먼저 들렸으면 좋겠습니다." },
+          { id: "nfcNote", type: "textarea", label: "NFC 콘텐츠에 더 바라는 점", placeholder: "예) 휴대폰을 대면 제 목소리로 작품 이야기가 먼저 들렸으면 좋겠습니다. / 세 팀의 작품을 한 번에 볼 수 있으면 좋겠습니다." },
         ],
       },
       {
