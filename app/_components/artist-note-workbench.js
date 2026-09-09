@@ -645,7 +645,7 @@ function composeLocally(artist, sections) {
   return lines.join("\n").trim();
 }
 
-export default function ArtistNoteWorkbench({ artist }) {
+export default function ArtistNoteWorkbench({ artist, works = [] }) {
   const [answers, setAnswers] = useState({});
   const [status, setStatus] = useState("idle");
   const [result, setResult] = useState("");
@@ -734,7 +734,11 @@ export default function ArtistNoteWorkbench({ artist }) {
       const response = await fetch("/api/artist-note", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ artist: { name: artist.name, team: artist.team }, sections }),
+        body: JSON.stringify({
+          artist: { name: artist.name, team: artist.team },
+          works: works.map((work) => ({ team: work.team, title: work.title, note: work.note })),
+          sections,
+        }),
       });
 
       if (response.ok) {

@@ -39,7 +39,7 @@ const teamWorks = {
   },
   "미로": {
     title: "나리움 NARIUM",
-    note: "한 아이는 우리가 한 일을 “나르고, 붙이고의 반복”이라고 말합니다. ‘나름’과 ‘이음’을 합쳐서 말을 만드니, 아직 이름 붙지 않은 세계의 광물이나 고대의 영험한 자연물의 이름처럼 들립니다.",
+    note: "한 아이는 우리가 한 일을 “나르고, 붙이고의 반복”이라고 말합니다. AI의 도움으로 ‘나름’과 ‘이음’을 합쳐서 말을 만드니, 아직 발견되지 않은 세계의 광물이나 고대의 영험한 자연물의 이름처럼 들립니다.",
   },
 };
 
@@ -358,7 +358,7 @@ export default function ArtistNotesPage() {
         </header>
 
         {WORKBENCH_ARTIST_IDS.has(selected.id) ? (
-          <ArtistNoteWorkbench artist={selected} />
+          <ArtistNoteWorkbench artist={selected} works={worksOf(selected.team)} />
         ) : (
           <>
         <section className="note-howto" aria-label="작성 안내">

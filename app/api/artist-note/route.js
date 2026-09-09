@@ -7,6 +7,7 @@ const MAX_SECTIONS = 8;
 const MAX_ITEMS = 40;
 const MAX_CHARS = 24_000;
 const EXPECTED_ITEMS = 41;
+const MAX_WORKS = 3;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX = 5;
 
@@ -26,6 +27,11 @@ const SYSTEM_PROMPT = `당신은 원주 니닉크라프트의 협력창작 프�
 - 고른 것들 사이의 연결을 찾아 한 걸음 더 들어가도 됩니다. 왜 그렇게 느꼈을지, 그 선택들이 함께 무엇을 말하는지 써도 좋습니다.
 - 다만 일어나지 않은 사건, 없는 사람, 주어지지 않은 이름·날짜·장소는 지어내지 않습니다. 해석은 되고 창작은 안 됩니다.
 - 고르지 않은 항목은 없는 것으로 두고, 빈 자리를 언급하지 않습니다.
+
+팀 울림통의 작품명:
+- 함께 만든 대형 울림통에는 이미 정해진 작품명이 있고, 아래 정보로 함께 드립니다. 글에서 그 이름을 그대로 쓰십시오.
+- 딸린 뜻풀이는 배경 정보일 뿐입니다. 그 문장을 옮겨 적거나 요약해 붙이지 마십시오. 작품명 자체가 작가 본인의 말은 아니므로, 이름을 부를 때만 쓰고 그 해설은 작가의 소감으로 둔갑시키지 않습니다.
+- 두 팀에 참여한 작가라면 두 작품을 모두 자연스럽게 언급합니다.
 
 문체:
 - 1인칭 '저'를 쓰고 존댓말(–습니다/–했습니다)로 씁니다.
@@ -72,13 +78,19 @@ function sanitize(value, limit) {
   return value.replace(/\s+/g, " ").trim().slice(0, limit);
 }
 
-function buildUserMessage(artist, sections) {
-  const lines = [
-    `작가: ${artist.name} (참여 팀 · ${artist.team})`,
-    "",
-    "아래는 이 작가가 체크한 키워드와 단답입니다.",
-    "",
-  ];
+function buildUserMessage(artist, works, sections) {
+  const lines = [`작가: ${artist.name} (참여 팀 · ${artist.team})`, ""];
+
+  if (works.length) {
+    lines.push("함께 만든 대형 울림통의 작품명 (정해진 이름 — 글에서 그대로 쓸 것):");
+    for (const work of works) {
+      lines.push(`- 팀 ${work.team}: 〈${work.title}〉`);
+      if (work.note) lines.push(`  (배경 참고, 옮겨 적지 말 것: ${work.note})`);
+    }
+    lines.push("");
+  }
+
+  lines.push("아래는 이 작가가 체크한 키워드와 단답입니다.", "");
 
   for (const section of sections) {
     lines.push(`[${section.title}]`);
@@ -97,6 +109,16 @@ function parseBody(body) {
   const name = sanitize(body?.artist?.name, 40);
   const team = sanitize(body?.artist?.team, 40);
   if (!name) return null;
+
+  const rawWorks = Array.isArray(body.works) ? body.works.slice(0, MAX_WORKS) : [];
+  const works = [];
+
+  for (const rawWork of rawWorks) {
+    const workTeam = sanitize(rawWork?.team, 20);
+    const title = sanitize(rawWork?.title, 60);
+    const note = sanitize(rawWork?.note, 400);
+    if (workTeam && title) works.push({ team: workTeam, title, note });
+  }
 
   const rawSections = Array.isArray(body.sections) ? body.sections.slice(0, MAX_SECTIONS) : [];
   const sections = [];
@@ -117,7 +139,7 @@ function parseBody(body) {
 
   const itemCount = sections.reduce((sum, section) => sum + section.items.length, 0);
   if (!sections.length || itemCount !== EXPECTED_ITEMS) return null;
-  return { artist: { name, team }, sections };
+  return { artist: { name, team }, works, sections };
 }
 
 export async function POST(request) {
@@ -164,7 +186,7 @@ export async function POST(request) {
       max_tokens: 3500,
       output_config: { effort: "low" },
       system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: buildUserMessage(parsed.artist, parsed.sections) }],
+      messages: [{ role: "user", content: buildUserMessage(parsed.artist, parsed.works, parsed.sections) }],
     });
 
     if (response.stop_reason === "refusal") {
