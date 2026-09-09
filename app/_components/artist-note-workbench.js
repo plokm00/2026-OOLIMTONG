@@ -123,7 +123,7 @@ const FORM = [
           {
             id: "drawingChange",
             type: "chips",
-            label: "처음 드로잉과 완성된 모습",
+            label: "완성된 모뉴먼트는 처음 드로잉에 비해…",
             options: [
               "거의 그대로다",
               "더 단순해졌다",
@@ -454,10 +454,18 @@ const FORM = [
   },
 ];
 
-function valueOf(answers, field) {
-  const value = answers[field.id];
-  if (field.type === "chips") return Array.isArray(value) ? value.join(", ") : "";
+function textAnswer(answers, key) {
+  const value = answers[key];
   return typeof value === "string" ? value.trim() : "";
+}
+
+function valueOf(answers, field) {
+  if (field.type === "chips") {
+    const picked = Array.isArray(answers[field.id]) ? answers[field.id] : [];
+    const own = textAnswer(answers, `${field.id}__etc`);
+    return [...picked, ...(own ? [own] : [])].join(", ");
+  }
+  return textAnswer(answers, field.id);
 }
 
 function buildSections(answers) {
@@ -584,6 +592,11 @@ export default function ArtistNoteWorkbench({ artist }) {
         .wb-chip { display:inline-block; padding:7px 15px; border:1px solid #f3ebe3; border-radius:16px; background:transparent; color:#b7a091; cursor:pointer; font:400 13px 'Noto Sans KR', sans-serif; line-height:1.5; transition:color .15s,border-color .15s,background .15s; }
         .wb-chip:hover { border-color:#e6d9cd; background:#faf4ee; color:var(--an-text); }
         .wb-chip.is-on { border-color:#eee3da; background:#f4ebe2; color:#261410; font-weight:500; }
+        .wb-chip-etc { width:158px; padding:7px 15px; border:1px solid #f3ebe3; border-radius:16px; background:transparent; color:#261410; font:400 13px 'Noto Sans KR', sans-serif; line-height:1.5; transition:color .15s,border-color .15s,background .15s; }
+        .wb-chip-etc::placeholder { color:#b7a091; }
+        .wb-chip-etc:hover { border-color:#e6d9cd; background:#faf4ee; }
+        .wb-chip-etc:focus { border-color:#d8c4b4; background:#faf4ee; outline:none; }
+        .wb-chip-etc.is-on { border-color:#eee3da; background:#f4ebe2; font-weight:500; }
         .wb-input { width:100%; max-width:520px; padding:7px 15px; border:1px solid #f3ebe3; border-radius:16px; background:transparent; color:#261410; font:400 13px 'Noto Sans KR', sans-serif; line-height:1.5; transition:color .15s,border-color .15s,background .15s; }
         .wb-input:hover { border-color:#e6d9cd; }
         .wb-input:focus { border-color:#d8c4b4; background:#faf4ee; outline:none; }
@@ -651,6 +664,17 @@ export default function ArtistNoteWorkbench({ artist }) {
                           </button>
                         );
                       })}
+                      <input
+                        className={
+                          textAnswer(answers, `${field.id}__etc`) ? "wb-chip-etc is-on" : "wb-chip-etc"
+                        }
+                        type="text"
+                        maxLength={60}
+                        aria-label={`${field.label} 직접 입력`}
+                        placeholder="직접 입력"
+                        value={typeof answers[`${field.id}__etc`] === "string" ? answers[`${field.id}__etc`] : ""}
+                        onChange={(event) => setText(`${field.id}__etc`, event.target.value)}
+                      />
                     </div>
                   ) : (
                     <input
