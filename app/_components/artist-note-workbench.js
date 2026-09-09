@@ -486,6 +486,8 @@ const FORM = [
             type: "chips",
             label: "작품을 두는 방식은…",
             options: [
+              "실내",
+              "실외",
               "기간 내내 상시 배치",
               "아침에 내놓고 저녁에 수거",
               "영업시간에만 밖에",
@@ -512,7 +514,7 @@ const FORM = [
               "별도 홍보 없이 자연스럽게 만나기",
             ],
           },
-          { id: "howDetail", type: "textarea", label: "공개 시간과 비·분실 시 관리 방법", placeholder: "예) 매일 10시~19시에 내놓고, 비 예보가 있거나 문을 닫을 때는 실내로 옮깁니다." },
+          { id: "howDetail", type: "textarea", label: "운영·관리 방법", placeholder: "예) 매일 10시~19시에 내놓고, 비 예보가 있거나 문을 닫을 때는 실내로 옮깁니다." },
         ],
       },
       {
