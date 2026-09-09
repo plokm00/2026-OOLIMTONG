@@ -409,7 +409,6 @@ const FORM = [
             type: "chips",
             label: "설치할 곳은…",
             note: "사람들과 소통할 수 있는 자리여야 합니다.",
-            single: true,
             options: [
               "집 마당",
               "거실 창가",
