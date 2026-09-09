@@ -235,10 +235,9 @@ export default function ArtistNotesPage() {
         .profile-photo span { display:block; padding:12px; }
         .profile-photo.has-photo { border:1px solid var(--an-line); }
         .profile-photo img { display:block; width:100%; height:100%; object-fit:cover; }
-        .artist-note-label { margin:0 0 12px; color:var(--an-accent); font-size:11px; font-weight:700; letter-spacing:.14em; }
-        .artist-note-name { margin:0; font-family:'IBM Plex Sans KR', sans-serif; font-size:clamp(38px,5vw,62px); line-height:1.15; letter-spacing:-.05em; }
+        /* 이름이 두 글자여도(허양·이안) 세 글자 폭을 잡아, 오른쪽 작품명 줄이 흔들리지 않게 한다. */
+        .artist-note-name { flex:0 0 auto; min-width:2.9em; margin:0; font-family:'IBM Plex Sans KR', sans-serif; font-size:clamp(38px,5vw,62px); line-height:1.15; letter-spacing:-.05em; }
         .artist-note-main { display:flex; flex-wrap:wrap; align-items:flex-end; gap:24px 44px; }
-        .artist-note-id { flex:0 0 auto; }
         .artist-note-works { flex:1 1 330px; min-width:0; }
         .artist-note-work + .artist-note-work { margin-top:18px; }
         .artist-note-team { margin:0 0 6px; font-family:'IBM Plex Sans KR', sans-serif; font-size:15px; font-weight:600; letter-spacing:-.01em; }
@@ -339,10 +338,7 @@ export default function ArtistNotesPage() {
             )}
           </div>
           <div className="artist-note-main">
-            <div className="artist-note-id">
-              <p className="artist-note-label">ARTIST NOTE</p>
-              <h1 className="artist-note-name">{selected.name}</h1>
-            </div>
+            <h1 className="artist-note-name">{selected.name}</h1>
             <div className="artist-note-works">
               {worksOf(selected.team).map((work) => (
                 <div className="artist-note-work" key={work.team}>
