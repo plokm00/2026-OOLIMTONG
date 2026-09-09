@@ -276,7 +276,7 @@ const FORM = [
             id: "teamOpinion",
             type: "textarea",
             label: "울림통 작업 전반에 대한 의견",
-            placeholder: "좋았던 점, 아쉬웠던 점, 바라는 점 무엇이든 좋습니다. 없다면 ‘없음’이라고 적어주세요.",
+            placeholder: "좋았던 점, 아쉬웠던 점, 바라는 점 무엇이든 좋습니다.",
           },
           {
             id: "teamName",
