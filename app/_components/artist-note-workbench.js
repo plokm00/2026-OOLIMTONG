@@ -270,7 +270,7 @@ const FORM = [
           {
             id: "sideEvent",
             type: "chips",
-            label: "작업 중에 흥미로웠던 side event",
+            label: "작업 중에 흥미로웠던 일은…",
             options: [
               "간식 · 새참 시간",
               "아이들의 놀이",
