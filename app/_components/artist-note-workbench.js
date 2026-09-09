@@ -20,7 +20,7 @@ const FORM = [
           {
             id: "motive",
             type: "chips",
-            label: "참여하게 된 계기",
+            label: "울림통-변주에 참여하게 된 것은…",
             options: [
               "지인의 권유로",
               "공고를 보고",
@@ -36,7 +36,7 @@ const FORM = [
           {
             id: "life",
             type: "chips",
-            label: "요즘 나의 하루",
+            label: "요즘 나는…",
             options: [
               "일이 바쁘다",
               "돌봄이 많다",
@@ -50,7 +50,7 @@ const FORM = [
           {
             id: "distance",
             type: "chips",
-            label: "흙과 나의 거리",
+            label: "흙과 나 사이는…",
             options: [
               "흙은 이번이 처음",
               "아주 오래전에 해봤다",
@@ -62,7 +62,7 @@ const FORM = [
           {
             id: "wish",
             type: "chips",
-            label: "이 작업이 끝난 뒤 남기를 바라는 것",
+            label: "이 작업이 끝난 뒤 나에게 남기를 바라는 것은…",
             options: [
               "계속 만드는 사람으로 남기",
               "내 이름이 걸린 작품",
@@ -81,7 +81,7 @@ const FORM = [
           {
             id: "firstTouch",
             type: "chips",
-            label: "처음 흙을 만졌을 때",
+            label: "처음 흙을 만졌을 때 흙은…",
             options: [
               "차가웠다",
               "축축했다",
@@ -97,7 +97,7 @@ const FORM = [
           {
             id: "whyClay",
             type: "chips",
-            label: "왜 흙이었을까",
+            label: "흙이 이 작업의 재료가 된 것은…",
             options: [
               "땅에서 나와 땅으로 돌아가서",
               "손자국이 그대로 남아서",
@@ -110,7 +110,7 @@ const FORM = [
           {
             id: "resonance",
             type: "chips",
-            label: "‘울림통’이라는 말에서 떠오른 것",
+            label: "‘울림통’이라는 말에서 제가 떠올린 것은…",
             options: [
               "악기의 몸통",
               "기억을 담는 그릇",
@@ -144,7 +144,7 @@ const FORM = [
           {
             id: "strange",
             type: "chips",
-            label: "가장 낯설었던 순간",
+            label: "작업 중 가장 낯설었던 순간은…",
             options: [
               "반죽이 뜻대로 안 될 때",
               "타래가 자꾸 끊어질 때",
@@ -158,13 +158,13 @@ const FORM = [
           {
             id: "nfcSpot",
             type: "chips",
-            label: "NFC 칩을 심은 자리",
+            label: "NFC 칩을 심은 자리는…",
             options: ["입구 옆", "몸통 한가운데", "뒤쪽", "바닥 가까이", "창 옆", "지붕 아래"],
           },
           {
             id: "nfcWhy",
             type: "chips",
-            label: "그 자리를 고른 이유",
+            label: "그 자리를 고른 것은…",
             options: [
               "손이 닿기 쉬워서",
               "눈에 잘 안 띄게 하고 싶어서",
@@ -176,7 +176,7 @@ const FORM = [
           {
             id: "finish",
             type: "chips",
-            label: "마감은 어느 쪽이었나",
+            label: "작품의 표면은…",
             options: [
               "손자국을 그대로 남겼다",
               "매끈하게 다듬었다",
@@ -194,7 +194,7 @@ const FORM = [
           {
             id: "connect",
             type: "chips",
-            label: "내 타래가 옆 사람 타래와 이어질 때",
+            label: "내 타래가 옆 사람 타래와 이어질 때 저는…",
             options: [
               "뿌듯했다",
               "내 것이 사라지는 것 같았다",
@@ -208,19 +208,19 @@ const FORM = [
           {
             id: "favoriteWork",
             type: "chips",
-            label: "나에게 편했던 작업",
+            label: "나에게 편했던 작업은…",
             options: ["반죽하기", "타래 밀기", "타래 쌓기", "이음새 메우기", "돌로 다지기", "정리·보관", "이야기 나누기"],
           },
           {
             id: "mixOrMark",
             type: "chips",
-            label: "내가 만든 부분",
+            label: "내가 만든 부분은…",
             options: ["구분되면 좋겠다", "섞이는 게 좋다", "구분은 안 되지만 내가 안다", "상관없다"],
           },
           {
             id: "tamping",
             type: "chips",
-            label: "돌로 벽을 다지던 시간",
+            label: "돌로 벽을 다지던 시간은…",
             options: [
               "소리가 좋았다",
               "팔이 아팠다",
@@ -233,7 +233,7 @@ const FORM = [
           {
             id: "scene",
             type: "chips",
-            label: "기억에 남는 장면",
+            label: "가장 기억에 남는 장면은…",
             options: [
               "다 같이 노래 부르던 때",
               "소리를 녹음하던 때",
@@ -255,13 +255,13 @@ const FORM = [
           {
             id: "hard",
             type: "chips",
-            label: "가장 어려웠던 것",
+            label: "가장 어려웠던 것은…",
             options: ["체력", "시간 내기", "흙의 성질", "높이 쌓기", "다 같이 정하기", "기다리는 일", "특별히 없었다"],
           },
           {
             id: "joy",
             type: "chips",
-            label: "가장 즐거웠던 것",
+            label: "가장 즐거웠던 것은…",
             options: [
               "손이 흙에 익어갈 때",
               "형태가 서기 시작할 때",
@@ -274,7 +274,7 @@ const FORM = [
           {
             id: "becameArtist",
             type: "chips",
-            label: "‘작가가 되었다’고 느낀 순간",
+            label: "‘작가가 되었다’고 느낀 순간은…",
             options: [
               "작품 이름을 지을 때",
               "내 작품이 혼자 서 있는 걸 봤을 때",
@@ -286,7 +286,7 @@ const FORM = [
           {
             id: "returnToEarth",
             type: "chips",
-            label: "굽지 않아 언젠가 흙으로 돌아가는 것",
+            label: "굽지 않아 언젠가 흙으로 돌아간다는 것이…",
             options: [
               "아쉽다",
               "자연스럽다",
@@ -312,7 +312,7 @@ const FORM = [
           {
             id: "nfcContent",
             type: "chips",
-            label: "칩에 연결하고 싶은 것",
+            label: "칩에 연결하고 싶은 것은…",
             options: [
               "내 모뉴먼트 소개 페이지",
               "작업 과정 사진 모음",
@@ -329,7 +329,7 @@ const FORM = [
           {
             id: "nfcAssets",
             type: "chips",
-            label: "지금 가지고 있는 자료",
+            label: "지금 가지고 있는 자료는…",
             options: ["작업 중 사진", "완성 사진", "영상", "녹음 파일", "손으로 쓴 글", "아직 없다 (도움 필요)"],
           },
           { id: "nfcNote", type: "text", label: "직접 적고 싶은 것", placeholder: "자유롭게" },
@@ -342,14 +342,14 @@ const FORM = [
           {
             id: "when",
             type: "chips",
-            label: "설치 기간",
+            label: "설치 기간은…",
             note: "기본값 — 2026. 11. 21.(토) ~ 12. 13.(일) · 전시 기간과 동일",
             options: ["전시 기간과 동일", "조금 일찍 시작", "전시 후에도 계속", "주말에만", "아직 미정"],
           },
           {
             id: "where",
             type: "chips",
-            label: "설치할 곳",
+            label: "설치할 곳은…",
             note: "사람들과 소통할 수 있는 자리여야 합니다.",
             options: [
               "집 마당",
@@ -377,19 +377,19 @@ const FORM = [
           {
             id: "whatWith",
             type: "chips",
-            label: "함께 둘 것",
+            label: "작품과 함께 둘 것은…",
             options: ["나무 좌대", "돌 받침", "작품 설명 카드", "NFC 안내문", "조명", "특별히 없음"],
           },
           {
             id: "who",
             type: "chips",
-            label: "설치하고 돌볼 사람",
+            label: "설치하고 돌볼 사람은…",
             options: ["나 혼자", "가족과 함께", "직장 동료와", "이웃과", "작가님 도움이 필요하다"],
           },
           {
             id: "forWhom",
             type: "chips",
-            label: "이 작품을 만났으면 하는 사람",
+            label: "이 작품을 만났으면 하는 사람은…",
             options: ["동네 사람들", "우리 손님들", "아이들", "지나가는 누구든", "가족", "같이 작업한 분들"],
           },
         ],
@@ -401,7 +401,7 @@ const FORM = [
           {
             id: "howPlace",
             type: "chips",
-            label: "배치 방식",
+            label: "작품을 두는 방식은…",
             options: [
               "기간 내내 상시 배치",
               "아침에 내놓고 저녁에 수거",
@@ -414,7 +414,7 @@ const FORM = [
           {
             id: "howEvent",
             type: "chips",
-            label: "함께 해볼 것 (선택)",
+            label: "함께 해볼 것은… (선택)",
             options: [
               "설명 카드 붙이기",
               "‘휴대폰을 대보세요’ 안내문",
@@ -435,7 +435,7 @@ const FORM = [
           {
             id: "why",
             type: "chips",
-            label: "그 자리에 두는 이유",
+            label: "그 자리에 두는 것은…",
             options: [
               "사람들과 나누고 싶어서",
               "나에게 특별한 자리라서",
