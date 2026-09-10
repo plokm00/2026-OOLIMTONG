@@ -95,7 +95,7 @@ export default function ArtistNotesPage() {
         .artist-note-work + .artist-note-work { margin-top:18px; }
         .artist-note-team { margin:0 0 6px; font-family:'IBM Plex Sans KR', sans-serif; font-size:15px; font-weight:600; letter-spacing:-.01em; }
         .artist-note-team-name { margin-right:8px; color:var(--an-dim); font-size:12px; font-weight:400; letter-spacing:0; }
-        .artist-note-work-note { margin:0; color:var(--an-dim); font-size:13px; line-height:1.75; }
+        .artist-note-work-note { margin:0; color:var(--an-dim); font-size:12.5px; line-height:1.6; letter-spacing:-.015em; }
 
 
         .artist-note-foot { margin-top:34px; display:flex; justify-content:space-between; gap:20px; color:var(--an-dim); font-size:12px; }
