@@ -1,5 +1,13 @@
 import Anthropic from "@anthropic-ai/sdk";
 
+import {
+  ArtistNoteStoreError,
+  saveGeneratedNote,
+  validEditorId,
+  validEditToken,
+  verifyArtistEditor,
+} from "../../_lib/artist-note-store";
+
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
@@ -106,9 +114,10 @@ function buildUserMessage(artist, works, sections) {
 function parseBody(body) {
   if (!body || typeof body !== "object") return null;
 
+  const id = sanitize(body?.artist?.id, 50);
   const name = sanitize(body?.artist?.name, 40);
   const team = sanitize(body?.artist?.team, 40);
-  if (!name) return null;
+  if (!id || !name || !validEditToken(body.token) || !validEditorId(body.editorId)) return null;
 
   const rawWorks = Array.isArray(body.works) ? body.works.slice(0, MAX_WORKS) : [];
   const works = [];
@@ -139,7 +148,7 @@ function parseBody(body) {
 
   const itemCount = sections.reduce((sum, section) => sum + section.items.length, 0);
   if (!sections.length || itemCount < MIN_ITEMS) return null;
-  return { artist: { name, team }, works, sections };
+  return { token: body.token, editorId: body.editorId, artist: { id, name, team }, works, sections };
 }
 
 export async function POST(request) {
@@ -162,7 +171,11 @@ export async function POST(request) {
     );
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
+  const gatewayToken =
+    process.env.AI_GATEWAY_API_KEY ||
+    process.env.VERCEL_OIDC_TOKEN ||
+    request.headers.get("x-vercel-oidc-token");
+  if (!gatewayToken) {
     return json({ error: "no_api_key" }, { status: 501 });
   }
 
@@ -178,13 +191,28 @@ export async function POST(request) {
     return json({ error: "empty_selection" }, { status: 400 });
   }
 
-  const client = new Anthropic();
+  try {
+    const storedDraft = await verifyArtistEditor(parsed.token, parsed.editorId);
+    if (storedDraft.artistId !== parsed.artist.id) {
+      return json({ error: "invalid_link" }, { status: 403 });
+    }
+  } catch (error) {
+    if (error instanceof ArtistNoteStoreError) {
+      const status = error.code === "locked" ? 423 : error.code === "generation_limit" ? 429 : 403;
+      return json({ error: error.code }, { status });
+    }
+    return json({ error: "storage_unavailable" }, { status: 503 });
+  }
+
+  const client = new Anthropic({
+    authToken: gatewayToken,
+    baseURL: "https://ai-gateway.vercel.sh",
+  });
 
   try {
     const response = await client.messages.create({
-      model: "claude-sonnet-5",
+      model: "anthropic/claude-sonnet-4.6",
       max_tokens: 3500,
-      output_config: { effort: "low" },
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: buildUserMessage(parsed.artist, parsed.works, parsed.sections) }],
     });
@@ -203,8 +231,13 @@ export async function POST(request) {
       return json({ error: "empty_response" }, { status: 502 });
     }
 
-    return json({ text, model: response.model });
+    const saved = await saveGeneratedNote(parsed.token, parsed.editorId, text);
+    return json({ text, model: response.model, ...saved });
   } catch (error) {
+    if (error instanceof ArtistNoteStoreError) {
+      const status = error.code === "locked" ? 423 : error.code === "generation_limit" ? 429 : 403;
+      return json({ error: error.code }, { status });
+    }
     if (error instanceof Anthropic.AuthenticationError) {
       return json({ error: "bad_api_key" }, { status: 502 });
     }
@@ -212,6 +245,12 @@ export async function POST(request) {
       return json({ error: "rate_limited" }, { status: 429 });
     }
     if (error instanceof Anthropic.APIError) {
+      console.error("Artist note AI Gateway error", {
+        name: error.name,
+        status: error.status,
+        message: error.message,
+        requestId: error.request_id,
+      });
       return json({ error: `api_error_${error.status}` }, { status: 502 });
     }
     return json({ error: "unknown" }, { status: 500 });

@@ -1,52 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import ArtistNoteWorkbench from "./artist-note-workbench";
+import { artists, worksOf } from "../_content/artist-notes";
+import PublishedArtistNote from "./published-artist-note";
 
-const artists = [
-  { id: "kim-juwon", name: "김주원", team: "미로", photo: "/artist-profiles/kim-juwon.webp" },
-  { id: "kim-hyeonguk", name: "김현국", team: "미로", photo: "/artist-profiles/kim-hyeonguk.webp" },
-  { id: "min-jihyeon", name: "민지현", team: "미로", photo: "/artist-profiles/min-jihyeon.webp" },
-  { id: "park-soyeon", name: "박소연", team: "고리", photo: "/artist-profiles/park-soyeon.webp" },
-  { id: "park-suyeon", name: "박수연", team: "고리", photo: "/artist-profiles/park-suyeon.webp" },
-  { id: "park-jinhee", name: "박진희", team: "고리", photo: "/artist-profiles/park-jinhee.webp" },
-  { id: "shin-jeongsuk", name: "신정숙", team: "네모", photo: "/artist-profiles/shin-jeongsuk.webp" },
-  { id: "lee-saerom", name: "이새롬", team: "미로", photo: "/artist-profiles/lee-saerom.webp" },
-  { id: "lee-seongsun", name: "이성순", team: "고리", photo: "/artist-profiles/lee-seongsun.webp" },
-  { id: "lee-an", name: "이안", team: "고리", photo: "/artist-profiles/lee-an.webp" },
-  { id: "lee-jaehong", name: "이재홍", team: "네모", photo: "/artist-profiles/lee-jaehong.webp" },
-  { id: "lee-chaemyeong", name: "이채명", team: "고리", photo: "/artist-profiles/lee-chaemyeong.webp" },
-  { id: "in-donguk", name: "인동욱", team: "미로", photo: "/artist-profiles/in-donguk.webp" },
-  { id: "im-gyehwa", name: "임계화", team: "네모", photo: "/artist-profiles/im-gyehwa.webp" },
-  { id: "cho-youngbeom", name: "조영범", team: "네모 · 미로", photo: "/artist-profiles/cho-youngbeom.webp" },
-  { id: "joo-jangseok", name: "주장석", team: "미로", photo: "/artist-profiles/joo-jangseok.webp" },
-  { id: "heoyang", name: "허양", team: "네모", photo: "/artist-profiles/heoyang.webp" },
+// 작업 기록 페이지(네모 → 고리 → 미로)와 같은 팀 순서를 쓴다.
+const teamOrder = ["네모", "고리", "미로"];
+
+const sortOptions = [
+  { id: "name", label: "가나다순" },
+  { id: "team", label: "팀별" },
 ];
 
-// 팀별 대형 울림통의 작품명과 뜻. 9회차 이름짓기에서 정해졌다.
-const teamWorks = {
-  "고리": {
-    title: "코아 COA",
-    note: "코가 제일 마지막에 만들어진 이 작품은 포근한 느낌을 줍니다. 영어로 core를 연상시켜, 사람에게 가장 중요한 사랑의 마음을 상징하는 듯합니다. 두 아이들이 떠오르는 대로 말하여 함께 지은 이름입니다.",
-  },
-  "네모": {
-    title: "Co-Ark (합주, 合舟)",
-    note: "피라미드와 같은 이국의 유적을 떠올리게 하는 이 작품은 모두의 소리를 조화롭게 모으는 공간입니다. 팀원 모두가 신앙이 깊으셨고, 네모난 배, 방주로부터 발상을 시작하여 이러한 뜻에 도달했습니다.",
-  },
-  "미로": {
-    title: "나리움 NARIUM",
-    note: "한 아이는 우리가 한 일을 “나르고, 붙이고의 반복”이라고 말합니다. AI의 도움으로 ‘나름’과 ‘이음’을 합쳐서 말을 만드니, 아직 발견되지 않은 세계의 광물이나 고대의 영험한 자연물의 이름처럼 들립니다.",
-  },
-};
-
-// 조영범 작가처럼 두 팀에 참여한 경우 두 작품을 모두 싣는다.
-function worksOf(team) {
-  return team
-    .split("·")
-    .map((name) => name.trim())
-    .filter((name) => teamWorks[name])
-    .map((name) => ({ team: name, ...teamWorks[name] }));
+function teamRank(artist) {
+  // 조영범처럼 두 팀에 걸친 작가는 앞선 팀 기준으로 묶는다.
+  const index = teamOrder.indexOf(artist.team.split("·")[0].trim());
+  return index === -1 ? teamOrder.length : index;
 }
 
 function initialArtist() {
@@ -57,6 +27,13 @@ function initialArtist() {
 
 export default function ArtistNotesPage() {
   const [selected, setSelected] = useState(initialArtist);
+  const [sort, setSort] = useState("name");
+
+  // artists는 이미 가나다순이고, sort는 안정 정렬이라 팀 안에서도 가나다순이 유지된다.
+  const orderedArtists = useMemo(
+    () => (sort === "team" ? [...artists].sort((a, b) => teamRank(a) - teamRank(b)) : artists),
+    [sort],
+  );
 
   useEffect(() => {
     const updateSelected = () => {
@@ -94,7 +71,12 @@ export default function ArtistNotesPage() {
         .artist-notes-record-link:hover { background:var(--an-bg3); }
         .artist-notes-summary { max-width:680px; margin:24px 0 0; color:var(--an-dim); font-size:15px; line-height:1.7; }
         .artist-picker { max-width:940px; margin:0 auto; padding:40px 40px; }
-        .artist-picker-label { display:block; margin-bottom:14px; color:var(--an-accent2); font-size:12px; font-weight:700; letter-spacing:.08em; }
+        .artist-picker-head { display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px; margin-bottom:14px; }
+        .artist-picker-label { color:var(--an-accent2); font-size:12px; font-weight:700; letter-spacing:.08em; }
+        .artist-picker-sort { display:flex; gap:6px; }
+        .artist-picker-sort button { padding:5px 11px; border:1px solid var(--an-line); border-radius:4px; background:transparent; color:var(--an-dim); cursor:pointer; font:600 11px 'Noto Sans KR', sans-serif; letter-spacing:.04em; transition:background .18s,border-color .18s,color .18s; }
+        .artist-picker-sort button:hover { background:var(--an-bg2); color:var(--an-text); }
+        .artist-picker-sort button[aria-pressed='true'] { border-color:var(--an-accent); background:var(--an-accent); color:var(--an-bg); }
         .artist-picker-list { display:flex; flex-wrap:wrap; gap:8px; }
         .artist-picker-button { min-width:88px; padding:10px 13px; border:0; border-radius:4px; background:var(--an-bg2); color:var(--an-text); cursor:pointer; font:600 13px 'Noto Sans KR', sans-serif; text-align:left; transition:background .18s,color .18s; }
         .artist-picker-button small { display:block; margin-top:3px; color:var(--an-dim); font-size:10px; font-weight:400; }
@@ -134,9 +116,23 @@ export default function ArtistNotesPage() {
       </nav>
 
       <section className="artist-picker" aria-label="작가 선택">
-        <span className="artist-picker-label">참여 작가 선택</span>
+        <div className="artist-picker-head">
+          <span className="artist-picker-label">참여 작가 선택</span>
+          <div className="artist-picker-sort" role="group" aria-label="작가 목록 정렬">
+            {sortOptions.map((option) => (
+              <button
+                key={option.id}
+                type="button"
+                aria-pressed={sort === option.id}
+                onClick={() => setSort(option.id)}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
         <div className="artist-picker-list">
-          {artists.map((artist) => (
+          {orderedArtists.map((artist) => (
             <button
               key={artist.id}
               type="button"
@@ -149,8 +145,7 @@ export default function ArtistNotesPage() {
           ))}
         </div>
         <p className="artist-notes-summary">
-          참여 작가 17인의 소개와 리뷰 인터뷰, 그리고 각자의 모뉴먼트를 어디에 어떻게 놓을지 담은 전시 계획을 모으는 페이지입니다.
-          아래는 작가 노트를 직접 쓰실 수 있도록 만든 작성 가이드입니다.
+          참여 작가 17인의 답변을 바탕으로 완성된 작가 노트 AI 초안과 모뉴먼트 전시 계획을 모았습니다.
         </p>
       </section>
 
@@ -182,7 +177,7 @@ export default function ArtistNotesPage() {
           </div>
         </header>
 
-        <ArtistNoteWorkbench artist={selected} works={worksOf(selected.team)} />
+        <PublishedArtistNote artist={selected} />
 
         <footer className="artist-note-foot">
           <span>다른 작가를 선택하면 해당 작가의 노트로 전환됩니다.</span>

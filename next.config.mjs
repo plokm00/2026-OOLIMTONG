@@ -1,6 +1,26 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  async headers() {
+    return [
+      {
+        source: "/artist-note/:path*",
+        headers: [
+          { key: "Cache-Control", value: "no-store" },
+          { key: "Referrer-Policy", value: "no-referrer" },
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+      {
+        source: "/oolimtong_2026_wcf_artists/edit",
+        headers: [
+          { key: "Cache-Control", value: "no-store" },
+          { key: "Referrer-Policy", value: "no-referrer" },
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [
       { source: "/index.html", destination: "/", permanent: true },

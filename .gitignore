@@ -9,3 +9,4 @@ media-source/
 *.txt
 .DS_Store
 .env*
+*.private.json

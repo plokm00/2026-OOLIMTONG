@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const FORM = [
   {
@@ -114,7 +114,7 @@ const FORM = [
               "살아 있는 것 같아서",
               "누구나 만질 수 있어서",
               "굽지 않아 언젠가 사라져서",
-              "여럿의 손이 한 형태로 이어져서",
+              "여럿의 하나의 형태를 만들 수 있어서",
             ],
           },
           {
@@ -564,31 +564,39 @@ function buildSections(answers, resolveLabel) {
   })).filter((section) => section.items.length);
 }
 
-function composeLocally(artist, sections) {
-  const lines = [
-    `AI 취합이 연결되기 전이라, ${artist.name} 작가가 고르신 내용만 정리해 두었습니다. 연결되면 이 자리에 한 편의 글이 들어옵니다.`,
-    "",
-  ];
-  for (const section of sections) {
-    lines.push(section.title);
-    for (const item of section.items) {
-      lines.push(`· ${item.label.split(" — ").pop()}: ${item.value}`);
-    }
-    lines.push("");
-  }
-  return lines.join("\n").trim();
-}
-
-export default function ArtistNoteWorkbench({ artist, works = [] }) {
-  const [answers, setAnswers] = useState({});
+export default function ArtistNoteWorkbench({
+  artist,
+  works = [],
+  editToken,
+  editorId,
+  initialAnswers = {},
+  initialDrafts = [],
+  initialPublishedVersionId = "",
+  initialPublishedText = "",
+  initialUsedCount = 0,
+  onAnswersChange,
+}) {
+  const [answers, setAnswers] = useState(initialAnswers);
   const [status, setStatus] = useState("idle");
-  const [result, setResult] = useState("");
-  const [resultKind, setResultKind] = useState("");
+  const [drafts, setDrafts] = useState(() =>
+    initialDrafts.map((draft) => ({ ...draft, savedText: draft.text })),
+  );
+  const [selectedDraftId, setSelectedDraftId] = useState(
+    initialPublishedVersionId || initialDrafts[0]?.id || "",
+  );
+  const [publishedVersionId, setPublishedVersionId] = useState(initialPublishedVersionId);
+  const [publishedText, setPublishedText] = useState(initialPublishedText);
+  const [draftStatus, setDraftStatus] = useState("idle");
   const [notice, setNotice] = useState("");
   const [copied, setCopied] = useState(false);
   const [aiConsent, setAiConsent] = useState(false);
   const [attempted, setAttempted] = useState(false);
-  const [usedCount, setUsedCount] = useState(0);
+  const [usedCount, setUsedCount] = useState(initialUsedCount);
+  const chipTouchRef = useRef(null);
+
+  useEffect(() => {
+    onAnswersChange?.(answers);
+  }, [answers, onAnswersChange]);
 
   const resolveLabel = useMemo(() => makeLabelResolver(works), [works]);
   const sections = useMemo(() => buildSections(answers, resolveLabel), [answers, resolveLabel]);
@@ -599,6 +607,7 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
     [answers],
   );
   const answeredCount = totalCount - missingFields.length;
+  const selectedDraft = drafts.find((draft) => draft.id === selectedDraftId) || drafts[0] || null;
 
   const toggleChip = (field, option) => {
     setAnswers((prev) => {
@@ -624,6 +633,39 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
           : {}),
       };
     });
+  };
+
+  const startChipTouch = (event) => {
+    const touch = event.touches[0];
+    if (!touch) return;
+    chipTouchRef.current = { x: touch.clientX, y: touch.clientY, moved: false };
+  };
+
+  const moveChipTouch = (event) => {
+    const gesture = chipTouchRef.current;
+    const touch = event.touches[0];
+    if (!gesture || !touch) return;
+    if (Math.hypot(touch.clientX - gesture.x, touch.clientY - gesture.y) > 8) {
+      gesture.moved = true;
+    }
+  };
+
+  const endChipTouch = () => {
+    const gesture = chipTouchRef.current;
+    if (!gesture) return;
+    window.setTimeout(() => {
+      if (chipTouchRef.current === gesture) chipTouchRef.current = null;
+    }, 500);
+  };
+
+  const chooseChip = (event, field, option) => {
+    const movedWhileTouching = chipTouchRef.current?.moved;
+    chipTouchRef.current = null;
+    if (movedWhileTouching) {
+      event.preventDefault();
+      return;
+    }
+    toggleChip(field, option);
   };
 
   const setText = (fieldId, value) => {
@@ -666,20 +708,20 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
       return;
     }
 
-    setUsedCount((count) => count + 1);
-
     setStatus("loading");
+    setAiConsent(false);
     setAttempted(false);
     setNotice("");
     setCopied(false);
-    setResultKind("");
 
     try {
       const response = await fetch("/api/artist-note", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          artist: { name: artist.name, team: artist.team },
+          token: editToken,
+          editorId,
+          artist: { id: artist.id, name: artist.name, team: artist.team },
           works: works.map((work) => ({ team: work.team, title: work.title, note: work.note })),
           sections,
         }),
@@ -687,50 +729,124 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
 
       if (response.ok) {
         const data = await response.json();
-        setResult(data.text);
-        setResultKind("ai");
+        const nextDraft = { ...data.draft, savedText: data.draft.text };
+        setDrafts((current) => [nextDraft, ...current.filter((draft) => draft.id !== nextDraft.id)]);
+        setSelectedDraftId(nextDraft.id);
+        setUsedCount(data.generationCount);
         setStatus("done");
+        setNotice("새 초안을 저장했습니다. 내용을 고친 뒤 원하는 초안을 공개본으로 선택해주세요.");
         return;
       }
 
       const data = await response.json().catch(() => ({}));
-      setResult(composeLocally(artist, sections));
-      setResultKind("local");
-      setStatus("done");
+      setStatus("idle");
       setNotice(
         data.error === "no_api_key"
-          ? "AI 연결이 아직 켜지지 않아 선택 항목만 정리했습니다. 운영자가 서버에 ANTHROPIC_API_KEY를 설정하면 글 초안을 만들 수 있습니다."
+          ? "AI 연결이 아직 켜지지 않았습니다. 운영자가 서버 설정을 마치면 초안을 만들 수 있습니다."
           : data.error === "rate_limited"
             ? "짧은 시간에 요청이 많았습니다. 잠시 뒤 다시 시도해주세요."
-          : "취합 중 문제가 생겨 선택 항목만 정리했습니다. 잠시 후 다시 눌러주세요.",
+            : data.error === "generation_limit"
+              ? `AI 초안 만들기는 ${MAX_RUNS}번까지 쓸 수 있습니다.`
+              : data.error === "locked"
+                ? "다른 분이 이 문서를 편집하고 있습니다. 잠시 후 다시 열어주세요."
+                : "초안을 만드는 중 문제가 생겼습니다. 잠시 후 다시 눌러주세요.",
       );
     } catch {
-      setResult(composeLocally(artist, sections));
-      setResultKind("local");
-      setStatus("done");
-      setNotice("연결이 끊겨 선택 항목만 정리했습니다. 잠시 후 다시 눌러주세요.");
+      setStatus("idle");
+      setNotice("연결이 끊겨 초안을 만들지 못했습니다. 잠시 후 다시 눌러주세요.");
     }
   };
 
   const copyResult = async () => {
     try {
-      await navigator.clipboard.writeText(result);
+      await navigator.clipboard.writeText(selectedDraft?.text || "");
       setCopied(true);
     } catch {
       setCopied(false);
     }
   };
 
+  const updateSelectedDraft = (text) => {
+    if (!selectedDraft) return;
+    setDrafts((current) => current.map((draft) => (
+      draft.id === selectedDraft.id ? { ...draft, text } : draft
+    )));
+    setCopied(false);
+    setDraftStatus("idle");
+  };
+
+  const saveDraft = async (draft, showNotice = true) => {
+    if (!draft || !draft.text.trim()) {
+      setNotice("초안 내용을 입력해주세요.");
+      return false;
+    }
+
+    setDraftStatus("saving");
+    try {
+      const response = await fetch("/api/artist-note/access", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token: editToken,
+          editorId,
+          action: "save_version",
+          versionId: draft.id,
+          text: draft.text,
+        }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || "save_failed");
+
+      setDrafts((current) => current.map((item) => (
+        item.id === draft.id
+          ? { ...item, text: data.text, savedText: data.text, updatedAt: data.updatedAt }
+          : item
+      )));
+      setDraftStatus("saved");
+      if (showNotice) setNotice(`초안 ${draft.generationCount}의 수정 내용을 저장했습니다.`);
+      return true;
+    } catch (error) {
+      setDraftStatus("error");
+      setNotice(error.message === "locked" ? "다른 분이 이 문서를 편집하고 있습니다." : "수정 내용을 저장하지 못했습니다. 다시 시도해주세요.");
+      return false;
+    }
+  };
+
+  const publishDraft = async () => {
+    if (!selectedDraft) return;
+    let draftToPublish = selectedDraft;
+    if (selectedDraft.text !== selectedDraft.savedText) {
+      const saved = await saveDraft(selectedDraft, false);
+      if (!saved) return;
+      draftToPublish = { ...selectedDraft, savedText: selectedDraft.text };
+    }
+
+    setDraftStatus("publishing");
+    try {
+      const response = await fetch("/api/artist-note/access", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: editToken, editorId, versionId: draftToPublish.id }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || "publish_failed");
+      setPublishedVersionId(data.publishedVersionId);
+      setPublishedText(draftToPublish.text.trim());
+      setDraftStatus("published");
+      setNotice(`초안 ${draftToPublish.generationCount}을 공개본으로 반영했습니다.`);
+    } catch (error) {
+      setDraftStatus("error");
+      setNotice(error.message === "locked" ? "다른 분이 이 문서를 편집하고 있습니다." : "공개본에 반영하지 못했습니다. 다시 시도해주세요.");
+    }
+  };
+
   const reset = () => {
     setAnswers({});
-    setResult("");
-    setResultKind("");
     setStatus("idle");
     setNotice("");
     setCopied(false);
     setAiConsent(false);
     setAttempted(false);
-    setUsedCount(0);
   };
 
   return (
@@ -740,6 +856,7 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
         .wb-howto { padding:24px 26px; background:var(--an-bg2); }
         .wb-howto h2 { margin:0 0 10px; font-family:'IBM Plex Sans KR', sans-serif; font-size:19px; }
         .wb-howto p { margin:0; color:var(--an-dim); font-size:14px; line-height:1.7; }
+        .wb-howto p + p { margin-top:8px; }
 
         .wb-section { margin-top:26px; padding:46px 48px 44px; border:1px solid var(--wb-paper-line); background:var(--wb-paper); box-shadow:0 2px 12px rgba(38,20,16,.05); }
         .wb-section h2 { margin:0 0 4px; font-family:'IBM Plex Sans KR', sans-serif; font-size:29px; line-height:1.25; letter-spacing:-.02em; }
@@ -757,7 +874,7 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
         .wb-field-warn { display:block; margin-top:8px; color:#a5412b; font-size:12px; }
         .wb-note { display:block; margin:-4px 0 9px; color:var(--an-dim); font-size:12px; }
         .wb-chips { display:flex; flex-wrap:wrap; gap:8px 7px; }
-        .wb-chip { display:inline-block; padding:7px 15px; border:1px solid #f3ebe3; border-radius:16px; background:transparent; color:#b7a091; cursor:pointer; font:400 13px 'Noto Sans KR', sans-serif; line-height:1.5; transition:color .15s,border-color .15s,background .15s; }
+        .wb-chip { display:inline-block; padding:7px 15px; border:1px solid #f3ebe3; border-radius:16px; background:transparent; color:#b7a091; cursor:pointer; touch-action:pan-y; font:400 13px 'Noto Sans KR', sans-serif; line-height:1.5; transition:color .15s,border-color .15s,background .15s; }
         .wb-chip:hover { border-color:#e6d9cd; background:#faf4ee; color:var(--an-text); }
         .wb-chip.is-on { border-color:#eee3da; background:#f4ebe2; color:#261410; font-weight:500; }
         .wb-chip-etc { width:158px; padding:7px 15px; border:1px solid #f3ebe3; border-radius:16px; background:transparent; color:#261410; font:400 13px 'Noto Sans KR', sans-serif; line-height:1.5; transition:color .15s,border-color .15s,background .15s; }
@@ -778,8 +895,10 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
         .wb-run:hover:enabled { background:var(--an-accent2); }
         .wb-run:disabled { background:var(--an-bg3); color:var(--an-dim); cursor:default; }
         .wb-count { color:var(--an-dim); font-size:13px; }
-        .wb-runs { color:#a5412b; }
-        .wb-reset { border:0; background:none; color:var(--an-dim); cursor:pointer; font:400 13px 'Noto Sans KR', sans-serif; text-decoration:underline; }
+        .wb-answer-status { display:inline-flex; align-items:center; gap:7px; white-space:nowrap; }
+        .wb-runs { color:#a5412b; font-weight:700; white-space:nowrap; }
+        .wb-reset { padding:5px 9px; border:1px solid var(--an-line); border-radius:2px; background:#f2e7de; color:var(--an-dim); cursor:pointer; font:500 12px 'Noto Sans KR', sans-serif; }
+        .wb-reset:hover { border-color:var(--an-accent); color:var(--an-accent); }
         .wb-hint { margin:12px 0 0; color:var(--an-dim); font-size:12.5px; line-height:1.65; }
         .wb-consent { display:flex; align-items:flex-start; gap:9px; margin:0 0 16px; color:var(--an-text); font-size:12.5px; line-height:1.65; }
         .wb-consent input { flex:none; width:16px; height:16px; margin:3px 0 0; accent-color:var(--an-accent); }
@@ -788,6 +907,19 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
         .wb-result { margin-top:26px; padding:40px 48px; border:1px solid var(--wb-paper-line); background:var(--wb-paper); box-shadow:0 2px 12px rgba(38,20,16,.05); }
         .wb-result-head { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
         .wb-result-head strong { color:var(--an-accent2); font-size:12px; font-weight:700; letter-spacing:.1em; }
+        .wb-draft-list { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 22px; }
+        .wb-draft-tab { padding:9px 14px; border:1px solid var(--an-line); border-radius:2px; background:var(--an-bg); color:var(--an-dim); cursor:pointer; font:500 12.5px 'Noto Sans KR', sans-serif; }
+        .wb-draft-tab:hover { border-color:var(--an-accent); color:var(--an-accent); }
+        .wb-draft-tab.is-on { border-color:var(--an-accent); background:var(--an-accent); color:white; }
+        .wb-draft-tab em { margin-left:5px; font-style:normal; font-size:10px; }
+        .wb-draft-editor { width:100%; min-height:430px; padding:20px; border:1px solid var(--wb-paper-line); border-radius:2px; background:#fff; color:var(--an-text); resize:vertical; font:400 14.5px/1.85 'Noto Sans KR', sans-serif; }
+        .wb-draft-editor:focus { border-color:var(--an-accent); outline:none; }
+        .wb-draft-actions { display:flex; flex-wrap:wrap; align-items:center; gap:9px; margin-top:14px; }
+        .wb-draft-save, .wb-draft-publish { padding:10px 16px; border:1px solid var(--an-accent); border-radius:2px; cursor:pointer; font:600 12.5px 'Noto Sans KR', sans-serif; }
+        .wb-draft-save { background:var(--an-bg); color:var(--an-accent); }
+        .wb-draft-publish { background:var(--an-accent); color:white; }
+        .wb-draft-save:disabled, .wb-draft-publish:disabled { cursor:default; opacity:.45; }
+        .wb-draft-state { color:var(--an-dim); font-size:12px; }
         .wb-copy { padding:7px 14px; border:1px solid var(--an-line); border-radius:2px; background:var(--an-bg); color:var(--an-dim); cursor:pointer; font:400 12px 'Noto Sans KR', sans-serif; }
         .wb-copy:hover { border-color:var(--an-accent); color:var(--an-accent); }
         .wb-text { margin:0; color:var(--an-text); font-family:'Noto Sans KR', sans-serif; font-size:14.5px; line-height:1.85; white-space:pre-wrap; }
@@ -801,8 +933,14 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
       <section className="wb-howto">
         <h2>작가 노트 작성 방법</h2>
         <p>
-          41개 항목을 모두 답한 뒤 아래 <strong>AI 초안 만들기</strong>를 누르세요. 별도 표시가 없으면 복수 선택이 가능합니다.
-          해당되는 보기가 없으면 <strong>직접 입력</strong>을 쓰고, 경험하지 않았거나 아직 정하지 못한 내용은 ‘없음·미정’ 보기를 골라주세요.
+          41개 항목에 모두 답한 뒤 아래 <strong>AI 초안 만들기</strong>를 누르세요. 초안이 마음에 들면 <strong>이 초안을 공개본으로 반영</strong>을 눌러주세요.
+        </p>
+        <p>
+          별도 표시가 없으면 여러 보기를 선택할 수 있습니다. 해당되는 보기가 없을 때는 ‘직접 입력’을 이용하고, 경험하지 않았거나 아직 정하지 못한 내용은 ‘없음·미정’에 해당하는 보기를 골라주세요.
+        </p>
+        <p>
+          AI 초안은 총 5회까지 만들 수 있으며, 답변을 수정하거나 보완하면 글의 내용도 달라집니다. 더 자세히 설명하고 싶은 부분은 생성된 초안에 직접 덧붙여주세요.
+          원하시면 문항에는 대략적으로 답한 뒤, 초안을 자유롭게 수정하여 직접 작가 노트를 완성하셔도 좋습니다.
         </p>
       </section>
 
@@ -841,7 +979,14 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
                             type="button"
                             className={isOn ? "wb-chip is-on" : "wb-chip"}
                             aria-pressed={isOn}
-                            onClick={() => toggleChip(field, option)}
+                            onTouchStart={startChipTouch}
+                            onTouchMove={moveChipTouch}
+                            onTouchEnd={endChipTouch}
+                            onTouchCancel={() => {
+                              if (chipTouchRef.current) chipTouchRef.current.moved = true;
+                              endChipTouch();
+                            }}
+                            onClick={(event) => chooseChip(event, field, option)}
                           >
                             {option}
                           </button>
@@ -905,40 +1050,103 @@ export default function ArtistNoteWorkbench({ artist, works = [] }) {
           />
           <span>
             <strong>외부 AI 전송 안내를 확인했습니다.</strong> 입력 내용은 글 초안을 만들기 위해 Anthropic의 Claude API로 전송됩니다.
-            이 사이트에는 답변을 저장하지 않으며, 정확한 주소·전화번호 같은 민감한 개인정보는 적지 마세요.
+            공동 작성을 위해 답변과 완성된 AI 초안은 데이터베이스에 저장됩니다. 정확한 주소·전화번호 같은 민감한 개인정보는 적지 마세요.
           </span>
         </label>
         <div className="wb-actions-row">
-          <button type="button" className="wb-run" onClick={compose} disabled={status === "loading" || usedCount >= MAX_RUNS}>
+          <button
+            type="button"
+            className="wb-run"
+            onClick={compose}
+            disabled={!aiConsent || status === "loading" || usedCount >= MAX_RUNS}
+            title={!aiConsent ? "외부 AI 전송 안내를 먼저 확인해주세요." : undefined}
+          >
             {status === "loading" ? "초안 만드는 중…" : "AI 초안 만들기"}
           </button>
-          <span className="wb-count">답변 {answeredCount} / {totalCount}</span>
-          <span className="wb-count wb-runs">
-            초안 만들기 {usedCount} / {MAX_RUNS}회 — {MAX_RUNS}번까지 쓸 수 있습니다
+          <span className="wb-answer-status">
+            <span className="wb-count">답변 {answeredCount} / {totalCount}</span>
+            {answeredCount ? (
+              <button type="button" className="wb-reset" onClick={reset}>
+                전부 지우기
+              </button>
+            ) : null}
           </span>
-          {answeredCount ? (
-            <button type="button" className="wb-reset" onClick={reset}>
-              전부 지우기
-            </button>
-          ) : null}
+          <span className="wb-count wb-runs">
+            초안 만들기 <strong>{usedCount} / {MAX_RUNS}회</strong> — {MAX_RUNS}번까지 쓸 수 있습니다
+          </span>
         </div>
         <p className="wb-hint">
           답하신 내용만으로 초안을 쓰고, 없는 이야기는 지어내지 않습니다.
           41개 항목을 모두 답해야 만들 수 있으며 보통 20초 안팎이 걸립니다. 완성된 글은 반드시 본인이 읽고 고쳐주세요.
+          {!aiConsent ? " 외부 AI 전송 안내에 체크해야 초안 만들기 버튼이 활성화됩니다." : ""}
         </p>
-        {notice && !result ? <p className="wb-notice wb-notice-inline">{notice}</p> : null}
+        {notice && !drafts.length ? <p className="wb-notice wb-notice-inline">{notice}</p> : null}
       </div>
 
-      {result ? (
+      {selectedDraft ? (
         <div className="wb-result">
           <div className="wb-result-head">
-            <strong>작가 노트 초안</strong>
+            <strong>저장된 작가 노트 초안</strong>
             <button type="button" className="wb-copy" onClick={copyResult}>
               {copied ? "복사했습니다" : "전체 복사"}
             </button>
           </div>
+          <div className="wb-draft-list" role="tablist" aria-label="저장된 초안 목록">
+            {drafts.map((draft) => (
+              <button
+                type="button"
+                role="tab"
+                key={draft.id}
+                className={draft.id === selectedDraft.id ? "wb-draft-tab is-on" : "wb-draft-tab"}
+                aria-selected={draft.id === selectedDraft.id}
+                onClick={() => {
+                  setSelectedDraftId(draft.id);
+                  setCopied(false);
+                  setDraftStatus("idle");
+                }}
+              >
+                초안 {draft.generationCount}
+                {draft.id === publishedVersionId ? (
+                  <em>{draft.text.trim() === publishedText ? "공개 중" : "공개 후 수정"}</em>
+                ) : null}
+              </button>
+            ))}
+          </div>
           {notice ? <p className="wb-notice">{notice}</p> : null}
-          <p className="wb-text">{result}</p>
+          <textarea
+            className="wb-draft-editor"
+            aria-label={`초안 ${selectedDraft.generationCount} 수정`}
+            maxLength={20000}
+            value={selectedDraft.text}
+            onChange={(event) => updateSelectedDraft(event.target.value)}
+          />
+          <div className="wb-draft-actions">
+            <button
+              type="button"
+              className="wb-draft-save"
+              disabled={draftStatus === "saving" || draftStatus === "publishing" || selectedDraft.text === selectedDraft.savedText}
+              onClick={() => saveDraft(selectedDraft)}
+            >
+              {draftStatus === "saving" ? "저장 중…" : "수정 내용 저장"}
+            </button>
+            <button
+              type="button"
+              className="wb-draft-publish"
+              disabled={draftStatus === "saving" || draftStatus === "publishing" || !selectedDraft.text.trim()}
+              onClick={publishDraft}
+            >
+              {draftStatus === "publishing" ? "공개본 반영 중…" : selectedDraft.id === publishedVersionId ? "공개본 다시 반영" : "이 초안을 공개본으로 반영"}
+            </button>
+            <span className="wb-draft-state">
+              {selectedDraft.text !== selectedDraft.savedText
+                ? "저장하지 않은 수정 내용이 있습니다."
+                : selectedDraft.id === publishedVersionId && selectedDraft.text.trim() === publishedText
+                  ? "현재 공개 중인 초안입니다."
+                  : selectedDraft.id === publishedVersionId
+                    ? "공개본과 다른 수정 내용입니다. 다시 반영해야 공개됩니다."
+                    : "수정 내용 저장됨"}
+            </span>
+          </div>
         </div>
       ) : null}
     </div>
