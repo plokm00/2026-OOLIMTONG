@@ -74,7 +74,7 @@ export default function ArtistNotesPage() {
         .artist-picker-head { display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px; margin-bottom:14px; }
         .artist-picker-label { color:var(--an-accent2); font-size:12px; font-weight:700; letter-spacing:.08em; }
         .artist-picker-sort { display:flex; gap:6px; }
-        .artist-picker-sort button { padding:2px 5px; border:1px solid var(--an-line); border-radius:3px; background:transparent; color:var(--an-dim); cursor:pointer; font:600 9px 'Noto Sans KR', sans-serif; letter-spacing:.04em; transition:background .18s,border-color .18s,color .18s; }
+        .artist-picker-sort button { padding:2px 5px; border:1px solid rgba(206,176,160,.6); border-radius:3px; background:transparent; color:rgba(122,76,60,.85); cursor:pointer; font:600 9px 'Noto Sans KR', sans-serif; letter-spacing:.04em; transition:background .18s,border-color .18s,color .18s; }
         .artist-picker-sort button:hover { background:var(--an-bg2); color:var(--an-text); }
         .artist-picker-sort button[aria-pressed='true'] { border-color:var(--an-bg3); background:var(--an-bg3); color:var(--an-text); }
         .artist-picker-list { display:flex; flex-wrap:wrap; gap:8px; }
