@@ -93,9 +93,9 @@ export default function ArtistNotesPage() {
         .artist-note-main { display:flex; flex-wrap:wrap; align-items:flex-end; gap:24px 44px; }
         .artist-note-works { flex:1 1 330px; min-width:0; }
         .artist-note-work + .artist-note-work { margin-top:18px; }
-        .artist-note-team { margin:0 0 6px; font-family:'IBM Plex Sans KR', sans-serif; font-size:15px; font-weight:600; letter-spacing:-.01em; }
-        .artist-note-team-name { margin-right:8px; color:var(--an-dim); font-size:12px; font-weight:400; letter-spacing:0; }
-        .artist-note-work-note { margin:0; color:var(--an-dim); font-size:12.5px; line-height:1.6; letter-spacing:-.015em; }
+        .artist-note-team { margin:0 0 5px; font-family:'IBM Plex Sans KR', sans-serif; font-size:14px; font-weight:600; line-height:1.45; letter-spacing:-.01em; }
+        .artist-note-team-name { margin-left:8px; color:var(--an-dim); font-size:12px; font-weight:400; letter-spacing:0; }
+        .artist-note-work-note { margin:0; color:var(--an-dim); font-size:12.5px; line-height:1.5; letter-spacing:-.015em; }
 
 
         .artist-note-foot { margin-top:34px; display:flex; justify-content:space-between; gap:20px; color:var(--an-dim); font-size:12px; }
@@ -167,8 +167,8 @@ export default function ArtistNotesPage() {
               {worksOf(selected.team).map((work) => (
                 <div className="artist-note-work" key={work.team}>
                   <p className="artist-note-team">
-                    <span className="artist-note-team-name">팀 {work.team}</span>
                     〈{work.title}〉
+                    <span className="artist-note-team-name">팀 {work.team}</span>
                   </p>
                   <p className="artist-note-work-note">{work.note}</p>
                 </div>
