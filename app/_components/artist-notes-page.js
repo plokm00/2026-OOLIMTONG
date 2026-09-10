@@ -167,7 +167,7 @@ export default function ArtistNotesPage() {
               {worksOf(selected.team).map((work) => (
                 <div className="artist-note-work" key={work.team}>
                   <p className="artist-note-team">
-                    〈{work.title}〉
+                    {work.title}
                     <span className="artist-note-team-name">팀 {work.team}</span>
                   </p>
                   <p className="artist-note-work-note">{work.note}</p>
