@@ -329,3 +329,15 @@ export async function getPublishedArtistNote(artistId) {
   const text = snapshot.data().text;
   return typeof text === "string" && text.trim() ? text.trim() : null;
 }
+
+// 작가 노트 페이지는 17명 분을 한 번에 서버에서 읽어 함께 내려보낸다.
+// 작가를 고를 때마다 문서를 하나씩 받아오면 매번 로딩이 보이고 읽기 횟수도 그만큼 늘어난다.
+export async function getAllPublishedArtistNotes() {
+  const snapshot = await getAdminDb().collection(PUBLIC_NOTES).get();
+  const notes = {};
+  for (const doc of snapshot.docs) {
+    const text = doc.data().text;
+    if (typeof text === "string" && text.trim()) notes[doc.id] = text.trim();
+  }
+  return notes;
+}

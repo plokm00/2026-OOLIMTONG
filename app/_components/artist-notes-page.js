@@ -25,7 +25,7 @@ function initialArtist() {
   return artists.find((artist) => artist.id === id) ?? artists[0];
 }
 
-export default function ArtistNotesPage() {
+export default function ArtistNotesPage({ notes = null }) {
   const [selected, setSelected] = useState(initialArtist);
   const [sort, setSort] = useState("name");
 
@@ -179,7 +179,7 @@ export default function ArtistNotesPage() {
           </div>
         </header>
 
-        <PublishedArtistNote artist={selected} />
+        <PublishedArtistNote artist={selected} notes={notes} />
 
         <footer className="artist-note-foot">
           <span>다른 작가를 선택하면 해당 작가의 노트로 전환됩니다.</span>

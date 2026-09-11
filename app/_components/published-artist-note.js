@@ -2,10 +2,17 @@
 
 import { useEffect, useState } from "react";
 
-export default function PublishedArtistNote({ artist }) {
-  const [state, setState] = useState({ status: "loading", text: "" });
+export default function PublishedArtistNote({ artist, notes }) {
+  // 서버에서 17명 분을 미리 받아 왔다면 곧바로 그린다 — 작가를 바꿔도 로딩이 없다.
+  const preloaded = notes ? { status: notes[artist.id] ? "done" : "empty", text: notes[artist.id] || "" } : null;
+  const [state, setState] = useState(preloaded ?? { status: "loading", text: "" });
 
   useEffect(() => {
+    if (notes) {
+      setState({ status: notes[artist.id] ? "done" : "empty", text: notes[artist.id] || "" });
+      return undefined;
+    }
+
     let active = true;
     setState({ status: "loading", text: "" });
 
@@ -24,7 +31,7 @@ export default function PublishedArtistNote({ artist }) {
     return () => {
       active = false;
     };
-  }, [artist.id]);
+  }, [artist.id, notes]);
 
   return (
     <section className="published-note" aria-live="polite">

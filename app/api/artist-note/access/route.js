@@ -1,3 +1,5 @@
+import { revalidatePath } from "next/cache";
+
 import {
   ArtistNoteStoreError,
   openArtistDraft,
@@ -89,7 +91,11 @@ export async function PATCH(request) {
 export async function PUT(request) {
   try {
     const { token, editorId, versionId } = await readRequest(request);
-    return json(await publishSavedNote(token, editorId, versionId));
+    const result = await publishSavedNote(token, editorId, versionId);
+    // 작가 노트 페이지는 게시된 노트를 서버에서 미리 담아 내려보낸다. 방금 게시한 글이
+    // 다음 재생성 주기까지 묻히지 않도록 여기서 바로 캐시를 비운다.
+    revalidatePath("/oolimtong_2026_wcf_artists");
+    return json(result);
   } catch (error) {
     return errorResponse(error);
   }
