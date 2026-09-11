@@ -58,6 +58,8 @@ export default function ArtistNotesPage() {
 
         :root { --an-bg:#f6ede6; --an-bg2:#eee0d6; --an-bg3:#e4d0c4; --an-line:#ceb0a0; --an-accent:#c03828; --an-accent2:#8c2418; --an-text:#261410; --an-dim:#7a4c3c; }
         * { box-sizing:border-box; }
+        /* 작가 노트가 나중에 도착해 페이지가 길어져도 스크롤바 자리를 미리 잡아 본문이 왼쪽으로 밀리지 않게 한다. */
+        html { overflow-y:scroll; scrollbar-gutter:stable; }
         body { margin:0; background:var(--an-bg); color:var(--an-text); font-family:'Noto Sans KR', sans-serif; }
         .artist-notes-page { min-height:100vh; padding-top:56px; background:var(--an-bg); }
         .artist-notes-nav { position:fixed; top:0; right:0; left:0; z-index:100; height:56px; padding:0 max(40px, calc((100% - 860px) / 2)); display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid var(--an-line); background:rgba(246,237,230,.95); backdrop-filter:blur(8px); }
