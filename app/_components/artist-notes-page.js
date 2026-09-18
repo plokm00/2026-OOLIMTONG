@@ -82,7 +82,12 @@ export default function ArtistNotesPage({ notes = null }) {
         .artist-picker-list { display:flex; flex-wrap:wrap; gap:8px; }
         .artist-picker-button { min-width:88px; padding:10px 13px; border:0; border-radius:4px; background:var(--an-bg2); color:var(--an-text); cursor:pointer; font:600 13px 'Noto Sans KR', sans-serif; text-align:left; transition:background .18s,color .18s; }
         .artist-picker-button small { display:block; margin-top:3px; color:var(--an-dim); font-size:10px; font-weight:400; }
-        .artist-picker-button:hover, .artist-picker-button[aria-selected='true'] { background:var(--an-accent); border-color:var(--an-accent); color:var(--an-bg); }
+        .artist-picker-button[aria-selected='true'] { background:var(--an-accent); border-color:var(--an-accent); color:var(--an-bg); }
+        /* 손가락으로 누른 버튼에 :hover가 남아 선택된 것처럼 두 개가 빨갛게 보이던 문제 — 마우스에서만 호버 색을 준다. */
+        @media (hover:hover) and (pointer:fine) {
+          .artist-picker-button:hover { background:var(--an-accent); border-color:var(--an-accent); color:var(--an-bg); }
+          .artist-picker-button:hover small { color:rgba(246,237,230,.8); }
+        }
         .artist-picker-button[aria-selected='true'] small { color:rgba(246,237,230,.8); }
         .artist-note { max-width:940px; margin:0 auto; padding:36px 40px 100px; }
         .artist-note-header { display:grid; grid-template-columns:150px minmax(0,1fr); gap:clamp(32px,6vw,64px); align-items:end; padding-bottom:40px; }
