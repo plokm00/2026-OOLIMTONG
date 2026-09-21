@@ -620,7 +620,7 @@ const script = `
     var missLabel = selectedDate < todayStr() ? "노쇼" : "미도착";
     var summary = document.getElementById("summary");
     summary.innerHTML =
-      "<span>사전신청 <b>" + reservedCame + "</b>팀 (" + missLabel + " <b>" + (reservedTotal - reservedCame) + "</b>팀)" +
+      "<span>사전신청 <b>" + reservedTotal + "</b>팀 중 참석 <b>" + reservedCame + "</b>팀 (" + missLabel + " <b>" + (reservedTotal - reservedCame) + "</b>팀)" +
       " · 현장참여 <b>" + walkinCame + "</b>팀</span>" +
       '<span class="done">현장 인원 <b>' + recorded + "</b>명</span>";
   }
