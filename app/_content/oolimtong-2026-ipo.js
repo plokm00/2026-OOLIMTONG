@@ -20,4 +20,61 @@ const pageData = {
   ]
 };
 
+pageData.styles.push(`
+  .cave-nfc-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    align-self: flex-start;
+    margin: 0 0 28px;
+    padding: 13px 20px;
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    background: var(--accent2);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .cave-nfc-button:hover {
+    background: var(--accent);
+    transform: translateY(-2px);
+  }
+  .cave-nfc-button small {
+    color: rgba(237, 240, 236, 0.68);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .cave-nfc-button span {
+    white-space: nowrap;
+  }
+  @media (max-width: 600px) {
+    .cave-nfc-button {
+      width: 100%;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+  }
+  @media (max-width: 420px) {
+    .cave-nfc-button {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+    }
+  }
+`);
+
+pageData.body = pageData.body.replace(
+  '      <div class="cover-meta">',
+  `      <a href="/oolimtong_2026_ipo/cave-of-the-solitary" class="cave-nfc-button">
+        <span>은자의 굴 NFC 영상 보기</span>
+        <small>Cave of the Solitary ↗</small>
+      </a>
+      <div class="cover-meta">`,
+);
+
 export default pageData;
