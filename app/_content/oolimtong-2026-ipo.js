@@ -55,6 +55,13 @@ pageData.styles.push(`
   .cave-nfc-button.goddess-nfc-button:hover {
     background: #416d78;
   }
+  .cave-nfc-button.giant-nfc-button {
+    background: #684936;
+    border-color: #9b7559;
+  }
+  .cave-nfc-button.giant-nfc-button:hover {
+    background: #865f45;
+  }
   .cave-nfc-button small {
     color: rgba(237, 240, 236, 0.68);
     font-size: 10px;
@@ -94,6 +101,10 @@ pageData.body = pageData.body.replace(
         <a href="/oolimtong_2026_ipo/observatory-of-the-goddess" class="cave-nfc-button goddess-nfc-button">
           <span>여신의 첨성대 NFC 영상 보기</span>
           <small>Observatory of the Goddess ↗</small>
+        </a>
+        <a href="/oolimtong_2026_ipo/the-giants-rock" class="cave-nfc-button giant-nfc-button">
+          <span>거인의 바위 NFC 영상 보기</span>
+          <small>The Giant's Rock ↗</small>
         </a>
       </div>
       <div class="cover-meta">`,
