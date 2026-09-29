@@ -21,12 +21,18 @@ const pageData = {
 };
 
 pageData.styles.push(`
+  .nfc-link-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-self: flex-start;
+    margin: 0 0 28px;
+  }
   .cave-nfc-button {
     display: inline-flex;
     align-items: center;
     gap: 14px;
-    align-self: flex-start;
-    margin: 0 0 28px;
+    margin: 0;
     padding: 13px 20px;
     border: 1px solid var(--accent);
     border-radius: 3px;
@@ -42,6 +48,13 @@ pageData.styles.push(`
     background: var(--accent);
     transform: translateY(-2px);
   }
+  .cave-nfc-button.goddess-nfc-button {
+    background: #2d4f59;
+    border-color: #5f8993;
+  }
+  .cave-nfc-button.goddess-nfc-button:hover {
+    background: #416d78;
+  }
   .cave-nfc-button small {
     color: rgba(237, 240, 236, 0.68);
     font-size: 10px;
@@ -53,10 +66,13 @@ pageData.styles.push(`
     white-space: nowrap;
   }
   @media (max-width: 600px) {
+    .nfc-link-group {
+      width: 100%;
+      margin-bottom: 24px;
+    }
     .cave-nfc-button {
       width: 100%;
       justify-content: space-between;
-      margin-bottom: 24px;
     }
   }
   @media (max-width: 420px) {
@@ -70,10 +86,16 @@ pageData.styles.push(`
 
 pageData.body = pageData.body.replace(
   '      <div class="cover-meta">',
-  `      <a href="/oolimtong_2026_ipo/cave-of-the-solitary" class="cave-nfc-button">
-        <span>은자의 굴 NFC 영상 보기</span>
-        <small>Cave of the Solitary ↗</small>
-      </a>
+  `      <div class="nfc-link-group">
+        <a href="/oolimtong_2026_ipo/cave-of-the-solitary" class="cave-nfc-button">
+          <span>은자의 굴 NFC 영상 보기</span>
+          <small>Cave of the Solitary ↗</small>
+        </a>
+        <a href="/oolimtong_2026_ipo/observatory-of-the-goddess" class="cave-nfc-button goddess-nfc-button">
+          <span>여신의 첨성대 NFC 영상 보기</span>
+          <small>Observatory of the Goddess ↗</small>
+        </a>
+      </div>
       <div class="cover-meta">`,
 );
 
