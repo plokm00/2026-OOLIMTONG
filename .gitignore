@@ -10,3 +10,6 @@ media-source/
 .DS_Store
 .env*
 *.private.json
+
+# 추석 카드 작업본 — 사이트에서 쓰지 않는 로컬 초안
+public/chuseok-greeting-card-2026*
