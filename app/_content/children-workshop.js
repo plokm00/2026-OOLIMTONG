@@ -336,4 +336,141 @@ pageData.scripts.push({
   `,
 });
 
+// 20회차(9월 17일)의 한지 옷은 세 팀이 함께 만든 공동작품입니다.
+// 앞·뒤를 한 쌍으로 비교할 수 있게 별도 갤러리로 묶고, 클릭하면 원본을 엽니다.
+pageData.body = pageData.body.replace(
+  '  </div><!-- /session-card 20 -->',
+  `    <div class="session-divider" style="margin-top: 22px;"></div>
+    <section class="collective-wearables-section" aria-labelledby="collective-wearables-title">
+      <div class="photo-sub-title" id="collective-wearables-title">공동작품</div>
+      <p class="collective-wearables-intro">세 팀이 함께 만든 한지 옷의 앞면과 뒷면입니다.</p>
+      <div class="collective-wearables-grid">
+        <article class="collective-team-card">
+          <h4 class="collective-team-title">1팀</h4>
+          <div class="collective-team-pair">
+            <div class="collective-side">
+              <div class="group-photo collective-work-shot" data-preview="/children-workshop/2026-09-17-collective-wearables/team-1-front.png">
+                <img src="/children-workshop/2026-09-17-collective-wearables/team-1-front-thumb.webp" alt="1팀 공동작품 앞면" loading="lazy" decoding="async" width="768" height="512">
+              </div>
+              <div class="collective-side-label">앞</div>
+            </div>
+            <div class="collective-side">
+              <div class="group-photo collective-work-shot" data-preview="/children-workshop/2026-09-17-collective-wearables/team-1-back.png">
+                <img src="/children-workshop/2026-09-17-collective-wearables/team-1-back-thumb.webp" alt="1팀 공동작품 뒷면" loading="lazy" decoding="async" width="768" height="512">
+              </div>
+              <div class="collective-side-label">뒤</div>
+            </div>
+          </div>
+        </article>
+        <article class="collective-team-card">
+          <h4 class="collective-team-title">2팀</h4>
+          <div class="collective-team-pair">
+            <div class="collective-side">
+              <div class="group-photo collective-work-shot" data-preview="/children-workshop/2026-09-17-collective-wearables/team-2-front.png">
+                <img src="/children-workshop/2026-09-17-collective-wearables/team-2-front-thumb.webp" alt="2팀 공동작품 앞면" loading="lazy" decoding="async" width="768" height="512">
+              </div>
+              <div class="collective-side-label">앞</div>
+            </div>
+            <div class="collective-side">
+              <div class="group-photo collective-work-shot" data-preview="/children-workshop/2026-09-17-collective-wearables/team-2-back.png">
+                <img src="/children-workshop/2026-09-17-collective-wearables/team-2-back-thumb.webp" alt="2팀 공동작품 뒷면" loading="lazy" decoding="async" width="768" height="512">
+              </div>
+              <div class="collective-side-label">뒤</div>
+            </div>
+          </div>
+        </article>
+        <article class="collective-team-card">
+          <h4 class="collective-team-title">3팀</h4>
+          <div class="collective-team-pair">
+            <div class="collective-side">
+              <div class="group-photo collective-work-shot" data-preview="/children-workshop/2026-09-17-collective-wearables/team-3-front.png">
+                <img src="/children-workshop/2026-09-17-collective-wearables/team-3-front-thumb.webp" alt="3팀 공동작품 앞면" loading="lazy" decoding="async" width="768" height="512">
+              </div>
+              <div class="collective-side-label">앞</div>
+            </div>
+            <div class="collective-side">
+              <div class="group-photo collective-work-shot" data-preview="/children-workshop/2026-09-17-collective-wearables/team-3-back.png">
+                <img src="/children-workshop/2026-09-17-collective-wearables/team-3-back-thumb.webp" alt="3팀 공동작품 뒷면" loading="lazy" decoding="async" width="768" height="512">
+              </div>
+              <div class="collective-side-label">뒤</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div><!-- /session-card 20 -->`,
+);
+
+pageData.styles.push(`
+  .collective-wearables-section {
+    padding: 6px 28px 30px;
+  }
+  .collective-wearables-intro {
+    margin: -2px 0 16px;
+    color: var(--text-mid);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .collective-wearables-grid {
+    display: grid;
+    gap: 18px;
+  }
+  .collective-team-card {
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(235, 223, 201, 0.42);
+  }
+  .collective-team-title {
+    margin: 0 0 11px;
+    color: var(--text);
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .collective-team-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .collective-side {
+    min-width: 0;
+  }
+  .collective-work-shot.group-photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    padding: 0;
+    overflow: hidden;
+    flex: none;
+    border: 1px solid rgba(107, 85, 64, 0.18);
+    border-radius: 13px;
+    background: radial-gradient(circle at 50% 45%, #f8f2e7 0%, #e9ddc8 100%);
+    box-shadow: none;
+  }
+  .collective-work-shot.group-photo img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    border-radius: 0;
+    transition: transform 0.2s ease;
+  }
+  .collective-work-shot.group-photo:hover img {
+    transform: scale(1.018);
+  }
+  .collective-side-label {
+    margin-top: 6px;
+    color: var(--text-mid);
+    font-size: 11.5px;
+    font-weight: 600;
+    text-align: center;
+  }
+  @media (max-width: 620px) {
+    .collective-wearables-section { padding: 4px 18px 24px; }
+    .collective-team-card { padding: 13px; }
+    .collective-team-pair { grid-template-columns: 1fr; }
+  }
+`);
+
 export default pageData;
