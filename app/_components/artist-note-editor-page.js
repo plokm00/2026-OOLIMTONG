@@ -201,6 +201,7 @@ export default function ArtistNoteEditorPage({ expectedArtistId = "" }) {
             initialPublishedVersionId={page.data.publishedVersionId}
             initialPublishedText={page.data.publishedText}
             initialUsedCount={page.data.generationCount}
+            initialGenerationLimit={page.data.generationLimit}
             onAnswersChange={queueSave}
           />
         </div>

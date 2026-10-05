@@ -9,6 +9,14 @@ const PUBLIC_NOTES = "artistNotePublic";
 const LOCK_MS = 2 * 60 * 1000;
 const MAX_GENERATIONS = 5;
 
+// 운영자가 작가별로 기회를 다시 채워줄 때는 generationCount를 되돌리지 않고 generationLimit을 늘린다.
+// 횟수를 되돌리면 "초안 N" 번호가 겹치고 초안 목록 정렬이 꼬인다.
+function generationLimitOf(data) {
+  return Number.isInteger(data.generationLimit) && data.generationLimit > MAX_GENERATIONS
+    ? data.generationLimit
+    : MAX_GENERATIONS;
+}
+
 export class ArtistNoteStoreError extends Error {
   constructor(code, details = {}) {
     super(code);
@@ -45,6 +53,7 @@ function publicDraft(data, readOnly) {
     aiDraft: typeof data.aiDraft === "string" ? data.aiDraft : "",
     revision: Number.isInteger(data.revision) ? data.revision : 0,
     generationCount: Number.isInteger(data.generationCount) ? data.generationCount : 0,
+    generationLimit: generationLimitOf(data),
     publishedVersionId: typeof data.publishedVersionId === "string" ? data.publishedVersionId : "",
     readOnly,
   };
@@ -133,7 +142,7 @@ export async function openArtistDraft(token, editorId) {
   });
 
   const [versionsSnapshot, publicSnapshot] = await Promise.all([
-    ref.collection("versions").orderBy("generationCount", "desc").limit(MAX_GENERATIONS).get(),
+    ref.collection("versions").orderBy("generationCount", "desc").limit(draft.generationLimit).get(),
     db.collection(PUBLIC_NOTES).doc(draft.artistId).get(),
   ]);
   const drafts = versionsSnapshot.docs.map(publicVersion);
@@ -187,7 +196,7 @@ export async function verifyArtistEditor(token, editorId) {
   if (data.lockOwner !== editorId || lockExpired(data, Date.now())) {
     throw new ArtistNoteStoreError("locked");
   }
-  if ((data.generationCount || 0) >= MAX_GENERATIONS) {
+  if ((data.generationCount || 0) >= generationLimitOf(data)) {
     throw new ArtistNoteStoreError("generation_limit");
   }
   return data;
@@ -208,7 +217,7 @@ export async function saveGeneratedNote(token, editorId, text) {
     }
 
     const generationCount = Number.isInteger(data.generationCount) ? data.generationCount : 0;
-    if (generationCount >= MAX_GENERATIONS) throw new ArtistNoteStoreError("generation_limit");
+    if (generationCount >= generationLimitOf(data)) throw new ArtistNoteStoreError("generation_limit");
 
     const nextGenerationCount = generationCount + 1;
     const currentRevision = Number.isInteger(data.revision) ? data.revision : 0;
@@ -229,6 +238,7 @@ export async function saveGeneratedNote(token, editorId, text) {
 
     return {
       generationCount: nextGenerationCount,
+      generationLimit: generationLimitOf(data),
       revision: currentRevision,
       draft: { id: versionRef.id, text, generationCount: nextGenerationCount, createdAt: Date.now(), updatedAt: Date.now() },
     };

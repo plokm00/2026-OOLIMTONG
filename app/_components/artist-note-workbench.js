@@ -574,6 +574,7 @@ export default function ArtistNoteWorkbench({
   initialPublishedVersionId = "",
   initialPublishedText = "",
   initialUsedCount = 0,
+  initialGenerationLimit = MAX_RUNS,
   onAnswersChange,
 }) {
   const [answers, setAnswers] = useState(initialAnswers);
@@ -592,6 +593,8 @@ export default function ArtistNoteWorkbench({
   const [aiConsent, setAiConsent] = useState(false);
   const [attempted, setAttempted] = useState(false);
   const [usedCount, setUsedCount] = useState(initialUsedCount);
+  const [runLimit, setRunLimit] = useState(Math.max(MAX_RUNS, initialGenerationLimit || 0));
+  const remainingRuns = Math.max(0, runLimit - usedCount);
   const chipTouchRef = useRef(null);
 
   useEffect(() => {
@@ -703,8 +706,8 @@ export default function ArtistNoteWorkbench({
       return;
     }
 
-    if (usedCount >= MAX_RUNS) {
-      setNotice(`AI 초안 만들기는 ${MAX_RUNS}번까지 쓸 수 있습니다. 지금까지 만든 초안을 직접 고쳐 완성해주세요.`);
+    if (!remainingRuns) {
+      setNotice(`AI 초안 만들기 기회를 모두 썼습니다. 지금까지 만든 초안을 직접 고쳐 완성해주세요.`);
       return;
     }
 
@@ -733,6 +736,7 @@ export default function ArtistNoteWorkbench({
         setDrafts((current) => [nextDraft, ...current.filter((draft) => draft.id !== nextDraft.id)]);
         setSelectedDraftId(nextDraft.id);
         setUsedCount(data.generationCount);
+        if (Number.isInteger(data.generationLimit)) setRunLimit(Math.max(MAX_RUNS, data.generationLimit));
         setStatus("done");
         setNotice("새 초안을 저장했습니다. 내용을 고친 뒤 원하는 초안을 공개본으로 선택해주세요.");
         return;
@@ -746,7 +750,7 @@ export default function ArtistNoteWorkbench({
           : data.error === "rate_limited"
             ? "짧은 시간에 요청이 많았습니다. 잠시 뒤 다시 시도해주세요."
             : data.error === "generation_limit"
-              ? `AI 초안 만들기는 ${MAX_RUNS}번까지 쓸 수 있습니다.`
+              ? "AI 초안 만들기 기회를 모두 썼습니다."
               : data.error === "locked"
                 ? "다른 분이 이 문서를 편집하고 있습니다. 잠시 후 다시 열어주세요."
                 : "초안을 만드는 중 문제가 생겼습니다. 잠시 후 다시 눌러주세요.",
@@ -1058,7 +1062,7 @@ export default function ArtistNoteWorkbench({
             type="button"
             className="wb-run"
             onClick={compose}
-            disabled={!aiConsent || status === "loading" || usedCount >= MAX_RUNS}
+            disabled={!aiConsent || status === "loading" || !remainingRuns}
             title={!aiConsent ? "외부 AI 전송 안내를 먼저 확인해주세요." : undefined}
           >
             {status === "loading" ? "초안 만드는 중…" : "AI 초안 만들기"}
@@ -1072,7 +1076,8 @@ export default function ArtistNoteWorkbench({
             ) : null}
           </span>
           <span className="wb-count wb-runs">
-            초안 만들기 <strong>{usedCount} / {MAX_RUNS}회</strong> — {MAX_RUNS}번까지 쓸 수 있습니다
+            초안 만들기 <strong>{remainingRuns}회 남음</strong>
+            {usedCount ? ` — 지금까지 ${usedCount}번 만들었습니다` : ` — ${runLimit}번까지 쓸 수 있습니다`}
           </span>
         </div>
         <p className="wb-hint">
