@@ -5,6 +5,26 @@ const pageData = {
     "description": "니닉크라프트 어린이 작업실의 수업 기록과 프로그램 소개",
     "alternates": {
       "canonical": "https://ninnikkraft.vercel.app/children_workshop"
+    },
+    "openGraph": {
+      "type": "website",
+      "url": "https://ninnikkraft.vercel.app/children_workshop",
+      "title": "CHILDREN'S WORKSHOP at NINNIK KRAFT",
+      "description": "니닉크라프트 어린이 작업실의 수업 기록과 프로그램 소개",
+      "images": [
+        {
+          "url": "https://ninnikkraft.vercel.app/children-workshop-og.png",
+          "width": 1200,
+          "height": 630,
+          "alt": "니닉크라프트 어린이 작업실 로고"
+        }
+      ]
+    },
+    "twitter": {
+      "card": "summary_large_image",
+      "title": "CHILDREN'S WORKSHOP at NINNIK KRAFT",
+      "description": "니닉크라프트 어린이 작업실의 수업 기록과 프로그램 소개",
+      "images": ["https://ninnikkraft.vercel.app/children-workshop-og.png"]
     }
   },
   "styles": [
