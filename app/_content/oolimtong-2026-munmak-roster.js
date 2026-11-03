@@ -1,8 +1,13 @@
 // 문막-흙으로 잇다 2026 현장 방명록 — 인쇄용 명단
 //
-// 체크인 페이지(/oolimtong_2026_munmak_checkin)가 Firestore에 적어 둔 방명록을
-// 그대로 읽어 번호를 매긴 표로 뽑는다. 여기서는 읽기만 하고 아무것도 쓰지 않는다.
+// 행사가 끝나 체크인을 마감했으므로, 마감 시점의 방명록(oolimtong-2026-munmak-checkin-final.js)을
+// 번호를 매긴 표로 뽑는다. 마감 후에는 비밀번호 없이 누구나 조회·인쇄할 수 있다.
 // 사전신청 명단은 체크인 페이지와 같은 방식으로 /oolimtong_2026_munmak 에서 가져온다.
+
+import checkinEntries from "./oolimtong-2026-munmak-checkin-final";
+
+// 인라인 스크립트에 넣으므로 "</script>" 같은 조각이 본문을 끊지 않게 "<"를 이스케이프한다.
+const finalEntriesJson = JSON.stringify(checkinEntries).split("<").join("\\u003c");
 
 const metadata = {
   title: "방명록 인쇄 | 문막-흙으로 잇다 2026",
@@ -43,22 +48,6 @@ const styles = [
     background: var(--bg2); border: 1px solid var(--line); border-radius: 4px;
     padding: 11px 13px; font-size: 12.5px; color: var(--text-dim); margin-bottom: 14px;
   }
-
-  .gate {
-    background: var(--bg2); border: 1px solid var(--line); border-radius: 4px;
-    padding: 22px; text-align: center;
-  }
-  .gate p { margin: 0 0 12px; font-size: 13.5px; color: var(--text-dim); }
-  .gate input {
-    font-family: inherit; font-size: 15px; padding: 8px 10px; width: 120px; text-align: center;
-    border: 1px solid var(--line); border-radius: 4px; background: #fff; color: var(--text);
-  }
-  .gate button {
-    font-family: inherit; font-size: 14px; font-weight: 700; padding: 9px 18px; margin-left: 6px;
-    background: var(--accent); color: #fff; border: none; border-radius: 4px; cursor: pointer;
-  }
-  .gate button:hover { background: var(--accent2); }
-  .gate .msg { display: block; margin-top: 10px; font-size: 12.5px; color: var(--accent2); min-height: 1.4em; }
 
   .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; }
   .date-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -126,20 +115,11 @@ const body = `
   </div>
 
   <div class="notice no-print">
-    체크인 페이지에 적힌 이름을 그대로 번호 매겨 뽑습니다. 이름이 하나도 안 적힌 팀은 빠집니다.
+    체크인 마감 시점의 방명록 이름을 그대로 번호 매겨 뽑습니다. 이름이 하나도 안 적힌 팀은 빠집니다.
     <b>인쇄</b>를 누르면 그대로 종이로 나오고, 인쇄 창에서 "PDF로 저장"을 고르면 파일로 받을 수 있습니다.
   </div>
 
-  <div class="gate no-print" id="gate">
-    <p>운영진 비밀번호를 입력하세요.</p>
-    <div>
-      <input type="password" id="gate-pw" inputmode="numeric" maxlength="8" placeholder="••••" aria-label="비밀번호">
-      <button type="button" id="gate-btn">열기</button>
-    </div>
-    <span class="msg" id="gate-msg"></span>
-  </div>
-
-  <div id="app" style="display:none;">
+  <div id="app">
     <div class="controls no-print">
       <div class="date-tabs" id="date-tabs"></div>
       <button type="button" class="print-btn" id="print-btn">인쇄 / PDF 저장</button>
@@ -151,9 +131,8 @@ const body = `
 
 const script = `
 (function () {
-  var PW = "1661";
   var reservations = null;
-  var entries = null;
+  var entries = ${finalEntriesJson};
   var selectedDate = "all";
   var DITTO = "〃";
 
@@ -185,14 +164,6 @@ const script = `
         reservations = [];
         render();
       });
-  }
-
-  function attachSync() {
-    if (!window.MunmakCheckinSync) return;
-    window.MunmakCheckinSync.onData(function (next) {
-      entries = next;
-      render();
-    });
   }
 
   // ── 표시 형식 ──
@@ -402,36 +373,12 @@ const script = `
     sheets.innerHTML = target.map(sheetHtml).join("");
   }
 
-  // ── 잠금 ──
-
-  function unlock() {
-    document.getElementById("gate").style.display = "none";
-    document.getElementById("app").style.display = "block";
-    fetchReservations();
-  }
-
-  document.getElementById("gate-btn").addEventListener("click", function () {
-    var pw = document.getElementById("gate-pw");
-    var msg = document.getElementById("gate-msg");
-    if (pw.value.trim() === PW) {
-      unlock();
-    } else {
-      msg.textContent = "비밀번호가 맞지 않습니다.";
-      pw.value = "";
-      pw.focus();
-    }
-  });
-
-  document.getElementById("gate-pw").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") document.getElementById("gate-btn").click();
-  });
-
   document.getElementById("print-btn").addEventListener("click", function () {
     window.print();
   });
 
-  if (window.MunmakCheckinSync) attachSync();
-  else window.addEventListener("munmak-sync-ready", attachSync);
+  render();
+  fetchReservations();
 })();
 `;
 
@@ -441,10 +388,6 @@ const pageData = {
   stylesheets: [],
   body,
   scripts: [
-    {
-      attributes: { type: "module", src: "/munmak-checkin-sync.js" },
-      content: "",
-    },
     {
       attributes: { type: "text/javascript" },
       content: script,

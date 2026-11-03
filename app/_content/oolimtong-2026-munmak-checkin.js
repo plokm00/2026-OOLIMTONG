@@ -4,9 +4,13 @@
 // 예약이 추가/변경되면 이 페이지에도 자동 반영된다. 체크인은 신청자 1명이 아니라
 // 그 자리에 실제로 온 사람 전원의 이름을 받는 방명록 역할을 한다(인원수 집계가 아님).
 //
-// 기록은 Firestore(public/munmak-checkin-sync.js)로 운영진 기기끼리 실시간 공유한다.
-// 연결이 안 되면(익명 로그인 미설정·오프라인·차단) 자동으로 이 기기 localStorage 모드로
-// 떨어지고, 나중에 연결되면 로컬에만 있던 기록을 한 번 올려 준다.
+// 행사 기간에는 Firestore로 운영진 기기끼리 실시간 공유했지만, 행사가 끝나 체크인을 닫았다.
+// 이제는 닫는 시점의 기록(oolimtong-2026-munmak-checkin-final.js)을 읽기 전용으로 보여 주기만 한다.
+
+import checkinEntries from "./oolimtong-2026-munmak-checkin-final";
+
+// 인라인 스크립트에 넣으므로 "</script>" 같은 조각이 본문을 끊지 않게 "<"를 이스케이프한다.
+const finalEntriesJson = JSON.stringify(checkinEntries).split("<").join("\\u003c");
 
 const metadata = {
   title: "현장 체크인 · 방명록 | 문막-흙으로 잇다 2026",
@@ -61,8 +65,9 @@ const styles = [
     background: #f5e0da; border: 1px solid var(--accent2);
     border-radius: 3px; padding: 3px 8px; white-space: nowrap;
   }
-  .sync-badge.ok {
-    color: var(--ok); background: var(--ok-bg); border-color: var(--ok);
+  .sync-badge:disabled {
+    font-family: inherit; color: var(--text-dim); background: var(--bg2);
+    border-color: var(--line); cursor: not-allowed;
   }
 
   .notice {
@@ -123,11 +128,10 @@ const styles = [
   .row.checked { background: var(--ok-bg); border-color: var(--ok); }
   .row .check {
     flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
-    border: 2px solid var(--line); background: #fff; cursor: pointer;
+    border: 2px solid var(--line); background: #fff;
     display: flex; align-items: center; justify-content: center;
     font-size: 15px; color: #fff; margin-top: 1px;
   }
-  .row .check:hover { border-color: var(--accent); }
   .row.checked .check { background: var(--ok); border-color: var(--ok); }
   .row .info { flex: 1; min-width: 0; }
   .row .name-line { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
@@ -146,29 +150,18 @@ const styles = [
     font-size: 10.5px; font-weight: 700; color: var(--accent);
     border: 1px solid var(--accent); border-radius: 3px; padding: 1px 5px;
   }
-  .row .del-btn {
-    flex-shrink: 0; border: none; background: none; color: var(--text-dim);
-    font-size: 18px; cursor: pointer; padding: 0 2px; line-height: 1;
-  }
-  .row .del-btn:hover { color: var(--accent); }
 
-  /* ── 방명록 이름 입력 ── */
+  /* ── 방명록 이름 (마감 후 읽기 전용) ── */
   .name-slots { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
   .name-slot-input {
     width: 78px; flex-shrink: 0; border: 1px solid var(--line); border-radius: 4px;
     padding: 6px 7px; font-family: inherit; font-size: 13px; color: var(--text); background: #fff;
   }
-  .name-slot-input:focus { outline: none; border-color: var(--accent); }
+  .name-slot-input:focus { outline: none; }
   /* 첫 칸에 뜨는 신청자 이름은 "아직 안 적힌 상태"로 보여야 한다. */
   .name-slot-input::placeholder { color: #c3a494; }
   /* 미리 채워 둔 신청자 이름 — 아직 확정 전이라 placeholder 와 같은 톤으로 둔다. */
   .name-slot-input.seeded { color: #c3a494; }
-  .name-slot-input.seeded:focus { color: var(--text); }
-  .name-slot-add {
-    flex-shrink: 0; border: 1px dashed var(--line); background: none; color: var(--text-dim);
-    font-size: 12px; padding: 6px 10px; border-radius: 4px; cursor: pointer; white-space: nowrap;
-  }
-  .name-slot-add:hover { border-color: var(--accent2); color: var(--accent2); }
   .guest-count { font-size: 11px; color: var(--text-dim); margin-top: 2px; text-align: right; }
   .row.checked .guest-count { color: var(--ok); font-weight: 600; }
 
@@ -176,7 +169,7 @@ const styles = [
     font-family: inherit; font-size: 12.5px; font-weight: 500; color: var(--text-dim);
     background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 3px 6px;
   }
-  .walkin-time-select:focus { outline: none; border-color: var(--accent); }
+  .walkin-time-select:disabled { opacity: 1; color: var(--text-dim); }
 
   .row .meta.walkin-meta { display: flex; align-items: center; gap: 6px; }
   .walkin-note-input {
@@ -184,21 +177,7 @@ const styles = [
     border: 1px solid var(--line); border-radius: 4px; padding: 5px 9px;
     font-family: inherit; font-size: 12.5px; color: var(--text-dim); background: #fff;
   }
-  .walkin-note-input:focus { outline: none; border-color: var(--accent); }
-
-  .add-walkin-btn {
-    width: 100%; padding: 11px; font-size: 14px; font-weight: 700;
-    background: var(--accent); color: #fff; border: none; border-radius: 4px; cursor: pointer;
-    margin-top: 8px;
-  }
-  .add-walkin-btn:hover { background: var(--accent2); }
-
-  .reset-row { text-align: center; margin-top: 28px; }
-  .reset-row button {
-    border: 1px solid var(--line); background: none; color: var(--text-dim);
-    font-size: 12px; padding: 7px 14px; border-radius: 4px; cursor: pointer;
-  }
-  .reset-row button:hover { border-color: var(--accent2); color: var(--accent2); }
+  .walkin-note-input:focus { outline: none; }
 
   .load-msg { text-align: center; padding: 30px 0; color: var(--text-dim); font-size: 13px; }
   `,
@@ -210,15 +189,12 @@ const body = `
     <h1>현장 체크인 · 방명록</h1>
     <span class="top-right">
       <a class="print-link" href="/oolimtong_2026_munmak_roster" target="_blank" rel="noopener noreferrer">명단인쇄 ↗</a>
-      <span class="sync-badge" id="sync-badge">연결 중…</span>
+      <button type="button" class="sync-badge" disabled>실시간 공유 종료</button>
     </span>
   </div>
 
   <div class="notice">
-    그 자리에 <b>실제로 온 사람 전원</b>의 이름을 한 칸에 한 명씩 적는 방명록입니다.
-    첫 칸에 신청자 이름이 미리 들어가 있으니 같이 온 사람만 "+ 추가"로 이어 적고, 신청자 본인이 참여하지 않을 경우 그 칸을 지워 주세요.
-    워크인은 참여 회차도 골라 주세요.
-    <span id="sync-note">연결 상태를 확인하는 중입니다.</span>
+    행사가 끝나 현장 체크인을 마감했습니다. 아래는 마감 시점의 방명록 기록이며, 더 이상 고칠 수 없습니다.
   </div>
 
   <div class="gate" id="gate">
@@ -239,11 +215,6 @@ const body = `
 
     <div class="section-label">현장 워크인</div>
     <div id="walkin-list"></div>
-    <button type="button" id="add-walkin-btn" class="add-walkin-btn">+ 새 워크인 추가</button>
-
-    <div class="reset-row" id="reset-row" style="display:none;">
-      <button type="button" id="reset-btn">이 기기의 방명록 기록 초기화</button>
-    </div>
   </div>
 </div>
 `;
@@ -251,35 +222,32 @@ const body = `
 const script = `
 (function () {
   var PW = "1661";
-  var STORAGE_KEY = "munmak2026-checkin-v2";
+  var FINAL_ENTRIES = ${finalEntriesJson};
   var reservations = null;
   var selectedDate = null;
-  var state = loadState();
+  var state = buildState(FINAL_ENTRIES);
   var currentItems = [];
-  var sync = null;
-  var syncStatus = "connecting";
-  var mergedLocalIntoRemote = false;
-  var lastRemoteEntries = null;
-  var saveTimers = {};
 
-  function loadState() {
-    try {
-      var raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return { guestbook: {}, walkins: [] };
-      var parsed = JSON.parse(raw);
-      return {
-        guestbook: parsed.guestbook || {},
-        walkins: parsed.walkins || [],
-      };
-    } catch (e) {
-      return { guestbook: {}, walkins: [] };
-    }
-  }
-
-  function saveState() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch (e) {}
+  // 마감 기록을 예전 실시간 스냅샷과 같은 모양(guestbook + walkins)으로 펼친다.
+  function buildState(entries) {
+    var guestbook = {};
+    var walkins = [];
+    Object.keys(entries).forEach(function (id) {
+      var e = entries[id] || {};
+      if (e.names && e.names.length) {
+        guestbook[id] = { names: e.names, updatedAt: e.updatedAt || 0 };
+      }
+      if (e.isWalkin) {
+        walkins.push({
+          id: id,
+          date: e.date || null,
+          time: e.time || null,
+          note: e.note || "",
+          addedAt: e.addedAt || 0,
+        });
+      }
+    });
+    return { guestbook: guestbook, walkins: walkins };
   }
 
   function unpackFromHtml(html) {
@@ -312,11 +280,6 @@ const script = `
       .then(function (res) { return res.text(); })
       .then(function (html) {
         reservations = unpackFromHtml(html);
-        // 명단을 기다리느라 미뤄 둔 첫 병합이 있으면 이제 처리한다.
-        if (!mergedLocalIntoRemote && lastRemoteEntries) {
-          mergedLocalIntoRemote = true;
-          pushLocalOnlyEntries(lastRemoteEntries);
-        }
         render();
       })
       .catch(function () {
@@ -357,21 +320,6 @@ const script = `
       .sort(function (a, b) { return timeSortKey(a) - timeSortKey(b); })
       .forEach(function (t) { opts.push({ value: t, label: fmtTime(t) }); });
     return opts;
-  }
-
-  // 워크인은 지금 이 자리에서 등록하는 것이므로, 오늘 날짜면 현재 시각이 속한
-  // 회차를 미리 골라 둔다. 틀리면 그 자리에서 바꾸면 된다.
-  function defaultWalkinTime() {
-    if (selectedDate !== todayStr()) return null;
-    var now = new Date();
-    var mins = now.getHours() * 60 + now.getMinutes();
-    var best = null;
-    timeSlotOptions().forEach(function (o) {
-      if (o.value.indexOf(":") === -1) return;  // "", 오전/오후 미정 회차는 제외
-      var k = timeSortKey(o.value);
-      if (k <= mins + 15 && (best === null || k > timeSortKey(best))) best = o.value;
-    });
-    return best;
   }
 
   function timeSortKey(t) {
@@ -439,167 +387,6 @@ const script = `
     return null;
   }
 
-  function findReservation(id) {
-    var list = reservations || [];
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].id === id) return list[i];
-    }
-    return null;
-  }
-
-  function setNames(id, names) {
-    state.guestbook[id] = { names: names, updatedAt: Date.now() };
-    saveState();
-    queueRemoteSave(id);
-  }
-
-  // ── 원격 동기화 ──
-
-  function buildPayload(id) {
-    var data = { names: namesFor(id), updatedAt: Date.now() };
-    var walkin = findWalkin(id);
-    if (walkin) {
-      data.isWalkin = true;
-      data.date = walkin.date || null;
-      data.time = walkin.time || null;
-      data.note = walkin.note || "";
-      data.addedAt = walkin.addedAt || Date.now();
-    } else {
-      var r = findReservation(id);
-      data.isWalkin = false;
-      data.date = r ? r.date : null;
-      data.name = r ? r.name : "";
-    }
-    return data;
-  }
-
-  function remoteSaveNow(id) {
-    if (!sync) return;
-    sync.save(id, buildPayload(id)).catch(function () {});
-  }
-
-  function queueRemoteSave(id) {
-    if (!sync) return;
-    clearTimeout(saveTimers[id]);
-    saveTimers[id] = setTimeout(function () { remoteSaveNow(id); }, 400);
-  }
-
-  // 연결 전에 이 기기에만 적어 둔 기록은 처음 연결될 때 한 번 올려 준다.
-  function pushLocalOnlyEntries(remote) {
-    Object.keys(state.guestbook).forEach(function (id) {
-      if (!remote[id] && namesFor(id).length) remoteSaveNow(id);
-    });
-    state.walkins.forEach(function (w) {
-      if (!remote[w.id]) remoteSaveNow(w.id);
-    });
-  }
-
-  function applyRemote(entries) {
-    var focusInfo = captureFocus();
-    lastRemoteEntries = entries;
-
-    // 예약 명단이 아직 안 왔으면 올려도 날짜·신청자 이름이 비게 되므로 기다린다.
-    if (!mergedLocalIntoRemote && reservations) {
-      mergedLocalIntoRemote = true;
-      pushLocalOnlyEntries(entries);
-    }
-
-    var guestbook = {};
-    var walkins = [];
-    Object.keys(entries).forEach(function (id) {
-      var e = entries[id] || {};
-      if (e.names && e.names.length) {
-        guestbook[id] = { names: e.names, updatedAt: e.updatedAt || 0 };
-      }
-      if (e.isWalkin) {
-        walkins.push({
-          id: id,
-          date: e.date || null,
-          time: e.time || null,
-          note: e.note || "",
-          addedAt: e.addedAt || 0,
-        });
-      }
-    });
-
-    // 지금 타이핑 중인 줄은 로컬 입력이 이기게 둔다. 원격 메아리가 한 박자 늦게
-    // 오면 방금 친 글자가 되돌아가 보이기 때문이다.
-    if (focusInfo) {
-      if (state.guestbook[focusInfo.id]) guestbook[focusInfo.id] = state.guestbook[focusInfo.id];
-      var known = walkins.some(function (w) { return w.id === focusInfo.id; });
-      if (!known) {
-        var localWalkin = findWalkin(focusInfo.id);
-        if (localWalkin) walkins.push(localWalkin);
-      }
-    }
-
-    state = { guestbook: guestbook, walkins: walkins };
-    saveState();
-    render();
-    restoreFocus(focusInfo);
-  }
-
-  function captureFocus() {
-    var el = document.activeElement;
-    if (!el || !el.className || el.className.indexOf("name-slot-input") === -1) return null;
-    var rowEl = el.parentNode;
-    while (rowEl && (!rowEl.className || rowEl.className.indexOf("row") === -1)) rowEl = rowEl.parentNode;
-    if (!rowEl) return null;
-    var inputs = Array.prototype.slice.call(rowEl.querySelectorAll(".name-slot-input"));
-    return {
-      id: rowEl.getAttribute("data-id"),
-      index: inputs.indexOf(el),
-      caret: el.selectionStart,
-    };
-  }
-
-  function restoreFocus(info) {
-    if (!info || !info.id) return;
-    var rowEl = document.querySelector('[data-id="' + info.id + '"]');
-    if (!rowEl) return;
-    var target = rowEl.querySelectorAll(".name-slot-input")[info.index];
-    if (!target) return;
-    target.focus();
-    try { target.setSelectionRange(info.caret, info.caret); } catch (e) {}
-  }
-
-  function renderSyncStatus() {
-    var connected = syncStatus === "connected";
-    var badge = document.getElementById("sync-badge");
-    if (badge) {
-      badge.textContent = connected ? "실시간 공유 중" : "이 기기에만 저장";
-      badge.className = "sync-badge" + (connected ? " ok" : "");
-    }
-    var note = document.getElementById("sync-note");
-    if (note) {
-      note.textContent = connected
-        ? "여기 적는 이름은 다른 운영진 폰에도 바로 나타납니다."
-        : "지금은 이 폰에만 저장됩니다(공유 연결 안 됨). 적은 내용은 사라지지 않으니 그대로 쓰셔도 됩니다.";
-    }
-    var resetRow = document.getElementById("reset-row");
-    if (resetRow) resetRow.style.display = connected ? "none" : "block";
-  }
-
-  function attachSync() {
-    if (sync || !window.MunmakCheckinSync) return;
-    sync = window.MunmakCheckinSync;
-    sync.onStatus(function (next) {
-      syncStatus = next;
-      renderSyncStatus();
-    });
-    sync.onData(applyRemote);
-  }
-
-  // ── 목록 ──
-
-  function removeWalkin(id) {
-    state.walkins = state.walkins.filter(function (w) { return w.id !== id; });
-    delete state.guestbook[id];
-    saveState();
-    if (sync) sync.remove(id).catch(function () {});
-    render();
-  }
-
   // 세는 대상은 '실제로 온 팀'이다. 이름이 하나도 안 적힌 사전신청은 노쇼로 빠지고,
   // 아직 이름을 안 적은 빈 워크인 칸도 현장참여로 세지 않는다.
   // 팀별 예상 인원은 각 줄에 그대로 있으므로 요약줄에서는 다루지 않는다.
@@ -625,6 +412,8 @@ const script = `
       '<span class="done">현장 인원 <b>' + recorded + "</b>명</span>";
   }
 
+  // 마감 후에는 고칠 수 없으므로 칸은 readonly 로만 남긴다. 체크 표시와 흐린
+  // 신청자 이름(아무도 안 적힌 팀)은 마감 직전 화면과 똑같이 보이게 둔다.
   function renderRow(container, item, opts) {
     opts = opts || {};
     var row = document.createElement("div");
@@ -632,23 +421,9 @@ const script = `
     row.className = "row" + (currentNames.length > 0 ? " checked" : "");
     row.setAttribute("data-id", item.id);
 
-    var slotsWrap = document.createElement("div");
-    slotsWrap.className = "name-slots";
-
     var indicator = document.createElement("div");
     indicator.className = "check";
-    indicator.textContent = currentNames.length > 0 ? "\\u2713" : "";
-    indicator.title = "이름 적기";
-    // 눌러도 아무 일이 없으면 고장난 것처럼 보인다. 빈 이름칸으로 보내 준다.
-    // 인원수에는 신청자 본인도 들어간다. 첫 칸에 미리 채워 둔 이름을 여기서 확정한다(= 본인 도착).
-    indicator.addEventListener("click", function () {
-      if (!namesFor(item.id).length && collectNames().length) commitNames();
-      var inputs = slotsWrap.querySelectorAll(".name-slot-input");
-      for (var i = 0; i < inputs.length; i++) {
-        if (!inputs[i].value.trim()) { inputs[i].focus(); return; }
-      }
-      addSlot("").focus();
-    });
+    indicator.textContent = currentNames.length > 0 ? "\u2713" : "";
     row.appendChild(indicator);
 
     var info = document.createElement("div");
@@ -667,91 +442,28 @@ const script = `
       nameLine.appendChild(tag);
     }
 
-    var countLabel = document.createElement("div");
-    countLabel.className = "guest-count";
-
-    function collectNames() {
-      var names = [];
-      Array.prototype.forEach.call(slotsWrap.querySelectorAll(".name-slot-input"), function (inp) {
-        var v = inp.value.trim();
-        if (v) names.push(v);
-      });
-      return names;
-    }
-
-    function commitNames() {
-      var names = collectNames();
-      Array.prototype.forEach.call(slotsWrap.querySelectorAll(".name-slot-input"), function (inp) {
-        inp.classList.remove("seeded");
-      });
-      setNames(item.id, names);
-      row.classList.toggle("checked", names.length > 0);
-      indicator.textContent = names.length > 0 ? "\\u2713" : "";
-      countLabel.textContent = names.length + "명 기록됨";
-      updateSummary();
-    }
-
-    // 첫 칸은 신청자 본인 자리다. 빈 칸에 본인 이름이 흐리게 떠 있어야
-    // "동행만 적는 칸"으로 오해하지 않는다.
-    function refreshPlaceholders() {
-      var inputs = slotsWrap.querySelectorAll(".name-slot-input");
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].placeholder = (i === 0 && !opts.isWalkin && item.name) ? item.name : "이름";
-      }
-    }
-
-    // 칸 사이에 삭제(×) 버튼을 두면 이름 칸을 나누는 구분자처럼 보여서 두지 않는다.
-    // 대신 비운 칸은 포커스가 빠질 때 스스로 사라진다(마지막 한 칸은 남긴다).
-    function addSlot(value) {
-      var input = document.createElement("input");
-      input.type = "text";
-      input.className = "name-slot-input";
-      input.placeholder = "이름";
-      input.value = value || "";
-      input.addEventListener("input", commitNames);
-      input.addEventListener("blur", function () {
-        if (input.value.trim()) return;
-        if (slotsWrap.querySelectorAll(".name-slot-input").length <= 1) return;
-        input.remove();
-        refreshPlaceholders();
-        commitNames();
-      });
-
-      slotsWrap.insertBefore(input, addBtn);
-      refreshPlaceholders();
-      return input;
-    }
-
-    var addBtn = document.createElement("button");
-    addBtn.type = "button";
-    addBtn.className = "name-slot-add";
-    addBtn.textContent = "+ 추가";
-    addBtn.addEventListener("click", function () {
-      var input = addSlot("");
-      input.focus();
-    });
-    slotsWrap.appendChild(addBtn);
-
-    // 아직 아무도 안 적힌 예약 행은 첫 칸에 신청자 이름을 미리 넣어 둔다.
-    // placeholder 로만 두면 운영진이 그 칸에 동행 이름을 적어 버려 본인이 인원수에서 빠진다.
-    // 아직 '기록'은 아니므로 seeded 로 흐리게 두고, 뭐라도 확정되는 순간 같이 올라간다.
+    var slotsWrap = document.createElement("div");
+    slotsWrap.className = "name-slots";
     var seeded = !currentNames.length && !opts.isWalkin && !!item.name;
     var initialNames = currentNames.length ? currentNames : [seeded ? item.name : ""];
-    initialNames.forEach(function (n) {
-      var input = addSlot(n);
-      if (seeded) input.classList.add("seeded");
+    initialNames.forEach(function (n, i) {
+      var input = document.createElement("input");
+      input.type = "text";
+      input.className = "name-slot-input" + (seeded ? " seeded" : "");
+      input.placeholder = (i === 0 && !opts.isWalkin && item.name) ? item.name : "이름";
+      input.value = n || "";
+      input.readOnly = true;
+      slotsWrap.appendChild(input);
     });
-    countLabel.textContent = currentNames.length + "명 기록됨";
-
     nameLine.appendChild(slotsWrap);
     info.appendChild(nameLine);
 
     var meta = document.createElement("div");
     meta.className = "meta" + (opts.isWalkin ? " walkin-meta" : "");
     if (opts.isWalkin) {
-      // 워크인도 어느 회차에 들어갔는지 남아야 나중에 회차별 인원을 셀 수 있다.
       var timeSelect = document.createElement("select");
       timeSelect.className = "walkin-time-select";
+      timeSelect.disabled = true;
       timeSlotOptions().forEach(function (slot) {
         var opt = document.createElement("option");
         opt.value = slot.value;
@@ -759,35 +471,21 @@ const script = `
         if ((item.time || "") === slot.value) opt.selected = true;
         timeSelect.appendChild(opt);
       });
-      timeSelect.addEventListener("change", function () {
-        item.time = timeSelect.value || null;
-        saveState();
-        queueRemoteSave(item.id);
-      });
       meta.appendChild(timeSelect);
 
-      // 비고를 아래 줄에 따로 두면 워크인 한 칸이 세 줄이 돼 스크롤이 길어진다.
-      // 회차 오른쪽에 붙여 한 줄로 만든다.
       var noteInput = document.createElement("input");
       noteInput.type = "text";
       noteInput.className = "walkin-note-input";
       noteInput.placeholder = "비고 (선택)";
       noteInput.value = item.note || "";
-      noteInput.addEventListener("input", function () {
-        item.note = noteInput.value;
-        saveState();
-        queueRemoteSave(item.id);
-      });
+      noteInput.readOnly = true;
       meta.appendChild(noteInput);
     } else {
       var metaTimeSpan = document.createElement("span");
       metaTimeSpan.className = "time";
       metaTimeSpan.textContent = fmtTime(item.time);
       meta.appendChild(metaTimeSpan);
-    }
-    if (!opts.isWalkin) {
-      // 맞이할 때 쓰는 순서대로 늘어놓는다: 회차 → 연락처 → 예상 인원 → 비고.
-      // 현장에서 안 온 팀에 연락할 일이 생긴다. 번호를 눌러 바로 걸거나 문자로 넘어가게 한다.
+      // 회차 → 연락처 → 예상 인원 → 비고 순서.
       if (item.phone) {
         var digits = item.phone.split("-").join("").split(" ").join("");
         meta.appendChild(document.createTextNode(" · "));
@@ -803,7 +501,6 @@ const script = `
         meta.appendChild(smsLink);
       }
       meta.appendChild(document.createTextNode(" · 예상 " + fmtHeadcount(item)));
-      // 비고는 줄을 따로 쓰지 않고 예약정보 뒤에 이어 붙인다(카드 높이 최소화).
       if (item.note) {
         var noteSpan = document.createElement("span");
         noteSpan.className = "note";
@@ -813,23 +510,12 @@ const script = `
     }
     info.appendChild(meta);
 
+    var countLabel = document.createElement("div");
+    countLabel.className = "guest-count";
+    countLabel.textContent = currentNames.length + "명 기록됨";
     info.appendChild(countLabel);
 
     row.appendChild(info);
-
-    if (opts.isWalkin) {
-      var del = document.createElement("button");
-      del.type = "button";
-      del.className = "del-btn";
-      del.setAttribute("aria-label", "삭제");
-      del.textContent = "\\u00d7";
-      del.addEventListener("click", function (e) {
-        e.stopPropagation();
-        removeWalkin(item.id);
-      });
-      row.appendChild(del);
-    }
-
     container.appendChild(row);
   }
 
@@ -873,23 +559,6 @@ const script = `
     updateSummary();
   }
 
-  function addWalkin() {
-    var id = "walkin_" + Date.now() + "_" + Math.random().toString(36).slice(2, 7);
-    var walkin = {
-      id: id,
-      name: "",
-      phone: "",
-      note: "",
-      date: selectedDate,
-      time: defaultWalkinTime(),
-      addedAt: Date.now(),
-    };
-    state.walkins.push(walkin);
-    saveState();
-    remoteSaveNow(id);
-    render();
-  }
-
   function unlock() {
     document.getElementById("gate").style.display = "none";
     document.getElementById("app").style.display = "block";
@@ -908,19 +577,6 @@ const script = `
   document.getElementById("gate-pw").addEventListener("keydown", function (e) {
     if (e.key === "Enter") document.getElementById("gate-btn").click();
   });
-
-  document.getElementById("add-walkin-btn").addEventListener("click", addWalkin);
-
-  document.getElementById("reset-btn").addEventListener("click", function () {
-    if (!confirm("이 기기에 저장된 방명록 기록을 모두 지울까요?")) return;
-    state = { guestbook: {}, walkins: [] };
-    saveState();
-    render();
-  });
-
-  if (window.MunmakCheckinSync) attachSync();
-  else window.addEventListener("munmak-sync-ready", attachSync);
-  renderSyncStatus();
 })();
 `;
 
@@ -930,10 +586,6 @@ const pageData = {
   stylesheets: [],
   body,
   scripts: [
-    {
-      attributes: { type: "module", src: "/munmak-checkin-sync.js" },
-      content: "",
-    },
     {
       attributes: { type: "text/javascript" },
       content: script,
