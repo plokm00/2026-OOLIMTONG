@@ -95,6 +95,8 @@ export async function PUT(request) {
     // 작가 노트 페이지는 게시된 노트를 서버에서 미리 담아 내려보낸다. 방금 게시한 글이
     // 다음 재생성 주기까지 묻히지 않도록 여기서 바로 캐시를 비운다.
     revalidatePath("/oolimtong_2026_wcf_artists");
+    // 한국어 이름 주소의 작가 개인 페이지(/김주원 등)도 게시된 노트를 담는다.
+    revalidatePath("/[artist]", "page");
     return json(result);
   } catch (error) {
     return errorResponse(error);
