@@ -56,7 +56,7 @@ export default function ArtistPage({ artist, note }) {
 
       <nav className="ap-top" aria-label="울림통-변주 2026">
         <a className="ap-brand" href="/oolimtong_2026_wcf">NINNIK × 울림통-변주 2026</a>
-        <a className="ap-top-link" href="/oolimtong_2026_wcf_artists">참여 작가 17인</a>
+        <a className="ap-top-link" href="/artist">참여 작가 17인</a>
       </nav>
 
       <header className="ap-head">
