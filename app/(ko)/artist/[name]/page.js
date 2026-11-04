@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 
-import ArtistPage from "../../_components/artist-page";
-import { artistPageBySlug, artistPages } from "../../_content/artist-pages";
-import { getPublishedArtistNote } from "../../_lib/artist-note-store";
+import ArtistPage from "../../../_components/artist-page";
+import { artistPageBySlug, artistPages } from "../../../_content/artist-pages";
+import { getPublishedArtistNote } from "../../../_lib/artist-note-store";
 
 // 17인의 이름만 주소로 연다. 그 밖의 한 단어 주소는 지금처럼 404가 난다.
 export const dynamicParams = false;
@@ -12,18 +12,18 @@ export const dynamicParams = false;
 export const revalidate = 600;
 
 export function generateStaticParams() {
-  return artistPages.map((artist) => ({ artist: artist.slug }));
+  return artistPages.map((artist) => ({ name: artist.slug }));
 }
 
 export async function generateMetadata({ params }) {
-  const { artist: slug } = await params;
+  const { name: slug } = await params;
   const artist = artistPageBySlug(slug);
   if (!artist) return {};
   const title = `${artist.name} — 울림통-변주 2026`;
   const description = artist.workTitle
     ? `${artist.name} 〈${artist.workTitle}〉 · 울림통-변주 2026 참여 작가`
     : `울림통-변주 2026 참여 작가 ${artist.name}`;
-  const url = `https://ninnikkraft.vercel.app/${encodeURIComponent(artist.slug)}`;
+  const url = `https://ninnikkraft.vercel.app/artist/${encodeURIComponent(artist.slug)}`;
   return {
     title,
     description,
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  const { artist: slug } = await params;
+  const { name: slug } = await params;
   const artist = artistPageBySlug(slug);
   if (!artist) notFound();
 
