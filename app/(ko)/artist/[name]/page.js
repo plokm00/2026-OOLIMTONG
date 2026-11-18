@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import ArtistPage from "../../../_components/artist-page";
+import ArtistProfilePage from "../../../_components/artist-profile-page";
 import ArtistExhibitionPage from "../../../_components/artist-exhibition-page";
 import { artistExhibitions } from "../../../_content/artist-exhibitions";
 import { artistPageBySlug, artistPages } from "../../../_content/artist-pages";
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }) {
   if (!artist) return {};
   const exhibition = artistExhibitions[artist.id];
   const title = `${artist.name} — 울림통-변주 2026`;
-  const workTitle = exhibition?.title ?? artist.workTitle;
+  const workTitle = artist.profile?.workTitle ?? exhibition?.title ?? artist.workTitle;
   const description = workTitle
     ? `${artist.name} 〈${workTitle}〉 · 울림통-변주 2026 참여 작가`
     : `울림통-변주 2026 참여 작가 ${artist.name}`;
@@ -37,7 +38,9 @@ export async function generateMetadata({ params }) {
       url,
       title,
       description,
-      images: [exhibition
+      images: [artist.profile?.workImage
+        ? { url: `https://ninnikkraft.vercel.app${artist.profile.workImage}`, alt: `${artist.name} 〈${artist.profile.workTitle}〉` }
+        : exhibition
         ? { url: `https://ninnikkraft.vercel.app/artist-exhibition/${artist.id}/artwork.webp`, alt: exhibition.artworkAlt }
         : { url: `https://ninnikkraft.vercel.app${artist.photo}`, alt: `${artist.name} 프로필 사진` }],
     },
@@ -57,6 +60,8 @@ export default async function Page({ params }) {
     note = null;
   }
 
+  // 허양·김주원은 흰 바탕 전시 프로필 시안(profile), 이채명·박진희는 exhibition 시안, 나머지는 기존 페이지.
+  if (artist.profile) return <ArtistProfilePage artist={artist} note={note} />;
   const exhibition = artistExhibitions[artist.id];
   return exhibition
     ? <ArtistExhibitionPage artist={artist} exhibition={exhibition} note={note} />
