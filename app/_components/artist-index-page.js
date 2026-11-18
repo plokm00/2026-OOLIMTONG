@@ -27,6 +27,10 @@ const CSS = `
   .xi-title { margin:0; font-size:clamp(44px, 12.5vw, 76px); line-height:1.05; letter-spacing:-.02em; color:var(--xp-navy); }
   .xi-lead { margin:18px 0 0; color:var(--xp-navy); font-size:18px; line-height:1.75; word-break:keep-all; }
 
+  /* 단체 사진 — 머리글과 17인 목록 사이 */
+  .xi-group { margin:0 0 48px; }
+  .xi-group img { display:block; width:100%; height:auto; background:var(--xp-soft); }
+  .xi-group figcaption { margin-top:8px; color:var(--xp-dim); font-size:11.5px; line-height:1.6; word-break:keep-all; }
   .xi-grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:26px 14px; margin:0; padding:0; list-style:none; }
   .xi-card { display:block; color:inherit; text-decoration:none; }
   .xi-photo { aspect-ratio:4/5; overflow:hidden; background:var(--xp-soft); }
@@ -48,6 +52,7 @@ const CSS = `
 
   @media (min-width:560px) { .xi-grid { grid-template-columns:repeat(3, minmax(0,1fr)); } }
   @media (min-width:760px) {
+    .xi-group { margin-bottom:64px; }
     .xi { padding-top:26px; }
     .xi-head { padding:64px 0 48px; }
     .xi-lead { font-size:19px; }
@@ -70,6 +75,11 @@ export default function ArtistIndexPage({ artists }) {
         <h1 className="xi-title">시민작가 {artists.length}인</h1>
         <p className="xi-lead">이름을 누르면 작가와 작품 이야기를 볼 수 있습니다.</p>
       </header>
+
+      <figure className="xi-group">
+        <img src="/artist-media/group-photo.webp" alt="대형 울림통 앞에 모인 시민작가와 가족들" width="1840" height="859" />
+        <figcaption>당일 함께하지 못한 4인은 AI를 활용해 합성하였습니다.</figcaption>
+      </figure>
 
       <ul className="xi-grid">
         {artists.map((artist) => (
