@@ -26,7 +26,8 @@ import { artists } from "./artist-notes";
 //   profile.workImage 맨 위에 크게 보이는 작품 사진(배경이 투명한 webp)
 //   profile.photos    작업하는 작가 사진 3장(4:5) [{ src, alt }]
 //   profile.venue     개인 모뉴먼트 전시장소 { name, address, period, hours }
-//   profile.playlist  배경음악. [{ src, title, note }]
+//   profile.installPhotos 전시 전경 사진 [{ src, alt }] — 비어 있으면 빈 칸만 둔다(이미지 태그 없음)
+//   profile.playlist  배경음악. [{ src, title, note }] — 변주곡은 작가마다 1곡
 //                     v_ 변주곡은 title을 "소녀들의 언덕 테마 변주곡"으로, note에 편곡 성격을 적는다.
 //
 // 이 밖에 팀 작품(대형 울림통)과 게시된 작가 노트는 기존 데이터에서 자동으로 함께 보여 준다.
@@ -51,10 +52,9 @@ const details = {
         period: "2026.11.21.(토) ~ 11.28.(토)",
         hours: "11:00 – 17:00 · 일요일 휴무",
       },
-      // 피아노 치는 작가 → 피아노 변주, 추억을 담는 카메라 → 아련한 로파이 변주
+      // 피아노 치는 작가 → 피아노 변주. 변주곡은 작가마다 한 곡만 고른다.
       playlist: [
         { src: "/artist-music/variation-gentlepiano.mp3", title: "소녀들의 언덕 테마 변주곡", note: "피아노" },
-        { src: "/artist-music/variation-ambientlofi.mp3", title: "소녀들의 언덕 테마 변주곡", note: "앰비언트 로파이" },
       ],
     },
   },
