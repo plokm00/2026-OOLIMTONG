@@ -44,7 +44,7 @@ const CSS = `
   .xi-foot { margin-top:72px; color:var(--xp-dim); font-size:12px; line-height:1.9; }
   .xi-foot-links { display:flex; flex-wrap:wrap; gap:6px 18px; margin-bottom:14px; }
   .xi-foot a { color:var(--xp-blue); text-decoration:none; font-weight:700; }
-  .xi-credit b { color:var(--xp-navy); font-weight:700; }
+  .xi-foot a.xi-home { color:var(--xp-navy); }
 
   @media (min-width:560px) { .xi-grid { grid-template-columns:repeat(3, minmax(0,1fr)); } }
   @media (min-width:760px) {
@@ -93,7 +93,7 @@ export default function ArtistIndexPage({ artists }) {
           <a href="/oolimtong_2026_wcf_record">팀별 작업 기록 →</a>
           <a href="/oolimtong_2026_wcf">메인으로 →</a>
         </div>
-        <p className="xi-credit"><b>니닉크라프트</b> · 원주문화재단 보조금 지원사업</p>
+        <p className="xi-credit"><a className="xi-home" href="https://ninnikkraft.vercel.app/">니닉크라프트</a> · 원주문화재단 보조금 지원사업</p>
       </footer>
     </main>
   );

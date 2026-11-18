@@ -7,6 +7,7 @@ import { trackSeconds } from "../_content/artist-music-lengths";
 // 작가 전시 프로필의 배경음악 플레이어 — 화면 아래에 붙어 있고, 켜기·끄기·소리 크기·곡 목록을 다룬다.
 // 브라우저는 소리가 나는 자동재생을 막으므로, 처음 스크롤하거나 누르는 순간 재생을 시작한다(플레이어에서 끄면 다시 켜지지 않는다).
 // 음원은 preload="none" — 재생 전에는 파일을 받지 않는다.
+// 재생 목록은 반복한다: 마지막 곡이 끝나면 첫 곡으로, 한 곡뿐이면 그 곡을 되풀이한다.
 
 const VOLUME_KEY = "artist-bgm-volume";
 
@@ -178,6 +179,7 @@ export default function ArtistBgmPlayer({ tracks }) {
         ref={audioRef}
         src={track.src}
         preload="none"
+        loop={tracks.length === 1}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
         onEnded={() => choose(index + 1)}

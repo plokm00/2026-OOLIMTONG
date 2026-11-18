@@ -58,7 +58,7 @@ const details = {
       summary: "작가는 울림통이 소리를 담듯,\n카메라가 추억을 담는다고 생각했습니다.",
       workImage: "/artist-media/kim-juwon-work.webp",
       photos: [
-        { src: "/artist-media/kim-juwon-photo-1.webp", alt: "나리움 터에서 흙을 나르는 김주원" },
+        { src: "/artist-media/kim-juwon-photo-1.webp", alt: "나리움 안에 들어가 앉은 김주원" },
         { src: "/artist-media/kim-juwon-photo-2.webp", alt: "나리움의 첫 타래를 놓는 김주원" },
         { src: "/artist-media/kim-juwon-photo-3.webp", alt: "흙 타래를 들고 있는 김주원" },
       ],
@@ -98,7 +98,7 @@ const details = {
       year: "2026",
       summary: "작가는 치악산이 보이는 거실의 창가에\n머리를 넣고 쉴 수 있는 자리를 구상합니다.",
       workImage: "/artist-media/min-jihyeon-work.webp",
-      photos: photos("min-jihyeon", ["흙 타래를 미는 민지현", "타래를 고르는 민지현", "둥근 벽을 쌓는 민지현"]),
+      photos: photos("min-jihyeon", ["둥근 벽에 타래를 붙이는 민지현", "타래를 고르는 민지현", "둥근 벽을 쌓는 민지현"]),
       venue: PRIVATE_SPACE,
       // 머리를 넣고 쉬는 자리 → 느긋한 앰비언트 로파이
       playlist: [variation("ambientlofi", "앰비언트 로파이")],
@@ -128,7 +128,7 @@ const details = {
       year: "2026",
       summary: "작가는 마루의 편안함을 둥근 공간에 담아\n잠시 쉬어 가고 싶은 마음을 전합니다.",
       workImage: "/artist-media/park-suyeon-work.webp",
-      photos: photos("park-suyeon", ["코아 앞에서 웃는 박수연", "〈마루〉를 빚는 박수연", "〈마루〉에 색을 입히는 박수연"]),
+      photos: photos("park-suyeon", ["코아 앞에서 웃는 박수연", "〈마루〉를 빚는 박수연", "야외에서 〈마루〉를 마감하는 박수연"]),
       venue: PRIVATE_SPACE,
       // 잠시 쉬어 가는 마음 → 느린 슬로코어
       playlist: [variation("slowcore", "슬로코어")],
@@ -143,10 +143,10 @@ const details = {
       year: "2026",
       summary: "작가는 할로윈 호박을 닮은 형상에\n흙을 만진 손자국을 그대로 남겼습니다.",
       workImage: "/artist-media/park-jinhee-work.webp",
-      photos: photos("park-jinhee", ["흙을 주무르는 박진희", "흙판을 만지는 박진희", "코아 곁에서 노는 박진희"]),
+      photos: photos("park-jinhee", ["흙을 주무르는 박진희", "흙판을 만지는 박진희", "울림통 좌대에 올라 만세하는 박진희"]),
       venue: TTEUL,
-      // 손으로 두드리는 마림바와 셰이커
-      playlist: [variation("malimbashaker01", "마림바·셰이커")],
+      // 여섯 살 작가의 신나는 할로윈 → 치어리딩
+      playlist: [variation("cheerleading", "치어리딩")],
     },
   },
   "shin-jeongsuk": {
@@ -158,7 +158,7 @@ const details = {
       year: "2026",
       summary: "작가는 어릴 적 자주 보고 만들던\n익숙한 형태를 다시 발견합니다.",
       workImage: "/artist-media/shin-jeongsuk-work.webp",
-      photos: photos("shin-jeongsuk", ["네모 팀과 함께한 신정숙", "완성한 Co-Ark 곁의 신정숙", "Co-Ark의 표면을 그을리는 신정숙"]),
+      photos: photos("shin-jeongsuk", ["네모 팀과 함께한 신정숙", "완성한 Co-Ark 곁의 신정숙", "Co-Ark의 지붕을 다듬는 신정숙"]),
       venue: MUNMAK_CHURCH,
       // 별을 보는 마음 → 현악 변주(성당 로비 전시)
       playlist: [variation("strings", "현악")],
@@ -173,7 +173,7 @@ const details = {
       year: "2026",
       summary: "작가는 울림통 안에서 태어난 소리가\n세상을 향하도록, 곳곳에 틈을 열었습니다.",
       workImage: "/artist-media/lee-saerom-work.webp",
-      photos: photos("lee-saerom", ["작업실의 이새롬", "나리움 터에 타래를 놓는 이새롬", "나리움 터의 이새롬"]),
+      photos: photos("lee-saerom", ["작업실에서 흙을 빚는 이새롬", "나리움 터에 타래를 놓는 이새롬", "나리움 터의 이새롬"]),
       venue: { name: "카페 아이하다", address: "원주시 입춘로 45, 222호", period: "2026.11.21. ~ 12.13.", hours: "" },
       // 틈으로 소리가 새어 나오듯 덜어 낸 미니멀 변주
       playlist: [variation("minimal", "미니멀")],
@@ -204,7 +204,7 @@ const details = {
       year: "2026",
       summary: "작가는 처음 구상과 달리 빚어진 형태에서\n흙이 지닌 특유의 자유로움을 발견합니다.",
       workImage: "/artist-media/lee-an-work.webp",
-      photos: photos("lee-an", ["코아의 벽을 쌓는 이안", "코아의 입구를 다듬는 이안", "딸과 함께 작업하는 이안"]),
+      photos: photos("lee-an", ["코아의 벽을 쌓는 이안", "딸과 함께 타래를 놓는 이안", "딸과 함께 작업하는 이안"]),
       venue: { ...TTEUL, label: "IAN" },
       // 자유 → 컨트리
       playlist: [variation("country", "컨트리")],
@@ -219,7 +219,7 @@ const details = {
       year: "2026",
       summary: "작가는 아내와 서로 닮은 형상을 빚었고,\n부부의 다정함은 주변을 온화하게 했습니다.",
       workImage: "/artist-media/lee-jaehong-work.webp",
-      photos: photos("lee-jaehong", ["Co-Ark의 표면을 다듬는 이재홍", "Co-Ark의 벽을 쌓는 이재홍", "Co-Ark에 마감재를 뿌리는 이재홍"]),
+      photos: photos("lee-jaehong", ["Co-Ark의 표면을 다듬는 이재홍", "완성한 Co-Ark 곁의 이재홍", "Co-Ark에 마감재를 뿌리는 이재홍"]),
       venue: MUNMAK_CHURCH,
       // 작가의 아베마리아 두 곡, 그리고 〈SOUL Ⅰ〉의 허양과 짝을 이루는 바흐 칸타타 변주
       playlist: [
@@ -238,7 +238,7 @@ const details = {
       year: "2026",
       summary: "작가는 물방울을 닮은 형상에\n인도어로 ‘보석’을 뜻하는 이름을 붙였습니다.",
       workImage: "/artist-media/lee-chaemyeong-work.webp",
-      photos: photos("lee-chaemyeong", ["〈라트나〉를 다듬는 이채명", "물레 위의 작품을 다듬는 이채명", "코아의 타래를 쌓는 이채명"]),
+      photos: photos("lee-chaemyeong", ["〈라트나〉를 다듬는 이채명", "물레 위의 작품을 다듬는 이채명", "코아의 고리를 함께 쌓는 이채명"]),
       venue: PRIVATE_SPACE,
       // 인도어 이름 ‘라트나’ → 볼리우드
       playlist: [variation("bollywood", "볼리우드")],
@@ -271,7 +271,7 @@ const details = {
       year: "2026",
       summary: "작가는 도토리 캐릭터처럼 귀여운 형상을 빚고\n동료들과 함께 즉석에서 이름을 지었습니다.",
       workImage: "/artist-media/im-gyehwa-work.webp",
-      photos: photos("im-gyehwa", ["흙 타래를 빚는 임계화", "완성한 Co-Ark 곁의 임계화", "작업실의 임계화"]),
+      photos: photos("im-gyehwa", ["흙 그릇을 빚는 임계화", "완성한 Co-Ark 곁의 임계화", "Co-Ark의 표면을 그을리는 임계화"]),
       venue: MUNMAK_CHURCH,
       // 귀여운 도토리 → 통통 튀는 마림바·셰이커
       playlist: [variation("malimbashaker02", "마림바·셰이커")],
@@ -286,7 +286,7 @@ const details = {
       year: "2026",
       summary: "작가는 고래를 조각하는 작은 피규어에\n자유를 만들어 가는 자신을 투영합니다.",
       workImage: "/artist-media/cho-youngbeom-work.webp",
-      photos: photos("cho-youngbeom", ["고래를 빚는 조영범", "완성한 Co-Ark 곁의 조영범", "나리움 터에서 작업하는 조영범"]),
+      photos: photos("cho-youngbeom", ["Co-Ark의 지붕을 다듬는 조영범", "완성한 Co-Ark 곁의 조영범", "나리움 터에서 작업하는 조영범"]),
       venue: { name: "해피스토리", address: "원주시 현충로 322번길 8", period: "2026.11.21. ~ 12.12.", hours: "일요일 휴무" },
       // 작가의 곡 TRIP과, 고래가 헤엄치는 듯한 시네마틱 변주
       playlist: [
@@ -304,7 +304,7 @@ const details = {
       year: "2026",
       summary: "작가는 배우가 목소리로 감정을 표현하는\n순간을 형태로 옮겼습니다.",
       workImage: "/artist-media/joo-jangseok-work.webp",
-      photos: photos("joo-jangseok", ["〈발성〉을 빚는 주장석", "〈발성〉의 입을 다듬는 주장석", "작업대 앞의 주장석"]),
+      photos: photos("joo-jangseok", ["〈발성〉을 빚는 주장석", "〈발성〉의 입을 다듬는 주장석", "야외 현장에서 대형 울림통을 쌓는 주장석"]),
       venue: { name: "예무아트컴퍼니 연습실", address: "원주시 현석길 11-3, 지하", period: "2026.11.21. ~ 12.13.", hours: "" },
       // 무대의 목소리 → 타악기가 이끄는 관현악 변주
       playlist: [variation("percussion-ledorchestral", "타악 관현악")],
