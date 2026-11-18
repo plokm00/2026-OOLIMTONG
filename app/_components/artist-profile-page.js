@@ -60,7 +60,7 @@ const CSS = `
   .xp-work::after { content:""; position:absolute; left:50%; bottom:36px; width:min(52%, 280px); height:22px; transform:translateX(-50%);
     border-radius:50%; background:radial-gradient(closest-side, rgba(40,30,20,.24), rgba(40,30,20,0)); }
 
-  .xp-label { margin:0 0 10px; color:var(--xp-blue); font-size:11px; font-weight:700; letter-spacing:.14em; }
+  .xp-label { margin:0 0 14px; color:var(--xp-blue); font-size:13px; font-weight:700; letter-spacing:.02em; }
   .xp-title { margin:0; font-size:clamp(44px, 12.5vw, 76px); line-height:1.05; letter-spacing:-.02em; color:var(--xp-navy); }
   .xp-specs { margin:14px 0 0; padding:0; list-style:none; color:var(--xp-dim); font-size:14px; line-height:1.7; }
   .xp-summary { margin:20px 0 0; color:var(--xp-navy); font-size:18px; line-height:1.75; word-break:keep-all; }
@@ -152,7 +152,6 @@ export default function ArtistProfilePage({ artist, note }) {
           </figure>
         ) : <div />}
         <div>
-          <p className="xp-label">WORK</p>
           <h1 className="xp-title" id="xp-work-title">{p.workTitle}</h1>
           <ul className="xp-specs">
             {p.materials ? <li>{p.materials}</li> : null}
@@ -177,7 +176,6 @@ export default function ArtistProfilePage({ artist, note }) {
       </section>
 
       <section className="xp-block" aria-labelledby="xp-show-title">
-        <p className="xp-label">EXHIBITION</p>
         <h2 className="xp-show" id="xp-show-title">울림통 – <span>변주</span></h2>
         <div className="xp-venues">
           {p.venue ? (
@@ -199,20 +197,17 @@ export default function ArtistProfilePage({ artist, note }) {
 
       {/* 전시 전경 — 사진이 들어오기 전까지는 빈 칸만 둔다(이미지 태그를 만들지 않는다). */}
       <section className="xp-block" id="installation" aria-label="전시 전경">
-        <p className="xp-label">INSTALLATION · 전시 전경</p>
         {p.installPhotos?.length ? <PhotoGrid photos={p.installPhotos} /> : <div className="xp-install is-empty" />}
       </section>
 
       {p.photos?.length ? (
         <section className="xp-block" aria-label={`작업하는 ${artist.name}`}>
-          <p className="xp-label">PROCESS · 작업 기록</p>
           <PhotoGrid photos={p.photos} />
         </section>
       ) : null}
 
       {body ? (
         <section className="xp-block" id="note" aria-labelledby="xp-note-title">
-          <p className="xp-label">ARTIST NOTE</p>
           <h2 className="xp-h2" id="xp-note-title">작가 노트</h2>
           <p className="xp-text">{body}</p>
         </section>
@@ -220,7 +215,7 @@ export default function ArtistProfilePage({ artist, note }) {
 
       {teamWorks.length ? (
         <section className="xp-block" id="team" aria-label="함께 만든 대형 울림통">
-          <p className="xp-label">TOGETHER · 함께 만든 대형 울림통</p>
+          <p className="xp-label">함께 만든 대형 울림통</p>
           {teamWorks.map((work) => (
             <div className="xp-team-work" key={work.team}>
               {work.thumb ? (

@@ -24,7 +24,6 @@ const CSS = `
   @media (min-width:760px) { .xi-brand { font-size:13px; letter-spacing:.07em; } .xi-brand i { margin:0 1.1em; } }
 
   .xi-head { padding:42px 0 34px; }
-  .xi-label { margin:0 0 10px; color:var(--xp-blue); font-size:11px; font-weight:700; letter-spacing:.14em; }
   .xi-title { margin:0; font-size:clamp(44px, 12.5vw, 76px); line-height:1.05; letter-spacing:-.02em; color:var(--xp-navy); }
   .xi-lead { margin:18px 0 0; color:var(--xp-navy); font-size:18px; line-height:1.75; word-break:keep-all; }
 
@@ -68,7 +67,6 @@ export default function ArtistIndexPage({ artists }) {
       </nav>
 
       <header className="xi-head">
-        <p className="xi-label">CITIZEN ARTISTS</p>
         <h1 className="xi-title">시민작가 {artists.length}인</h1>
         <p className="xi-lead">이름을 누르면 작가와 작품 이야기를 볼 수 있습니다.</p>
       </header>
