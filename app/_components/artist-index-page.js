@@ -59,8 +59,8 @@ export default function ArtistIndexPage({ artists }) {
       </ul>
 
       <footer className="ai-foot">
-        <a href="/oolimtong_2026_wcf_artists">작가 노트 모아보기 →</a>
-        <a href="/oolimtong_2026_wcf">울림통-변주 2026 →</a>
+        <a href="/oolimtong_2026_wcf_record">팀별 작업 기록 →</a>
+        <a href="/oolimtong_2026_wcf">메인으로 →</a>
       </footer>
     </main>
   );
