@@ -34,6 +34,9 @@ const CSS = `
   .xi-grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:26px 14px; margin:0; padding:0; list-style:none; }
   .xi-card { display:block; color:inherit; text-decoration:none; }
   .xi-photo { aspect-ratio:4/5; overflow:hidden; background:var(--xp-soft); }
+  /* 모뉴먼트 컷아웃 — 사진 오른쪽 아래 모서리에 도장처럼 반쯤 걸쳐 둔다 */
+  .xi-fig { position:relative; }
+  .xi-mon { position:absolute; right:-8px; bottom:-30px; width:52%; height:auto; pointer-events:none; filter:drop-shadow(0 3px 6px rgba(23,20,90,.18)); transition:transform .3s ease; }
   .xi-photo img { display:block; width:100%; height:100%; object-fit:cover; transition:transform .3s ease; }
   .xi-team { display:inline-block; margin:12px 0 6px; padding:2px 8px 3px; background:#dff3e6; color:var(--xp-green); font-size:11.5px; font-weight:700; }
   .xi-name { margin:0; font-size:26px; line-height:1.1; letter-spacing:-.02em; color:var(--xp-navy); }
@@ -43,6 +46,7 @@ const CSS = `
   @media (hover:hover) and (pointer:fine) {
     .xi-card:hover .xi-name { color:var(--xp-blue); }
     .xi-card:hover .xi-photo img { transform:scale(1.03); }
+    .xi-card:hover .xi-mon { transform:scale(1.12) rotate(-3deg); }
   }
 
   .xi-foot { margin-top:72px; color:var(--xp-dim); font-size:12px; line-height:1.9; }
@@ -85,9 +89,14 @@ export default function ArtistIndexPage({ artists }) {
         {artists.map((artist) => (
           <li key={artist.id}>
             <a className="xi-card" href={`/artist/${encodeURIComponent(artist.slug)}`}>
-              <div className="xi-photo">
-                {artist.photo ? (
-                  <img src={artist.photo} alt="" width="300" height="375" loading="lazy" />
+              <div className="xi-fig">
+                <div className="xi-photo">
+                  {artist.photo ? (
+                    <img src={artist.photo} alt="" width="300" height="375" loading="lazy" />
+                  ) : null}
+                </div>
+                {artist.profile?.monument ? (
+                  <img className="xi-mon" src={artist.profile.monument} alt="" width="420" height="357" loading="lazy" />
                 ) : null}
               </div>
               <p className="xi-team">팀 {artist.team}</p>

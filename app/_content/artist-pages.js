@@ -57,6 +57,8 @@ const details = {
       year: "2026",
       summary: "작가는 울림통이 소리를 담듯,\n카메라가 추억을 담는다고 생각했습니다.",
       workImage: "/artist-media/kim-juwon-work.webp",
+      // 17인 목록 카드에 겹쳐 두는 모뉴먼트 컷아웃(홍보물 망점 이미지에서 잘라냄)
+      monument: "/artist-media/kim-juwon-monument.webp",
       photos: [
         { src: "/artist-media/kim-juwon-photo-1.webp", alt: "나리움 안에 들어가 앉은 김주원" },
         { src: "/artist-media/kim-juwon-photo-2.webp", alt: "나리움의 첫 타래를 놓는 김주원" },
