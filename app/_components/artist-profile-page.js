@@ -84,6 +84,9 @@ const CSS = `
   .xp-when { margin:2px 0 0; color:var(--xp-dim); font-size:14px; line-height:1.6; }
 
   .xp-grid { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:10px; }
+  /* 사진이 세 장보다 많으면 한 줄로 두고 가로로 넘겨 본다 — 한 화면에 세 장 너비, 넷째 장이 살짝 보이게 */
+  .xp-grid.is-scroll { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; overscroll-behavior-x:contain; -webkit-overflow-scrolling:touch; padding-bottom:8px; scrollbar-width:thin; }
+  .xp-grid.is-scroll .xp-photo { flex:0 0 calc((100% - 20px) / 2.8); scroll-snap-align:start; }
   .xp-install { aspect-ratio:2/1; background:var(--xp-soft); }
 
   .xp-h2 { margin:0 0 18px; font-size:28px; color:var(--xp-navy); }
@@ -118,7 +121,7 @@ const CSS = `
 
 function PhotoGrid({ photos }) {
   return (
-    <div className="xp-grid">
+    <div className={photos.length > 3 ? "xp-grid is-scroll" : "xp-grid"}>
       {photos.map((photo) => (
         <div className="xp-photo" key={photo.src}>
           <img src={photo.src} alt={photo.alt} width="880" height="1100" loading="lazy" />

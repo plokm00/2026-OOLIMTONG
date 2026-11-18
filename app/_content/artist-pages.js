@@ -83,7 +83,7 @@ const details = {
       year: "2026",
       summary: "작가는 태초의 인공 울림통으로 가슴을\n울리는 악기, 북을 가장 먼저 떠올렸습니다.",
       workImage: "/artist-media/kim-hyeonguk-work.webp",
-      photos: photos("kim-hyeonguk", ["나리움 터에 흙 타래를 놓는 김현국", "나리움의 벽을 쌓는 김현국", "작업실에서 형태를 다듬는 김현국"]),
+      photos: photos("kim-hyeonguk", ["나리움 터에 흙 타래를 놓는 김현국", "나리움의 벽을 쌓는 김현국", "나리움의 굽이진 벽을 다듬는 김현국"]),
       venue: MIPPEUDA,
       // 북 → 팀파니와 북이 이끄는 변주
       playlist: [variation("timpanidrums", "팀파니·드럼")],
@@ -98,7 +98,7 @@ const details = {
       year: "2026",
       summary: "작가는 치악산이 보이는 거실의 창가에\n머리를 넣고 쉴 수 있는 자리를 구상합니다.",
       workImage: "/artist-media/min-jihyeon-work.webp",
-      photos: photos("min-jihyeon", ["둥근 벽에 타래를 붙이는 민지현", "타래를 고르는 민지현", "둥근 벽을 쌓는 민지현"]),
+      photos: photos("min-jihyeon", ["둥근 벽에 타래를 붙이는 민지현", "흙 타래를 빚는 민지현", "작업대에서 형태를 만드는 민지현", "아이와 함께 흙을 빚는 민지현", "작업대 앞의 민지현"]),
       venue: PRIVATE_SPACE,
       // 머리를 넣고 쉬는 자리 → 느긋한 앰비언트 로파이
       playlist: [variation("ambientlofi", "앰비언트 로파이")],
@@ -113,7 +113,7 @@ const details = {
       year: "2026",
       summary: "작가는 즐거웠던 여름 시절을\n소라와 닮은 향꽂이에 담고자 합니다.",
       workImage: "/artist-media/park-soyeon-work.webp",
-      photos: photos("park-soyeon", ["코아의 안쪽을 다듬는 박소연", "흙을 매만지는 박소연", "코아 곁의 박소연"]),
+      photos: photos("park-soyeon", ["고리 팀과 함께한 박소연", "작품을 빚는 박소연", "이안과 함께 도안을 그리는 박소연"]),
       venue: TTEUL,
       // 소라처럼 바람이 울리는 오카리나
       playlist: [variation("okarina01", "오카리나")],
@@ -143,7 +143,7 @@ const details = {
       year: "2026",
       summary: "작가는 할로윈 호박을 닮은 형상에\n흙을 만진 손자국을 그대로 남겼습니다.",
       workImage: "/artist-media/park-jinhee-work.webp",
-      photos: photos("park-jinhee", ["흙을 주무르는 박진희", "흙판을 만지는 박진희", "울림통 좌대에 올라 만세하는 박진희"]),
+      photos: photos("park-jinhee", ["흙을 주무르는 박진희", "작은 울림통을 빚는 박진희의 손", "울림통 좌대에 올라 만세하는 박진희"]),
       venue: TTEUL,
       // 여섯 살 작가의 신나는 할로윈 → 치어리딩
       playlist: [variation("cheerleading", "치어리딩")],
@@ -173,7 +173,7 @@ const details = {
       year: "2026",
       summary: "작가는 울림통 안에서 태어난 소리가\n세상을 향하도록, 곳곳에 틈을 열었습니다.",
       workImage: "/artist-media/lee-saerom-work.webp",
-      photos: photos("lee-saerom", ["작업실에서 흙을 빚는 이새롬", "나리움 터에 타래를 놓는 이새롬", "나리움 터의 이새롬"]),
+      photos: photos("lee-saerom", ["작업대에서 흙을 빚는 이새롬", "나리움 터에 타래를 놓는 이새롬", "나리움 터의 이새롬"]),
       venue: { name: "카페 아이하다", address: "원주시 입춘로 45, 222호", period: "2026.11.21. ~ 12.13.", hours: "" },
       // 틈으로 소리가 새어 나오듯 덜어 낸 미니멀 변주
       playlist: [variation("minimal", "미니멀")],
@@ -188,7 +188,7 @@ const details = {
       year: "2026",
       summary: "작가는 흙이 작품의 형태를 정했다고 합니다.\n그 작품의 이름은 ‘예쁜 코’를 뜻합니다.",
       workImage: "/artist-media/lee-seongsun-work.webp",
-      photos: photos("lee-seongsun", ["〈코아〉를 마무리하는 이성순", "〈코아〉를 빚는 이성순", "작업대 앞의 이성순"]),
+      photos: photos("lee-seongsun", ["〈코아〉를 다듬는 이성순", "〈코아〉를 빚는 이성순", "흙 조각을 고르는 이성순"]),
       venue: { name: "클라운지 2호점", address: "원주시 마재3로 24-54, 101호", period: "2026.11.21. ~ 12.13.", hours: "" },
       // ‘예쁜 코’ → 아코디언 샹송
       playlist: [variation("accordionchanson", "아코디언 샹송")],
@@ -204,7 +204,7 @@ const details = {
       year: "2026",
       summary: "작가는 처음 구상과 달리 빚어진 형태에서\n흙이 지닌 특유의 자유로움을 발견합니다.",
       workImage: "/artist-media/lee-an-work.webp",
-      photos: photos("lee-an", ["코아의 벽을 쌓는 이안", "딸과 함께 타래를 놓는 이안", "딸과 함께 작업하는 이안"]),
+      photos: photos("lee-an", ["코아의 벽을 쌓는 이안", "딸과 함께 타래를 놓는 이안", "고리 안에 앉아 보는 이안"]),
       venue: { ...TTEUL, label: "IAN" },
       // 자유 → 컨트리
       playlist: [variation("country", "컨트리")],
@@ -238,7 +238,7 @@ const details = {
       year: "2026",
       summary: "작가는 물방울을 닮은 형상에\n인도어로 ‘보석’을 뜻하는 이름을 붙였습니다.",
       workImage: "/artist-media/lee-chaemyeong-work.webp",
-      photos: photos("lee-chaemyeong", ["〈라트나〉를 다듬는 이채명", "물레 위의 작품을 다듬는 이채명", "코아의 고리를 함께 쌓는 이채명"]),
+      photos: photos("lee-chaemyeong", ["〈라트나〉를 다듬는 이채명", "물레 위의 작품을 다듬는 이채명", "코아의 안쪽을 다듬는 이채명"]),
       venue: PRIVATE_SPACE,
       // 인도어 이름 ‘라트나’ → 볼리우드
       playlist: [variation("bollywood", "볼리우드")],
@@ -286,7 +286,7 @@ const details = {
       year: "2026",
       summary: "작가는 고래를 조각하는 작은 피규어에\n자유를 만들어 가는 자신을 투영합니다.",
       workImage: "/artist-media/cho-youngbeom-work.webp",
-      photos: photos("cho-youngbeom", ["Co-Ark의 지붕을 다듬는 조영범", "완성한 Co-Ark 곁의 조영범", "나리움 터에서 작업하는 조영범"]),
+      photos: photos("cho-youngbeom", ["완성한 Co-Ark 곁의 조영범", "작업 테이블의 조영범", "나리움을 다듬는 조영범"]),
       venue: { name: "해피스토리", address: "원주시 현충로 322번길 8", period: "2026.11.21. ~ 12.12.", hours: "일요일 휴무" },
       // 작가의 곡 TRIP과, 고래가 헤엄치는 듯한 시네마틱 변주
       playlist: [
