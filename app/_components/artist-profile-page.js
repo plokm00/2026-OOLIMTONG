@@ -23,7 +23,10 @@ function noteBody(note) {
 }
 
 const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+  /* 홍보물(포스터·리플렛·미니배너)과 같은 국립박물관문화재단클래식 — 완성형 2350자로 줄여 직접 올린다 */
+  @font-face { font-family:'Museum Classic'; font-weight:500; font-display:swap; src:url('/fonts/museum-classic-M.woff2') format('woff2'); }
+  @font-face { font-family:'Museum Classic'; font-weight:700; font-display:swap; src:url('/fonts/museum-classic-B.woff2') format('woff2'); }
   :root {
     --xp-navy:#17145a; --xp-blue:#1596d8; --xp-green:#169a52;
     --xp-text:#1d1b45; --xp-dim:#5d5b80; --xp-soft:#f3f5f8;
@@ -38,10 +41,10 @@ const CSS = `
   .xp-all { color:var(--xp-navy); font-size:14px; font-weight:700; text-decoration:none; }
   .xp-all:hover { color:var(--xp-blue); }
 
-  /* 제목·이름은 기존 Gowun Dodum 그대로, 굵게(웨이트가 하나뿐이라 획을 덧입혀 진하게) */
+  /* 제목·이름은 홍보물의 박물관체(국립박물관문화재단클래식) Bold */
   .xp-brand, .xp-title, .xp-name, .xp-show, .xp-venue-head, .xp-h2, .xp-team-name {
-    font-family:'Gowun Dodum', sans-serif; font-weight:700; -webkit-text-stroke:.04em currentColor; paint-order:stroke fill; }
-  .xp-summary { font-family:'Gowun Dodum', sans-serif; }
+    font-family:'Museum Classic', 'Noto Sans KR', sans-serif; font-weight:700; }
+  .xp-summary { font-family:'Museum Classic', 'Noto Sans KR', sans-serif; font-weight:500; }
 
   /* 작품 — 은은한 원형 배경과 바닥 그림자로 작품을 앉힌다 */
   .xp-hero { display:grid; gap:8px; margin-top:10px; }
