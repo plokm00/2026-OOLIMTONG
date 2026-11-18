@@ -231,7 +231,6 @@ export default function ArtistProfilePage({ artist, note }) {
       <footer className="xp-foot">
         <div className="xp-foot-links">
           <a className="xp-all" href="/artist">시민작가 17인 ↗</a>
-          <a href={`/oolimtong_2026_wcf_artists#${artist.id}`}>작가 노트 모아보기</a>
           <a href="/oolimtong_2026_wcf_record">팀별 작업 기록</a>
         </div>
         <p className="xp-credit"><b>니닉크라프트</b> · 원주문화재단 보조금 지원사업</p>
