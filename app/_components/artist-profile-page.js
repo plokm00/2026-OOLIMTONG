@@ -18,7 +18,8 @@ const MAIN_SHOW = {
 // 게시된 작가 노트 중 앞부분(작가 노트)만 쓴다. "---" 뒤의 전시 계획은 준비 단계의 글이라 전시 프로필에서는 뺀다.
 function noteBody(note) {
   if (!note) return "";
-  return note.split(/\n\s*-{3,}\s*\n/)[0].trim();
+  // 노트 첫 줄의 "작가 노트" 제목은 페이지 제목과 겹치므로 뺀다.
+  return note.split(/\n\s*-{3,}\s*\n/)[0].trim().replace(/^작가\s*노트\s*\n+/, "").trim();
 }
 
 export default function ArtistProfilePage({ artist, note }) {
