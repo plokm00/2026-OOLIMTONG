@@ -2,11 +2,30 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { trackSeconds } from "../_content/artist-music-lengths";
+
 // 작가 전시 프로필의 배경음악 플레이어 — 화면 아래에 붙어 있고, 켜기·끄기·소리 크기·곡 목록을 다룬다.
 // 브라우저는 소리가 나는 자동재생을 막으므로, 처음 스크롤하거나 누르는 순간 재생을 시작한다(플레이어에서 끄면 다시 켜지지 않는다).
 // 음원은 preload="none" — 재생 전에는 파일을 받지 않는다.
 
 const VOLUME_KEY = "artist-bgm-volume";
+
+// 곡 길이를 3:05처럼 분:초로 쓴다.
+function length(src) {
+  const sec = trackSeconds[src];
+  if (!sec) return "";
+  return `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, "0")}`;
+}
+
+function Meta({ track }) {
+  const len = length(track.src);
+  return (
+    <>
+      {track.note ? <small>{track.note}</small> : null}
+      {len ? <small className="bgm-len">{len}</small> : null}
+    </>
+  );
+}
 
 export default function ArtistBgmPlayer({ tracks }) {
   const audioRef = useRef(null);
@@ -149,6 +168,7 @@ export default function ArtistBgmPlayer({ tracks }) {
         .bgm-list button:hover { background:rgba(255,255,255,.06); }
         .bgm-no { flex:0 0 auto; width:18px; color:#7fd0f5; font-variant-numeric:tabular-nums; }
         .bgm-list small { margin-left:6px; color:#a8a6d4; font-weight:400; }
+        .bgm small.bgm-len { font-variant-numeric:tabular-nums; }
         .bgm-error { margin:0; padding:0 14px 10px; color:#ffd2c8; font-size:12px; }
         @media (max-width:420px) { .bgm-vol input { width:58px; } .bgm .bgm-skip { display:none; } }
         @media print { .bgm { display:none; } }
@@ -174,7 +194,7 @@ export default function ArtistBgmPlayer({ tracks }) {
               <li key={t.src}>
                 <button type="button" aria-current={i === index} onClick={() => choose(i)}>
                   <span className="bgm-no">{i + 1}</span>
-                  <span>{t.title}{t.note ? <small>{t.note}</small> : null}</span>
+                  <span>{t.title}<Meta track={t} /></span>
                 </button>
               </li>
             ))}
@@ -196,7 +216,7 @@ export default function ArtistBgmPlayer({ tracks }) {
           ) : null}
           <div className="bgm-now" aria-live="polite">
             <span className="bgm-kicker">BGM {index + 1}/{tracks.length}</span>
-            <span className="bgm-title">{track.title}{track.note ? <small>{track.note}</small> : null}</span>
+            <span className="bgm-title">{track.title}<Meta track={track} /></span>
           </div>
           <div className="bgm-vol">
             <button type="button" onClick={() => setMuted((m) => !m)} aria-label={muted ? "소리 켜기" : "소리 끄기"} aria-pressed={muted}>
