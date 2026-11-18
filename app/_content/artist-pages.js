@@ -98,7 +98,7 @@ const details = {
       year: "2026",
       summary: "작가는 치악산이 보이는 거실의 창가에\n머리를 넣고 쉴 수 있는 자리를 구상합니다.",
       workImage: "/artist-media/min-jihyeon-work.webp",
-      photos: photos("min-jihyeon", ["둥근 벽에 타래를 붙이는 민지현", "흙 타래를 빚는 민지현", "작업대에서 형태를 만드는 민지현", "아이와 함께 흙을 빚는 민지현", "작업대 앞의 민지현"]),
+      photos: photos("min-jihyeon", ["둥근 벽에 타래를 붙이는 민지현", "작업대에서 형태를 만드는 민지현", "아이와 함께 흙을 빚는 민지현"]),
       venue: PRIVATE_SPACE,
       // 머리를 넣고 쉬는 자리 → 느긋한 앰비언트 로파이
       playlist: [variation("ambientlofi", "앰비언트 로파이")],
