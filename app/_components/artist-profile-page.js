@@ -65,6 +65,7 @@ const CSS = `
   .xp-photo img { display:block; width:100%; height:100%; object-fit:cover; }
   .xp-team { display:inline-block; margin:0 0 8px; padding:2px 8px 3px; background:#dff3e6; color:var(--xp-green); font-size:12px; font-weight:700; }
   .xp-name { margin:0; font-size:clamp(36px, 9.5vw, 48px); line-height:1.05; letter-spacing:-.02em; color:var(--xp-navy); }
+  .xp-name-en { margin:6px 0 0; color:var(--xp-navy); font-size:12px; font-weight:700; letter-spacing:.12em; }
   .xp-tagline { margin:8px 0 0; color:var(--xp-dim); font-size:14px; }
 
   .xp-block { margin-top:64px; }
@@ -161,6 +162,7 @@ export default function ArtistProfilePage({ artist, note }) {
             <div>
               <p className="xp-team">팀 {artist.team}</p>
               <h2 className="xp-name">{artist.name}</h2>
+              {p.nameEn ? <p className="xp-name-en">{p.nameEn}</p> : null}
               {p.tagline ? <p className="xp-tagline">{p.tagline}</p> : null}
             </div>
           </div>
@@ -173,7 +175,7 @@ export default function ArtistProfilePage({ artist, note }) {
         <div className="xp-venues">
           {p.venue ? (
             <div>
-              <p className="xp-venue-head">{artist.name} 모뉴먼트 전시</p>
+              <p className="xp-venue-head">{p.venue.label ?? artist.name} 모뉴먼트 전시</p>
               <p className="xp-place">{p.venue.name}{p.venue.address ? <small>{p.venue.address}</small> : null}</p>
               <p className="xp-when">{[p.venue.period, p.venue.hours].filter(Boolean).join(" · ")}</p>
             </div>

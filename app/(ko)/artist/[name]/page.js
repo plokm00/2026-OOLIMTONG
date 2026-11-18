@@ -60,7 +60,7 @@ export default async function Page({ params }) {
     note = null;
   }
 
-  // 허양·김주원은 흰 바탕 전시 프로필 시안(profile), 이채명·박진희는 exhibition 시안, 나머지는 기존 페이지.
+  // 17인 모두 흰 바탕 전시 프로필(profile)로 그린다. profile이 없는 작가가 생기면 이전 디자인으로 돌아간다.
   if (artist.profile) return <ArtistProfilePage artist={artist} note={note} />;
   const exhibition = artistExhibitions[artist.id];
   return exhibition
