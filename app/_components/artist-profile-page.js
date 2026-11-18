@@ -23,7 +23,7 @@ function noteBody(note) {
 }
 
 const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;700&display=swap');
   :root {
     --xp-navy:#17145a; --xp-blue:#1596d8; --xp-green:#169a52;
     --xp-text:#1d1b45; --xp-dim:#5d5b80; --xp-soft:#f3f5f8;
@@ -33,10 +33,15 @@ const CSS = `
   body { color:var(--xp-text); font-family:'Noto Sans KR', sans-serif; -webkit-text-size-adjust:100%; }
   .xp { max-width:920px; margin:0 auto; padding:16px 22px 128px; }
   .xp-top { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
-  .xp-brand { font-size:15px; font-weight:900; letter-spacing:-.02em; text-decoration:none; color:var(--xp-green); }
-  .xp-brand b { font-weight:900; color:var(--xp-blue); }
+  .xp-brand { font-size:16px; text-decoration:none; color:var(--xp-green); }
+  .xp-brand b { font-weight:inherit; color:var(--xp-blue); }
   .xp-all { color:var(--xp-navy); font-size:14px; font-weight:700; text-decoration:none; }
   .xp-all:hover { color:var(--xp-blue); }
+
+  /* 제목·이름은 기존 Gowun Dodum 그대로, 굵게(웨이트가 하나뿐이라 획을 덧입혀 진하게) */
+  .xp-brand, .xp-title, .xp-name, .xp-show, .xp-venue-head, .xp-h2, .xp-team-name {
+    font-family:'Gowun Dodum', sans-serif; font-weight:700; -webkit-text-stroke:.04em currentColor; paint-order:stroke fill; }
+  .xp-summary { font-family:'Gowun Dodum', sans-serif; }
 
   /* 작품 — 은은한 원형 배경과 바닥 그림자로 작품을 앉힌다 */
   .xp-hero { display:grid; gap:8px; margin-top:10px; }
@@ -48,22 +53,22 @@ const CSS = `
     border-radius:50%; background:radial-gradient(closest-side, rgba(40,30,20,.24), rgba(40,30,20,0)); }
 
   .xp-label { margin:0 0 10px; color:var(--xp-blue); font-size:11px; font-weight:700; letter-spacing:.14em; }
-  .xp-title { margin:0; font-weight:900; font-size:clamp(44px, 12.5vw, 76px); line-height:1.02; letter-spacing:-.045em; color:var(--xp-navy); }
+  .xp-title { margin:0; font-size:clamp(44px, 12.5vw, 76px); line-height:1.05; letter-spacing:-.02em; color:var(--xp-navy); }
   .xp-specs { margin:14px 0 0; padding:0; list-style:none; color:var(--xp-dim); font-size:14px; line-height:1.7; }
-  .xp-summary { margin:20px 0 0; color:var(--xp-navy); font-size:17px; font-weight:500; line-height:1.75; word-break:keep-all; }
+  .xp-summary { margin:20px 0 0; color:var(--xp-navy); font-size:18px; line-height:1.75; word-break:keep-all; }
 
   .xp-artist { display:grid; grid-template-columns:104px minmax(0,1fr); gap:18px; align-items:end; margin-top:34px; }
   .xp-photo { aspect-ratio:4/5; overflow:hidden; background:var(--xp-soft); }
   .xp-photo img { display:block; width:100%; height:100%; object-fit:cover; }
   .xp-team { display:inline-block; margin:0 0 8px; padding:2px 8px 3px; background:#dff3e6; color:var(--xp-green); font-size:12px; font-weight:700; }
-  .xp-name { margin:0; font-weight:900; font-size:clamp(34px, 9vw, 44px); line-height:1.05; letter-spacing:-.04em; color:var(--xp-navy); }
+  .xp-name { margin:0; font-size:clamp(36px, 9.5vw, 48px); line-height:1.05; letter-spacing:-.02em; color:var(--xp-navy); }
   .xp-tagline { margin:8px 0 0; color:var(--xp-dim); font-size:14px; }
 
   .xp-block { margin-top:64px; }
-  .xp-show { margin:0; font-weight:900; font-size:clamp(32px, 8.5vw, 46px); line-height:1.1; letter-spacing:-.04em; color:var(--xp-green); }
+  .xp-show { margin:0; font-size:clamp(32px, 8.5vw, 46px); line-height:1.1; letter-spacing:-.02em; color:var(--xp-green); }
   .xp-show span { color:var(--xp-blue); }
   .xp-venues { display:grid; gap:26px; margin-top:22px; }
-  .xp-venue-head { margin:0 0 6px; font-size:18px; font-weight:900; letter-spacing:-.02em; color:var(--xp-blue); }
+  .xp-venue-head { margin:0 0 6px; font-size:20px; color:var(--xp-blue); }
   .xp-venue-head.is-main { color:var(--xp-green); }
   .xp-place { margin:0; color:var(--xp-navy); font-size:16px; font-weight:700; line-height:1.6; }
   .xp-place small { margin-left:6px; color:var(--xp-dim); font-size:13px; font-weight:400; }
@@ -72,13 +77,13 @@ const CSS = `
   .xp-grid { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:10px; }
   .xp-install { aspect-ratio:2/1; background:var(--xp-soft); }
 
-  .xp-h2 { margin:0 0 18px; font-weight:900; font-size:26px; letter-spacing:-.03em; color:var(--xp-navy); }
-  .xp-text { margin:0; max-width:680px; color:var(--xp-text); font-size:16px; line-height:1.95; white-space:pre-wrap; word-break:keep-all; overflow-wrap:anywhere; }
+  .xp-h2 { margin:0 0 18px; font-size:28px; color:var(--xp-navy); }
+  .xp-text { margin:0; color:var(--xp-text); font-size:16px; line-height:1.95; white-space:pre-wrap; word-break:keep-all; overflow-wrap:anywhere; }
 
   .xp-team-work { display:grid; grid-template-columns:104px minmax(0,1fr); gap:18px; align-items:start; }
   .xp-team-work + .xp-team-work { margin-top:28px; }
   .xp-team-thumb { display:block; width:100%; height:auto; aspect-ratio:1; object-fit:cover; background:#fff; }
-  .xp-team-name { margin:0; font-weight:900; font-size:22px; letter-spacing:-.03em; color:var(--xp-green); }
+  .xp-team-name { margin:0; font-size:24px; color:var(--xp-green); }
   .xp-team-work .xp-text { margin-top:6px; color:var(--xp-dim); font-size:14.5px; line-height:1.85; }
 
   .xp-foot { margin-top:72px; color:var(--xp-dim); font-size:12px; line-height:1.9; }
@@ -93,7 +98,7 @@ const CSS = `
     .xp-work { margin:0; padding:56px 24px 64px; }
     .xp-work img { max-height:460px; max-width:88%; }
     .xp-work::after { bottom:54px; }
-    .xp-summary { font-size:18px; white-space:pre-line; }
+    .xp-summary { font-size:19px; white-space:pre-line; }
     .xp-artist { grid-template-columns:120px minmax(0,1fr); gap:22px; }
     .xp-grid { gap:14px; }
     .xp-block { margin-top:88px; }
