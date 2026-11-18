@@ -35,14 +35,19 @@ const CSS = `
   html, body { margin:0; background:#fff; }
   body { color:var(--xp-text); font-family:'Noto Sans KR', sans-serif; -webkit-text-size-adjust:100%; }
   .xp { max-width:920px; margin:0 auto; padding:16px 22px 128px; }
-  .xp-top { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
-  .xp-brand { font-size:16px; text-decoration:none; color:var(--xp-green); }
-  .xp-brand b { font-weight:inherit; color:var(--xp-blue); }
+  /* 맨 위 머리글 — 미니배너의 머리글 줄(2026 / OOLIMTONG VARIATION / 17 CITIZEN ARTISTS)을 파란 글자와 밑줄로 */
+  .xp-top { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:2px 0 11px; border-bottom:1px solid var(--xp-blue); }
+  .xp-brand { min-width:0; color:var(--xp-blue); font-size:11px; font-weight:500; letter-spacing:.05em; text-decoration:none; white-space:nowrap; }
+  .xp-brand i { font-style:normal; margin:0 .6em; }
+  .xp-top .xp-all { flex:0 0 auto; font-size:13px; }
+  /* 휴대폰에서는 옆의 "시민작가 17인" 링크와 겹치는 "17 CITIZEN ARTISTS"를 뺀다 */
+  @media (max-width:559px) { .xp-brand .xp-cnt { display:none; } }
+  @media (min-width:760px) { .xp-brand { font-size:13px; letter-spacing:.07em; } .xp-brand i { margin:0 1.1em; } .xp-top .xp-all { font-size:14px; } }
   .xp-all { color:var(--xp-navy); font-size:14px; font-weight:700; text-decoration:none; }
   .xp-all:hover { color:var(--xp-blue); }
 
   /* 제목·이름은 홍보물의 박물관체(국립박물관문화재단클래식) Bold */
-  .xp-brand, .xp-title, .xp-name, .xp-show, .xp-venue-head, .xp-h2, .xp-team-name {
+  .xp-title, .xp-name, .xp-show, .xp-venue-head, .xp-h2, .xp-team-name {
     font-family:'Museum Classic', 'Noto Sans KR', sans-serif; font-weight:700; }
   .xp-summary { font-family:'Museum Classic', 'Noto Sans KR', sans-serif; font-weight:500; }
 
@@ -134,7 +139,9 @@ export default function ArtistProfilePage({ artist, note }) {
       <style>{CSS}</style>
 
       <nav className="xp-top" aria-label="울림통-변주 2026">
-        <a className="xp-brand" href="/oolimtong_2026_wcf">울림통 – <b>변주</b></a>
+        <a className="xp-brand" href="/oolimtong_2026_wcf" aria-label="울림통-변주 2026 메인으로">
+          2026<i>/</i>OOLIMTONG VARIATION<span className="xp-cnt"><i>/</i>17 CITIZEN ARTISTS</span>
+        </a>
         <a className="xp-all" href="/artist">시민작가 17인 ↗</a>
       </nav>
 

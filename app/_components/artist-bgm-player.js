@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 // 작가 전시 프로필의 배경음악 플레이어 — 화면 아래에 붙어 있고, 켜기·끄기·소리 크기·곡 목록을 다룬다.
-// 브라우저는 소리가 나는 자동재생을 막으므로, 처음 페이지를 누르는 순간 재생을 시작한다(플레이어에서 끄면 다시 켜지지 않는다).
+// 브라우저는 소리가 나는 자동재생을 막으므로, 처음 스크롤하거나 누르는 순간 재생을 시작한다(플레이어에서 끄면 다시 켜지지 않는다).
 // 음원은 preload="none" — 재생 전에는 파일을 받지 않는다.
 
 const VOLUME_KEY = "artist-bgm-volume";
@@ -39,19 +39,35 @@ export default function ArtistBgmPlayer({ tracks }) {
     }
   }, [volume, muted]);
 
-  // 첫 클릭·키 입력에 맞춰 배경음악을 시작한다. 플레이어 안을 누른 경우는 플레이어가 직접 처리한다.
+  // 첫 스크롤·터치·클릭·키 입력에 맞춰 배경음악을 시작한다. 플레이어 안을 누른 경우는 플레이어가 직접 처리한다.
+  // 브라우저가 소리 재생을 허락하는 입력은 정해져 있어(터치를 뗄 때, 클릭, 키 입력 등) 어떤 입력에서 허락될지
+  // 브라우저마다 다르다. 그래서 여러 입력에서 시도하고, 실제로 재생이 시작되면 그때 듣기를 멈춘다.
   useEffect(() => {
-    function start(event) {
-      if (rootRef.current?.contains(event.target)) return cleanup();
-      if (!userStoppedRef.current) play();
-      cleanup();
-    }
+    const events = ["scroll", "wheel", "touchstart", "touchend", "pointerdown", "pointerup", "keydown"];
+    let done = false;
+    let trying = false;
     function cleanup() {
-      window.removeEventListener("pointerup", start, true);
-      window.removeEventListener("keydown", start, true);
+      done = true;
+      events.forEach((name) => window.removeEventListener(name, start, true));
     }
-    window.addEventListener("pointerup", start, true);
-    window.addEventListener("keydown", start, true);
+    async function start(event) {
+      if (done || trying) return;
+      if (event.target instanceof Node && rootRef.current?.contains(event.target)) return cleanup();
+      if (userStoppedRef.current) return cleanup();
+      const audio = audioRef.current;
+      if (!audio || !audio.paused) return cleanup();
+      trying = true;
+      try {
+        await audio.play();
+        setError("");
+        cleanup();
+      } catch {
+        // 이 입력으로는 허락되지 않았다 — 다음 입력에서 다시 시도한다.
+      } finally {
+        trying = false;
+      }
+    }
+    events.forEach((name) => window.addEventListener(name, start, { capture: true, passive: true }));
     return cleanup;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

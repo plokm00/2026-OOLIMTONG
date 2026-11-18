@@ -1,66 +1,101 @@
 // 리플렛 QR 하나로 들어오는 참여 작가 17인 목록. 이름을 누르면 /artist/이름 개인 페이지로 간다.
-// 휴대폰에서 두 줄, 넓은 화면에서 서너 줄로 사진과 이름을 보여 준다.
+// 전시용 페이지라 아카이브(작가 노트 모아보기)가 아닌 개인 전시 프로필과 같은 디자인을 쓴다:
+// 흰 바탕, 홍보물의 남색·파랑·연두, 제목·이름은 박물관체(국립박물관문화재단클래식).
+
+const CSS = `
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+  @font-face { font-family:'Museum Classic'; font-weight:500; font-display:swap; src:url('/fonts/museum-classic-M.woff2') format('woff2'); }
+  @font-face { font-family:'Museum Classic'; font-weight:700; font-display:swap; src:url('/fonts/museum-classic-B.woff2') format('woff2'); }
+  :root {
+    --xp-navy:#17145a; --xp-blue:#1596d8; --xp-green:#169a52;
+    --xp-text:#1d1b45; --xp-dim:#5d5b80; --xp-soft:#f3f5f8;
+  }
+  * { box-sizing:border-box; }
+  html, body { margin:0; background:#fff; }
+  body { color:var(--xp-text); font-family:'Noto Sans KR', sans-serif; -webkit-text-size-adjust:100%; }
+  .xi { max-width:920px; min-height:100vh; margin:0 auto; padding:16px 22px 72px; }
+  .xi-title, .xi-name { font-family:'Museum Classic', 'Noto Sans KR', sans-serif; font-weight:700; }
+  .xi-lead { font-family:'Museum Classic', 'Noto Sans KR', sans-serif; font-weight:500; }
+
+  /* 맨 위 머리글 — 개인 페이지와 같은 미니배너 머리글 줄 */
+  .xi-top { padding:2px 0 11px; border-bottom:1px solid var(--xp-blue); }
+  .xi-brand { color:var(--xp-blue); font-size:11px; font-weight:500; letter-spacing:.05em; text-decoration:none; white-space:nowrap; }
+  .xi-brand i { font-style:normal; margin:0 .6em; }
+  @media (min-width:760px) { .xi-brand { font-size:13px; letter-spacing:.07em; } .xi-brand i { margin:0 1.1em; } }
+
+  .xi-head { padding:42px 0 34px; }
+  .xi-label { margin:0 0 10px; color:var(--xp-blue); font-size:11px; font-weight:700; letter-spacing:.14em; }
+  .xi-title { margin:0; font-size:clamp(44px, 12.5vw, 76px); line-height:1.05; letter-spacing:-.02em; color:var(--xp-navy); }
+  .xi-lead { margin:18px 0 0; color:var(--xp-navy); font-size:18px; line-height:1.75; word-break:keep-all; }
+
+  .xi-grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:26px 14px; margin:0; padding:0; list-style:none; }
+  .xi-card { display:block; color:inherit; text-decoration:none; }
+  .xi-photo { aspect-ratio:4/5; overflow:hidden; background:var(--xp-soft); }
+  .xi-photo img { display:block; width:100%; height:100%; object-fit:cover; transition:transform .3s ease; }
+  .xi-team { display:inline-block; margin:12px 0 6px; padding:2px 8px 3px; background:#dff3e6; color:var(--xp-green); font-size:11.5px; font-weight:700; }
+  .xi-name { margin:0; font-size:26px; line-height:1.1; letter-spacing:-.02em; color:var(--xp-navy); }
+  .xi-work { margin:5px 0 0; color:var(--xp-blue); font-size:13.5px; font-weight:700; }
+  .xi-card:active .xi-name, .xi-card:focus-visible .xi-name { color:var(--xp-blue); }
+  .xi-card:focus-visible { outline:2px solid var(--xp-blue); outline-offset:4px; }
+  @media (hover:hover) and (pointer:fine) {
+    .xi-card:hover .xi-name { color:var(--xp-blue); }
+    .xi-card:hover .xi-photo img { transform:scale(1.03); }
+  }
+
+  .xi-foot { margin-top:72px; color:var(--xp-dim); font-size:12px; line-height:1.9; }
+  .xi-foot-links { display:flex; flex-wrap:wrap; gap:6px 18px; margin-bottom:14px; }
+  .xi-foot a { color:var(--xp-blue); text-decoration:none; font-weight:700; }
+  .xi-credit b { color:var(--xp-navy); font-weight:700; }
+
+  @media (min-width:560px) { .xi-grid { grid-template-columns:repeat(3, minmax(0,1fr)); } }
+  @media (min-width:760px) {
+    .xi { padding-top:26px; }
+    .xi-head { padding:64px 0 48px; }
+    .xi-lead { font-size:19px; }
+    .xi-grid { grid-template-columns:repeat(4, minmax(0,1fr)); gap:36px 20px; }
+  }
+`;
 
 export default function ArtistIndexPage({ artists }) {
   return (
-    <main className="ai">
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
-        :root { --ap-bg:#f6ede6; --ap-bg2:#eee0d6; --ap-bg3:#e4d0c4; --ap-line:#ceb0a0; --ap-accent:#c03828; --ap-accent2:#8c2418; --ap-text:#261410; --ap-dim:#7a4c3c; }
-        * { box-sizing:border-box; }
-        body { margin:0; background:var(--ap-bg); color:var(--ap-text); font-family:'Noto Sans KR', sans-serif; -webkit-text-size-adjust:100%; }
-        .ai { max-width:860px; min-height:100vh; margin:0 auto; padding:22px 22px 64px; }
-        .ai-top { display:flex; justify-content:space-between; align-items:center; gap:12px; padding-bottom:16px; border-bottom:1px solid var(--ap-line); }
-        .ai-brand { color:var(--ap-accent); font-size:11px; font-weight:700; letter-spacing:.1em; text-decoration:none; }
-        .ai-top-link { color:var(--ap-dim); font-size:11px; text-decoration:none; }
-        .ai-head { padding:28px 0 24px; }
-        .ai-kicker { margin:0 0 6px; color:var(--ap-accent2); font-size:11px; font-weight:700; letter-spacing:.08em; }
-        .ai-title { margin:0; font-family:'IBM Plex Sans KR', sans-serif; font-size:clamp(32px,9vw,48px); line-height:1.15; letter-spacing:-.04em; }
-        .ai-lead { margin:10px 0 0; color:var(--ap-dim); font-size:14px; line-height:1.7; }
-        .ai-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 14px; margin:0; padding:0; list-style:none; }
-        .ai-card { display:block; color:inherit; text-decoration:none; }
-        .ai-photo { aspect-ratio:4/5; overflow:hidden; border:1px solid var(--ap-line); background:var(--ap-bg3); }
-        .ai-photo img { display:block; width:100%; height:100%; object-fit:cover; }
-        .ai-name { margin:9px 0 0; font-family:'IBM Plex Sans KR', sans-serif; font-size:19px; font-weight:700; letter-spacing:-.03em; }
-        .ai-team { margin:2px 0 0; color:var(--ap-dim); font-size:12px; }
-        .ai-card:active .ai-name { color:var(--ap-accent); }
-        @media (hover:hover) and (pointer:fine) { .ai-card:hover .ai-name { color:var(--ap-accent); } }
-        @media (min-width:560px) { .ai-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
-        @media (min-width:760px) { .ai { padding-top:36px; } .ai-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:26px 18px; } }
-        .ai-foot { display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; margin-top:36px; padding-top:22px; border-top:1px solid var(--ap-line); color:var(--ap-dim); font-size:12px; }
-        .ai-foot a { color:var(--ap-accent); text-decoration:none; }
-      `}</style>
+    <main className="xi">
+      <style>{CSS}</style>
 
-      <nav className="ai-top" aria-label="울림통-변주 2026">
-        <a className="ai-brand" href="/oolimtong_2026_wcf">NINNIK × 울림통-변주 2026</a>
-        <a className="ai-top-link" href="/oolimtong_2026_wcf_record">팀별 작업 기록</a>
+      <nav className="xi-top" aria-label="울림통-변주 2026">
+        <a className="xi-brand" href="/oolimtong_2026_wcf" aria-label="울림통-변주 2026 메인으로">
+          2026<i>/</i>OOLIMTONG VARIATION<i>/</i>17 CITIZEN ARTISTS
+        </a>
       </nav>
 
-      <header className="ai-head">
-        <p className="ai-kicker">울림통-변주 2026</p>
-        <h1 className="ai-title">참여 작가 {artists.length}인</h1>
-        <p className="ai-lead">이름을 누르면 작가와 작품 이야기를 볼 수 있습니다.</p>
+      <header className="xi-head">
+        <p className="xi-label">CITIZEN ARTISTS</p>
+        <h1 className="xi-title">시민작가 {artists.length}인</h1>
+        <p className="xi-lead">이름을 누르면 작가와 작품 이야기를 볼 수 있습니다.</p>
       </header>
 
-      <ul className="ai-grid">
+      <ul className="xi-grid">
         {artists.map((artist) => (
           <li key={artist.id}>
-            <a className="ai-card" href={`/artist/${encodeURIComponent(artist.slug)}`}>
-              <div className="ai-photo">
+            <a className="xi-card" href={`/artist/${encodeURIComponent(artist.slug)}`}>
+              <div className="xi-photo">
                 {artist.photo ? (
                   <img src={artist.photo} alt="" width="300" height="375" loading="lazy" />
                 ) : null}
               </div>
-              <p className="ai-name">{artist.name}</p>
-              <p className="ai-team">팀 {artist.team}</p>
+              <p className="xi-team">팀 {artist.team}</p>
+              <p className="xi-name">{artist.name}</p>
+              {artist.profile?.workTitle ? <p className="xi-work">〈{artist.profile.workTitle}〉</p> : null}
             </a>
           </li>
         ))}
       </ul>
 
-      <footer className="ai-foot">
-        <a href="/oolimtong_2026_wcf_record">팀별 작업 기록 →</a>
-        <a href="/oolimtong_2026_wcf">메인으로 →</a>
+      <footer className="xi-foot">
+        <div className="xi-foot-links">
+          <a href="/oolimtong_2026_wcf_record">팀별 작업 기록 →</a>
+          <a href="/oolimtong_2026_wcf">메인으로 →</a>
+        </div>
+        <p className="xi-credit"><b>니닉크라프트</b> · 원주문화재단 보조금 지원사업</p>
       </footer>
     </main>
   );
