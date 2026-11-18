@@ -85,6 +85,8 @@ const details = {
       year: "2026",
       summary: "작가는 태초의 인공 울림통으로 가슴을\n울리는 악기, 북을 가장 먼저 떠올렸습니다.",
       workImage: "/artist-media/kim-hyeonguk-work.webp",
+      // 17인 목록 카드의 프로필 사진을 파란 단색으로(시범)
+      cardTone: "blue",
       photos: photos("kim-hyeonguk", ["나리움 터에 흙 타래를 놓는 김현국", "나리움의 벽을 쌓는 김현국", "야외에서 작품에 마감재를 바르는 김현국"]),
       venue: MIPPEUDA,
       // 북 → 팀파니와 북이 이끄는 변주

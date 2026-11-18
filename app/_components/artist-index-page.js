@@ -34,6 +34,9 @@ const CSS = `
   .xi-grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:26px 14px; margin:0; padding:0; list-style:none; }
   .xi-card { display:block; color:inherit; text-decoration:none; }
   .xi-photo { aspect-ratio:4/5; overflow:hidden; background:var(--xp-soft); }
+  /* 파란 단색 — 흑백으로 바꾼 사진 위에 파랑을 곱하기로 얹어, 밝은 곳은 파랑·어두운 곳은 남색이 된다 */
+  .xi-photo.is-blue { position:relative; background:var(--xp-blue); }
+  .xi-photo.is-blue img { filter:grayscale(1) contrast(1.1) brightness(1.08); mix-blend-mode:multiply; }
   /* 모뉴먼트 컷아웃 — 사진 오른쪽 아래 모서리에 도장처럼 반쯤 걸쳐 둔다 */
   .xi-fig { position:relative; }
   .xi-mon { position:absolute; right:-8px; bottom:-30px; width:52%; height:auto; pointer-events:none; filter:drop-shadow(0 3px 6px rgba(23,20,90,.18)); transition:transform .3s ease; }
@@ -90,7 +93,7 @@ export default function ArtistIndexPage({ artists }) {
           <li key={artist.id}>
             <a className="xi-card" href={`/artist/${encodeURIComponent(artist.slug)}`}>
               <div className="xi-fig">
-                <div className="xi-photo">
+                <div className={artist.profile?.cardTone === "blue" ? "xi-photo is-blue" : "xi-photo"}>
                   {artist.photo ? (
                     <img src={artist.photo} alt="" width="300" height="375" loading="lazy" />
                   ) : null}
