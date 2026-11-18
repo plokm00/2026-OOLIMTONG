@@ -83,7 +83,7 @@ const details = {
       year: "2026",
       summary: "작가는 태초의 인공 울림통으로 가슴을\n울리는 악기, 북을 가장 먼저 떠올렸습니다.",
       workImage: "/artist-media/kim-hyeonguk-work.webp",
-      photos: photos("kim-hyeonguk", ["나리움 터에 흙 타래를 놓는 김현국", "나리움의 벽을 쌓는 김현국", "나리움의 굽이진 벽을 다듬는 김현국"]),
+      photos: photos("kim-hyeonguk", ["나리움 터에 흙 타래를 놓는 김현국", "나리움의 벽을 쌓는 김현국", "야외에서 작품에 마감재를 바르는 김현국"]),
       venue: MIPPEUDA,
       // 북 → 팀파니와 북이 이끄는 변주
       playlist: [variation("timpanidrums", "팀파니·드럼")],
@@ -188,7 +188,7 @@ const details = {
       year: "2026",
       summary: "작가는 흙이 작품의 형태를 정했다고 합니다.\n그 작품의 이름은 ‘예쁜 코’를 뜻합니다.",
       workImage: "/artist-media/lee-seongsun-work.webp",
-      photos: photos("lee-seongsun", ["〈코아〉를 다듬는 이성순", "〈코아〉를 빚는 이성순", "흙 조각을 고르는 이성순"]),
+      photos: photos("lee-seongsun", ["〈코아〉 곁에서 작업하는 이성순", "〈코아〉를 빚는 이성순", "흙 조각을 고르는 이성순"]),
       venue: { name: "클라운지 2호점", address: "원주시 마재3로 24-54, 101호", period: "2026.11.21. ~ 12.13.", hours: "" },
       // ‘예쁜 코’ → 아코디언 샹송
       playlist: [variation("accordionchanson", "아코디언 샹송")],
@@ -322,7 +322,7 @@ const details = {
       photos: [
         { src: "/artist-media/heoyang-photo-1.webp", alt: "〈SOUL Ⅰ〉의 타래를 쌓는 허양" },
         { src: "/artist-media/heoyang-photo-2.webp", alt: "〈SOUL Ⅰ〉에 무늬를 다듬는 허양" },
-        { src: "/artist-media/heoyang-photo-3.webp", alt: "완성한 Co-Ark 앞의 허양" },
+        { src: "/artist-media/heoyang-photo-3.webp", alt: "이재홍과 함께 Co-Ark를 다듬는 허양" },
       ],
       venue: {
         name: "문막성당 로비",
