@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 
 import ArtistPage from "../../../_components/artist-page";
+import ArtistExhibitionPage from "../../../_components/artist-exhibition-page";
+import { artistExhibitions } from "../../../_content/artist-exhibitions";
 import { artistPageBySlug, artistPages } from "../../../_content/artist-pages";
 import { getPublishedArtistNote } from "../../../_lib/artist-note-store";
 
@@ -19,9 +21,11 @@ export async function generateMetadata({ params }) {
   const { name: slug } = await params;
   const artist = artistPageBySlug(slug);
   if (!artist) return {};
+  const exhibition = artistExhibitions[artist.id];
   const title = `${artist.name} — 울림통-변주 2026`;
-  const description = artist.workTitle
-    ? `${artist.name} 〈${artist.workTitle}〉 · 울림통-변주 2026 참여 작가`
+  const workTitle = exhibition?.title ?? artist.workTitle;
+  const description = workTitle
+    ? `${artist.name} 〈${workTitle}〉 · 울림통-변주 2026 참여 작가`
     : `울림통-변주 2026 참여 작가 ${artist.name}`;
   const url = `https://ninnikkraft.vercel.app/artist/${encodeURIComponent(artist.slug)}`;
   return {
@@ -33,7 +37,9 @@ export async function generateMetadata({ params }) {
       url,
       title,
       description,
-      images: [{ url: `https://ninnikkraft.vercel.app${artist.photo}`, alt: `${artist.name} 프로필 사진` }],
+      images: [exhibition
+        ? { url: `https://ninnikkraft.vercel.app/artist-exhibition/${artist.id}/artwork.webp`, alt: exhibition.artworkAlt }
+        : { url: `https://ninnikkraft.vercel.app${artist.photo}`, alt: `${artist.name} 프로필 사진` }],
     },
   };
 }
@@ -51,5 +57,8 @@ export default async function Page({ params }) {
     note = null;
   }
 
-  return <ArtistPage artist={artist} note={note} />;
+  const exhibition = artistExhibitions[artist.id];
+  return exhibition
+    ? <ArtistExhibitionPage artist={artist} exhibition={exhibition} note={note} />
+    : <ArtistPage artist={artist} note={note} />;
 }
