@@ -57,7 +57,7 @@ const CSS = `
   .xi-big { position:relative; display:grid; overflow:hidden; background:var(--xp-soft); }
   .xi-big-text { position:relative; z-index:1; padding:26px 22px 8px; }
   .xi-tags { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 16px; }
-  .xi-tag { display:inline-block; margin:0; padding:4px 10px 5px; color:#fff; font-family:'Museum Classic','Noto Sans KR',sans-serif; font-weight:700; font-size:20px; line-height:1.15; }
+  .xi-tag { display:inline-block; margin:0; padding:5.5px 10px 3.5px; color:#fff; font-family:'Museum Classic','Noto Sans KR',sans-serif; font-weight:700; font-size:20px; line-height:1.15; }
   .xi-tag.is-work { background:var(--xp-green); }
   .xi-tag.is-team { background:var(--xp-blue); }
   .xi-big-text > p { margin:0 0 18px; font-size:15px; line-height:1.8; word-break:keep-all; }
