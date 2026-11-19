@@ -25,9 +25,9 @@ const CSS = `
   .xi-brand i { font-style:normal; margin:0 .6em; }
   @media (min-width:760px) { .xi-brand { font-size:13px; letter-spacing:.07em; } .xi-brand i { margin:0 1.1em; } }
 
-  .xi-head { padding:42px 0 34px; }
+  .xi-head { padding:42px 0 44px; }
   .xi-title { margin:0; font-size:clamp(44px, 12.5vw, 76px); line-height:1.05; letter-spacing:-.02em; color:var(--xp-navy); }
-  .xi-lead { margin:18px 0 0; color:var(--xp-navy); font-size:18px; line-height:1.75; word-break:keep-all; }
+  .xi-lead { margin:24px 0 0; color:var(--xp-navy); font-size:18px; line-height:1.7; word-break:keep-all; }
 
   /* 단체 사진 — 머리글과 17인 목록 사이 */
   .xi-group { margin:0 0 48px; }
@@ -111,7 +111,8 @@ const CSS = `
   @media (min-width:760px) {
     .xi-group { margin-bottom:64px; }
     .xi { padding-top:26px; }
-    .xi-head { padding:64px 0 48px; }
+    .xi-head { padding:64px 0 64px; }
+    .xi-lead { margin-top:30px; }
     .xi-lead { font-size:19px; }
     .xi-grid { grid-template-columns:repeat(4, minmax(0,1fr)); gap:36px 20px; }
   }
