@@ -125,7 +125,7 @@ const CSS = `
   .vm-artists span { color:var(--xp-dim); }
   .vm-when, .vm-addr { margin-top:6px !important; color:var(--xp-dim); font-size:12.5px; line-height:1.55; }
   .vm-addr { margin-top:2px !important; }
-  .vm-links { display:flex; gap:12px; margin-top:10px !important; }
+  .vm-links { display:flex; flex-wrap:wrap; gap:4px 12px; margin-top:10px !important; }
   .vm-links a { color:var(--xp-blue); font-size:12.5px; font-weight:700; text-decoration:none; }
   .xp-map figcaption { display:flex; flex-wrap:wrap; gap:4px 14px; margin-top:10px; color:var(--xp-dim); font-size:12px; }
   .xp-map-key { display:inline-block; width:8px; height:8px; margin-right:5px; border-radius:50%; background:var(--xp-navy); opacity:.55; vertical-align:1px; }
