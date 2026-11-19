@@ -43,7 +43,9 @@ const CSS = `
   /* 모뉴먼트 전시장소 — 장소 이름만, 기간은 본전시(11.21~12.13)와 다를 때만 */
   .xi-venue { position:relative; margin:6px 0 0; padding-left:13px; color:var(--xp-dim); font-size:12.5px; line-height:1.5; word-break:keep-all; }
   .xi-venue::before { content:""; position:absolute; left:1px; top:.45em; width:7px; height:7px; border-radius:50% 50% 50% 0; background:var(--xp-green); transform:rotate(-45deg); }
-  .xi-venue span { display:block; }
+  .xi-venue { white-space:nowrap; letter-spacing:-.02em; }
+  @media (max-width:559px) { .xi-venue { font-size:12px; } .xi-venue span::before { margin:0 5px 0 6px; } }
+  .xi-venue span::before { content:""; display:inline-block; width:1px; height:.8em; margin:0 6px 0 7px; background:#c3c6d6; vertical-align:-.05em; }
   .xi-card:focus-visible { outline:2px solid var(--xp-blue); outline-offset:4px; }
   @media (hover:hover) and (pointer:fine) {
     .xi-card:hover .xi-photo img { transform:scale(1.03); }
