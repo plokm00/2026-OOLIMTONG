@@ -88,13 +88,13 @@ const CSS = `
   .xp-show-body { display:grid; gap:30px; }
   .xp-map { margin:0; }
   .xp-map svg { display:block; width:100%; height:auto; overflow:visible; }
-  .xp-map-area { fill:#b9bdd0; font-size:10px; letter-spacing:.12em; }
+  .xp-map-area { fill:#b9bdd0; font-size:11px; letter-spacing:.12em; }
   .xp-map-line { fill:none; stroke:var(--xp-blue); stroke-width:.9; stroke-dasharray:2 3; opacity:.45; }
   .xp-map-line.is-here { stroke-width:1.6; stroke-dasharray:none; opacity:.9; }
   .xp-map-dot { fill:var(--xp-navy); opacity:.55; }
   .xp-map-dot.is-here { fill:var(--xp-blue); opacity:1; stroke:#fff; stroke-width:2; }
   .xp-map-main { fill:var(--xp-green); stroke:#fff; stroke-width:2.5; }
-  .xp-map-label { font-family:'Noto Sans KR', sans-serif; font-size:11.5px; font-weight:700; paint-order:stroke; stroke:#fff; stroke-width:3px; stroke-linejoin:round; }
+  .xp-map-label { font-family:'Noto Sans KR', sans-serif; font-size:13px; font-weight:700; paint-order:stroke; stroke:#fff; stroke-width:3px; stroke-linejoin:round; }
   .xp-map-label.is-main { fill:var(--xp-green); }
   .xp-map-label.is-here { fill:var(--xp-blue); }
   .xp-map figcaption { display:flex; flex-wrap:wrap; gap:4px 14px; margin-top:10px; color:var(--xp-dim); font-size:12px; }
@@ -217,7 +217,7 @@ export default function ArtistProfilePage({ artist, note }) {
             <p className="xp-when">{MAIN_SHOW.period} · {MAIN_SHOW.hours}</p>
           </div>
         </div>
-        <VenueMap current={p.venue?.name} />
+        <VenueMap current={p.venue?.name} who={p.venue?.label ?? artist.name} />
         </div>
       </section>
 
