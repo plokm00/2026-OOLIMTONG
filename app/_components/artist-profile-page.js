@@ -1,6 +1,8 @@
 import { worksOf } from "../_content/artist-notes";
 import ArtistBgmPlayer from "./artist-bgm-player";
 import VenueMap from "./venue-map";
+import { artistPages } from "../_content/artist-pages";
+import { VENUE_POINTS } from "../_content/venue-points";
 
 // 울림통-변주 2026 작가 전시 프로필 — 흰 바탕, 홍보물(포스터·리플렛·미니배너)의 남색·파랑·연두를 글자색으로 쓴다.
 // 순서: 작품(그림자를 깐 작품 사진 + 작품 정보 + 작가) → 전시 정보 → 전시 전경 → 작업하는 작가 사진 3장 → 작가 노트 → 함께 만든 대형 울림통.
@@ -15,6 +17,24 @@ const MAIN_SHOW = {
     { name: "하나어린이집 야외 공터", address: "원주시 문막읍 작은애니길 38-8" },
   ],
 };
+
+// 지도에 찍을 장소 — 본 전시 두 곳과, 17인의 모뉴먼트 전시장소(같은 장소의 작가는 한 점에 모은다).
+// 좌표가 없는 장소(작가 개인 공간)는 지도에 넣지 않는다.
+const MAP_PLACES = (() => {
+  const main = MAIN_SHOW.places
+    .filter((place) => VENUE_POINTS[place.name])
+    .map((place) => ({ ...place, main: true, point: VENUE_POINTS[place.name], period: MAIN_SHOW.period, hours: MAIN_SHOW.hours }));
+  const byName = new Map();
+  for (const artist of artistPages) {
+    const venue = artist.profile?.venue;
+    if (!venue?.name || !VENUE_POINTS[venue.name]) continue;
+    if (!byName.has(venue.name)) {
+      byName.set(venue.name, { name: venue.name, address: venue.address, period: venue.period, hours: venue.hours, point: VENUE_POINTS[venue.name], artists: [] });
+    }
+    byName.get(venue.name).artists.push({ name: artist.name, work: artist.profile.workTitle });
+  }
+  return [...main, ...byName.values()];
+})();
 
 // 게시된 작가 노트 중 앞부분(작가 노트)만 쓴다. "---" 뒤의 전시 계획은 준비 단계의 글이라 전시 프로필에서는 뺀다.
 function noteBody(note) {
@@ -87,16 +107,26 @@ const CSS = `
   /* 전시장소 지도 — 본 전시(문막)에서 원주 곳곳의 모뉴먼트 전시장소로 뻗어 나간다 */
   .xp-show-body { display:grid; gap:30px; }
   .xp-map { margin:0; }
-  .xp-map svg { display:block; width:100%; height:auto; overflow:visible; }
-  .xp-map-area { fill:#b9bdd0; font-size:11px; letter-spacing:.12em; }
-  .xp-map-line { fill:none; stroke:var(--xp-blue); stroke-width:.9; stroke-dasharray:2 3; opacity:.45; }
-  .xp-map-line.is-here { stroke-width:1.6; stroke-dasharray:none; opacity:.9; }
-  .xp-map-dot { fill:var(--xp-navy); opacity:.55; }
-  .xp-map-dot.is-here { fill:var(--xp-blue); opacity:1; stroke:#fff; stroke-width:2; }
-  .xp-map-main { fill:var(--xp-green); stroke:#fff; stroke-width:2.5; }
-  .xp-map-label { font-family:'Noto Sans KR', sans-serif; font-size:13px; font-weight:700; paint-order:stroke; stroke:#fff; stroke-width:3px; stroke-linejoin:round; }
-  .xp-map-label.is-main { fill:var(--xp-green); }
-  .xp-map-label.is-here { fill:var(--xp-blue); }
+  .xp-map-box { position:relative; z-index:0; height:300px; background:var(--xp-soft); }
+  .xp-map .leaflet-container { font-family:'Noto Sans KR', sans-serif; }
+  .xp-map .leaflet-control-attribution { font-size:9.5px; }
+  .xp-map .leaflet-tile-pane { filter:grayscale(1) brightness(1.06) contrast(.88); opacity:.85; }
+  .vm-tip { padding:2px 7px; border:0; border-radius:2px; box-shadow:0 1px 3px rgba(23,20,90,.18); color:var(--xp-navy); font-size:12px; font-weight:700; }
+  .vm-tip.is-here { background:var(--xp-blue); color:#fff; }
+  .vm-tip.is-here::before { border-top-color:var(--xp-blue); }
+  .vm-tip.is-main { color:var(--xp-green); }
+  .vm-pop { min-width:190px; color:var(--xp-text); font-family:'Noto Sans KR', sans-serif; }
+  .vm-pop p { margin:0; }
+  .vm-kind { color:var(--xp-blue); font-size:11.5px; font-weight:700; }
+  .vm-kind.is-main { color:var(--xp-green); }
+  .vm-name { margin-top:2px !important; color:var(--xp-navy); font-family:'Museum Classic','Noto Sans KR',sans-serif; font-size:18px; font-weight:700; line-height:1.3; }
+  .vm-artists { margin:8px 0 0; padding:0; list-style:none; font-size:13.5px; line-height:1.7; }
+  .vm-artists a { color:var(--xp-navy); font-weight:700; text-decoration:none; border-bottom:1px solid #c9d6ee; }
+  .vm-artists span { color:var(--xp-dim); }
+  .vm-when, .vm-addr { margin-top:6px !important; color:var(--xp-dim); font-size:12.5px; line-height:1.55; }
+  .vm-addr { margin-top:2px !important; }
+  .vm-links { display:flex; gap:12px; margin-top:10px !important; }
+  .vm-links a { color:var(--xp-blue); font-size:12.5px; font-weight:700; text-decoration:none; }
   .xp-map figcaption { display:flex; flex-wrap:wrap; gap:4px 14px; margin-top:10px; color:var(--xp-dim); font-size:12px; }
   .xp-map-key { display:inline-block; width:8px; height:8px; margin-right:5px; border-radius:50%; background:var(--xp-navy); opacity:.55; vertical-align:1px; }
   .xp-map-key.is-main { background:var(--xp-green); opacity:1; }
@@ -134,6 +164,7 @@ const CSS = `
     .xp-grid { gap:14px; }
     .xp-block { margin-top:88px; }
     .xp-show-body { grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:40px; align-items:center; }
+    .xp-map-box { height:340px; }
     .xp-team-work { grid-template-columns:150px minmax(0,1fr); gap:26px; }
   }
   @media print { .xp-top, .xp-foot { display:none; } }
@@ -217,7 +248,7 @@ export default function ArtistProfilePage({ artist, note }) {
             <p className="xp-when">{MAIN_SHOW.period} · {MAIN_SHOW.hours}</p>
           </div>
         </div>
-        <VenueMap current={p.venue?.name} who={p.venue?.label ?? artist.name} />
+        <VenueMap places={MAP_PLACES} current={p.venue?.name} who={p.venue?.label ?? artist.name} />
         </div>
       </section>
 
