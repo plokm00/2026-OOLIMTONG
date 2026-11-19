@@ -40,6 +40,10 @@ const CSS = `
   .xi-team { display:inline-block; margin:12px 0 6px; padding:2px 8px 3px; background:#dff3e6; color:var(--xp-green); font-size:11.5px; font-weight:700; }
   .xi-name { margin:0; font-size:26px; line-height:1.1; letter-spacing:-.02em; color:var(--xp-navy); }
   .xi-work { margin:5px 0 0; color:var(--xp-blue); font-size:13.5px; font-weight:700; }
+  /* 모뉴먼트 전시장소 — 장소 이름만, 기간은 본전시(11.21~12.13)와 다를 때만 */
+  .xi-venue { position:relative; margin:6px 0 0; padding-left:13px; color:var(--xp-dim); font-size:12.5px; line-height:1.5; word-break:keep-all; }
+  .xi-venue::before { content:""; position:absolute; left:1px; top:.45em; width:7px; height:7px; border-radius:50% 50% 50% 0; background:var(--xp-green); transform:rotate(-45deg); }
+  .xi-venue span { display:block; }
   .xi-card:active .xi-name, .xi-card:focus-visible .xi-name { color:var(--xp-blue); }
   .xi-card:focus-visible { outline:2px solid var(--xp-blue); outline-offset:4px; }
   @media (hover:hover) and (pointer:fine) {
@@ -114,6 +118,18 @@ const CSS = `
     .xi-grid { grid-template-columns:repeat(4, minmax(0,1fr)); gap:36px 20px; }
   }
 `;
+
+// 본전시 기간과 같으면 아무것도 쓰지 않고, 다르면 "11.24~11.29", "~11.28"처럼 짧게 쓴다.
+const MAIN_START = "11.21";
+const MAIN_END = "12.13";
+function venueNote(venue) {
+  if (venue.name === "작가 개인 공간") return "초대 관람";
+  const days = (venue.period || "").match(/(?<!\d)\d{1,2}\.\d{1,2}(?=\.)/g);
+  if (!days || days.length < 2) return "";
+  const [start, end] = [days[days.length - 2], days[days.length - 1]];
+  if (start === MAIN_START && end === MAIN_END) return "";
+  return start === MAIN_START ? `~${end}` : `${start}~${end}`;
+}
 
 export default function ArtistIndexPage({ artists }) {
   const byName = new Map(artists.map((artist) => [artist.name, artist]));
@@ -202,6 +218,12 @@ export default function ArtistIndexPage({ artists }) {
               <p className="xi-team">팀 {artist.team}</p>
               <p className="xi-name">{artist.name}</p>
               {artist.profile?.workTitle ? <p className="xi-work">〈{artist.profile.workTitle}〉</p> : null}
+              {artist.profile?.venue?.name ? (
+                <p className="xi-venue">
+                  {artist.profile.venue.name}
+                  {venueNote(artist.profile.venue) ? <span>{venueNote(artist.profile.venue)}</span> : null}
+                </p>
+              ) : null}
             </a>
           </li>
         ))}
