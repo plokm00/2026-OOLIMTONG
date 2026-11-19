@@ -36,10 +36,6 @@ const CSS = `
   .xi-grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:26px 14px; margin:0; padding:0; list-style:none; }
   .xi-card { display:block; color:inherit; text-decoration:none; }
   .xi-photo { aspect-ratio:4/5; overflow:hidden; background:var(--xp-soft); }
-  /* 롤오버 — 마우스를 올리면 프로필 사진 대신 모뉴먼트 컷아웃이 떠오른다 */
-  .xi-photo { position:relative; }
-  .xi-photo .xi-mon { position:absolute; inset:0; width:100%; height:100%; padding:14%; object-fit:contain; background:var(--xp-soft); opacity:0; transition:opacity .35s ease; }
-  .xi-card:focus-visible .xi-photo .xi-mon { opacity:1; }
   .xi-photo img { display:block; width:100%; height:100%; object-fit:cover; transition:transform .3s ease; }
   .xi-team { display:inline-block; margin:12px 0 6px; padding:2px 8px 3px; background:#dff3e6; color:var(--xp-green); font-size:11.5px; font-weight:700; }
   .xi-name { margin:0; font-size:26px; line-height:1.1; letter-spacing:-.02em; color:var(--xp-navy); }
@@ -49,7 +45,6 @@ const CSS = `
   @media (hover:hover) and (pointer:fine) {
     .xi-card:hover .xi-name { color:var(--xp-blue); }
     .xi-card:hover .xi-photo img { transform:scale(1.03); }
-    .xi-card:hover .xi-photo .xi-mon { opacity:1; transform:none; }
   }
 
   /* 프로젝트 소개 + 대형 울림통 세 기 — 리플렛 내지처럼, 작품 사진이 카드 가장자리에서 잘려 나간다 */
@@ -79,8 +74,8 @@ const CSS = `
   .xi-mons i { position:absolute; top:-6px; right:-10px; color:var(--xp-blue); font-style:normal; font-size:13px; font-weight:500; }
   .xi-big-pic { position:relative; height:330px; }
   /* 흰 배경 사진을 곱하기로 얹어 카드 바탕색에 녹인다 */
-  .xi-big-pic img { position:absolute; height:118%; width:auto; max-width:none; mix-blend-mode:multiply; }
-  .xi-big.bleed-left .xi-big-pic img { left:-14%; bottom:-8%; }
+  .xi-big-pic img { position:absolute; height:100%; width:auto; max-width:none; mix-blend-mode:multiply; }
+  .xi-big.bleed-left .xi-big-pic img { left:-14%; bottom:-7%; }
   .xi-big.bleed-right .xi-big-pic img { right:-12%; bottom:-6%; }
   @media (hover:hover) and (pointer:fine) {
     .xi-members a:hover { color:var(--xp-blue); }
@@ -96,10 +91,10 @@ const CSS = `
     .xi-big-text { padding:40px 36px 36px; }
     .xi-members { grid-template-columns:repeat(2, minmax(0,1fr)); }
     .xi-big-pic { height:auto; }
-    .xi-big-pic img { height:112%; }
+    .xi-big-pic img { height:96%; }
     .xi-big.bleed-left .xi-big-pic { order:-1; }
-    .xi-big.bleed-left .xi-big-pic img { left:-22%; bottom:-10%; }
-    .xi-big.bleed-right .xi-big-pic img { right:-14%; bottom:-6%; }
+    .xi-big.bleed-left .xi-big-pic img { left:-22%; bottom:-7%; }
+    .xi-big.bleed-right .xi-big-pic img { right:-14%; bottom:-5%; }
   }
 
   .xi-foot { margin-top:72px; color:var(--xp-dim); font-size:12px; line-height:1.9; }
@@ -199,9 +194,6 @@ export default function ArtistIndexPage({ artists }) {
               <div className="xi-photo">
                 {artist.photo ? (
                   <img src={artist.photo} alt="" width="300" height="375" loading="lazy" />
-                ) : null}
-                {artist.profile?.monument ? (
-                  <img className="xi-mon" src={artist.profile.monument} alt="" loading="lazy" />
                 ) : null}
               </div>
               <p className="xi-team">팀 {artist.team}</p>
