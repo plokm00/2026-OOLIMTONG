@@ -75,8 +75,8 @@ const CSS = `
   .xi-big-pic { position:relative; height:330px; }
   /* 흰 배경 사진을 곱하기로 얹어 카드 바탕색에 녹인다 */
   .xi-big-pic img { position:absolute; height:100%; width:auto; max-width:none; mix-blend-mode:multiply; }
-  .xi-big.bleed-left .xi-big-pic img { left:-14%; bottom:-7%; }
-  .xi-big.bleed-right .xi-big-pic img { right:-12%; bottom:-6%; }
+  .xi-big.bleed-left .xi-big-pic img { left:-7%; bottom:-7%; }
+  .xi-big.bleed-right .xi-big-pic img { right:-6%; bottom:-6%; }
   @media (hover:hover) and (pointer:fine) {
     .xi-members a:hover { color:var(--xp-blue); }
     .xi-leaflet:hover { background:var(--xp-blue); color:#fff; }
@@ -93,8 +93,11 @@ const CSS = `
     .xi-big-pic { height:auto; }
     .xi-big-pic img { height:96%; }
     .xi-big.bleed-left .xi-big-pic { order:-1; }
-    .xi-big.bleed-left .xi-big-pic img { left:-22%; bottom:-7%; }
-    .xi-big.bleed-right .xi-big-pic img { right:-14%; bottom:-5%; }
+    .xi-big.bleed-left .xi-big-pic img { left:-11%; bottom:-7%; }
+    .xi-big.bleed-right .xi-big-pic img { right:-7%; bottom:-5%; }
+    /* 설명 글을 카드 가운데 쪽으로 — 사진 반대편 바깥 여백을 넓힌다 */
+    .xi-big.bleed-left .xi-big-text { padding-left:12px; padding-right:60px; }
+    .xi-big.bleed-right .xi-big-text { padding-left:60px; padding-right:12px; }
   }
 
   .xi-foot { margin-top:72px; color:var(--xp-dim); font-size:12px; line-height:1.9; }
