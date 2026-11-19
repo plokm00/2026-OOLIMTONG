@@ -143,7 +143,7 @@ export default function ArtistIndexPage({ artists }) {
 
       <header className="xi-head">
         <h1 className="xi-title">시민작가 {artists.length}인</h1>
-        <p className="xi-lead">이름을 누르면 작가와 작품 이야기를 볼 수 있습니다.</p>
+        <p className="xi-lead">세 팀이 함께 지은 대형 울림통 세 기,<br />저마다의 뜻을 담은 열일곱 개의 모뉴먼트.</p>
       </header>
 
       <figure className="xi-group">
