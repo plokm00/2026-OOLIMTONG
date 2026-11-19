@@ -73,16 +73,20 @@ const CSS = `
   .xi-members a:focus-visible { outline:2px solid var(--xp-blue); outline-offset:2px; }
   .xi-mons { display:flex; flex-wrap:wrap; align-items:flex-end; gap:14px 18px; margin:22px 0 0; padding:0; list-style:none; }
   .xi-mons a { position:relative; display:block; }
-  .xi-mons img { display:block; height:54px; width:auto; transition:transform .25s ease; }
+  .xi-mons img { display:block; height:54px; width:auto; transition:opacity .3s ease; }
+  /* 롤오버 — 작품 섬네일이 홍보물의 푸른 망점 모뉴먼트로 바뀐다(17인 카드와 같은 이미지) */
+  .xi-mons .xi-mons-blue { position:absolute; left:50%; bottom:0; height:54px; width:auto; max-width:none; transform:translateX(-50%); opacity:0; transition:opacity .3s ease; }
   .xi-mons i { position:absolute; top:-6px; right:-10px; color:var(--xp-blue); font-style:normal; font-size:13px; font-weight:500; }
   .xi-big-pic { position:relative; height:330px; }
-  .xi-big-pic img { position:absolute; height:118%; width:auto; max-width:none; }
+  /* 흰 배경 사진을 곱하기로 얹어 카드 바탕색에 녹인다 */
+  .xi-big-pic img { position:absolute; height:118%; width:auto; max-width:none; mix-blend-mode:multiply; }
   .xi-big.bleed-left .xi-big-pic img { left:-14%; bottom:-8%; }
   .xi-big.bleed-right .xi-big-pic img { right:-12%; bottom:-6%; }
   @media (hover:hover) and (pointer:fine) {
     .xi-members a:hover { color:var(--xp-blue); }
     .xi-leaflet:hover { background:var(--xp-blue); color:#fff; }
-    .xi-mons a:hover img { transform:translateY(-4px); }
+    .xi-mons a:hover img:not(.xi-mons-blue) { opacity:0; }
+    .xi-mons a:hover .xi-mons-blue { opacity:1; }
   }
   @media (min-width:760px) {
     .xi-intro { margin-bottom:72px; }
@@ -167,11 +171,13 @@ export default function ArtistIndexPage({ artists }) {
               </ol>
               <ul className="xi-mons" aria-hidden="true">
                 {work.members.map((member) => {
-                  const image = byName.get(member.name)?.profile?.workImage;
+                  const profile = byName.get(member.name)?.profile;
+                  const image = profile?.workImage;
                   return image ? (
                     <li key={member.no}>
                       <a href={`/artist/${encodeURIComponent(member.name)}`} tabIndex={-1}>
                         <img src={image} alt="" loading="lazy" />
+                        {profile.monument ? <img className="xi-mons-blue" src={profile.monument} alt="" loading="lazy" /> : null}
                         <i>{member.no}</i>
                       </a>
                     </li>
