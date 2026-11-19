@@ -52,8 +52,10 @@ export default function VenueMap({ places, current, who }) {
       // 점을 올리기 전에 먼저 화면 범위를 정해야 벡터 레이어가 그려진다.
       // 글꼴·격자 배치가 끝나기 전에 재면 지도 크기를 잘못 알아 엉뚱한 곳을 비추므로, 상자 크기가 바뀔 때마다 다시 맞춘다.
       const bounds = L.latLngBounds(places.map((p) => p.point));
-      const fit = () => { map.invalidateSize(); map.fitBounds(bounds, { padding: [28, 28] }); };
-      map.fitBounds(bounds, { padding: [28, 28] });
+      // 지금 작가의 장소 이름표가 점 위 가운데에 붙으므로, 가장자리 점이어도 이름표가 잘리지 않게 좌우·위 여백을 넉넉히 둔다
+      const pad = { paddingTopLeft: [80, 46], paddingBottomRight: [80, 24] };
+      const fit = () => { map.invalidateSize(); map.fitBounds(bounds, pad); };
+      map.fitBounds(bounds, pad);
       let lastWidth = box.current.clientWidth;
       resizeObserver = new ResizeObserver(() => {
         const width = box.current?.clientWidth ?? 0;
