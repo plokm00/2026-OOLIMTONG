@@ -51,8 +51,8 @@ const CSS = `
 
   /* 프로젝트 소개 + 대형 울림통 세 기 — 리플렛 내지처럼, 작품 사진이 카드 가장자리에서 잘려 나간다 */
   .xi-intro { margin:0 0 56px; }
-  .xi-intro h2 { margin:0 0 18px; font-family:'Museum Classic','Noto Sans KR',sans-serif; font-weight:700; color:var(--xp-blue); font-size:clamp(25px, 6.4vw, 36px); line-height:1.3; letter-spacing:-.01em; word-break:keep-all; }
-  .xi-intro p { margin:0 0 14px; font-size:15px; line-height:1.85; word-break:keep-all; }
+  .xi-intro h2 { margin:0 0 26px; font-family:'Museum Classic','Noto Sans KR',sans-serif; font-weight:700; color:var(--xp-blue); font-size:clamp(25px, 6.4vw, 36px); line-height:1.3; letter-spacing:-.01em; word-break:keep-all; }
+  .xi-intro p { max-width:44em; margin:0 0 22px; font-size:15px; line-height:1.85; word-break:keep-all; }
   .xi-works { display:grid; gap:22px; margin:0 0 64px; }
   .xi-leaflet { justify-self:start; padding:10px 16px 11px; border:1px solid var(--xp-blue); color:var(--xp-blue); font-size:14px; font-weight:700; text-decoration:none; }
   .xi-leaflet:focus-visible { outline:2px solid var(--xp-blue); outline-offset:3px; }
