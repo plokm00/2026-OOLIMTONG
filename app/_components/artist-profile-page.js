@@ -61,8 +61,6 @@ const CSS = `
   .xp-brand { min-width:0; color:var(--xp-blue); font-size:11px; font-weight:500; letter-spacing:.05em; text-decoration:none; white-space:nowrap; }
   .xp-brand i { font-style:normal; margin:0 .6em; }
   .xp-top .xp-all { flex:0 0 auto; font-size:13px; }
-  /* 휴대폰에서는 옆의 "시민작가 17인" 링크와 겹치는 "17 CITIZEN ARTISTS"를 뺀다 */
-  @media (max-width:559px) { .xp-brand .xp-cnt { display:none; } }
   @media (min-width:760px) { .xp-brand { font-size:13px; letter-spacing:.07em; } .xp-brand i { margin:0 1.1em; } .xp-top .xp-all { font-size:14px; } }
   .xp-all { color:var(--xp-navy); font-size:14px; font-weight:700; text-decoration:none; }
   .xp-all:hover { color:var(--xp-blue); }
@@ -73,7 +71,7 @@ const CSS = `
   .xp-summary { font-family:'Museum Classic', 'Noto Sans KR', sans-serif; font-weight:500; }
 
   /* 작품 — 은은한 원형 배경과 바닥 그림자로 작품을 앉힌다 */
-  .xp-hero { display:grid; gap:8px; margin-top:10px; }
+  .xp-hero { display:grid; gap:8px; margin-top:30px; }
   .xp-work { position:relative; margin:0 -22px; padding:34px 22px 44px; display:flex; justify-content:center;
     background:radial-gradient(closest-side, #e8f0ec 0%, #f2f6f4 55%, rgba(255,255,255,0) 100%); }
   .xp-work img { position:relative; z-index:1; display:block; width:auto; max-width:min(78%, 400px); height:auto; max-height:340px; object-fit:contain;
@@ -97,7 +95,7 @@ const CSS = `
   .xp-block { margin-top:64px; }
   .xp-show { margin:0; font-size:clamp(32px, 8.5vw, 46px); line-height:1.1; letter-spacing:-.02em; color:var(--xp-green); }
   .xp-show span { color:var(--xp-blue); }
-  .xp-venues { display:grid; gap:26px; margin-top:22px; }
+  .xp-venues { display:grid; gap:26px; margin-top:30px; }
   .xp-venue-head { margin:0 0 6px; font-size:20px; color:var(--xp-blue); }
   .xp-venue-head.is-main { color:var(--xp-green); }
   .xp-place { margin:0; color:var(--xp-navy); font-size:16px; font-weight:700; line-height:1.6; }
@@ -155,7 +153,7 @@ const CSS = `
 
   @media (min-width:760px) {
     .xp { padding-top:26px; }
-    .xp-hero { grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:48px; align-items:center; margin-top:28px; }
+    .xp-hero { grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:48px; align-items:center; margin-top:60px; }
     .xp-work { margin:0; padding:56px 24px 64px; }
     .xp-work img { max-height:460px; max-width:88%; }
     .xp-work::after { bottom:54px; }
@@ -163,6 +161,7 @@ const CSS = `
     .xp-artist { grid-template-columns:120px minmax(0,1fr); gap:22px; }
     .xp-grid { gap:14px; }
     .xp-block { margin-top:88px; }
+    .xp-venues { margin-top:56px; }
     .xp-show-body { grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:40px; align-items:start; }
     .xp-map-box { height:340px; }
     .xp-team-work { grid-template-columns:150px minmax(0,1fr); gap:26px; }
@@ -196,7 +195,6 @@ export default function ArtistProfilePage({ artist, note }) {
         <a className="xp-brand" href="/artist" aria-label="시민작가 17인 목록으로">
           2026<i>/</i>OOLIMTONG VARIATION<span className="xp-cnt"><i>/</i>17 CITIZEN ARTISTS</span>
         </a>
-        <a className="xp-all" href="/artist">시민작가 17인 ↗</a>
       </nav>
 
       <section className="xp-hero" aria-labelledby="xp-work-title">
@@ -292,7 +290,7 @@ export default function ArtistProfilePage({ artist, note }) {
       <footer className="xp-foot">
         <div className="xp-foot-links">
           <a className="xp-all" href="/artist">시민작가 17인 ↗</a>
-          <a href="/oolimtong_2026_wcf_record">팀별 작업 기록</a>
+          <a href="/oolimtong_2026_wcf_record">팀별 작업 기록 →</a>
           <a href="/oolimtong_2026_wcf">프로젝트 메인 페이지 →</a>
         </div>
         <p className="xp-credit"><b>니닉크라프트</b> · 원주문화재단 보조금 지원사업</p>

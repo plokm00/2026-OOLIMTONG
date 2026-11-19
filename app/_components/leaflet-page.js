@@ -29,7 +29,6 @@ export default function LeafletPage({ panels }) {
       <style>{CSS}</style>
       <nav className="xl-top" aria-label="울림통-변주 2026">
         <a href="/artist">2026 / OOLIMTONG VARIATION</a>
-        <a href="/artist">시민작가 17인 →</a>
       </nav>
       <header className="xl-head">
         <h1 className="xl-title">리플렛 온라인 보기</h1>
