@@ -162,7 +162,8 @@ const CSS = `
     .xp-grid { gap:14px; }
     .xp-block { margin-top:88px; }
     .xp-venues { margin-top:56px; }
-    .xp-show-body { grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:40px; align-items:start; }
+    /* 위 작품 단(.xp-hero)과 같은 칸 나누기 — 지도 왼쪽 선이 작품 제목 왼쪽 선과 맞는다 */
+    .xp-show-body { grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:48px; align-items:start; }
     .xp-map-box { height:340px; }
     .xp-team-work { grid-template-columns:150px minmax(0,1fr); gap:26px; }
   }
