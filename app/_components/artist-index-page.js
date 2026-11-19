@@ -57,6 +57,8 @@ const CSS = `
   .xi-intro h2 { margin:0 0 18px; font-family:'Museum Classic','Noto Sans KR',sans-serif; font-weight:700; color:var(--xp-blue); font-size:clamp(25px, 6.4vw, 36px); line-height:1.3; letter-spacing:-.01em; word-break:keep-all; }
   .xi-intro p { margin:0 0 14px; font-size:15px; line-height:1.85; word-break:keep-all; }
   .xi-works { display:grid; gap:22px; margin:0 0 64px; }
+  .xi-leaflet { justify-self:start; padding:10px 16px 11px; border:1px solid var(--xp-blue); color:var(--xp-blue); font-size:14px; font-weight:700; text-decoration:none; }
+  .xi-leaflet:focus-visible { outline:2px solid var(--xp-blue); outline-offset:3px; }
   .xi-big { position:relative; display:grid; overflow:hidden; background:var(--xp-soft); }
   .xi-big-text { position:relative; z-index:1; padding:26px 22px 8px; }
   .xi-tags { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 16px; }
@@ -79,6 +81,7 @@ const CSS = `
   .xi-big.bleed-right .xi-big-pic img { right:-12%; bottom:-6%; }
   @media (hover:hover) and (pointer:fine) {
     .xi-members a:hover { color:var(--xp-blue); }
+    .xi-leaflet:hover { background:var(--xp-blue); color:#fff; }
     .xi-mons a:hover img { transform:translateY(-4px); }
   }
   @media (min-width:760px) {
@@ -137,6 +140,7 @@ export default function ArtistIndexPage({ artists }) {
         {projectIntro.paragraphs.map((text) => (
           <p key={text.slice(0, 12)}>{text}</p>
         ))}
+        <a className="xi-leaflet" href="/oolimtong_2026_wcf_leaflet">리플렛 온라인 보기 →</a>
       </section>
 
       <section className="xi-works" aria-label="대형 울림통 세 기">
@@ -204,6 +208,7 @@ export default function ArtistIndexPage({ artists }) {
 
       <footer className="xi-foot">
         <div className="xi-foot-links">
+          <a href="/oolimtong_2026_wcf_leaflet">리플렛 온라인 보기 →</a>
           <a href="/oolimtong_2026_wcf_record">팀별 작업 기록 →</a>
           <a href="/oolimtong_2026_wcf">메인으로 →</a>
         </div>
