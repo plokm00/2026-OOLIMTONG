@@ -28,7 +28,7 @@ export default function LeafletPage({ panels }) {
     <main className="xl">
       <style>{CSS}</style>
       <nav className="xl-top" aria-label="울림통-변주 2026">
-        <a href="/oolimtong_2026_wcf">2026 / OOLIMTONG VARIATION</a>
+        <a href="/artist">2026 / OOLIMTONG VARIATION</a>
         <a href="/artist">시민작가 17인 →</a>
       </nav>
       <header className="xl-head">
@@ -49,7 +49,7 @@ export default function LeafletPage({ panels }) {
       </ol>
       <footer className="xl-foot">
         <a href="/artist">시민작가 17인 보기 →</a>
-        <a href="/oolimtong_2026_wcf">메인으로 →</a>
+        <a href="/oolimtong_2026_wcf">프로젝트 메인 페이지 →</a>
       </footer>
     </main>
   );

@@ -193,7 +193,7 @@ export default function ArtistProfilePage({ artist, note }) {
       <style>{CSS}</style>
 
       <nav className="xp-top" aria-label="울림통-변주 2026">
-        <a className="xp-brand" href="/oolimtong_2026_wcf" aria-label="울림통-변주 2026 메인으로">
+        <a className="xp-brand" href="/artist" aria-label="시민작가 17인 목록으로">
           2026<i>/</i>OOLIMTONG VARIATION<span className="xp-cnt"><i>/</i>17 CITIZEN ARTISTS</span>
         </a>
         <a className="xp-all" href="/artist">시민작가 17인 ↗</a>
@@ -291,6 +291,7 @@ export default function ArtistProfilePage({ artist, note }) {
         <div className="xp-foot-links">
           <a className="xp-all" href="/artist">시민작가 17인 ↗</a>
           <a href="/oolimtong_2026_wcf_record">팀별 작업 기록</a>
+          <a href="/oolimtong_2026_wcf">프로젝트 메인 페이지 →</a>
         </div>
         <p className="xp-credit"><b>니닉크라프트</b> · 원주문화재단 보조금 지원사업</p>
       </footer>

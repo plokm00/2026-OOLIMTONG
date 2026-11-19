@@ -139,7 +139,7 @@ export default function ArtistIndexPage({ artists }) {
       <style>{CSS}</style>
 
       <nav className="xi-top" aria-label="울림통-변주 2026">
-        <a className="xi-brand" href="/oolimtong_2026_wcf" aria-label="울림통-변주 2026 메인으로">
+        <a className="xi-brand" href="/artist" aria-label="시민작가 17인 목록 맨 위로">
           2026<i>/</i>OOLIMTONG VARIATION<i>/</i>17 CITIZEN ARTISTS
         </a>
       </nav>
@@ -234,7 +234,7 @@ export default function ArtistIndexPage({ artists }) {
         <div className="xi-foot-links">
           <a href="/oolimtong_2026_wcf_leaflet">리플렛 온라인 보기 →</a>
           <a href="/oolimtong_2026_wcf_record">팀별 작업 기록 →</a>
-          <a href="/oolimtong_2026_wcf">메인으로 →</a>
+          <a href="/oolimtong_2026_wcf">프로젝트 메인 페이지 →</a>
         </div>
         <p className="xi-credit"><a className="xi-home" href="https://ninnikkraft.vercel.app/">니닉크라프트</a> · 원주문화재단 보조금 지원사업</p>
       </footer>
