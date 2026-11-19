@@ -37,6 +37,7 @@ export default function VenueMap({ places, current, who }) {
 
   useEffect(() => {
     let map;
+    let resizeObserver;
     let cancelled = false;
     import("leaflet").then(({ default: L }) => {
       if (cancelled || !box.current) return;
@@ -47,8 +48,18 @@ export default function VenueMap({ places, current, who }) {
         dragging: !touch,
         zoomControl: true,
       });
-      // 점을 올리기 전에 먼저 화면 범위를 정해야 벡터 레이어가 그려진다
-      map.fitBounds(L.latLngBounds(places.map((p) => p.point)), { padding: [28, 28] });
+      // 점을 올리기 전에 먼저 화면 범위를 정해야 벡터 레이어가 그려진다.
+      // 글꼴·격자 배치가 끝나기 전에 재면 지도 크기를 잘못 알아 엉뚱한 곳을 비추므로, 상자 크기가 바뀔 때마다 다시 맞춘다.
+      const bounds = L.latLngBounds(places.map((p) => p.point));
+      const fit = () => { map.invalidateSize(); map.fitBounds(bounds, { padding: [28, 28] }); };
+      map.fitBounds(bounds, { padding: [28, 28] });
+      let lastWidth = box.current.clientWidth;
+      resizeObserver = new ResizeObserver(() => {
+        const width = box.current?.clientWidth ?? 0;
+        if (width && width !== lastWidth) { lastWidth = width; fit(); }
+      });
+      resizeObserver.observe(box.current);
+      requestAnimationFrame(fit);
       // OpenStreetMap 기본 타일(키 없이 쓸 수 있다). 색은 CSS(.xp-map .leaflet-tile-pane)로 옅은 회색조로 눌러 홍보물 색이 돋보이게 한다.
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
@@ -87,6 +98,7 @@ export default function VenueMap({ places, current, who }) {
     });
     return () => {
       cancelled = true;
+      resizeObserver?.disconnect();
       map?.remove();
     };
   }, [places, current]);

@@ -163,7 +163,7 @@ const CSS = `
     .xp-artist { grid-template-columns:120px minmax(0,1fr); gap:22px; }
     .xp-grid { gap:14px; }
     .xp-block { margin-top:88px; }
-    .xp-show-body { grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:40px; align-items:center; }
+    .xp-show-body { grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:40px; align-items:start; }
     .xp-map-box { height:340px; }
     .xp-team-work { grid-template-columns:150px minmax(0,1fr); gap:26px; }
   }
@@ -230,8 +230,9 @@ export default function ArtistProfilePage({ artist, note }) {
       </section>
 
       <section className="xp-block" aria-labelledby="xp-show-title">
-        <h2 className="xp-show" id="xp-show-title">울림통 – <span>변주</span></h2>
         <div className="xp-show-body">
+        <div>
+        <h2 className="xp-show" id="xp-show-title">울림통 – <span>변주</span></h2>
         <div className="xp-venues">
           {p.venue ? (
             <div>
@@ -247,6 +248,7 @@ export default function ArtistProfilePage({ artist, note }) {
             ))}
             <p className="xp-when">{MAIN_SHOW.period} · {MAIN_SHOW.hours}</p>
           </div>
+        </div>
         </div>
         <VenueMap places={MAP_PLACES} current={p.venue?.name} who={p.venue?.label ?? artist.name} />
         </div>
