@@ -44,10 +44,8 @@ const CSS = `
   .xi-venue { position:relative; margin:6px 0 0; padding-left:13px; color:var(--xp-dim); font-size:12.5px; line-height:1.5; word-break:keep-all; }
   .xi-venue::before { content:""; position:absolute; left:1px; top:.45em; width:7px; height:7px; border-radius:50% 50% 50% 0; background:var(--xp-green); transform:rotate(-45deg); }
   .xi-venue span { display:block; }
-  .xi-card:active .xi-name, .xi-card:focus-visible .xi-name { color:var(--xp-blue); }
   .xi-card:focus-visible { outline:2px solid var(--xp-blue); outline-offset:4px; }
   @media (hover:hover) and (pointer:fine) {
-    .xi-card:hover .xi-name { color:var(--xp-blue); }
     .xi-card:hover .xi-photo img { transform:scale(1.03); }
   }
 

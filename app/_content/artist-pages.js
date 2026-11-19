@@ -111,7 +111,7 @@ const details = {
   "park-soyeon": {
     profile: {
       tagline: "나의 시간과 이야기를 간직하고 싶은 두 딸의 엄마",
-      workTitle: "한 여름의 추억",
+      workTitle: "한여름의 추억",
       materials: "점토, 비소성, 콩기름으로 마감",
       size: "14 × 12 × 35 cm",
       year: "2026",

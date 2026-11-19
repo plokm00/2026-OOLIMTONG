@@ -1,5 +1,6 @@
 import { worksOf } from "../_content/artist-notes";
 import ArtistBgmPlayer from "./artist-bgm-player";
+import VenueMap from "./venue-map";
 
 // 울림통-변주 2026 작가 전시 프로필 — 흰 바탕, 홍보물(포스터·리플렛·미니배너)의 남색·파랑·연두를 글자색으로 쓴다.
 // 순서: 작품(그림자를 깐 작품 사진 + 작품 정보 + 작가) → 전시 정보 → 전시 전경 → 작업하는 작가 사진 3장 → 작가 노트 → 함께 만든 대형 울림통.
@@ -83,6 +84,24 @@ const CSS = `
   .xp-place small { margin-left:6px; color:var(--xp-dim); font-size:13px; font-weight:400; }
   .xp-when { margin:2px 0 0; color:var(--xp-dim); font-size:14px; line-height:1.6; }
 
+  /* 전시장소 지도 — 본 전시(문막)에서 원주 곳곳의 모뉴먼트 전시장소로 뻗어 나간다 */
+  .xp-show-body { display:grid; gap:30px; }
+  .xp-map { margin:0; }
+  .xp-map svg { display:block; width:100%; height:auto; overflow:visible; }
+  .xp-map-area { fill:#b9bdd0; font-size:10px; letter-spacing:.12em; }
+  .xp-map-line { fill:none; stroke:var(--xp-blue); stroke-width:.9; stroke-dasharray:2 3; opacity:.45; }
+  .xp-map-line.is-here { stroke-width:1.6; stroke-dasharray:none; opacity:.9; }
+  .xp-map-dot { fill:var(--xp-navy); opacity:.55; }
+  .xp-map-dot.is-here { fill:var(--xp-blue); opacity:1; stroke:#fff; stroke-width:2; }
+  .xp-map-main { fill:var(--xp-green); stroke:#fff; stroke-width:2.5; }
+  .xp-map-label { font-family:'Noto Sans KR', sans-serif; font-size:11.5px; font-weight:700; paint-order:stroke; stroke:#fff; stroke-width:3px; stroke-linejoin:round; }
+  .xp-map-label.is-main { fill:var(--xp-green); }
+  .xp-map-label.is-here { fill:var(--xp-blue); }
+  .xp-map figcaption { display:flex; flex-wrap:wrap; gap:4px 14px; margin-top:10px; color:var(--xp-dim); font-size:12px; }
+  .xp-map-key { display:inline-block; width:8px; height:8px; margin-right:5px; border-radius:50%; background:var(--xp-navy); opacity:.55; vertical-align:1px; }
+  .xp-map-key.is-main { background:var(--xp-green); opacity:1; }
+  .xp-map-key.is-here { background:var(--xp-blue); opacity:1; }
+
   .xp-grid { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:10px; }
   /* 사진이 세 장보다 많으면 한 줄로 두고 가로로 넘겨 본다 — 한 화면에 세 장 너비, 넷째 장이 살짝 보이게 */
   .xp-grid.is-scroll { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; overscroll-behavior-x:contain; -webkit-overflow-scrolling:touch; padding-bottom:8px; scrollbar-width:thin; }
@@ -114,6 +133,7 @@ const CSS = `
     .xp-artist { grid-template-columns:120px minmax(0,1fr); gap:22px; }
     .xp-grid { gap:14px; }
     .xp-block { margin-top:88px; }
+    .xp-show-body { grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:40px; align-items:center; }
     .xp-team-work { grid-template-columns:150px minmax(0,1fr); gap:26px; }
   }
   @media print { .xp-top, .xp-foot { display:none; } }
@@ -180,6 +200,7 @@ export default function ArtistProfilePage({ artist, note }) {
 
       <section className="xp-block" aria-labelledby="xp-show-title">
         <h2 className="xp-show" id="xp-show-title">울림통 – <span>변주</span></h2>
+        <div className="xp-show-body">
         <div className="xp-venues">
           {p.venue ? (
             <div>
@@ -195,6 +216,8 @@ export default function ArtistProfilePage({ artist, note }) {
             ))}
             <p className="xp-when">{MAIN_SHOW.period} · {MAIN_SHOW.hours}</p>
           </div>
+        </div>
+        <VenueMap current={p.venue?.name} />
         </div>
       </section>
 
