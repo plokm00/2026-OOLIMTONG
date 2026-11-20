@@ -151,7 +151,7 @@ export default function ArtistIndexPage({ artists }) {
 
       <figure className="xi-group">
         <img src="/artist-media/group-photo.webp" alt="대형 울림통 앞에 모인 시민작가와 가족들" width="1840" height="874" />
-        <figcaption>당일 함께하지 못한 4인은 AI를 활용해 합성하였습니다.</figcaption>
+        <figcaption>촬영에 함께하지 못한 4인은 AI를 활용해 합성하였습니다.</figcaption>
       </figure>
 
       <section className="xi-intro" aria-labelledby="xi-intro-title">
