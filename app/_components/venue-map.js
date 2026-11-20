@@ -2,7 +2,7 @@
 
 // 울림통-변주 전시장소 지도 — 실제 지도(OpenStreetMap 타일, Leaflet) 위에
 // 문막의 본 전시에서 원주 곳곳의 모뉴먼트 전시장소로 점선이 뻗어 나간다.
-// 점을 누르면 그 장소의 전시 정보(작가·작품·기간·주소)와 네이버지도·카카오맵·구글맵 링크가 팝업으로 뜬다.
+// 점을 누르면 그 장소의 전시 정보(작가·작품·기간·주소)와 네이버·카카오·구글 지도 링크(장소 기호 붙임, 한 줄)가 팝업으로 뜬다.
 // current: 지금 작가의 전시장소 이름 — 그 점만 파랗게 키운다. who: 범례의 "○○ 전시"에 쓸 이름.
 // 지도 라이브러리는 브라우저에서만 불러오고, 그 전(과 자바스크립트가 꺼진 경우)에는 빈 바탕만 보인다.
 
@@ -19,7 +19,9 @@ function mapLinks(place) {
   const query = place.address ? `원주시 ${place.address.replace(/^원주시\s*/, "").split(",")[0]}` : `${lat},${lon}`;
   const google = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
   const naver = `https://map.naver.com/p/search/${encodeURIComponent(query)}`;
-  return `<p class="vm-links"><a href="${naver}" target="_blank" rel="noopener">네이버지도 ↗</a><a href="${kakao}" target="_blank" rel="noopener">카카오맵 ↗</a><a href="${google}" target="_blank" rel="noopener">구글맵 ↗</a></p>`;
+  const pin = `<svg class="vm-pin" viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0.8C3.1 0.8 0.9 3 0.9 5.8c0 3.7 5.1 9.4 5.1 9.4s5.1-5.7 5.1-9.4C11.1 3 8.9 0.8 6 0.8zm0 7.1a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2z" fill="currentColor"/></svg>`;
+  const link = (href, label, full) => `<a href="${href}" target="_blank" rel="noopener" aria-label="${full}에서 보기">${label}${pin}</a>`;
+  return `<p class="vm-links">${link(naver, "네이버", "네이버지도")}${link(kakao, "카카오", "카카오맵")}${link(google, "구글", "구글맵")}</p>`;
 }
 
 function popupHtml(place) {
