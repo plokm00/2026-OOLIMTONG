@@ -100,6 +100,16 @@ export default function VenueMap({ places, current, who }) {
         return marker;
       });
       markers.forEach((m, i) => { if (places[i].name === current) m.bringToFront(); });
+      // 팝업이 잘리지 않게 지도가 저절로 움직이므로(autoPan), 팝업을 닫으면 모든 장소가 보이는 처음 화면으로 돌아온다.
+      // 다른 점을 바로 누르면 닫힘 직후 새 팝업이 열리므로, 잠깐 기다렸다가 열린 팝업이 없을 때만 되돌린다.
+      let back;
+      map.on("popupopen", () => clearTimeout(back));
+      map.on("popupclose", () => {
+        clearTimeout(back);
+        back = setTimeout(() => {
+          if (!cancelled && !markers.some((m) => m.isPopupOpen())) map.flyToBounds(bounds, { ...pad, duration: 0.45 });
+        }, 120);
+      });
     });
     return () => {
       cancelled = true;
