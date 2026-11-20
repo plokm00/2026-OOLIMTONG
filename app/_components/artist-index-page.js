@@ -3,6 +3,9 @@
 // 흰 바탕, 홍보물의 남색·파랑·연두, 제목·이름은 박물관체(국립박물관문화재단클래식).
 
 import { largeWorks, projectIntro } from "../_content/oolimtong-works";
+import { MAP_PLACES } from "../_content/venue-map-places";
+import VenueMap from "./venue-map";
+import { VENUE_MAP_CSS } from "./venue-map-css";
 
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
@@ -104,6 +107,11 @@ const CSS = `
     .xi-big.bleed-right .xi-big-text { padding-left:60px; padding-right:12px; }
   }
 
+  /* 전시 장소 지도 — 17인 목록 뒤. 점을 누르면 그 장소의 작가(개인 페이지 링크)·기간·주소·길찾기가 뜬다 */
+  .xi-map { margin-top:64px; }
+  .xi-map h2 { margin:0 0 18px; font-family:'Museum Classic','Noto Sans KR',sans-serif; font-weight:700; color:var(--xp-blue); font-size:clamp(25px, 6.4vw, 36px); line-height:1.3; letter-spacing:-.01em; word-break:keep-all; }
+  .xi-map .xp-map-box { height:380px; }
+  @media (min-width:760px) { .xi-map { margin-top:88px; } .xi-map .xp-map-box { height:460px; } }
   .xi-foot { margin-top:72px; color:var(--xp-dim); font-size:12px; line-height:1.9; }
   .xi-foot-links { display:flex; flex-wrap:wrap; gap:6px 18px; margin-bottom:14px; }
   .xi-foot a { color:var(--xp-blue); text-decoration:none; font-weight:700; }
@@ -136,7 +144,7 @@ export default function ArtistIndexPage({ artists }) {
   const byName = new Map(artists.map((artist) => [artist.name, artist]));
   return (
     <main className="xi">
-      <style>{CSS}</style>
+      <style>{CSS + VENUE_MAP_CSS}</style>
 
       <nav className="xi-top" aria-label="울림통-변주 2026">
         <a className="xi-brand" href="/artist" aria-label="시민작가 17인 목록 맨 위로">
@@ -229,6 +237,11 @@ export default function ArtistIndexPage({ artists }) {
           </li>
         ))}
       </ul>
+
+      <section className="xi-map" aria-labelledby="xi-map-title">
+        <h2 id="xi-map-title">한눈에 보는 전시 장소</h2>
+        <VenueMap places={MAP_PLACES} />
+      </section>
 
       <footer className="xi-foot">
         <div className="xi-foot-links">
