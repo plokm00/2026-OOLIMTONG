@@ -72,6 +72,8 @@ export default function ArtistBgmPlayer({ tracks }) {
     }
     async function start(event) {
       if (done || trying) return;
+      // Esc는 멈추는 키이므로 음악을 켜지 않는다
+      if (event.type === "keydown" && event.key === "Escape") return;
       if (event.target instanceof Node && rootRef.current?.contains(event.target)) return cleanup();
       if (userStoppedRef.current) return cleanup();
       const audio = audioRef.current;
@@ -91,6 +93,31 @@ export default function ArtistBgmPlayer({ tracks }) {
     return cleanup;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // PC에서 Esc를 누르면 배경음악을 멈춘다(플레이어의 일시정지와 같아서, 그 뒤 스크롤해도 다시 켜지지 않는다).
+  // 다만 지도 팝업이나 곡 목록이 열려 있으면 Esc는 그것만 닫고 음악은 그대로 둔다.
+  useEffect(() => {
+    function onKey(event) {
+      if (event.key !== "Escape" || event.defaultPrevented) return;
+      const popupClose = document.querySelector(".leaflet-popup .leaflet-popup-close-button");
+      if (popupClose) {
+        popupClose.click();
+        return;
+      }
+      if (listOpen) {
+        setListOpen(false);
+        return;
+      }
+      const audio = audioRef.current;
+      if (audio && !audio.paused) {
+        userStoppedRef.current = true;
+        audio.pause();
+      }
+    }
+    // 지도(Leaflet)를 누른 뒤에는 지도가 키 입력을 가로채 위로 올려보내지 않으므로, 먼저 받는 단계(capture)에서 듣는다
+    window.addEventListener("keydown", onKey, true);
+    return () => window.removeEventListener("keydown", onKey, true);
+  }, [listOpen]);
 
   async function play() {
     const audio = audioRef.current;
