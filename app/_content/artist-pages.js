@@ -199,7 +199,7 @@ const details = {
       workImage: "/artist-media/lee-seongsun-work.webp",
       monument: "/artist-media/lee-seongsun-monument.webp",
       photos: photos("lee-seongsun", ["〈코아〉 곁에서 작업하는 이성순", "〈코아〉를 빚는 이성순", "흙 조각을 고르는 이성순"]),
-      venue: { name: "클라운지 2호점", address: "원주시 마재3로 24-54, 101호", period: "2026.11.21. ~ 12.13.", hours: "토·일요일 휴무" },
+      venue: { name: "클라운지 2호점", address: "원주시 마재3로 24-54, 101호", period: "2026.11.21. ~ 12.11.", hours: "토·일요일 휴무" },
       // ‘예쁜 코’ → 아코디언 샹송
       playlist: [variation("accordionchanson", "아코디언 샹송")],
     },
