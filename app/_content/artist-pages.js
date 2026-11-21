@@ -200,7 +200,7 @@ const details = {
       summary: "작가는 울림통 안에서 태어난 소리가\n세상을 향하도록, 곳곳에 틈을 열었습니다.",
       workImage: "/artist-media/lee-saerom-work.webp",
       monument: "/artist-media/lee-saerom-monument.webp",
-      photos: photos("lee-saerom", ["작업대에서 흙을 빚는 이새롬", "나리움 터에 타래를 놓는 이새롬", "나리움 터의 이새롬"]),
+      photos: photos("lee-saerom", ["작업대에서 흙을 빚는 이새롬", "나리움 터에 타래를 놓는 이새롬", "나리움 터에서 타래 벽을 쌓는 이새롬"]),
       venue: { name: "카페 아이하다", address: "원주시 입춘로 45, 222호", period: "2026.11.21. ~ 12.13.", hours: "" },
       // 틈으로 소리가 새어 나오듯 덜어 낸 미니멀 변주
       playlist: [variation("minimal", "미니멀")],
