@@ -97,12 +97,10 @@ const CSS = `
   .xp-guest .xp-h2 { margin-bottom:6px; }
   .og-sub { margin:0 0 18px; color:var(--xp-dim); font-size:15px; line-height:1.6; word-break:keep-all; }
   .og-card { position:relative; padding:14px; background:#eef6fc; border-radius:14px 8px 16px 6px; }
-  .og-line { display:grid; grid-template-columns:96px minmax(0,1fr); gap:8px; }
-  .og-line input { min-width:0; padding:12px 13px; border:1px solid #c6dcef; background:#fff; color:var(--xp-navy); font:inherit; font-size:16px; outline:none; }
-  .og-line input:focus { border-color:var(--xp-blue); }
+  .og-line { display:grid; grid-template-columns:84px minmax(0,1fr); gap:10px 14px; align-items:end; }
+  .og-line input { min-width:0; padding:10px 2px 8px; border:0; border-bottom:1px solid #9fbedb; border-radius:0; background:transparent; color:var(--xp-navy); font:inherit; font-size:16px; outline:none; }
+  .og-line input:focus { border-bottom-color:var(--xp-blue); box-shadow:0 1px 0 var(--xp-blue); }
   .og-line input::placeholder { color:#9db3c9; }
-  .og-name { border-radius:8px 4px 9px 3px; }
-  .og-text { border-radius:4px 9px 3px 8px; }
   .og-line .og-send { grid-column:1 / -1; padding:12px 18px; }
   @media (min-width:560px) { .og-line { grid-template-columns:120px minmax(0,1fr) auto; } .og-line .og-send { grid-column:auto; } }
   .og-send { flex:0 0 auto; padding:10px 18px; border:0; border-radius:8px 4px 9px 3px; background:var(--xp-navy); color:#fff; font:inherit; font-size:15px; font-weight:700; cursor:pointer; transition:transform .15s ease, opacity .15s ease; }
