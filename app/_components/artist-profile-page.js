@@ -1,5 +1,6 @@
 import { worksOf } from "../_content/artist-notes";
 import ArtistBgmPlayer from "./artist-bgm-player";
+import ArtistGuestbook from "./artist-guestbook";
 import VenueMap from "./venue-map";
 import { MAIN_SHOW, MAP_PLACES } from "../_content/venue-map-places";
 import { VENUE_MAP_CSS } from "./venue-map-css";
@@ -92,6 +93,22 @@ const CSS = `
   .xp-team-name { margin:0; font-size:24px; color:var(--xp-green); }
   .xp-team-work .xp-text { margin-top:6px; color:var(--xp-dim); font-size:14.5px; line-height:1.85; }
 
+  /* 방명록 — 이름(선택) + 한 줄 글. 글 목록은 이름·글·날짜를 한 줄씩 */
+  .xp-guest-form { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; }
+  .xp-guest-form input { min-width:0; padding:11px 12px; border:1px solid #c9d6ee; border-radius:0; background:#fff; color:var(--xp-text); font:inherit; font-size:16px; }
+  .xp-guest-form input:focus { outline:none; border-color:var(--xp-blue); }
+  .xp-guest-name { grid-column:1 / -1; max-width:200px; }
+  .xp-guest-trap { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
+  .xp-guest-send { padding:0 18px; border:0; background:var(--xp-navy); color:#fff; font:inherit; font-size:15px; font-weight:700; cursor:pointer; }
+  .xp-guest-send:disabled { opacity:.5; cursor:default; }
+  .xp-guest-notice { margin:8px 0 0; color:var(--xp-blue); font-size:13px; }
+  .xp-guest-empty { margin:16px 0 0; color:var(--xp-dim); font-size:14px; }
+  .xp-guest-list { margin:22px 0 0; padding:0; list-style:none; border-top:1px solid #dfe5f0; }
+  .xp-guest-list li { display:flex; flex-wrap:wrap; align-items:baseline; gap:2px 10px; padding:11px 0; border-bottom:1px solid #dfe5f0; font-size:15px; line-height:1.6; }
+  .xp-guest-list b { flex:0 0 auto; color:var(--xp-navy); font-weight:700; }
+  .xp-guest-msg { flex:1 1 12em; min-width:0; color:var(--xp-text); overflow-wrap:anywhere; }
+  .xp-guest-list time { flex:0 0 auto; margin-left:auto; color:var(--xp-dim); font-size:12px; }
+  @media (min-width:760px) { .xp-guest-form { grid-template-columns:200px minmax(0,1fr) auto; } .xp-guest-name { grid-column:auto; max-width:none; } }
   .xp-foot { margin-top:72px; color:var(--xp-dim); font-size:12px; line-height:1.9; }
   .xp-foot-links { display:flex; flex-wrap:wrap; gap:6px 18px; margin-bottom:14px; }
   .xp-foot a { color:var(--xp-blue); text-decoration:none; font-weight:700; }
@@ -234,6 +251,8 @@ export default function ArtistProfilePage({ artist, note }) {
           ))}
         </section>
       ) : null}
+
+      <ArtistGuestbook artistId={artist.id} artistName={artist.name} />
 
       <footer className="xp-foot">
         <div className="xp-foot-links">
