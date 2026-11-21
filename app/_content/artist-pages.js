@@ -164,8 +164,12 @@ const details = {
       monument: "/artist-media/park-jinhee-monument.webp",
       photos: photos("park-jinhee", ["흙을 주무르는 박진희", "작은 울림통을 빚는 박진희의 손", "울림통 좌대에 올라 만세하는 박진희"]),
       venue: TTEUL,
-      // 사진 속 아이가 진희라 진희 페이지에만 뒷모습 사진을 더한다.
-      installPhotos: [...TTEUL_INSTALL, install("park-jinhee-back", "선반 위 작품을 가리키는 박진희의 뒷모습")],
+      // 사진 속 아이가 진희라 진희 페이지에는 진희가 나온 정면 사진·뒷모습 사진을 쓴다.
+      installPhotos: [
+        TTEUL_INSTALL[0],
+        install("park-jinhee-front", "세 작품이 놓인 선반 앞 자리에 앉은 박진희"),
+        install("park-jinhee-back", "선반 위 작품을 가리키는 박진희의 뒷모습"),
+      ],
       // 여섯 살 작가의 신나는 할로윈 → 치어리딩
       playlist: [variation("cheerleading", "치어리딩")],
     },

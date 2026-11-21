@@ -7,7 +7,7 @@ import { MAIN_SHOW, MAP_PLACES } from "../_content/venue-map-places";
 import { VENUE_MAP_CSS } from "./venue-map-css";
 
 // 울림통-변주 2026 작가 전시 프로필 — 흰 바탕, 홍보물(포스터·리플렛·미니배너)의 남색·파랑·연두를 글자색으로 쓴다.
-// 순서: 작품(그림자를 깐 작품 사진 + 작품 정보 + 작가) → 전시 정보 → 전시 전경 → 작업하는 작가 사진 3장 → 작가 노트 → 함께 만든 대형 울림통.
+// 순서: 작품(그림자를 깐 작품 사진 + 작품 정보 + 작가) → 전시 정보 → 전시 전경 → 작가 노트 → 작업하는 작가 사진 3장 → 함께 만든 대형 울림통.
 // 상자 테두리나 구분선 없이 여백과 글자색만으로 단락을 나눈다. 작품 사진은 원본 해상도가 낮아 크게 키우지 않는다.
 
 // 게시된 작가 노트 중 앞부분(작가 노트)만 쓴다. "---" 뒤의 전시 계획은 준비 단계의 글이라 전시 프로필에서는 뺀다.
@@ -86,10 +86,15 @@ const CSS = `
   .xp-install { aspect-ratio:2/1; background:var(--xp-soft); }
   .xp-install-gallery .xp-install { aspect-ratio:15/7; overflow:hidden; }
   .xp-install img { display:block; width:100%; height:100%; object-fit:cover; }
-  .xp-install-thumbs { display:flex; gap:8px; margin-top:10px; }
-  .xp-install-thumbs button { flex:0 1 120px; min-width:0; padding:0; border:0; background:var(--xp-soft); cursor:pointer; opacity:.55; transition:opacity .15s; outline-offset:2px; }
+  /* 썸네일은 큰 사진 안 오른쪽 아래에 작게 얹는다 */
+  .xp-install-gallery { position:relative; }
+  .xp-install-thumbs { position:absolute; right:8px; bottom:8px; display:flex; gap:5px; }
+  .xp-install-thumbs button { width:52px; padding:0; border:0; background:var(--xp-soft); cursor:pointer; opacity:.7; transition:opacity .15s;
+    box-shadow:0 0 0 1.5px rgba(255,255,255,.85), 0 2px 6px rgba(0,0,0,.25); }
   .xp-install-thumbs button.is-on, .xp-install-thumbs button:hover { opacity:1; }
-  .xp-install-thumbs button.is-on { box-shadow:0 0 0 2px var(--xp-blue); }
+  .xp-install-thumbs button.is-on { box-shadow:0 0 0 2px #fff, 0 0 0 3.5px var(--xp-blue); }
+  .xp-install-thumbs button:focus-visible { outline:2px solid var(--xp-blue); outline-offset:3px; }
+  @media (min-width:760px) { .xp-install-thumbs { right:14px; bottom:14px; gap:8px; } .xp-install-thumbs button { width:84px; } }
   .xp-install-thumbs img { display:block; width:100%; height:auto; aspect-ratio:15/7; object-fit:cover; }
 
   .xp-h2 { margin:0 0 18px; font-size:28px; color:var(--xp-navy); }
@@ -246,16 +251,16 @@ export default function ArtistProfilePage({ artist, note }) {
         {p.installPhotos?.length ? <ArtistInstallGallery photos={p.installPhotos} /> : <div className="xp-install is-empty" />}
       </section>
 
-      {p.photos?.length ? (
-        <section className="xp-block" aria-label={`작업하는 ${artist.name}`}>
-          <PhotoGrid photos={p.photos} />
-        </section>
-      ) : null}
-
       {body ? (
         <section className="xp-block" id="note" aria-labelledby="xp-note-title">
           <h2 className="xp-h2" id="xp-note-title">작가 노트</h2>
           <p className="xp-text">{body}</p>
+        </section>
+      ) : null}
+
+      {p.photos?.length ? (
+        <section className="xp-block" aria-label={`작업하는 ${artist.name}`}>
+          <PhotoGrid photos={p.photos} />
         </section>
       ) : null}
 
