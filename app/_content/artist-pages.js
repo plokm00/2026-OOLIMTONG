@@ -28,7 +28,8 @@ import { artists } from "./artist-notes";
 //   profile.photos    작업하는 작가 사진 3장(4:5) [{ src, alt }]
 //   profile.venue     개인 모뉴먼트 전시장소 { name, address, period, hours, label? }
 //                     label은 "○○ 모뉴먼트 전시"에 이름 대신 쓸 말(선택)
-//   profile.installPhotos 전시 전경 사진 [{ src, alt }] — 비어 있으면 빈 칸만 둔다(이미지 태그 없음)
+//   profile.installPhotos 전시 전경 사진 [{ src, thumb, alt }] — 1인 2~3장. 큰 사진 + 썸네일로 보인다.
+//                     비어 있으면 빈 칸만 둔다(이미지 태그 없음). 파일은 public/artist-install/
 //   profile.playlist  배경음악. [{ src, title, note }] — 변주곡은 작가마다 1곡
 //                     v_ 변주곡은 title을 "소녀들의 언덕 테마 변주곡"으로, note에 편곡 성격을 적는다.
 //
@@ -38,6 +39,16 @@ const MUNMAK_CHURCH = { name: "문막성당 로비", address: "원주시 건등�
 const TTEUL = { name: "브런치카페 뜰", address: "원주시 봉대길 41-1", period: "2026.11.24.(화) ~ 11.29.(일)", hours: "" };
 const MIPPEUDA = { name: "미쁘다 갤러리카페", address: "원주시 미래로 3, 107호", period: "2026.11.21.(토) ~ 11.28.(토)", hours: "11:00 – 17:00 · 일요일 휴무" };
 const PRIVATE_SPACE = { name: "작가 개인 공간", address: "", period: "상설전시", hours: "초대 관람만 가능" };
+
+// 전시 전경 사진(public/artist-install/) — 큰 사진 1800×840, 썸네일 360×168
+function install(name, alt) {
+  return { src: `/artist-install/${name}.webp`, thumb: `/artist-install/${name}_thumb.webp`, alt };
+}
+// 브런치카페 뜰 — 박진희·박소연·이안 가족이 한자리에 전시하므로 대표 사진을 함께 쓴다.
+const TTEUL_INSTALL = [
+  install("tteul-1", "브런치카페 뜰 선반에 나란히 놓인 가족의 세 작품"),
+  install("tteul-2", "창가 선반 위 세 작품과 카페 자리"),
+];
 
 function variation(name, note) {
   return { src: `/artist-music/variation-${name}.mp3`, title: "소녀들의 언덕 테마 변주곡", note };
@@ -120,6 +131,7 @@ const details = {
       monument: "/artist-media/park-soyeon-monument.webp",
       photos: photos("park-soyeon", ["고리 팀과 함께한 박소연", "작품을 빚는 박소연", "이안과 함께 도안을 그리는 박소연"]),
       venue: TTEUL,
+      installPhotos: TTEUL_INSTALL,
       // 소라처럼 바람이 울리는 오카리나
       playlist: [variation("okarina01", "오카리나")],
     },
@@ -152,6 +164,8 @@ const details = {
       monument: "/artist-media/park-jinhee-monument.webp",
       photos: photos("park-jinhee", ["흙을 주무르는 박진희", "작은 울림통을 빚는 박진희의 손", "울림통 좌대에 올라 만세하는 박진희"]),
       venue: TTEUL,
+      // 사진 속 아이가 진희라 진희 페이지에만 뒷모습 사진을 더한다.
+      installPhotos: [...TTEUL_INSTALL, install("park-jinhee-back", "선반 위 작품을 가리키는 박진희의 뒷모습")],
       // 여섯 살 작가의 신나는 할로윈 → 치어리딩
       playlist: [variation("cheerleading", "치어리딩")],
     },
@@ -200,6 +214,11 @@ const details = {
       monument: "/artist-media/lee-seongsun-monument.webp",
       photos: photos("lee-seongsun", ["〈코아〉 곁에서 작업하는 이성순", "〈코아〉를 빚는 이성순", "흙 조각을 고르는 이성순"]),
       venue: { name: "클라운지 2호점", address: "원주시 마재3로 24-54, 101호", period: "2026.11.21. ~ 12.11.", hours: "토·일요일 휴무" },
+      installPhotos: [
+        install("lee-seongsun-1", "클라운지 2호점 진열대 위의 〈코아〉와 작품 안내판"),
+        install("lee-seongsun-2", "〈코아〉 곁에 앉아 안내판을 가리키는 이성순"),
+        install("lee-seongsun-3", "〈코아〉를 가까이에서 본 모습"),
+      ],
       // ‘예쁜 코’ → 아코디언 샹송
       playlist: [variation("accordionchanson", "아코디언 샹송")],
     },
@@ -217,6 +236,7 @@ const details = {
       monument: "/artist-media/lee-an-monument.webp",
       photos: photos("lee-an", ["코아의 벽을 쌓는 이안", "딸과 함께 타래를 놓는 이안", "고리 안에 앉아 보는 이안"]),
       venue: { ...TTEUL, label: "IAN" },
+      installPhotos: TTEUL_INSTALL,
       // 자유 → 컨트리
       playlist: [variation("country", "컨트리")],
     },

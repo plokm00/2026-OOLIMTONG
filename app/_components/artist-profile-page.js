@@ -1,6 +1,7 @@
 import { worksOf } from "../_content/artist-notes";
 import ArtistBgmPlayer from "./artist-bgm-player";
 import ArtistGuestbook from "./artist-guestbook";
+import ArtistInstallGallery from "./artist-install-gallery";
 import VenueMap from "./venue-map";
 import { MAIN_SHOW, MAP_PLACES } from "../_content/venue-map-places";
 import { VENUE_MAP_CSS } from "./venue-map-css";
@@ -83,6 +84,13 @@ const CSS = `
   .xp-grid.is-scroll { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; overscroll-behavior-x:contain; -webkit-overflow-scrolling:touch; padding-bottom:8px; scrollbar-width:thin; }
   .xp-grid.is-scroll .xp-photo { flex:0 0 calc((100% - 20px) / 2.8); scroll-snap-align:start; }
   .xp-install { aspect-ratio:2/1; background:var(--xp-soft); }
+  .xp-install-gallery .xp-install { aspect-ratio:15/7; overflow:hidden; }
+  .xp-install img { display:block; width:100%; height:100%; object-fit:cover; }
+  .xp-install-thumbs { display:flex; gap:8px; margin-top:10px; }
+  .xp-install-thumbs button { flex:0 1 120px; min-width:0; padding:0; border:0; background:var(--xp-soft); cursor:pointer; opacity:.55; transition:opacity .15s; outline-offset:2px; }
+  .xp-install-thumbs button.is-on, .xp-install-thumbs button:hover { opacity:1; }
+  .xp-install-thumbs button.is-on { box-shadow:0 0 0 2px var(--xp-blue); }
+  .xp-install-thumbs img { display:block; width:100%; height:auto; aspect-ratio:15/7; object-fit:cover; }
 
   .xp-h2 { margin:0 0 18px; font-size:28px; color:var(--xp-navy); }
   .xp-text { margin:0; color:var(--xp-text); font-size:16px; line-height:1.95; white-space:pre-wrap; word-break:keep-all; overflow-wrap:anywhere; }
@@ -235,7 +243,7 @@ export default function ArtistProfilePage({ artist, note }) {
 
       {/* 전시 전경 — 사진이 들어오기 전까지는 빈 칸만 둔다(이미지 태그를 만들지 않는다). */}
       <section className="xp-block" id="installation" aria-label="전시 전경">
-        {p.installPhotos?.length ? <PhotoGrid photos={p.installPhotos} /> : <div className="xp-install is-empty" />}
+        {p.installPhotos?.length ? <ArtistInstallGallery photos={p.installPhotos} /> : <div className="xp-install is-empty" />}
       </section>
 
       {p.photos?.length ? (
