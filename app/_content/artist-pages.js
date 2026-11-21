@@ -44,10 +44,10 @@ const PRIVATE_SPACE = { name: "작가 개인 공간", address: "", period: "상�
 function install(name, alt) {
   return { src: `/artist-install/${name}.webp`, thumb: `/artist-install/${name}_thumb.webp`, alt };
 }
-// 브런치카페 뜰 — 박진희·박소연·이안 가족이 한자리에 전시하므로 대표 사진을 함께 쓴다.
+// 브런치카페 뜰 — 박소연 페이지의 전시 전경(정면 컷이 먼저). 박진희는 근접 컷 + 본인 사진, 이안은 따로 고른 사진.
 const TTEUL_INSTALL = [
-  install("tteul-1", "브런치카페 뜰 선반 위에 나란히 놓인 가족의 세 작품"),
   install("tteul-2", "정면에서 본 선반 위 세 작품과 카페 자리"),
+  install("tteul-1", "브런치카페 뜰 선반 위에 나란히 놓인 가족의 세 작품"),
 ];
 
 function variation(name, note) {
@@ -166,7 +166,7 @@ const details = {
       venue: TTEUL,
       // 사진 속 아이가 진희라 진희 페이지에는 진희가 나온 정면 사진·뒷모습 사진을 쓴다.
       installPhotos: [
-        TTEUL_INSTALL[0],
+        install("tteul-1", "브런치카페 뜰 선반 위에 나란히 놓인 가족의 세 작품"),
         install("park-jinhee-front", "세 작품이 놓인 선반 앞 자리에 앉은 박진희"),
         install("park-jinhee-back", "선반 위 작품을 가리키는 박진희의 뒷모습"),
       ],
