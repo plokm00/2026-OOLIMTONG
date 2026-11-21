@@ -93,22 +93,32 @@ const CSS = `
   .xp-team-name { margin:0; font-size:24px; color:var(--xp-green); }
   .xp-team-work .xp-text { margin-top:6px; color:var(--xp-dim); font-size:14.5px; line-height:1.85; }
 
-  /* 방명록 — 이름(선택) + 한 줄 글. 글 목록은 이름·글·날짜를 한 줄씩 */
-  .xp-guest-form { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; }
-  .xp-guest-form input { min-width:0; padding:11px 12px; border:1px solid #c9d6ee; border-radius:0; background:#fff; color:var(--xp-text); font:inherit; font-size:16px; }
-  .xp-guest-form input:focus { outline:none; border-color:var(--xp-blue); }
-  .xp-guest-name { grid-column:1 / -1; max-width:200px; }
+  /* 방명록 — 큰 글칸 + 빠른 글 단추, 글은 모서리가 조금씩 다른 파란 계열 말풍선으로 쌓인다 */
+  .xp-guest .xp-h2 { margin-bottom:6px; }
+  .og-sub { margin:0 0 18px; color:var(--xp-dim); font-size:15px; line-height:1.6; word-break:keep-all; }
+  .og-card { position:relative; padding:18px 18px 14px; background:#eef6fc; border-radius:14px 8px 16px 6px; }
+  .og-text { display:block; width:100%; min-height:64px; padding:4px 2px; border:0; background:transparent; color:var(--xp-navy); font:inherit; font-size:18px; line-height:1.55; resize:none; outline:none; }
+  .og-text::placeholder { color:#8aa6c4; }
+  .og-chips { display:flex; flex-wrap:wrap; gap:7px; margin:10px 0 12px; }
+  .og-chips button { padding:6px 12px 7px; border:1px solid #bfdcf2; border-radius:6px; background:#fff; color:var(--xp-blue); font:inherit; font-size:13px; font-weight:700; cursor:pointer; }
+  .og-chips button:active { transform:scale(.96); }
+  .og-row { display:flex; align-items:center; gap:10px; padding-top:12px; border-top:1px dashed #bfd6ea; }
+  .og-name { flex:1 1 auto; min-width:0; max-width:180px; padding:7px 12px; border:0; border-radius:6px; background:#fff; color:var(--xp-text); font:inherit; font-size:16px; outline:none; }
+  .og-count { margin-left:auto; color:#8aa6c4; font-size:12px; font-variant-numeric:tabular-nums; }
+  .og-send { flex:0 0 auto; padding:10px 18px; border:0; border-radius:8px 4px 9px 3px; background:var(--xp-navy); color:#fff; font:inherit; font-size:15px; font-weight:700; cursor:pointer; transition:transform .15s ease, opacity .15s ease; }
+  .og-send:disabled { opacity:.35; cursor:default; }
+  .og-send:not(:disabled):active { transform:scale(.95); }
   .xp-guest-trap { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
-  .xp-guest-send { padding:0 18px; border:0; background:var(--xp-navy); color:#fff; font:inherit; font-size:15px; font-weight:700; cursor:pointer; }
-  .xp-guest-send:disabled { opacity:.5; cursor:default; }
   .xp-guest-notice { margin:8px 0 0; color:var(--xp-blue); font-size:13px; }
-  .xp-guest-empty { margin:16px 0 0; color:var(--xp-dim); font-size:14px; }
-  .xp-guest-list { margin:22px 0 0; padding:0; list-style:none; border-top:1px solid #dfe5f0; }
-  .xp-guest-list li { display:flex; flex-wrap:wrap; align-items:baseline; gap:2px 10px; padding:11px 0; border-bottom:1px solid #dfe5f0; font-size:15px; line-height:1.6; }
-  .xp-guest-list b { flex:0 0 auto; color:var(--xp-navy); font-weight:700; }
-  .xp-guest-msg { flex:1 1 12em; min-width:0; color:var(--xp-text); overflow-wrap:anywhere; }
-  .xp-guest-list time { flex:0 0 auto; margin-left:auto; color:var(--xp-dim); font-size:12px; }
-  @media (min-width:760px) { .xp-guest-form { grid-template-columns:200px minmax(0,1fr) auto; } .xp-guest-name { grid-column:auto; max-width:none; } }
+  .og-empty { margin:26px 0 0; color:var(--xp-dim); font-size:15px; line-height:1.7; text-align:center; }
+  .og-wall { display:flex; flex-wrap:wrap; align-items:flex-start; gap:10px 8px; margin:26px 0 0; padding:0; list-style:none; }
+  .og-wall li { max-width:100%; padding:11px 15px 9px; background:#eaf4fb; }
+  .og-wall li.is-deep { background:#dcedf9; }
+  .og-wall li p { margin:0; color:var(--xp-navy); font-size:15.5px; line-height:1.55; word-break:keep-all; overflow-wrap:anywhere; }
+  .og-wall li span { display:block; margin-top:4px; color:var(--xp-dim); font-size:11.5px; }
+  .og-wall li.is-fresh { animation:og-pop .5s cubic-bezier(.2,1.4,.4,1); }
+  @keyframes og-pop { from { opacity:0; transform:scale(.6) translateY(10px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion:reduce) { .og-wall li.is-fresh { animation:none; } }
   .xp-foot { margin-top:72px; color:var(--xp-dim); font-size:12px; line-height:1.9; }
   .xp-foot-links { display:flex; flex-wrap:wrap; gap:6px 18px; margin-bottom:14px; }
   .xp-foot a { color:var(--xp-blue); text-decoration:none; font-weight:700; }
