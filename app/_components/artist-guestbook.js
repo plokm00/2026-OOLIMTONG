@@ -38,8 +38,7 @@ const MESSAGES = {
   delete_failed: "지우지 못했어요. 잠시 뒤에 다시 해 주세요.",
 };
 
-// 글은 손으로 빚은 듯 모서리가 조금씩 다른 말풍선으로 쌓인다(색은 홍보물 파랑 계열 두 가지만). 빠른 글 단추로 쓰기 시작을 돕는다.
-const CHIPS = ["잘 봤어요", "응원해요!", "또 보러 올게요", "작품이 따뜻해요"];
+// 이름 옆에 한 줄 글칸을 두는 간단한 구성(모바일 청첩장 축하글처럼). 글은 모서리가 조금씩 다른 파랑 계열 말풍선으로 쌓인다.
 const TINTS = ["", "is-deep"];
 const SHAPES = [
   "10px 6px 12px 4px",
@@ -158,21 +157,26 @@ export default function ArtistGuestbook({ artistId, artistName }) {
       <h2 className="xp-h2" id="xp-guest-title">방명록</h2>
       <p className="og-sub">{artistName} 작가의 울림에 한마디 답해 주세요.</p>
       <form className="og-card" onSubmit={submit}>
-        <textarea
-          className="og-text"
-          value={text}
-          onChange={(e) => edit(e.target.value.replace(/[\r\n]+/g, " ").slice(0, TEXT_MAX))}
-          onKeyDown={(e) => { if (e.key === "Enter" && !e.nativeEvent.isComposing) { e.preventDefault(); e.currentTarget.form.requestSubmit(); } }}
-          placeholder="여기에 한 줄 남겨 주세요"
-          aria-label={`${artistName} 작가에게 남기는 글`}
-          rows={2}
-          maxLength={TEXT_MAX}
-          enterKeyHint="send"
-        />
-        <div className="og-chips" aria-label="빠르게 쓰기">
-          {CHIPS.map((chip) => (
-            <button key={chip} type="button" onClick={() => edit((text.trim() ? `${text.trim()} ${chip}` : chip).slice(0, TEXT_MAX))}>{chip}</button>
-          ))}
+        <div className="og-line">
+          <input
+            className="og-name"
+            value={name}
+            onChange={(e) => { setConfirming(false); setName(e.target.value.slice(0, NAME_MAX)); }}
+            placeholder="이름"
+            aria-label="이름(선택)"
+            maxLength={NAME_MAX}
+            autoComplete="nickname"
+          />
+          <input
+            className="og-text"
+            value={text}
+            onChange={(e) => edit(e.target.value.slice(0, TEXT_MAX))}
+            placeholder="한 줄 남기기"
+            aria-label={`${artistName} 작가에게 남기는 글`}
+            maxLength={TEXT_MAX}
+            enterKeyHint="send"
+          />
+          {confirming ? null : <button className="og-send" type="submit" disabled={!text.trim()}>남기기</button>}
         </div>
         {confirming ? (
           <div className="og-confirm" role="group" aria-label="남기기 확인">
@@ -182,23 +186,7 @@ export default function ArtistGuestbook({ artistId, artistName }) {
               <button type="button" className="og-send" onClick={post} disabled={sending}>{sending ? "남기는 중" : "남기기"}</button>
             </div>
           </div>
-        ) : (
-          <div className="og-row">
-            <label className="og-who">
-              <span>보내는 사람</span>
-              <input
-                className="og-name"
-                value={name}
-                onChange={(e) => setName(e.target.value.slice(0, NAME_MAX))}
-                placeholder="이름(선택)"
-                maxLength={NAME_MAX}
-                autoComplete="nickname"
-              />
-            </label>
-            <span className="og-count" aria-hidden="true">{text.length}/{TEXT_MAX}</span>
-            <button className="og-send" type="submit" disabled={!text.trim()}>남기기</button>
-          </div>
-        )}
+        ) : null}
         <input className="xp-guest-trap" value={website} onChange={(e) => setWebsite(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true" />
       </form>
       {notice ? <p className="xp-guest-notice" role="status">{notice}</p> : null}

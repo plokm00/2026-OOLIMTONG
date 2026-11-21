@@ -96,24 +96,19 @@ const CSS = `
   /* 방명록 — 큰 글칸 + 빠른 글 단추, 글은 모서리가 조금씩 다른 파란 계열 말풍선으로 쌓인다 */
   .xp-guest .xp-h2 { margin-bottom:6px; }
   .og-sub { margin:0 0 18px; color:var(--xp-dim); font-size:15px; line-height:1.6; word-break:keep-all; }
-  .og-card { position:relative; padding:18px 18px 14px; background:#eef6fc; border-radius:14px 8px 16px 6px; }
-  .og-text { display:block; width:100%; min-height:84px; padding:12px 14px; border:1px solid #c6dcef; border-radius:10px 6px 12px 4px; background:#fff; color:var(--xp-navy); font:inherit; font-size:18px; line-height:1.55; resize:none; outline:none; box-shadow:0 1px 0 rgba(23,20,90,.04); }
-  .og-text:focus { border-color:var(--xp-blue); }
-  .og-text::placeholder { color:#8aa6c4; }
-  .og-chips { display:flex; flex-wrap:wrap; gap:7px; margin:10px 0 12px; }
-  .og-chips button { padding:6px 12px 7px; border:1px solid #bfdcf2; border-radius:6px; background:#fff; color:var(--xp-blue); font:inherit; font-size:13px; font-weight:700; cursor:pointer; }
-  .og-chips button:active { transform:scale(.96); }
-  .og-row { display:flex; align-items:center; gap:10px; padding-top:12px; border-top:1px dashed #bfd6ea; }
-  .og-who { display:flex; align-items:baseline; gap:8px; flex:1 1 auto; min-width:0; }
-  .og-who span { flex:0 0 auto; color:var(--xp-dim); font-size:12.5px; font-weight:700; }
-  .og-name { flex:1 1 auto; min-width:0; max-width:130px; padding:4px 2px; border:0; border-bottom:1px solid #9fbedb; border-radius:0; background:transparent; color:var(--xp-text); font:inherit; font-size:16px; outline:none; }
-  .og-name:focus { border-bottom-color:var(--xp-blue); }
-  .og-name::placeholder { color:#9db3c9; }
-  .og-count { margin-left:auto; color:#8aa6c4; font-size:12px; font-variant-numeric:tabular-nums; }
+  .og-card { position:relative; padding:14px; background:#eef6fc; border-radius:14px 8px 16px 6px; }
+  .og-line { display:grid; grid-template-columns:96px minmax(0,1fr); gap:8px; }
+  .og-line input { min-width:0; padding:12px 13px; border:1px solid #c6dcef; background:#fff; color:var(--xp-navy); font:inherit; font-size:16px; outline:none; }
+  .og-line input:focus { border-color:var(--xp-blue); }
+  .og-line input::placeholder { color:#9db3c9; }
+  .og-name { border-radius:8px 4px 9px 3px; }
+  .og-text { border-radius:4px 9px 3px 8px; }
+  .og-line .og-send { grid-column:1 / -1; padding:12px 18px; }
+  @media (min-width:560px) { .og-line { grid-template-columns:120px minmax(0,1fr) auto; } .og-line .og-send { grid-column:auto; } }
   .og-send { flex:0 0 auto; padding:10px 18px; border:0; border-radius:8px 4px 9px 3px; background:var(--xp-navy); color:#fff; font:inherit; font-size:15px; font-weight:700; cursor:pointer; transition:transform .15s ease, opacity .15s ease; }
   .og-send:disabled { opacity:.35; cursor:default; }
   .og-send:not(:disabled):active { transform:scale(.95); }
-  .og-confirm { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; padding-top:12px; border-top:1px dashed #bfd6ea; }
+  .og-confirm { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; margin-top:12px; padding-top:12px; border-top:1px dashed #bfd6ea; }
   .og-confirm p { margin:0; color:var(--xp-navy); font-size:15px; font-weight:700; line-height:1.5; }
   .og-confirm p span { display:block; color:var(--xp-dim); font-size:12.5px; font-weight:500; word-break:keep-all; }
   .og-confirm > div { display:flex; gap:8px; margin-left:auto; }
