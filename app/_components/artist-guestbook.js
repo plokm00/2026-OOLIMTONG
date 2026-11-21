@@ -203,7 +203,6 @@ export default function ArtistGuestbook({ artistId, artistName }) {
       </form>
       {notice ? <p className="xp-guest-notice" role="status">{notice}</p> : null}
       {loadError ? <p className="og-empty">방명록을 불러오지 못했어요.</p> : null}
-      {entries && !entries.length ? <p className="og-empty">아직 아무도 남기지 않았어요.<br />첫 울림을 남겨 주세요.</p> : null}
       {entries?.length ? (
         <ul className="og-wall">
           {entries.map((entry) => {
