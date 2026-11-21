@@ -240,7 +240,10 @@ const details = {
       monument: "/artist-media/lee-an-monument.webp",
       photos: photos("lee-an", ["코아의 벽을 쌓는 이안", "딸과 함께 타래를 놓는 이안", "고리 안에 앉아 보는 이안"]),
       venue: { ...TTEUL, label: "IAN" },
-      installPhotos: TTEUL_INSTALL,
+      installPhotos: [
+        install("lee-an-1", "비스듬히 본 선반 위 세 작품과 바닥에 세운 작품 안내판"),
+        install("lee-an-2", "화분 옆에 나란히 세운 이안·박소연·박진희의 작품 안내판"),
+      ],
       // 자유 → 컨트리
       playlist: [variation("country", "컨트리")],
     },
