@@ -184,15 +184,17 @@ export default function ArtistGuestbook({ artistId, artistName }) {
           </div>
         ) : (
           <div className="og-row">
-            <input
-              className="og-name"
-              value={name}
-              onChange={(e) => setName(e.target.value.slice(0, NAME_MAX))}
-              placeholder="이름(선택)"
-              aria-label="이름(선택)"
-              maxLength={NAME_MAX}
-              autoComplete="nickname"
-            />
+            <label className="og-who">
+              <span>보내는 사람</span>
+              <input
+                className="og-name"
+                value={name}
+                onChange={(e) => setName(e.target.value.slice(0, NAME_MAX))}
+                placeholder="이름(선택)"
+                maxLength={NAME_MAX}
+                autoComplete="nickname"
+              />
+            </label>
             <span className="og-count" aria-hidden="true">{text.length}/{TEXT_MAX}</span>
             <button className="og-send" type="submit" disabled={!text.trim()}>남기기</button>
           </div>
