@@ -46,8 +46,8 @@ function install(name, alt) {
 }
 // 브런치카페 뜰 — 박진희·박소연·이안 가족이 한자리에 전시하므로 대표 사진을 함께 쓴다.
 const TTEUL_INSTALL = [
-  install("tteul-1", "브런치카페 뜰 선반에 나란히 놓인 가족의 세 작품"),
-  install("tteul-2", "창가 선반 위 세 작품과 카페 자리"),
+  install("tteul-1", "브런치카페 뜰 선반 위에 나란히 놓인 가족의 세 작품"),
+  install("tteul-2", "정면에서 본 선반 위 세 작품과 카페 자리"),
 ];
 
 function variation(name, note) {
@@ -220,7 +220,7 @@ const details = {
       venue: { name: "클라운지 2호점", address: "원주시 마재3로 24-54, 101호", period: "2026.11.21. ~ 12.11.", hours: "토·일요일 휴무" },
       installPhotos: [
         install("lee-seongsun-1", "클라운지 2호점 진열대 위의 〈코아〉와 작품 안내판"),
-        install("lee-seongsun-2", "〈코아〉 곁에 앉아 안내판을 가리키는 이성순"),
+        install("lee-seongsun-2", "〈코아〉 곁에 앉아 작품을 바라보는 이성순"),
         install("lee-seongsun-3", "〈코아〉를 가까이에서 본 모습"),
       ],
       // ‘예쁜 코’ → 아코디언 샹송
