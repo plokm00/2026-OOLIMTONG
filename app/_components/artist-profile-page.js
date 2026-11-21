@@ -108,6 +108,14 @@ const CSS = `
   .og-send { flex:0 0 auto; padding:10px 18px; border:0; border-radius:8px 4px 9px 3px; background:var(--xp-navy); color:#fff; font:inherit; font-size:15px; font-weight:700; cursor:pointer; transition:transform .15s ease, opacity .15s ease; }
   .og-send:disabled { opacity:.35; cursor:default; }
   .og-send:not(:disabled):active { transform:scale(.95); }
+  .og-confirm { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; padding-top:12px; border-top:1px dashed #bfd6ea; }
+  .og-confirm p { margin:0; color:var(--xp-navy); font-size:15px; font-weight:700; line-height:1.5; }
+  .og-confirm p span { display:block; color:var(--xp-dim); font-size:12.5px; font-weight:500; word-break:keep-all; }
+  .og-confirm > div { display:flex; gap:8px; margin-left:auto; }
+  .og-back { padding:10px 14px; border:1px solid #bfd6ea; border-radius:8px 4px 9px 3px; background:#fff; color:var(--xp-navy); font:inherit; font-size:15px; font-weight:700; cursor:pointer; }
+  .og-del { font-style:normal; margin-left:8px; }
+  .og-del button { padding:0; margin-left:6px; border:0; background:none; color:var(--xp-blue); font:inherit; font-size:11.5px; font-weight:700; text-decoration:underline; text-underline-offset:2px; cursor:pointer; }
+  .og-del button:first-child { margin-left:0; }
   .xp-guest-trap { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
   .xp-guest-notice { margin:8px 0 0; color:var(--xp-blue); font-size:13px; }
   .og-empty { margin:26px 0 0; color:var(--xp-dim); font-size:15px; line-height:1.7; text-align:center; }

@@ -13,10 +13,29 @@ const day = (ms) => {
   return `${d.getMonth() + 1}.${d.getDate()}.`;
 };
 
+// 내가 남긴 글의 지우기 열쇠 — 이 브라우저에만 둔다(다른 기기에서는 지울 수 없다).
+const MINE_KEY = "oolimtong-guestbook-mine";
+const readMine = () => {
+  try {
+    const data = JSON.parse(window.localStorage.getItem(MINE_KEY) || "{}");
+    return data && typeof data === "object" ? data : {};
+  } catch {
+    return {};
+  }
+};
+const writeMine = (data) => {
+  try {
+    window.localStorage.setItem(MINE_KEY, JSON.stringify(data));
+  } catch {
+    // 저장하지 못하면 이번 방문 동안만 지울 수 있다.
+  }
+};
+
 const MESSAGES = {
   empty: "글을 적어 주세요.",
   too_fast: "잠시 뒤에 다시 남겨 주세요.",
   failed: "남기지 못했어요. 잠시 뒤에 다시 해 주세요.",
+  delete_failed: "지우지 못했어요. 잠시 뒤에 다시 해 주세요.",
 };
 
 // 글은 손으로 빚은 듯 모서리가 조금씩 다른 말풍선으로 쌓인다(색은 홍보물 파랑 계열 두 가지만). 빠른 글 단추로 쓰기 시작을 돕는다.
@@ -44,6 +63,11 @@ export default function ArtistGuestbook({ artistId, artistName }) {
   const [website, setWebsite] = useState("");
   const [sending, setSending] = useState(false);
   const [notice, setNotice] = useState("");
+  const [confirming, setConfirming] = useState(false);
+  const [mine, setMine] = useState({});
+  const [askDelete, setAskDelete] = useState("");
+
+  useEffect(() => { setMine(readMine()); }, []);
 
   useEffect(() => {
     const el = box.current;
@@ -65,11 +89,21 @@ export default function ArtistGuestbook({ artistId, artistName }) {
     return () => io.disconnect();
   }, [artistId]);
 
-  async function submit(event) {
+  // 남기기(또는 Enter)를 누르면 바로 올리지 않고 한 번 더 확인한다.
+  function submit(event) {
     event.preventDefault();
     if (sending) return;
+    if (!text.trim()) { setNotice(MESSAGES.empty); return; }
+    setNotice("");
+    setConfirming(true);
+  }
+
+  const edit = (next) => { setConfirming(false); setText(next); };
+
+  async function post() {
+    if (sending) return;
     const body = text.trim();
-    if (!body) { setNotice(MESSAGES.empty); return; }
+    if (!body) { setConfirming(false); return; }
     setSending(true);
     setNotice("");
     try {
@@ -80,12 +114,42 @@ export default function ArtistGuestbook({ artistId, artistName }) {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) { setNotice(MESSAGES[data.error] ?? MESSAGES.failed); return; }
-      if (data.entry) setEntries((list) => [{ ...data.entry, fresh: true }, ...(list ?? [])]);
+      if (data.entry) {
+        setEntries((list) => [{ ...data.entry, fresh: true }, ...(list ?? [])]);
+        if (data.token) {
+          const next = { ...readMine(), [data.entry.id]: data.token };
+          writeMine(next);
+          setMine(next);
+        }
+      }
       setText("");
+      setConfirming(false);
     } catch {
       setNotice(MESSAGES.failed);
     } finally {
       setSending(false);
+    }
+  }
+
+  async function remove(id) {
+    const token = mine[id];
+    if (!token) return;
+    try {
+      const res = await fetch(`/api/guestbook/${artistId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, token }),
+      });
+      if (!res.ok) throw new Error("delete");
+      setEntries((list) => (list ?? []).filter((entry) => entry.id !== id));
+      const next = { ...readMine() };
+      delete next[id];
+      writeMine(next);
+      setMine(next);
+    } catch {
+      setNotice(MESSAGES.delete_failed);
+    } finally {
+      setAskDelete("");
     }
   }
 
@@ -97,7 +161,7 @@ export default function ArtistGuestbook({ artistId, artistName }) {
         <textarea
           className="og-text"
           value={text}
-          onChange={(e) => setText(e.target.value.replace(/[\r\n]+/g, " ").slice(0, TEXT_MAX))}
+          onChange={(e) => edit(e.target.value.replace(/[\r\n]+/g, " ").slice(0, TEXT_MAX))}
           onKeyDown={(e) => { if (e.key === "Enter" && !e.nativeEvent.isComposing) { e.preventDefault(); e.currentTarget.form.requestSubmit(); } }}
           placeholder="여기에 한 줄 남겨 주세요"
           aria-label={`${artistName} 작가에게 남기는 글`}
@@ -107,22 +171,32 @@ export default function ArtistGuestbook({ artistId, artistName }) {
         />
         <div className="og-chips" aria-label="빠르게 쓰기">
           {CHIPS.map((chip) => (
-            <button key={chip} type="button" onClick={() => setText((t) => (t.trim() ? `${t.trim()} ${chip}` : chip).slice(0, TEXT_MAX))}>{chip}</button>
+            <button key={chip} type="button" onClick={() => edit((text.trim() ? `${text.trim()} ${chip}` : chip).slice(0, TEXT_MAX))}>{chip}</button>
           ))}
         </div>
-        <div className="og-row">
-          <input
-            className="og-name"
-            value={name}
-            onChange={(e) => setName(e.target.value.slice(0, NAME_MAX))}
-            placeholder="이름(선택)"
-            aria-label="이름(선택)"
-            maxLength={NAME_MAX}
-            autoComplete="nickname"
-          />
-          <span className="og-count" aria-hidden="true">{text.length}/{TEXT_MAX}</span>
-          <button className="og-send" type="submit" disabled={sending || !text.trim()}>{sending ? "남기는 중" : "남기기"}</button>
-        </div>
+        {confirming ? (
+          <div className="og-confirm" role="group" aria-label="남기기 확인">
+            <p>이대로 남길까요?<span>{name.trim() ? `‘${name.trim()}’ 이름으로` : "익명으로"} 올라가요. 남긴 글은 이 휴대폰에서 지울 수 있어요.</span></p>
+            <div>
+              <button type="button" className="og-back" onClick={() => setConfirming(false)}>고치기</button>
+              <button type="button" className="og-send" onClick={post} disabled={sending}>{sending ? "남기는 중" : "남기기"}</button>
+            </div>
+          </div>
+        ) : (
+          <div className="og-row">
+            <input
+              className="og-name"
+              value={name}
+              onChange={(e) => setName(e.target.value.slice(0, NAME_MAX))}
+              placeholder="이름(선택)"
+              aria-label="이름(선택)"
+              maxLength={NAME_MAX}
+              autoComplete="nickname"
+            />
+            <span className="og-count" aria-hidden="true">{text.length}/{TEXT_MAX}</span>
+            <button className="og-send" type="submit" disabled={!text.trim()}>남기기</button>
+          </div>
+        )}
         <input className="xp-guest-trap" value={website} onChange={(e) => setWebsite(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true" />
       </form>
       {notice ? <p className="xp-guest-notice" role="status">{notice}</p> : null}
@@ -139,7 +213,20 @@ export default function ArtistGuestbook({ artistId, artistName }) {
                 style={{ borderRadius: SHAPES[n % SHAPES.length], rotate: `${((n % 5) - 2) * 0.25}deg` }}
               >
                 <p>{entry.text}</p>
-                <span>{entry.name || "익명"} · {day(entry.at)}</span>
+                <span>
+                  {entry.name || "익명"} · {day(entry.at)}
+                  {mine[entry.id] ? (
+                    askDelete === entry.id ? (
+                      <em className="og-del">
+                        지울까요?
+                        <button type="button" onClick={() => remove(entry.id)}>지우기</button>
+                        <button type="button" onClick={() => setAskDelete("")}>아니요</button>
+                      </em>
+                    ) : (
+                      <em className="og-del"><button type="button" onClick={() => setAskDelete(entry.id)}>내 글 지우기</button></em>
+                    )
+                  ) : null}
+                </span>
               </li>
             );
           })}
