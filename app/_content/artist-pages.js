@@ -337,14 +337,14 @@ const details = {
       monument: "/artist-media/cho-youngbeom-monument.webp",
       photos: photos("cho-youngbeom", ["완성한 Co-Ark 곁의 조영범", "작업 테이블의 조영범", "나리움을 다듬는 조영범"]),
       venue: { name: "해피스토리", address: "원주시 현충로 322번길 8", period: "2026.11.21. ~ 12.12.", hours: "일요일 휴무" },
-      // 사진·영상은 레벨을 살짝 보정하고, 흰색·회색 부분 기준으로 색을 맞춰 푸른·초록 기를 뺐다. 피규어 컷(cho-youngbeom-3)은 작가가 찍은 영상에서 뽑은 장면,
+      // 사진·영상은 레벨·색을 살짝 보정. 쇼윈도 컷(2)만 흰색·회색 기준으로 색을 맞췄고, 벤치 컷은 밝기를 올렸다. 피규어 컷(cho-youngbeom-3)은 작가가 찍은 영상에서 뽑은 장면,
       // 영상은 H.264 960px·소리 없이 압축(원본 KakaoTalk_20261122_185218636.mp4).
       installPhotos: [
         install("cho-youngbeom-2", "해피스토리 쇼윈도 너머 벤치 위의 〈자유를 짓다〉"),
         install("cho-youngbeom-bench", "쇼윈도 안 철제 벤치 위의 고래와 작품 안내판"),
         install("cho-youngbeom-inside", "가게 안쪽에서 본 고래와 등 위·발치의 두 피규어"),
-        installVideo("cho-youngbeom-video", "벤치 위 고래와 피규어를 둘러보는 영상"),
         install("cho-youngbeom-3", "고래 등 위 숨구멍 곁에 선 피규어"),
+        installVideo("cho-youngbeom-video", "벤치 위 고래와 피규어를 둘러보는 영상"),
       ],
       // 작가의 곡 TRIP과, 고래가 헤엄치는 듯한 시네마틱 변주
       playlist: [
