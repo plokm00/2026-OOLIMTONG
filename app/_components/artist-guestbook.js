@@ -62,7 +62,6 @@ export default function ArtistGuestbook({ artistId, artistName }) {
   const [website, setWebsite] = useState("");
   const [sending, setSending] = useState(false);
   const [notice, setNotice] = useState("");
-  const [confirming, setConfirming] = useState(false);
   const [mine, setMine] = useState({});
   const [askDelete, setAskDelete] = useState("");
 
@@ -88,21 +87,13 @@ export default function ArtistGuestbook({ artistId, artistName }) {
     return () => io.disconnect();
   }, [artistId]);
 
-  // 남기기(또는 Enter)를 누르면 바로 올리지 않고 한 번 더 확인한다.
-  function submit(event) {
+  // 남기기(또는 Enter)를 누르면 바로 올린다. 다시 확인을 묻지 않는다(확인을 못 보고 떠나면 글이 빠지므로).
+  // 잘못 남긴 글은 이 휴대폰에서 '내 글 지우기'로 지울 수 있다.
+  async function submit(event) {
     event.preventDefault();
     if (sending) return;
-    if (!text.trim()) { setNotice(MESSAGES.empty); return; }
-    setNotice("");
-    setConfirming(true);
-  }
-
-  const edit = (next) => { setConfirming(false); setText(next); };
-
-  async function post() {
-    if (sending) return;
     const body = text.trim();
-    if (!body) { setConfirming(false); return; }
+    if (!body) { setNotice(MESSAGES.empty); return; }
     setSending(true);
     setNotice("");
     try {
@@ -122,7 +113,6 @@ export default function ArtistGuestbook({ artistId, artistName }) {
         }
       }
       setText("");
-      setConfirming(false);
     } catch {
       setNotice(MESSAGES.failed);
     } finally {
@@ -161,7 +151,7 @@ export default function ArtistGuestbook({ artistId, artistName }) {
           <input
             className="og-name"
             value={name}
-            onChange={(e) => { setConfirming(false); setName(e.target.value.slice(0, NAME_MAX)); }}
+            onChange={(e) => setName(e.target.value.slice(0, NAME_MAX))}
             placeholder="이름"
             aria-label="이름(선택)"
             maxLength={NAME_MAX}
@@ -170,23 +160,14 @@ export default function ArtistGuestbook({ artistId, artistName }) {
           <input
             className="og-text"
             value={text}
-            onChange={(e) => edit(e.target.value.slice(0, TEXT_MAX))}
+            onChange={(e) => setText(e.target.value.slice(0, TEXT_MAX))}
             placeholder="한 줄 남기기"
             aria-label={`${artistName} 작가에게 남기는 글`}
             maxLength={TEXT_MAX}
             enterKeyHint="send"
           />
-          {confirming ? null : <button className="og-send" type="submit" disabled={!text.trim()}>남기기</button>}
+          <button className="og-send" type="submit" disabled={sending || !text.trim()}>{sending ? "남기는 중" : "남기기"}</button>
         </div>
-        {confirming ? (
-          <div className="og-confirm" role="group" aria-label="남기기 확인">
-            <p>이대로 남길까요?<span>{name.trim() ? `‘${name.trim()}’ 이름으로` : "익명으로"} 올라가요. 남긴 글은 이 휴대폰에서 지울 수 있어요.</span></p>
-            <div>
-              <button type="button" className="og-back" onClick={() => setConfirming(false)}>고치기</button>
-              <button type="button" className="og-send" onClick={post} disabled={sending}>{sending ? "남기는 중" : "남기기"}</button>
-            </div>
-          </div>
-        ) : null}
         <input className="xp-guest-trap" value={website} onChange={(e) => setWebsite(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true" />
       </form>
       {notice ? <p className="xp-guest-notice" role="status">{notice}</p> : null}
