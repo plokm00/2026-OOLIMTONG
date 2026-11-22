@@ -337,7 +337,7 @@ const details = {
       monument: "/artist-media/cho-youngbeom-monument.webp",
       photos: photos("cho-youngbeom", ["완성한 Co-Ark 곁의 조영범", "작업 테이블의 조영범", "나리움을 다듬는 조영범"]),
       venue: { name: "해피스토리", address: "원주시 현충로 322번길 8", period: "2026.11.21. ~ 12.12.", hours: "일요일 휴무" },
-      // 사진·영상은 레벨·색을 살짝 보정. 쇼윈도 컷(2)만 흰색·회색 기준으로 색을 맞췄고, 벤치 컷은 밝기를 올렸다. 피규어 컷(cho-youngbeom-3)은 작가가 찍은 영상에서 뽑은 장면,
+      // 사진·영상은 레벨·색을 살짝 보정. 쇼윈도 컷(2)만 흰색·회색 기준으로 색을 맞췄고, 벤치 컷은 밝기를 올렸다. 안쪽 컷(inside)은 보정 없이 원본. 피규어 컷(cho-youngbeom-3)은 작가가 찍은 영상에서 뽑은 장면,
       // 영상은 H.264 960px·소리 없이 압축(원본 KakaoTalk_20261122_185218636.mp4).
       installPhotos: [
         install("cho-youngbeom-2", "해피스토리 쇼윈도 너머 벤치 위의 〈자유를 짓다〉"),
@@ -365,10 +365,11 @@ const details = {
       monument: "/artist-media/joo-jangseok-monument.webp",
       photos: photos("joo-jangseok", ["〈발성〉을 빚는 주장석", "〈발성〉의 입을 다듬는 주장석", "야외 현장에서 대형 울림통을 쌓는 주장석"]),
       venue: { name: "예무아트컴퍼니 연습실", address: "원주시 현석길 11-3, 지하", period: "2026.11.21. ~ 12.13.", hours: "" },
-      // 3은 세로 사진이라 가운데 두고 양옆은 같은 사진을 흐리게 깔았다. 조영범·주장석 사진은 레벨·색을 살짝 보정했다.
+      // 3은 세로 사진이라 가운데 두고 양옆은 같은 사진을 흐리게 깔았다. 레벨·색을 살짝 보정(front는 초록 기만 빼고 조금 밝게).
       installPhotos: [
-        install("joo-jangseok-1", "예무아트컴퍼니 연습실 한쪽, 〈발성〉 곁에 앉은 주장석"),
+        install("joo-jangseok-front", "가까이에서 본 나무 스툴 위의 〈발성〉과 작품 캡션"),
         install("joo-jangseok-2", "나무 스툴 위에 놓인 〈발성〉과 작품 안내판"),
+        install("joo-jangseok-1", "예무아트컴퍼니 연습실 한쪽, 〈발성〉 곁에 앉은 주장석"),
         install("joo-jangseok-3", "예무아트컴퍼니 공연 포스터 아래 놓인 〈발성〉"),
       ],
       // 무대의 목소리 → 타악기가 이끄는 관현악 변주
