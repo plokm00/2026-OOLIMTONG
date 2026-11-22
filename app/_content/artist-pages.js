@@ -365,7 +365,7 @@ const details = {
       monument: "/artist-media/joo-jangseok-monument.webp",
       photos: photos("joo-jangseok", ["〈발성〉을 빚는 주장석", "〈발성〉의 입을 다듬는 주장석", "야외 현장에서 대형 울림통을 쌓는 주장석"]),
       venue: { name: "예무아트컴퍼니 연습실", address: "원주시 현석길 11-3, 지하", period: "2026.11.21. ~ 12.13.", hours: "" },
-      // 3은 세로 사진이라 가운데 두고 양옆은 같은 사진을 흐리게 깔았다. 네 장 모두 흰 벽 기준으로 초록 기를 빼고(아주 살짝 따뜻한 중립), 명암을 펴서 뿌연 느낌을 뺐다.
+      // 3은 세로 사진이라 가운데 두고 양옆은 같은 사진을 흐리게 깔았다. 모두 원본에서 작업: front는 원본 색 그대로 레벨만 살짝, 나머지 세 장은 벽 색조만 front에 맞췄다.
       installPhotos: [
         install("joo-jangseok-front", "가까이에서 본 나무 스툴 위의 〈발성〉과 작품 캡션"),
         install("joo-jangseok-2", "나무 스툴 위에 놓인 〈발성〉과 작품 안내판"),
