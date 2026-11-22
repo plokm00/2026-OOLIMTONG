@@ -4,25 +4,47 @@ import { useState } from "react";
 
 // 전시 전경 — 큰 사진 한 장과 그 아래 썸네일. 썸네일을 누르면 큰 사진이 바뀐다.
 // 큰 사진은 지금 보이는 한 장만 불러오고, 나머지는 누를 때 불러온다.
+// 항목에 video가 있으면 영상으로 보여 준다(src는 포스터). 영상은 재생을 누르기 전까지 받지 않는다.
 export default function ArtistInstallGallery({ photos }) {
   const [index, setIndex] = useState(0);
+  const [picked, setPicked] = useState(false);
   const current = photos[index] ?? photos[0];
+  const isVideo = Boolean(current.video);
 
   return (
-    <div className="xp-install-gallery">
+    <div className={isVideo ? "xp-install-gallery is-video" : "xp-install-gallery"}>
       <div className="xp-install">
-        <img src={current.src} alt={current.alt} width="1800" height="840" />
+        {isVideo ? (
+          <video
+            key={current.video}
+            src={current.video}
+            poster={current.src}
+            aria-label={current.alt}
+            width="1800"
+            height="840"
+            controls
+            playsInline
+            muted
+            preload="none"
+            autoPlay={picked}
+          />
+        ) : (
+          <img src={current.src} alt={current.alt} width="1800" height="840" />
+        )}
       </div>
       {photos.length > 1 ? (
         <div className="xp-install-thumbs" role="group" aria-label="전시 전경 사진 고르기">
           {photos.map((photo, i) => (
             <button
               type="button"
-              key={photo.src}
-              className={i === index ? "is-on" : undefined}
+              key={photo.video ?? photo.src}
+              className={[i === index ? "is-on" : "", photo.video ? "is-video" : ""].join(" ").trim() || undefined}
               aria-pressed={i === index}
-              aria-label={`${i + 1}번째 사진: ${photo.alt}`}
-              onClick={() => setIndex(i)}
+              aria-label={`${i + 1}번째 ${photo.video ? "영상" : "사진"}: ${photo.alt}`}
+              onClick={() => {
+                setPicked(true);
+                setIndex(i);
+              }}
             >
               <img src={photo.thumb} alt="" width="360" height="168" loading="lazy" />
             </button>

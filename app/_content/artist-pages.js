@@ -44,6 +44,10 @@ const PRIVATE_SPACE = { name: "작가 개인 공간", address: "", period: "상�
 function install(name, alt) {
   return { src: `/artist-install/${name}.webp`, thumb: `/artist-install/${name}_thumb.webp`, alt };
 }
+// 전시 전경 영상 — {name}.mp4(H.264), 포스터·썸네일은 {name}.webp / {name}_thumb.webp
+function installVideo(name, alt) {
+  return { ...install(name, alt), video: `/artist-install/${name}.mp4` };
+}
 // 브런치카페 뜰 — 박소연 페이지의 전시 전경(정면 컷이 먼저). 박진희는 근접 컷 + 본인 사진, 이안은 따로 고른 사진.
 const TTEUL_INSTALL = [
   install("tteul-2", "정면에서 본 선반 위 세 작품과 카페 자리"),
@@ -333,10 +337,12 @@ const details = {
       monument: "/artist-media/cho-youngbeom-monument.webp",
       photos: photos("cho-youngbeom", ["완성한 Co-Ark 곁의 조영범", "작업 테이블의 조영범", "나리움을 다듬는 조영범"]),
       venue: { name: "해피스토리", address: "원주시 현충로 322번길 8", period: "2026.11.21. ~ 12.12.", hours: "일요일 휴무" },
-      // 1은 사진, 2~5는 작가가 찍은 영상(KakaoTalk_20261122_185218636.mp4)에서 뽑은 장면
+      // 사진은 레벨·색을 살짝 보정(푸른 기를 덜어 냄). 3~5는 작가가 찍은 영상에서 뽑은 장면,
+      // 영상은 H.264 960px·소리 없이 압축(원본 KakaoTalk_20261122_185218636.mp4).
       installPhotos: [
-        install("cho-youngbeom-1", "해피스토리 쇼윈도 너머 벤치 위의 〈자유를 짓다〉"),
-        install("cho-youngbeom-2", "쇼윈도 안 벤치에 놓인 고래와 등 위의 작은 피규어"),
+        install("cho-youngbeom-1", "현충로 해피스토리 가게 앞, 쇼윈도 안의 〈자유를 짓다〉"),
+        install("cho-youngbeom-2", "해피스토리 쇼윈도 너머 벤치 위의 〈자유를 짓다〉"),
+        installVideo("cho-youngbeom-video", "벤치 위 고래와 피규어를 둘러보는 영상"),
         install("cho-youngbeom-3", "고래 등 위 숨구멍 곁에 선 피규어"),
         install("cho-youngbeom-4", "낮은 눈높이에서 본 고래 지느러미와 피규어"),
         install("cho-youngbeom-5", "고래 옆구리에 휴대폰을 대 보는 관람객"),
