@@ -339,7 +339,7 @@ const details = {
         install("cho-youngbeom-2", "쇼윈도 안 벤치에 놓인 고래와 등 위의 작은 피규어"),
         install("cho-youngbeom-3", "고래 등 위 숨구멍 곁에 선 피규어"),
         install("cho-youngbeom-4", "낮은 눈높이에서 본 고래 지느러미와 피규어"),
-        install("cho-youngbeom-5", "작품 안내판에 휴대폰을 대 보는 관람객"),
+        install("cho-youngbeom-5", "고래 옆구리에 휴대폰을 대 보는 관람객"),
       ],
       // 작가의 곡 TRIP과, 고래가 헤엄치는 듯한 시네마틱 변주
       playlist: [
