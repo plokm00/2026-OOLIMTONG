@@ -5,6 +5,7 @@
 import { largeWorks, projectIntro } from "../_content/oolimtong-works";
 import { MAIN_SHOW, MAP_PLACES } from "../_content/venue-map-places";
 import BigWorkPhotos from "./big-work-photos";
+import VisitGuide from "./visit-guide";
 import VenueMap from "./venue-map";
 import { VENUE_MAP_CSS } from "./venue-map-css";
 
@@ -66,7 +67,29 @@ const CSS = `
   .xi-intro h2 { margin:0 0 18px; font-family:'Museum Classic','Noto Sans KR',sans-serif; font-weight:700; color:var(--xp-blue); font-size:clamp(25px, 6.4vw, 36px); line-height:1.3; letter-spacing:-.01em; word-break:keep-all; }
   .xi-intro p { margin:0 0 14px; font-size:15px; line-height:1.85; word-break:keep-all; }
   .xi-works { display:grid; gap:22px; margin:0 0 64px; }
-  .xi-leaflet { display:inline-block; margin-top:18px; padding:10px 16px 11px; border:1px solid var(--xp-blue); color:var(--xp-blue); font-size:14px; font-weight:700; text-decoration:none; }
+  .xi-btns { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+  .xi-leaflet { display:inline-block; padding:10px 16px 11px; border:1px solid var(--xp-blue); background:#fff; color:var(--xp-blue); font:inherit; font-size:14px; font-weight:700; text-decoration:none; cursor:pointer; }
+  .xi-leaflet.is-on { background:var(--xp-blue); color:#fff; }
+  /* 전시 관람 안내 — 버튼을 누르면 펼쳐지는 카드(인쇄용 관람 안내와 같은 내용) */
+  .xi-guide { display:grid; gap:26px; margin-top:14px; padding:22px 20px 20px; border-top:3px solid var(--xp-navy); background:var(--xp-soft); }
+  .xi-guide h3 { margin:0 0 12px; font-family:'Museum Classic','Noto Sans KR',sans-serif; font-weight:700; color:var(--xp-navy); font-size:24px; line-height:1.2; }
+  .xi-guide h4 { margin:16px 0 6px; font-family:'Museum Classic','Noto Sans KR',sans-serif; font-weight:700; font-size:17px; }
+  .xi-guide h4.is-green { color:var(--xp-green); }
+  .xi-guide h4.is-blue { color:var(--xp-blue); }
+  .xi-intro .xi-guide p, .xi-guide li { margin:0 0 6px; font-size:14px; line-height:1.7; word-break:keep-all; }
+  .xi-guide ul { margin:0; padding:0 0 0 1.1em; }
+  .xi-guide li::marker { color:var(--xp-blue); }
+  .xi-guide b { color:var(--xp-navy); }
+  .xi-intro .xi-guide .xi-guide-lead { font-family:'Museum Classic','Noto Sans KR',sans-serif; font-weight:700; color:var(--xp-navy); font-size:17px; line-height:1.5; }
+  .xi-intro .xi-guide .xi-guide-small { color:var(--xp-dim); font-size:12.5px; }
+  .xi-chips { display:grid; grid-template-columns:repeat(3, 1fr); margin:12px 0 14px; padding:0; list-style:none; border-top:1.5px solid var(--xp-navy); border-bottom:1.5px solid var(--xp-navy); }
+  .xi-chips li { display:flex; flex-direction:column; align-items:center; margin:0; padding:8px 2px 9px; font-size:12px; font-weight:700; color:var(--xp-navy); text-align:center; }
+  .xi-chips li + li { border-left:1px solid var(--xp-navy); }
+  .xi-chips b { color:var(--xp-blue); font-size:30px; line-height:1.1; }
+  @media (max-width:559px) { .xi-chips li { font-size:10.5px; white-space:nowrap; letter-spacing:-.02em; } }
+  .xi-guide-box { margin-top:14px; padding:14px 16px 10px; border:1px solid var(--xp-green); border-radius:10px; background:#fff; }
+  .xi-guide-box h4 { margin-top:0; }
+  @media (min-width:760px) { .xi-guide { grid-template-columns:1fr 1fr; gap:36px; padding:28px 28px 24px; } }
   .xi-leaflet:focus-visible { outline:2px solid var(--xp-blue); outline-offset:3px; }
   .xi-big { position:relative; display:grid; overflow:hidden; background:var(--xp-soft); }
   .xi-big-text { position:relative; z-index:1; padding:26px 22px 8px; }
@@ -208,7 +231,7 @@ export default function ArtistIndexPage({ artists }) {
         {projectIntro.paragraphs.map((text) => (
           <p key={text.slice(0, 12)}>{text}</p>
         ))}
-        <a className="xi-leaflet" href="/oolimtong_2026_wcf_leaflet">리플렛 온라인 보기 →</a>
+        <VisitGuide />
       </section>
 
       <section className="xi-works" aria-label="대형 울림통 세 기">
