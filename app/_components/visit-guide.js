@@ -50,8 +50,7 @@ export default function VisitGuide({ show }) {
             <dl className="xi-show">
               <dt>본 전시</dt>
               <dd>
-                <b>{show.places.map((place) => place.name).join(" · ")}</b> (문막)
-                <span>{show.period} · {show.hours}</span>
+                <b>{show.places.map((place) => place.name).join(" · ")}</b> (문막) <b className="xi-show-when">{show.period}</b> {show.hours}
               </dd>
               <dt>모뉴먼트</dt>
               <dd>원주 곳곳 · 장소마다 기간이 달라요 <a href="#xi-map-title">지도 보기 ↓</a></dd>

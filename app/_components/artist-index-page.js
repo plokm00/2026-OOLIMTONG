@@ -34,6 +34,7 @@ const CSS = `
   .xi-title { margin:0; font-size:clamp(44px, 12.5vw, 76px); line-height:1.05; letter-spacing:-.02em; color:var(--xp-navy); }
   .xi-show { display:grid; grid-template-columns:auto 1fr; gap:6px 14px; margin:0; padding:0 0 18px; border-bottom:1px solid #d9dcea; font-size:13.5px; line-height:1.55; word-break:keep-all; }
   .xi-show dd a { margin-left:12px; }
+  .xi-show .xi-show-when { margin-left:10px; }
   @media (min-width:760px) { .xi-show { grid-column:1 / -1; } }
   .xi-show dt { color:var(--xp-green); font-weight:700; white-space:nowrap; }
   .xi-show dd { margin:0; color:var(--xp-text); }
