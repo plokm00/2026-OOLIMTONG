@@ -48,7 +48,7 @@ export default function VisitGuide({ show }) {
         <div className="xi-guide" id="xi-guide">
           {show ? (
             <dl className="xi-show">
-              <dt>본 전시</dt>
+              <dt>울림통</dt>
               <dd>
                 <b>{show.places.map((place) => place.name).join(" · ")}</b> (문막) <b className="xi-show-when">{show.period}</b> {show.hours}
               </dd>
