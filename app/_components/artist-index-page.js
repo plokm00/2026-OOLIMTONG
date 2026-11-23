@@ -3,7 +3,8 @@
 // 흰 바탕, 홍보물의 남색·파랑·연두, 제목·이름은 박물관체(국립박물관문화재단클래식).
 
 import { largeWorks, projectIntro } from "../_content/oolimtong-works";
-import { MAP_PLACES } from "../_content/venue-map-places";
+import { MAIN_SHOW, MAP_PLACES } from "../_content/venue-map-places";
+import BigWorkPhotos from "./big-work-photos";
 import VenueMap from "./venue-map";
 import { VENUE_MAP_CSS } from "./venue-map-css";
 
@@ -30,6 +31,12 @@ const CSS = `
 
   .xi-head { padding:42px 0 44px; }
   .xi-title { margin:0; font-size:clamp(44px, 12.5vw, 76px); line-height:1.05; letter-spacing:-.02em; color:var(--xp-navy); }
+  .xi-show { display:grid; grid-template-columns:auto 1fr; gap:6px 14px; margin:26px 0 0; padding:14px 16px; background:var(--xp-soft); font-size:13.5px; line-height:1.55; word-break:keep-all; }
+  .xi-show dt { color:var(--xp-green); font-weight:700; white-space:nowrap; }
+  .xi-show dd { margin:0; color:var(--xp-text); }
+  .xi-show b { color:var(--xp-navy); }
+  .xi-show span { display:block; color:var(--xp-dim); font-size:12.5px; }
+  .xi-show a { color:var(--xp-blue); font-weight:700; text-decoration:none; white-space:nowrap; }
   .xi-lead { margin:24px 0 0; color:var(--xp-navy); font-size:18px; line-height:1.7; word-break:keep-all; }
 
   /* 단체 사진 — 머리글과 17인 목록 사이 */
@@ -79,7 +86,28 @@ const CSS = `
   /* 롤오버 — 작품 섬네일이 홍보물의 푸른 망점 모뉴먼트로 바뀐다(17인 카드와 같은 이미지) */
   .xi-mons .xi-mons-blue { position:absolute; left:50%; bottom:0; height:54px; width:auto; max-width:none; transform:translateX(-50%); opacity:0; transition:opacity .3s ease; }
   .xi-mons i { position:absolute; top:-6px; right:-10px; color:var(--xp-blue); font-style:normal; font-size:13px; font-weight:500; }
-  .xi-big-pic { position:relative; height:330px; }
+  .xi-big-pic { position:relative; display:block; width:100%; height:330px; margin:0; padding:0; border:0; background:none; font:inherit; color:inherit; text-align:left; }
+  button.xi-big-pic { cursor:zoom-in; }
+  button.xi-big-pic:focus-visible { outline:2px solid var(--xp-blue); outline-offset:-4px; }
+  /* 롤오버 — 모뉴먼트 섬네일처럼 홍보물의 푸른 망점 이미지로 바뀐다 */
+  .xi-big-pic .xi-big-blue { opacity:0; mix-blend-mode:normal; transition:opacity .3s ease; }
+  .xi-big-pic img:not(.xi-big-blue) { transition:opacity .3s ease; }
+  .xi-big-more { position:absolute; right:12px; bottom:12px; z-index:1; padding:6px 10px 5px; background:rgba(23,20,90,.82); color:#fff; font-size:12.5px; font-weight:700; letter-spacing:.01em; }
+  .xi-big.bleed-left .xi-big-more { right:auto; left:12px; }
+  /* 사진 크게 보기 */
+  .xi-lb { position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center; padding:52px 12px 20px; background:rgba(12,11,40,.97); }
+  .xi-lb figure { margin:0; display:flex; flex-direction:column; align-items:center; max-width:100%; max-height:100%; }
+  .xi-lb img { display:block; max-width:min(100%, 1200px); max-height:calc(100vh - 130px); width:auto; height:auto; object-fit:contain; }
+  .xi-lb figcaption { display:flex; gap:10px; align-items:baseline; margin-top:12px; color:#d9dcf0; font-size:13px; line-height:1.5; word-break:keep-all; }
+  .xi-lb figcaption b { color:#fff; font-family:'Museum Classic','Noto Sans KR',sans-serif; }
+  .xi-lb figcaption span { margin-left:auto; padding-left:10px; color:#9fa3c6; white-space:nowrap; }
+  .xi-lb-nav, .xi-lb-close { position:absolute; border:0; background:none; color:#fff; font:inherit; cursor:pointer; line-height:1; }
+  .xi-lb-nav { top:50%; transform:translateY(-50%); width:48px; height:72px; font-size:44px; opacity:.85; }
+  .xi-lb-nav.is-prev { left:2px; }
+  .xi-lb-nav.is-next { right:2px; }
+  .xi-lb-close { top:8px; right:10px; width:44px; height:44px; font-size:34px; }
+  .xi-lb-nav:focus-visible, .xi-lb-close:focus-visible { outline:2px solid #fff; }
+  @media (max-width:559px) { .xi-lb-nav { display:none; } }
   /* 흰 배경 사진을 곱하기로 얹어 카드 바탕색에 녹인다 */
   .xi-big-pic img { position:absolute; height:100%; width:auto; max-width:none; mix-blend-mode:multiply; }
   .xi-big.bleed-left .xi-big-pic img { left:-7%; bottom:-7%; }
@@ -89,6 +117,8 @@ const CSS = `
     .xi-leaflet:hover { background:var(--xp-blue); color:#fff; }
     .xi-mons a:hover img:not(.xi-mons-blue) { opacity:0; }
     .xi-mons a:hover .xi-mons-blue { opacity:1; }
+    .xi-big-pic:hover img:not(.xi-big-blue) { opacity:0; }
+    .xi-big-pic:hover .xi-big-blue { opacity:1; }
   }
   @media (min-width:760px) {
     .xi-intro { margin-bottom:72px; }
@@ -155,6 +185,17 @@ export default function ArtistIndexPage({ artists }) {
       <header className="xi-head">
         <h1 className="xi-title">시민작가 {artists.length}인</h1>
         <p className="xi-lead">세 팀이 함께 지은 대형 울림통 세 기,<br />저마다의 뜻을 담은 열일곱 개의 모뉴먼트.</p>
+        <dl className="xi-show">
+          <dt>본 전시</dt>
+          <dd>
+            <b>{MAIN_SHOW.period}</b> {MAIN_SHOW.hours}
+            <span>{MAIN_SHOW.places.map((place) => place.name).join(" · ")} (문막)</span>
+          </dd>
+          <dt>모뉴먼트</dt>
+          <dd>원주 곳곳 · 장소마다 기간이 달라요 <a href="#xi-map-title">지도 보기 ↓</a></dd>
+          <dt>문의</dt>
+          <dd><a href={`tel:${MAIN_SHOW.phone.replace(/[^0-9]/g, "")}`}>{MAIN_SHOW.phone}</a> 김아영 작가</dd>
+        </dl>
       </header>
 
       <figure className="xi-group">
@@ -208,9 +249,7 @@ export default function ArtistIndexPage({ artists }) {
                 })}
               </ul>
             </div>
-            <div className="xi-big-pic">
-              <img src={work.image} alt={work.alt} loading="lazy" />
-            </div>
+            <BigWorkPhotos work={work} />
           </article>
         ))}
       </section>

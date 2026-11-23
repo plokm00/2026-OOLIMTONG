@@ -21,6 +21,13 @@ export const largeWorks = [
     team: "고리",
     image: "/artist-media/work-coa.webp",
     alt: "얼굴이 달린 둥근 토굴 모양의 대형 울림통 코아",
+    photos: [
+      { src: "/artist-media/big/coa-1.webp", alt: "작업실에 놓인 코아와 그 둘레" },
+      { src: "/artist-media/big/coa-2.webp", alt: "비스듬히 본 코아의 몸통과 입구" },
+      { src: "/artist-media/big/coa-3.webp", alt: "코아의 얼굴을 가까이에서" },
+      { src: "/artist-media/big/coa-4.webp", alt: "코아의 입과 코 부분 근접" },
+      { src: "/artist-media/big/coa-5.webp", alt: "코아 곁에 놓인 Co-Ark" },
+    ],
     layout: "bleed-left",
     text: "우스꽝스런 얼굴과 포근한 인상이 공존합니다. 아이의 몸집에 맞춰 빚고 팀의 두 아이가 함께 이름을 지은 코아는 작업실을 찾는 어린이들에게 사랑받고 있습니다.",
     members: [
@@ -38,6 +45,13 @@ export const largeWorks = [
     team: "네모",
     image: "/artist-media/work-coark.webp",
     alt: "뾰족한 지붕을 인 네모난 방주 모양의 대형 울림통 Co-Ark",
+    photos: [
+      { src: "/artist-media/big/coark-1.webp", alt: "작업실에 세운 Co-Ark" },
+      { src: "/artist-media/big/coark-2.webp", alt: "비스듬히 본 Co-Ark의 입구와 작은 창" },
+      { src: "/artist-media/big/coark-3.webp", alt: "코아와 나란히 선 Co-Ark" },
+      { src: "/artist-media/big/coark-4.webp", alt: "Co-Ark 안에서 올려다본 지붕의 빛 구멍" },
+      { src: "/artist-media/big/coark-5.webp", alt: "Co-Ark 안쪽 벽과 작은 창" },
+    ],
     layout: "bleed-right",
     text: "네모난 방주 같은 공간에 여러 사람의 소리가 합주하듯 모입니다. 성인이 들어갈 만큼 넉넉한 내부는 함께 나아가는 여정의 이미지로 이어집니다.",
     members: [
@@ -54,6 +68,13 @@ export const largeWorks = [
     team: "미로",
     image: "/artist-media/work-narium.webp",
     alt: "물결 같은 흙 타래로 쌓아 올린 동굴 모양의 대형 울림통 나리움",
+    photos: [
+      { src: "/artist-media/big/narium-1.webp", alt: "가을 숲 앞마당에 놓인 나리움" },
+      { src: "/artist-media/big/narium-2.webp", alt: "낙엽 덮인 마당의 나리움" },
+      { src: "/artist-media/big/narium-3.webp", alt: "비스듬히 본 나리움의 입구" },
+      { src: "/artist-media/big/narium-4.webp", alt: "나리움의 옆면에 붙은 귀" },
+      { src: "/artist-media/big/narium-5.webp", alt: "나리움의 흙 타래 결 근접" },
+    ],
     layout: "bleed-right",
     text: "흙을 나르고 이어 붙이는 작업에서 ‘나름’과 ‘이음’을 조합해 지은 이름입니다. 미지의 광물이나 고대의 신비로운 자연물을 닮은 작품의 모습과 어울립니다.",
     members: [
