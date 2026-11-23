@@ -79,6 +79,13 @@ const details = {
         { src: "/artist-media/kim-juwon-photo-2.webp", alt: "나리움의 첫 타래를 놓는 김주원" },
         { src: "/artist-media/kim-juwon-photo-3.webp", alt: "흙 타래를 들고 있는 김주원" },
       ],
+      // 미쁘다 갤러리카페 한 테이블에 김현국 〈북〉과 함께 전시. 이채명처럼 밝게·선명하게.
+      installPhotos: [
+        install("kim-juwon-1", "가까이에서 본 〈카메라〉와 작품 안내판"),
+        install("kim-juwon-2", "〈북〉 곁에 놓인 〈카메라〉와 김주원의 작품 안내판"),
+        install("kim-juwon-3", "비스듬히 본 테이블 위 세 작품과 두 작가의 안내판"),
+        install("kim-juwon-4", "계단 옆 흰 테이블 위에 놓인 작품들"),
+      ],
       venue: {
         name: "미쁘다 갤러리카페",
         address: "원주시 미래로 3, 107호",
@@ -102,6 +109,13 @@ const details = {
       workImage: "/artist-media/kim-hyeonguk-work.webp",
       monument: "/artist-media/kim-hyeonguk-monument.webp",
       photos: photos("kim-hyeonguk", ["나리움 터에 흙 타래를 놓는 김현국", "나리움의 벽을 쌓는 김현국", "야외에서 작품에 마감재를 바르는 김현국"]),
+      // 미쁘다 갤러리카페 한 테이블에 김주원 〈카메라〉와 함께 전시. 이채명처럼 밝게·선명하게.
+      installPhotos: [
+        install("kim-hyeonguk-1", "가까이에서 본 〈북〉의 옆면과 숨구멍"),
+        install("kim-hyeonguk-2", "위에서 본 〈북〉과 양옆의 작품들"),
+        install("kim-hyeonguk-3", "정면에서 본 테이블 위 세 작품과 두 작가의 안내판"),
+        install("kim-hyeonguk-4", "나비 장식과 계단 사이 흰 테이블 위의 작품들"),
+      ],
       venue: MIPPEUDA,
       // 북 → 팀파니와 북이 이끄는 변주
       playlist: [variation("timpanidrums", "팀파니·드럼")],
