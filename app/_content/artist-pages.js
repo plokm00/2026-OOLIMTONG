@@ -297,7 +297,6 @@ const details = {
       installPhotos: [
         install("lee-chaemyeong-1", "불빛이 든 〈라트나〉와 작품 안내판"),
         install("lee-chaemyeong-2", "창가 테이블의 두 작품과 이채명·박수연"),
-        install("lee-chaemyeong-3", "작품 곁에서 박수연과 이야기 나누는 이채명"),
         install("lee-chaemyeong-4", "흰 아치 벽감 안에 나란히 놓인 〈라트나〉와 〈마루〉"),
       ],
       // 인도어 이름 ‘라트나’ → 볼리우드
