@@ -32,7 +32,7 @@ function popupHtml(place) {
     .map((a) => `<li><a href="/artist/${encodeURIComponent(a.name)}">${esc(a.name)}</a> <span>〈${esc(a.work)}〉</span></li>`)
     .join("");
   const when = [place.period, place.hours].filter(Boolean).join(" · ");
-  return `<div class="vm-pop">${head}<p class="vm-name">${esc(place.name)}</p>${artists ? `<ul class="vm-artists">${artists}</ul>` : ""}${when ? `<p class="vm-when">${esc(when)}</p>` : ""}${place.address ? `<p class="vm-addr">${esc(place.address)}</p>` : ""}${mapLinks(place)}</div>`;
+  return `<div class="vm-pop">${head}<p class="vm-name">${esc(place.name)}</p>${artists ? `<ul class="vm-artists">${artists}</ul>` : ""}${when ? `<p class="vm-when">${esc(when)}</p>` : ""}${place.address ? `<p class="vm-addr">${esc(place.address)}</p>` : ""}${place.phone ? `<p class="vm-tel"><a href="tel:${place.phone.replace(/[^0-9]/g, "")}">☎ ${esc(place.phone)}</a>${place.main ? " <span>김아영 작가</span>" : ""}</p>` : ""}${mapLinks(place)}</div>`;
 }
 
 export default function VenueMap({ places, current, who }) {

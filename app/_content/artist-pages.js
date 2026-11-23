@@ -35,9 +35,9 @@ import { artists } from "./artist-notes";
 //
 // 이 밖에 팀 작품(대형 울림통)과 게시된 작가 노트는 기존 데이터에서 자동으로 함께 보여 준다.
 // 프로필에서 자주 쓰는 전시장소·음원·사진 묶음
-const MUNMAK_CHURCH = { name: "문막성당 로비", address: "원주시 건등로 10-18", period: "2026.11.21. ~ 12.13.", hours: "" };
-const TTEUL = { name: "브런치카페 뜰", address: "원주시 봉대길 41-1", period: "2026.11.24.(화) ~ 11.29.(일)", hours: "" };
-const MIPPEUDA = { name: "미쁘다 갤러리카페", address: "원주시 미래로 3, 107호", period: "2026.11.21.(토) ~ 11.28.(토)", hours: "11:00 – 17:00 · 일요일 휴무" };
+const MUNMAK_CHURCH = { name: "문막성당 로비", address: "원주시 건등로 10-18", phone: "033-734-5240", period: "2026.11.21. ~ 12.13.", hours: "" };
+const TTEUL = { name: "브런치카페 뜰", address: "원주시 봉대길 41-1", phone: "0507-1315-7474", period: "2026.11.24.(화) ~ 11.29.(일)", hours: "" };
+const MIPPEUDA = { name: "미쁘다 갤러리카페", address: "원주시 미래로 3, 107호", phone: "0507-1309-0061", period: "2026.11.21.(토) ~ 11.28.(토)", hours: "11:00 – 17:00 · 일요일 휴무" };
 const PRIVATE_SPACE = { name: "작가 개인 공간", address: "", period: "상설전시", hours: "초대 관람만 가능" };
 
 // 전시 전경 사진(public/artist-install/) — 큰 사진 1800×840, 썸네일 360×168
@@ -89,6 +89,7 @@ const details = {
       venue: {
         name: "미쁘다 갤러리카페",
         address: "원주시 미래로 3, 107호",
+        phone: "0507-1309-0061",
         period: "2026.11.21.(토) ~ 11.28.(토)",
         hours: "11:00 – 17:00 · 일요일 휴무",
       },
@@ -224,7 +225,7 @@ const details = {
       workImage: "/artist-media/lee-saerom-work.webp",
       monument: "/artist-media/lee-saerom-monument.webp",
       photos: photos("lee-saerom", ["작업대에서 흙을 빚는 이새롬", "나리움 터에 타래를 놓는 이새롬", "나리움 터에서 타래 벽을 쌓는 이새롬"]),
-      venue: { name: "카페 아이하다", address: "원주시 입춘로 45, 222호", period: "2026.11.21. ~ 12.13.", hours: "" },
+      venue: { name: "카페 아이하다", address: "원주시 입춘로 45, 222호", phone: "0507-1369-1626", period: "2026.11.21. ~ 12.13.", hours: "" },
       // 아이하다에서 찍은 사진은 세로 한 장뿐이라, 가운데 두고 양옆은 같은 사진을 흐리게 깔았다.
       installPhotos: [install("lee-saerom-1", "카페 아이하다 창가 테이블 위 〈울림의 틈〉과 작품 안내판")],
       // 틈으로 소리가 새어 나오듯 덜어 낸 미니멀 변주
@@ -242,7 +243,7 @@ const details = {
       workImage: "/artist-media/lee-seongsun-work.webp",
       monument: "/artist-media/lee-seongsun-monument.webp",
       photos: photos("lee-seongsun", ["〈코아〉 곁에서 작업하는 이성순", "〈코아〉를 빚는 이성순", "흙 조각을 고르는 이성순"]),
-      venue: { name: "클라운지 2호점", address: "원주시 마재3로 24-54, 101호", period: "2026.11.21. ~ 12.11.", hours: "토·일요일 휴무" },
+      venue: { name: "클라운지 2호점", address: "원주시 마재3로 24-54, 101호", phone: "0507-1470-0437", period: "2026.11.21. ~ 12.11.", hours: "토·일요일 휴무" },
       installPhotos: [
         install("lee-seongsun-1", "클라운지 2호점 진열대 위의 〈코아〉와 작품 안내판"),
         install("lee-seongsun-2", "〈코아〉 곁에 앉아 작품을 바라보는 이성순"),
@@ -394,7 +395,7 @@ const details = {
       workImage: "/artist-media/joo-jangseok-work.webp",
       monument: "/artist-media/joo-jangseok-monument.webp",
       photos: photos("joo-jangseok", ["〈발성〉을 빚는 주장석", "〈발성〉의 입을 다듬는 주장석", "야외 현장에서 대형 울림통을 쌓는 주장석"]),
-      venue: { name: "예무아트컴퍼니 연습실", address: "원주시 현석길 11-3, 지하", period: "2026.11.21. ~ 12.13.", hours: "" },
+      venue: { name: "예무아트컴퍼니 연습실", address: "원주시 현석길 11-3, 지하", phone: "0507-1347-5942", period: "2026.11.21. ~ 12.13.", hours: "" },
       // 3은 세로 사진이라 가운데 두고 양옆은 같은 사진을 흐리게 깔았다. 모두 원본에서 작업: front는 원본 색 그대로 레벨만 살짝, 나머지 세 장은 벽 색조만 front에 맞췄다.
       installPhotos: [
         install("joo-jangseok-front", "가까이에서 본 나무 스툴 위의 〈발성〉과 작품 캡션"),
@@ -424,6 +425,7 @@ const details = {
       venue: {
         name: "문막성당 로비",
         address: "원주시 건등로 10-18",
+        phone: "033-734-5240",
         period: "2026.11.21. ~ 12.13.",
         hours: "",
       },

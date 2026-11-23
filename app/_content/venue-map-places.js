@@ -6,6 +6,8 @@ export const MAIN_SHOW = {
   title: "김아영 외 17인의 시민작가 본 전시",
   period: "2026.11.21. ~ 12.13.",
   hours: "매일 11:00 – 17:00",
+  // 본 전시 두 곳은 김아영 작가가 직접 연락을 받는다.
+  phone: "010-3570-1661",
   places: [
     { name: "니닉크라프트", address: "원주시 문막읍 원문로 1734-15" },
     { name: "하나어린이집 야외 공터", address: "원주시 문막읍 작은애니길 38-8" },
@@ -17,13 +19,13 @@ export const MAIN_SHOW = {
 export const MAP_PLACES = (() => {
   const main = MAIN_SHOW.places
     .filter((place) => VENUE_POINTS[place.name])
-    .map((place) => ({ ...place, main: true, point: VENUE_POINTS[place.name], period: MAIN_SHOW.period, hours: MAIN_SHOW.hours }));
+    .map((place) => ({ ...place, main: true, point: VENUE_POINTS[place.name], period: MAIN_SHOW.period, hours: MAIN_SHOW.hours, phone: MAIN_SHOW.phone }));
   const byName = new Map();
   for (const artist of artistPages) {
     const venue = artist.profile?.venue;
     if (!venue?.name || !VENUE_POINTS[venue.name]) continue;
     if (!byName.has(venue.name)) {
-      byName.set(venue.name, { name: venue.name, address: venue.address, period: venue.period, hours: venue.hours, point: VENUE_POINTS[venue.name], artists: [] });
+      byName.set(venue.name, { name: venue.name, address: venue.address, phone: venue.phone, period: venue.period, hours: venue.hours, point: VENUE_POINTS[venue.name], artists: [] });
     }
     byName.get(venue.name).artists.push({ name: artist.name, work: artist.profile.workTitle });
   }

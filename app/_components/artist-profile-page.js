@@ -75,6 +75,9 @@ const CSS = `
   .xp-place { margin:0; color:var(--xp-navy); font-size:16px; font-weight:700; line-height:1.6; }
   .xp-place small { margin-left:6px; color:var(--xp-dim); font-size:13px; font-weight:400; }
   .xp-when { margin:2px 0 0; color:var(--xp-dim); font-size:14px; line-height:1.6; }
+  .xp-tel { margin:3px 0 0; font-size:13px; }
+  .xp-tel a { color:var(--xp-navy); font-weight:700; text-decoration:none; }
+  .xp-tel span { color:var(--xp-dim); font-size:12px; }
 
   /* 전시장소 지도 — 본 전시(문막)에서 원주 곳곳의 모뉴먼트 전시장소로 뻗어 나간다 */
   .xp-show-body { display:grid; gap:30px; }
@@ -236,6 +239,7 @@ export default function ArtistProfilePage({ artist, note }) {
               <p className="xp-venue-head">{p.venue.label ?? artist.name} 모뉴먼트 전시</p>
               <p className="xp-place">{p.venue.name}{p.venue.address ? <small>{p.venue.address}</small> : null}</p>
               <p className="xp-when">{[p.venue.period, p.venue.hours].filter(Boolean).join(" · ")}</p>
+              {p.venue.phone ? <p className="xp-tel"><a href={`tel:${p.venue.phone.replace(/[^0-9]/g, "")}`}>☎ {p.venue.phone}</a></p> : null}
             </div>
           ) : null}
           <div>
@@ -244,6 +248,7 @@ export default function ArtistProfilePage({ artist, note }) {
               <p className="xp-place" key={place.name}>{place.name}<small>{place.address}</small></p>
             ))}
             <p className="xp-when">{MAIN_SHOW.period} · {MAIN_SHOW.hours}</p>
+            <p className="xp-tel"><a href={`tel:${MAIN_SHOW.phone.replace(/[^0-9]/g, "")}`}>☎ {MAIN_SHOW.phone}</a> <span>김아영 작가</span></p>
           </div>
         </div>
         </div>

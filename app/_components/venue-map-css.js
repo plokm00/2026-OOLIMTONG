@@ -20,6 +20,9 @@ export const VENUE_MAP_CSS = `
   .vm-artists a { color:var(--xp-navy); font-weight:700; text-decoration:none; border-bottom:1px solid #c9d6ee; }
   .vm-artists span { color:var(--xp-dim); }
   .vm-when, .vm-addr { margin-top:6px !important; color:var(--xp-dim); font-size:12.5px; line-height:1.55; }
+  .vm-tel { margin:4px 0 0 !important; font-size:12.5px; }
+  .vm-tel a { color:var(--xp-navy, #17145a); font-weight:700; text-decoration:none; }
+  .vm-tel span { color:#5d5b80; font-size:11.5px; font-weight:400; }
   .vm-addr { margin-top:2px !important; }
   .vm-links { display:flex; flex-wrap:nowrap; gap:14px; margin-top:10px !important; white-space:nowrap; }
   .vm-links a { display:inline-flex; align-items:center; gap:3px; color:var(--xp-blue); font-size:12.5px; font-weight:700; text-decoration:none; }
