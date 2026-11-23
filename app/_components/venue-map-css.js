@@ -28,4 +28,5 @@ export const VENUE_MAP_CSS = `
   .xp-map-key { display:inline-block; width:8px; height:8px; margin-right:5px; border-radius:50%; background:var(--xp-navy); opacity:.55; vertical-align:1px; }
   .xp-map-key.is-main { background:var(--xp-green); opacity:1; }
   .xp-map-key.is-here { background:var(--xp-blue); opacity:1; }
+  .xp-map-note { margin:8px 0 0; padding:8px 11px; border-radius:6px; background:#fff6dd; color:#5a4a12; font-size:12.5px; line-height:1.55; word-break:keep-all; }
 `;

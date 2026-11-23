@@ -127,6 +127,8 @@ export default function VenueMap({ places, current, who }) {
         {hasHere ? <span><i className="xp-map-key is-here" />{who} 전시</span> : null}
         <span><i className="xp-map-key" />모뉴먼트 전시장소 — 점을 누르면 전시 정보</span>
       </figcaption>
+      {/* 전시장소가 카페·가게·성당 같은 일상 공간이라 갑자기 쉬거나 여는 시간이 들쭉날쭉할 수 있다 */}
+      <p className="xp-map-note">카페·가게·성당 등 일상 공간이라 갑자기 쉬거나 여는 시간이 바뀔 수 있어요. 방문 전에 장소에 연락해 여는 시간을 꼭 확인해 주세요.</p>
     </figure>
   );
 }
