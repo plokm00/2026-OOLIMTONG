@@ -33,7 +33,7 @@ const CSS = `
   .xi-head { padding:42px 0 44px; }
   .xi-title { margin:0; font-size:clamp(44px, 12.5vw, 76px); line-height:1.05; letter-spacing:-.02em; color:var(--xp-navy); }
   .xi-show { display:grid; grid-template-columns:auto 1fr; gap:6px 14px; margin:0; padding:0 0 18px; border-bottom:1px solid #d9dcea; font-size:13.5px; line-height:1.55; word-break:keep-all; }
-  .xi-show .xi-call { display:inline-block; margin-left:6px; padding:1px 9px 2px; border:1px solid var(--xp-blue); border-radius:999px; font-size:12.5px; }
+  .xi-show dd a { margin-left:12px; }
   @media (min-width:760px) { .xi-show { grid-column:1 / -1; } }
   .xi-show dt { color:var(--xp-green); font-weight:700; white-space:nowrap; }
   .xi-show dd { margin:0; color:var(--xp-text); }

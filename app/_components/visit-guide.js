@@ -58,7 +58,7 @@ export default function VisitGuide({ show }) {
               {show.phone ? (
                 <>
                   <dt>문의</dt>
-                  <dd>김아영 작가 <a className="xi-call" href={`tel:${show.phone.replace(/[^0-9]/g, "")}`}>전화하기</a></dd>
+                  <dd>김아영 작가 <a href={`tel:${show.phone.replace(/[^0-9]/g, "")}`}>전화하기 ↗</a></dd>
                 </>
               ) : null}
             </dl>
