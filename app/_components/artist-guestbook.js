@@ -248,8 +248,8 @@ export default function ArtistGuestbook({ artistId, artistName }) {
                       </em>
                     ) : (
                       <em className="og-del">
-                        <button type="button" className="og-fix" onClick={() => startEdit(entry)}>수정</button>
-                        <button type="button" onClick={() => setAskDelete(entry.id)}>내 글 지우기</button>
+                        <button type="button" className="og-fix" onClick={() => startEdit(entry)}>고치기</button>
+                        <button type="button" onClick={() => setAskDelete(entry.id)}>지우기</button>
                       </em>
                     )
                   ) : null}
