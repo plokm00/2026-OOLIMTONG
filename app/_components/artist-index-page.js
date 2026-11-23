@@ -113,13 +113,12 @@ const CSS = `
   .xi-mons .xi-mons-blue { position:absolute; left:50%; bottom:0; height:54px; width:auto; max-width:none; transform:translateX(-50%); opacity:0; transition:opacity .3s ease; }
   .xi-mons i { position:absolute; top:-6px; right:-10px; color:var(--xp-blue); font-style:normal; font-size:13px; font-weight:500; }
   .xi-big-pic { position:relative; display:block; width:100%; height:330px; margin:0; padding:0; border:0; background:none; font:inherit; color:inherit; text-align:left; }
-  button.xi-big-pic { cursor:zoom-in; }
+  button.xi-big-pic { cursor:default; }
+  button.xi-big-pic.is-hit { cursor:zoom-in; }
   button.xi-big-pic:focus-visible { outline:2px solid var(--xp-blue); outline-offset:-4px; }
   /* 롤오버 — 모뉴먼트 섬네일처럼 홍보물의 푸른 망점 이미지로 바뀐다 */
   .xi-big-pic .xi-big-blue { opacity:0; mix-blend-mode:normal; transition:opacity .3s ease; }
   .xi-big-pic img:not(.xi-big-blue) { transition:opacity .3s ease; }
-  .xi-big-more { position:absolute; right:12px; bottom:12px; z-index:1; display:grid; place-items:center; width:34px; height:34px; border-radius:50%; background:rgba(23,20,90,.78); color:#fff; transition:transform .2s ease, background .2s ease; }
-  .xi-big.bleed-left .xi-big-more { right:auto; left:12px; }
   .xi-big-pic.is-flash img:not(.xi-big-blue) { opacity:0; }
   .xi-big-pic.is-flash .xi-big-blue { opacity:1; }
   /* 사진 크게 보기 */
@@ -145,9 +144,8 @@ const CSS = `
     .xi-leaflet:hover { background:var(--xp-blue); color:#fff; }
     .xi-mons a:hover img:not(.xi-mons-blue) { opacity:0; }
     .xi-mons a:hover .xi-mons-blue { opacity:1; }
-    .xi-big-pic:hover img:not(.xi-big-blue) { opacity:0; }
-    .xi-big-pic:hover .xi-big-blue { opacity:1; }
-    .xi-big-pic:hover .xi-big-more { transform:scale(1.1); background:var(--xp-blue); }
+    .xi-big-pic.is-hit img:not(.xi-big-blue) { opacity:0; }
+    .xi-big-pic.is-hit .xi-big-blue { opacity:1; }
   }
   @media (min-width:760px) {
     .xi-intro { margin-bottom:72px; }
