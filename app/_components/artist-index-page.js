@@ -156,6 +156,8 @@ const CSS = `
     .xi-big { grid-template-columns:1fr 1fr; min-height:440px; }
     .xi-big-text { padding:40px 36px 36px; }
     .xi-members { grid-template-columns:repeat(2, minmax(0,1fr)); }
+    /* 메모(*네모&미로)가 붙은 이름은 반 칸에 안 들어가 작품명이 줄바꿈되므로 한 줄을 다 쓴다 */
+    .xi-members li.is-wide { grid-column:1 / -1; }
     .xi-big-pic { height:auto; }
     .xi-big-pic img { height:96%; }
     .xi-big.bleed-left .xi-big-pic { order:-1; }
@@ -240,7 +242,7 @@ export default function ArtistIndexPage({ artists }) {
               <p>{work.text}</p>
               <ol className="xi-members">
                 {work.members.map((member) => (
-                  <li key={member.no}>
+                  <li key={member.no} className={member.note ? "is-wide" : undefined}>
                     <a href={`/artist/${encodeURIComponent(member.name)}`}>
                       <b>{member.no}</b>
                       <em style={{ fontStyle: "normal" }}>
