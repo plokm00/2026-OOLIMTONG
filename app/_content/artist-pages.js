@@ -113,7 +113,6 @@ const details = {
       installPhotos: [
         install("kim-hyeonguk-1", "가까이에서 본 〈북〉의 옆면과 숨구멍"),
         install("kim-hyeonguk-2", "위에서 본 〈북〉과 양옆의 작품들"),
-        install("kim-hyeonguk-3", "정면에서 본 테이블 위 세 작품과 두 작가의 안내판"),
         install("kim-hyeonguk-4", "나비 장식과 계단 사이 흰 테이블 위의 작품들"),
       ],
       venue: MIPPEUDA,
