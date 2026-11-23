@@ -118,8 +118,10 @@ const CSS = `
   /* 롤오버 — 모뉴먼트 섬네일처럼 홍보물의 푸른 망점 이미지로 바뀐다 */
   .xi-big-pic .xi-big-blue { opacity:0; mix-blend-mode:normal; transition:opacity .3s ease; }
   .xi-big-pic img:not(.xi-big-blue) { transition:opacity .3s ease; }
-  .xi-big-more { position:absolute; right:12px; bottom:12px; z-index:1; padding:6px 10px 5px; background:rgba(23,20,90,.82); color:#fff; font-size:12.5px; font-weight:700; letter-spacing:.01em; }
+  .xi-big-more { position:absolute; right:12px; bottom:12px; z-index:1; display:grid; place-items:center; width:34px; height:34px; border-radius:50%; background:rgba(23,20,90,.78); color:#fff; transition:transform .2s ease, background .2s ease; }
   .xi-big.bleed-left .xi-big-more { right:auto; left:12px; }
+  .xi-big-pic.is-flash img:not(.xi-big-blue) { opacity:0; }
+  .xi-big-pic.is-flash .xi-big-blue { opacity:1; }
   /* 사진 크게 보기 */
   .xi-lb { position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center; padding:52px 12px 20px; background:rgba(12,11,40,.97); }
   .xi-lb figure { margin:0; display:flex; flex-direction:column; align-items:center; max-width:100%; max-height:100%; }
@@ -145,6 +147,7 @@ const CSS = `
     .xi-mons a:hover .xi-mons-blue { opacity:1; }
     .xi-big-pic:hover img:not(.xi-big-blue) { opacity:0; }
     .xi-big-pic:hover .xi-big-blue { opacity:1; }
+    .xi-big-pic:hover .xi-big-more { transform:scale(1.1); background:var(--xp-blue); }
   }
   @media (min-width:760px) {
     .xi-intro { margin-bottom:72px; }
