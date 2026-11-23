@@ -326,6 +326,11 @@ const details = {
       workImage: "/artist-media/in-donguk-work.webp",
       monument: "/artist-media/in-donguk-monument.webp",
       photos: photos("in-donguk", ["나리움의 타래를 쌓는 인동욱", "나리움 터에서 작업하는 인동욱", "나리움의 벽을 다지는 인동욱"]),
+      // 실내 테이블 전시 — 작가와 함께 찍은 컷·흰 받침이 깔린 컷은 빼고 두 장만. 주변이 덜 보이게 바짝 크랍.
+      installPhotos: [
+        install("in-donguk-1", "비스듬히 본 테이블 위의 〈갈무리〉와 작품 안내판"),
+        install("in-donguk-2", "긴 테이블 위에 놓인 〈갈무리〉와 작품 안내판"),
+      ],
       venue: { name: "취병2리 마을회관", address: "원주시 취병로 644", period: "2026.11.21. ~ 12.13.", hours: "" },
       // 작가의 곡 Catch the Rainbow와 어울리는 록 변주
       playlist: [
