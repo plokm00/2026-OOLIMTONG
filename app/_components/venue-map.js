@@ -32,7 +32,7 @@ function popupHtml(place) {
     .map((a) => `<li><a href="/artist/${encodeURIComponent(a.name)}">${esc(a.name)}</a> <span>〈${esc(a.work)}〉</span></li>`)
     .join("");
   const when = [place.period, place.hours].filter(Boolean).join(" · ");
-  return `<div class="vm-pop">${head}<p class="vm-name">${esc(place.name)}</p>${artists ? `<ul class="vm-artists">${artists}</ul>` : ""}${when ? `<p class="vm-when">${esc(when)}</p>` : ""}${place.address ? `<p class="vm-addr">${esc(place.address)}</p>` : ""}${place.phone ? `<p class="vm-tel"><a href="tel:${place.phone.replace(/[^0-9]/g, "")}">☎ ${esc(place.phone)}</a>${place.main ? " <span>김아영 작가</span>" : ""}</p>` : ""}${mapLinks(place)}</div>`;
+  return `<div class="vm-pop">${head}<p class="vm-name">${esc(place.name)}</p>${artists ? `<ul class="vm-artists">${artists}</ul>` : ""}${when ? `<p class="vm-when">${esc(when)}</p>` : ""}${place.address ? `<p class="vm-addr">${esc(place.address)}</p>` : ""}${place.phone ? `<p class="vm-tel"><a href="tel:${place.phone.replace(/[^0-9]/g, "")}">☎ ${place.main ? "김아영 작가에게 전화하기" : esc(place.phone)}</a></p>` : ""}${mapLinks(place)}</div>`;
 }
 
 // note: 지도 아래 "방문 전 연락" 안내를 붙일지(17인 목록 페이지에서만 켠다)

@@ -248,7 +248,7 @@ export default function ArtistProfilePage({ artist, note }) {
               <p className="xp-place" key={place.name}>{place.name}<small>{place.address}</small></p>
             ))}
             <p className="xp-when">{MAIN_SHOW.period} · {MAIN_SHOW.hours}</p>
-            <p className="xp-tel"><a href={`tel:${MAIN_SHOW.phone.replace(/[^0-9]/g, "")}`}>☎ {MAIN_SHOW.phone}</a> <span>김아영 작가</span></p>
+            <p className="xp-tel"><a href={`tel:${MAIN_SHOW.phone.replace(/[^0-9]/g, "")}`}>☎ 김아영 작가에게 전화하기</a></p>
           </div>
         </div>
         </div>

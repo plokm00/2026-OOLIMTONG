@@ -32,7 +32,9 @@ const CSS = `
 
   .xi-head { padding:42px 0 44px; }
   .xi-title { margin:0; font-size:clamp(44px, 12.5vw, 76px); line-height:1.05; letter-spacing:-.02em; color:var(--xp-navy); }
-  .xi-show { display:grid; grid-template-columns:auto 1fr; gap:6px 14px; margin:26px 0 0; padding:14px 16px; background:var(--xp-soft); font-size:13.5px; line-height:1.55; word-break:keep-all; }
+  .xi-show { display:grid; grid-template-columns:auto 1fr; gap:6px 14px; margin:0; padding:0 0 18px; border-bottom:1px solid #d9dcea; font-size:13.5px; line-height:1.55; word-break:keep-all; }
+  .xi-show .xi-call { display:inline-block; margin-left:6px; padding:1px 9px 2px; border:1px solid var(--xp-blue); border-radius:999px; font-size:12.5px; }
+  @media (min-width:760px) { .xi-show { grid-column:1 / -1; } }
   .xi-show dt { color:var(--xp-green); font-weight:700; white-space:nowrap; }
   .xi-show dd { margin:0; color:var(--xp-text); }
   .xi-show b { color:var(--xp-navy); }
@@ -208,17 +210,6 @@ export default function ArtistIndexPage({ artists }) {
       <header className="xi-head">
         <h1 className="xi-title">시민작가 {artists.length}인</h1>
         <p className="xi-lead">세 팀이 함께 지은 대형 울림통 세 기,<br />저마다의 뜻을 담은 열일곱 개의 모뉴먼트.</p>
-        <dl className="xi-show">
-          <dt>본 전시</dt>
-          <dd>
-            <b>{MAIN_SHOW.period}</b> {MAIN_SHOW.hours}
-            <span>{MAIN_SHOW.places.map((place) => place.name).join(" · ")} (문막)</span>
-          </dd>
-          <dt>모뉴먼트</dt>
-          <dd>원주 곳곳 · 장소마다 기간이 달라요 <a href="#xi-map-title">지도 보기 ↓</a></dd>
-          <dt>문의</dt>
-          <dd><a href={`tel:${MAIN_SHOW.phone.replace(/[^0-9]/g, "")}`}>{MAIN_SHOW.phone}</a> 김아영 작가</dd>
-        </dl>
       </header>
 
       <figure className="xi-group">
@@ -231,7 +222,7 @@ export default function ArtistIndexPage({ artists }) {
         {projectIntro.paragraphs.map((text) => (
           <p key={text.slice(0, 12)}>{text}</p>
         ))}
-        <VisitGuide />
+        <VisitGuide show={MAIN_SHOW} />
       </section>
 
       <section className="xi-works" aria-label="대형 울림통 세 기">

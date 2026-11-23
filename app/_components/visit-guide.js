@@ -27,7 +27,8 @@ const CHIPS = [
   { n: 2, name: "〈NARIUM(나리움)〉" },
 ];
 
-export default function VisitGuide() {
+// show: 본 전시 정보(MAIN_SHOW). 개인 번호는 글자로 드러내지 않고 "전화하기" 버튼으로만 건다.
+export default function VisitGuide({ show }) {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -45,6 +46,23 @@ export default function VisitGuide() {
       </div>
       {open ? (
         <div className="xi-guide" id="xi-guide">
+          {show ? (
+            <dl className="xi-show">
+              <dt>본 전시</dt>
+              <dd>
+                <b>{show.period}</b> {show.hours}
+                <span>{show.places.map((place) => place.name).join(" · ")} (문막)</span>
+              </dd>
+              <dt>모뉴먼트</dt>
+              <dd>원주 곳곳 · 장소마다 기간이 달라요 <a href="#xi-map-title">지도 보기 ↓</a></dd>
+              {show.phone ? (
+                <>
+                  <dt>문의</dt>
+                  <dd>김아영 작가 <a className="xi-call" href={`tel:${show.phone.replace(/[^0-9]/g, "")}`}>전화하기</a></dd>
+                </>
+              ) : null}
+            </dl>
+          ) : null}
           <section>
             <h3>관람 안내</h3>
             <h4 className="is-green">이렇게 해 보세요!</h4>
