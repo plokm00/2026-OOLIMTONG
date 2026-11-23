@@ -306,7 +306,7 @@ export default function ArtistIndexPage({ artists }) {
           <a href="/oolimtong_2026_wcf_record">팀별 작업 기록 →</a>
           <a href="/oolimtong_2026_wcf">프로젝트 메인 페이지 →</a>
         </div>
-        <p className="xi-credit"><a className="xi-home" href="https://ninnikkraft.vercel.app/">니닉크라프트</a> · 원주문화재단 보조금 지원사업</p>
+        <p className="xi-credit"><a className="xi-home" href="https://ninnikkraft.vercel.app/" target="_blank" rel="noopener noreferrer">니닉크라프트</a> · 원주문화재단 보조금 지원사업</p>
       </footer>
     </main>
   );
