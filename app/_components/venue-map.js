@@ -35,7 +35,8 @@ function popupHtml(place) {
   return `<div class="vm-pop">${head}<p class="vm-name">${esc(place.name)}</p>${artists ? `<ul class="vm-artists">${artists}</ul>` : ""}${when ? `<p class="vm-when">${esc(when)}</p>` : ""}${place.address ? `<p class="vm-addr">${esc(place.address)}</p>` : ""}${place.phone ? `<p class="vm-tel"><a href="tel:${place.phone.replace(/[^0-9]/g, "")}">☎ ${esc(place.phone)}</a>${place.main ? " <span>김아영 작가</span>" : ""}</p>` : ""}${mapLinks(place)}</div>`;
 }
 
-export default function VenueMap({ places, current, who }) {
+// note: 지도 아래 "방문 전 연락" 안내를 붙일지(17인 목록 페이지에서만 켠다)
+export default function VenueMap({ places, current, who, note = false }) {
   const box = useRef(null);
 
   useEffect(() => {
@@ -128,7 +129,7 @@ export default function VenueMap({ places, current, who }) {
         <span><i className="xp-map-key" />모뉴먼트 전시장소 — 점을 누르면 전시 정보</span>
       </figcaption>
       {/* 전시장소가 카페·가게·성당 같은 일상 공간이라 갑자기 쉬거나 여는 시간이 들쭉날쭉할 수 있다 */}
-      <p className="xp-map-note">카페·가게·성당 등 일상 공간이라 갑자기 쉬거나 여는 시간이 바뀔 수 있어요. 방문 전에 장소에 연락해 여는 시간을 꼭 확인해 주세요.</p>
+      {note ? <p className="xp-map-note">카페·가게·성당 등 일상 공간이라 갑자기 쉬거나 여는 시간이 바뀔 수 있어요. 방문 전에 장소에 연락해 여는 시간을 꼭 확인해 주세요.</p> : null}
     </figure>
   );
 }

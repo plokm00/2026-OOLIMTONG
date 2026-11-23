@@ -240,7 +240,7 @@ export default function ArtistIndexPage({ artists }) {
 
       <section className="xi-map" aria-labelledby="xi-map-title">
         <h2 id="xi-map-title">한눈에 보는 전시 장소</h2>
-        <VenueMap places={MAP_PLACES} />
+        <VenueMap places={MAP_PLACES} note />
       </section>
 
       <footer className="xi-foot">
