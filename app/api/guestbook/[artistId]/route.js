@@ -1,5 +1,5 @@
 import { artistById } from "../../../_content/artist-notes";
-import { addGuestbook, deleteGuestbook, GuestbookError, listGuestbook } from "../../../_lib/guestbook-store";
+import { addGuestbook, deleteGuestbook, editGuestbook, GuestbookError, listGuestbook } from "../../../_lib/guestbook-store";
 
 export const runtime = "nodejs";
 
@@ -57,6 +57,28 @@ export async function DELETE(request, context) {
   } catch (error) {
     if (error instanceof GuestbookError) {
       const status = error.code === "forbidden" ? 403 : 400;
+      return Response.json({ error: error.code }, { status, headers: noStore });
+    }
+    return Response.json({ error: "storage_unavailable" }, { status: 503, headers: noStore });
+  }
+}
+
+// 자기 글 고치기 — 지우기와 같은 열쇠로 확인한다.
+export async function PATCH(request, context) {
+  const { artistId } = await context.params;
+  if (!artistById(artistId)) return Response.json({ error: "not_found" }, { status: 404 });
+  let input;
+  try {
+    input = await request.json();
+  } catch {
+    return Response.json({ error: "bad_request" }, { status: 400, headers: noStore });
+  }
+  try {
+    const entry = await editGuestbook(artistId, input?.id, input?.token, input?.text);
+    return Response.json({ entry }, { headers: noStore });
+  } catch (error) {
+    if (error instanceof GuestbookError) {
+      const status = error.code === "forbidden" ? 403 : error.code === "gone" ? 404 : 400;
       return Response.json({ error: error.code }, { status, headers: noStore });
     }
     return Response.json({ error: "storage_unavailable" }, { status: 503, headers: noStore });

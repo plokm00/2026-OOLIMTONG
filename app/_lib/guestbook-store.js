@@ -42,6 +42,7 @@ export async function listGuestbook(artistId) {
       name: data.name || "",
       text: data.text || "",
       at: data.createdAt?.toMillis?.() ?? Date.now(),
+      edited: Boolean(data.editedAt),
     };
   });
 }
@@ -70,15 +71,31 @@ export async function addGuestbook(artistId, { name, text }, ip) {
 
 const sha = (value) => createHash("sha256").update(String(value)).digest("hex");
 
-export async function deleteGuestbook(artistId, id, token) {
+// 남길 때 받은 열쇠가 맞는지 확인하고 그 글을 돌려준다. 없는 글이면 null.
+async function ownedEntry(artistId, id, token) {
   if (typeof id !== "string" || !/^[A-Za-z0-9]{10,40}$/.test(id) || typeof token !== "string" || !token) {
     throw new GuestbookError("bad_request");
   }
   const ref = entries(artistId).doc(id);
   const snap = await ref.get();
-  if (!snap.exists) return;
+  if (!snap.exists) return null;
   const stored = Buffer.from(String(snap.data().deleteHash || ""), "utf8");
   const given = Buffer.from(sha(token), "utf8");
   if (stored.length !== given.length || !timingSafeEqual(stored, given)) throw new GuestbookError("forbidden");
-  await ref.delete();
+  return { ref, data: snap.data() };
+}
+
+export async function deleteGuestbook(artistId, id, token) {
+  const owned = await ownedEntry(artistId, id, token);
+  if (owned) await owned.ref.delete();
+}
+
+// 자기 글 고치기 — 글만 바꾼다(이름·날짜는 그대로). 고친 글에는 '수정됨' 표시가 붙는다.
+export async function editGuestbook(artistId, id, token, text) {
+  const body = clean(text, TEXT_MAX);
+  if (!body) throw new GuestbookError("empty");
+  const owned = await ownedEntry(artistId, id, token);
+  if (!owned) throw new GuestbookError("gone");
+  if (owned.data.text !== body) await owned.ref.update({ text: body, editedAt: FieldValue.serverTimestamp() });
+  return { id, text: body, edited: owned.data.text !== body || Boolean(owned.data.editedAt) };
 }

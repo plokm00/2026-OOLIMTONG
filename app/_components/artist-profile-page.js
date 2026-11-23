@@ -126,6 +126,12 @@ const CSS = `
   .og-del { font-style:normal; margin-left:8px; }
   .og-del button { padding:0; margin-left:10px; border:0; background:none; color:var(--xp-blue); font:inherit; font-size:11.5px; font-weight:700; text-decoration:underline; text-underline-offset:2px; cursor:pointer; }
   .og-del button:only-child { margin-left:0; }
+  .og-del button.og-fix { margin-left:0; }
+  .og-edit { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .og-edit input { flex:1 1 180px; min-width:0; padding:6px 9px; border:1px solid #b9d6ec; border-radius:6px; background:#fff; color:var(--xp-navy); font:inherit; font-size:15px; }
+  .og-edit button { padding:5px 10px; border:0; border-radius:6px; background:var(--xp-blue); color:#fff; font:inherit; font-size:12.5px; font-weight:700; cursor:pointer; }
+  .og-edit button[type="button"] { background:none; color:var(--xp-dim); padding:5px 4px; }
+  .og-edit button:disabled { opacity:.5; cursor:default; }
   .xp-guest-trap { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
   .xp-guest-notice { margin:8px 0 0; color:var(--xp-blue); font-size:13px; }
   .og-empty { margin:26px 0 0; color:var(--xp-dim); font-size:15px; line-height:1.7; text-align:center; }

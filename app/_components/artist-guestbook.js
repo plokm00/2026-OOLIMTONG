@@ -36,6 +36,7 @@ const MESSAGES = {
   too_fast: "잠시 뒤에 다시 남겨 주세요.",
   failed: "남기지 못했어요. 잠시 뒤에 다시 해 주세요.",
   delete_failed: "지우지 못했어요. 잠시 뒤에 다시 해 주세요.",
+  edit_failed: "고치지 못했어요. 잠시 뒤에 다시 해 주세요.",
 };
 
 // 이름 옆에 한 줄 글칸을 두는 간단한 구성(모바일 청첩장 축하글처럼). 글은 모서리가 조금씩 다른 파랑 계열 말풍선으로 쌓인다.
@@ -64,6 +65,9 @@ export default function ArtistGuestbook({ artistId, artistName }) {
   const [notice, setNotice] = useState("");
   const [mine, setMine] = useState({});
   const [askDelete, setAskDelete] = useState("");
+  const [editing, setEditing] = useState("");
+  const [draft, setDraft] = useState("");
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => { setMine(readMine()); }, []);
 
@@ -142,6 +146,40 @@ export default function ArtistGuestbook({ artistId, artistName }) {
     }
   }
 
+  function startEdit(entry) {
+    setAskDelete("");
+    setNotice("");
+    setEditing(entry.id);
+    setDraft(entry.text);
+  }
+
+  // 자기 글 고치기 — 남길 때 받은 열쇠로 확인한다. 글만 바뀌고 이름·날짜는 그대로다.
+  async function saveEdit(event, id) {
+    event.preventDefault();
+    if (saving) return;
+    const body = draft.trim();
+    if (!body) { setNotice(MESSAGES.empty); return; }
+    const token = mine[id];
+    if (!token) return;
+    setSaving(true);
+    setNotice("");
+    try {
+      const res = await fetch(`/api/guestbook/${artistId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, token, text: body }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.entry) { setNotice(MESSAGES[data.error] ?? MESSAGES.edit_failed); return; }
+      setEntries((list) => (list ?? []).map((entry) => (entry.id === id ? { ...entry, text: data.entry.text, edited: data.entry.edited } : entry)));
+      setEditing("");
+    } catch {
+      setNotice(MESSAGES.edit_failed);
+    } finally {
+      setSaving(false);
+    }
+  }
+
   return (
     <section className="xp-block xp-guest" id="guestbook" aria-labelledby="xp-guest-title" ref={box}>
       <h2 className="xp-h2" id="xp-guest-title">방명록</h2>
@@ -182,10 +220,26 @@ export default function ArtistGuestbook({ artistId, artistName }) {
                 className={[TINTS[n % TINTS.length], entry.fresh ? "is-fresh" : ""].filter(Boolean).join(" ") || undefined}
                 style={{ borderRadius: SHAPES[n % SHAPES.length], rotate: `${((n % 5) - 2) * 0.25}deg` }}
               >
-                <p>{entry.text}</p>
+                {editing === entry.id ? (
+                  <form className="og-edit" onSubmit={(event) => saveEdit(event, entry.id)}>
+                    <input
+                      value={draft}
+                      onChange={(e) => setDraft(e.target.value.slice(0, TEXT_MAX))}
+                      aria-label="고칠 글"
+                      maxLength={TEXT_MAX}
+                      enterKeyHint="done"
+                      autoFocus
+                    />
+                    <button type="submit" disabled={saving || !draft.trim()}>{saving ? "저장 중" : "저장"}</button>
+                    <button type="button" onClick={() => setEditing("")}>취소</button>
+                  </form>
+                ) : (
+                  <p>{entry.text}</p>
+                )}
                 <span>
                   {entry.name || "익명"} · {day(entry.at)}
-                  {mine[entry.id] ? (
+                  {entry.edited ? " · 수정됨" : ""}
+                  {mine[entry.id] && editing !== entry.id ? (
                     askDelete === entry.id ? (
                       <em className="og-del">
                         지울까요?
@@ -193,7 +247,10 @@ export default function ArtistGuestbook({ artistId, artistName }) {
                         <button type="button" onClick={() => setAskDelete("")}>아니요</button>
                       </em>
                     ) : (
-                      <em className="og-del"><button type="button" onClick={() => setAskDelete(entry.id)}>내 글 지우기</button></em>
+                      <em className="og-del">
+                        <button type="button" className="og-fix" onClick={() => startEdit(entry)}>수정</button>
+                        <button type="button" onClick={() => setAskDelete(entry.id)}>내 글 지우기</button>
+                      </em>
                     )
                   ) : null}
                 </span>
