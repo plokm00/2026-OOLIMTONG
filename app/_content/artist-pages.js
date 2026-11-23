@@ -154,9 +154,8 @@ const details = {
       venue: PRIVATE_SPACE,
       // 이채명과 한 공간에 전시 — 근접·함께·벽감 컷을 나눠 썼다. 레벨만 살짝(색은 원본). 4는 세로 사진이라 양옆을 흐리게 채움.
       installPhotos: [
-        install("park-suyeon-1", "창가 테이블 위의 〈마루〉와 작품 안내판"),
+        install("park-suyeon-1", "조명 아래 창가 테이블에 놓인 〈라트나〉와 〈마루〉"),
         install("park-suyeon-2", "〈마루〉 뒤에 앉은 박수연과 이채명"),
-        install("park-suyeon-3", "조명 아래 창가 테이블에 놓인 두 작품"),
         install("park-suyeon-4", "화분 놓인 흰 장식장 아래 벽감 속 두 작품"),
       ],
       // 잠시 쉬어 가는 마음 → 느린 슬로코어
