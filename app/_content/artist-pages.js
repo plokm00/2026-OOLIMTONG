@@ -233,6 +233,8 @@ const details = {
         install("lee-saerom-4", "카운터 위 빵 진열장 곁에 놓인 〈울림의 틈〉"),
         install("lee-saerom-5", "〈울림의 틈〉을 가까이에서 본 모습"),
         install("lee-saerom-6", "카페 아이하다 카운터 쪽에서 본 〈울림의 틈〉과 매장 전경"),
+        // 처음 올렸던 세로 사진(양옆은 같은 사진을 흐리게 깐 것)
+        install("lee-saerom-7", "카페 아이하다 창가 테이블 위 〈울림의 틈〉과 작품 안내판"),
       ],
       // 틈으로 소리가 새어 나오듯 덜어 낸 미니멀 변주
       playlist: [variation("minimal", "미니멀")],
