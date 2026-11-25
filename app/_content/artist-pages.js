@@ -232,7 +232,6 @@ const details = {
         install("lee-saerom-1", "카페 아이하다 나무 선반 위의 〈울림의 틈〉과 작품 안내판"),
         install("lee-saerom-2", "빵 진열장 옆 〈울림의 틈〉과 안내판, 그 뒤의 카페 내부"),
         install("lee-saerom-3", "햇살 드는 소파에서 울림통-변주 리플릿을 함께 보는 관람객"),
-        install("lee-saerom-4", "카운터 위 빵 진열장 곁에 놓인 〈울림의 틈〉"),
         install("lee-saerom-5", "〈울림의 틈〉을 가까이에서 본 모습"),
         install("lee-saerom-6", "카페 아이하다 카운터 쪽에서 본 〈울림의 틈〉과 매장 전경"),
       ],
