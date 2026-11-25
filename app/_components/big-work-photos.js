@@ -8,7 +8,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function BigWorkPhotos({ work }) {
-  const photos = work.photos?.length ? [{ src: work.image, alt: work.alt, profile: true }, ...work.photos] : [];
+  // profileLast: 현장 사진을 먼저 보이고 작품 프로필은 맨 끝에(나리움).
+  const profile = { src: work.image, alt: work.alt, profile: true };
+  const photos = !work.photos?.length ? [] : work.profileLast ? [...work.photos, profile] : [profile, ...work.photos];
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
   const [touchX, setTouchX] = useState(null);
