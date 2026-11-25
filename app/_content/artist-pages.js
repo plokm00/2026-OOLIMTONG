@@ -226,8 +226,14 @@ const details = {
       monument: "/artist-media/lee-saerom-monument.webp",
       photos: photos("lee-saerom", ["작업대에서 흙을 빚는 이새롬", "나리움 터에 타래를 놓는 이새롬", "나리움 터에서 타래 벽을 쌓는 이새롬"]),
       venue: { name: "카페 아이하다", address: "원주시 입춘로 45, B동 222호", phone: "0507-1369-1626", period: "2026.11.21. ~ 12.13.", hours: "" },
-      // 아이하다에서 찍은 사진은 세로 한 장뿐이라, 가운데 두고 양옆은 같은 사진을 흐리게 깔았다.
-      installPhotos: [install("lee-saerom-1", "카페 아이하다 창가 테이블 위 〈울림의 틈〉과 작품 안내판")],
+      installPhotos: [
+        install("lee-saerom-1", "카페 아이하다 나무 선반 위의 〈울림의 틈〉과 작품 안내판"),
+        install("lee-saerom-2", "빵 진열장 옆 〈울림의 틈〉과 안내판, 그 뒤의 카페 내부"),
+        install("lee-saerom-3", "햇살 드는 소파에서 울림통-변주 리플릿을 함께 보는 관람객"),
+        install("lee-saerom-4", "카운터 위 빵 진열장 곁에 놓인 〈울림의 틈〉"),
+        install("lee-saerom-5", "〈울림의 틈〉을 가까이에서 본 모습"),
+        install("lee-saerom-6", "카페 아이하다 카운터 쪽에서 본 〈울림의 틈〉과 매장 전경"),
+      ],
       // 틈으로 소리가 새어 나오듯 덜어 낸 미니멀 변주
       playlist: [variation("minimal", "미니멀")],
     },
