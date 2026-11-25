@@ -50,12 +50,13 @@ function installVideo(name, alt) {
 }
 // 브런치카페 뜰 — 박소연 페이지의 전시 전경(정면 컷이 먼저). 박진희는 근접 컷 + 본인 사진, 이안은 따로 고른 사진.
 // 문막성당 로비 4인 — 개인 컷 없이 공용 3장(왼쪽 창: 허양·이재홍, 오른쪽 창: 신정숙·임계화)
-const CHURCH_WIDE = install("munmak-church-wide", "문막성당 로비, 나무 기둥 사이 두 창턱에 나뉘어 놓인 네 작품");
+const CHURCH_LOBBY_1 = install("munmak-church-lobby-1", "꽃병이 놓인 문막성당 로비, 나무 기둥 사이 두 창턱에 나뉘어 놓인 네 작품");
+const CHURCH_LOBBY_2 = install("munmak-church-lobby-2", "나무 기둥 양옆 두 창턱에 나뉘어 놓인 네 작품을 조금 더 가까이 본 문막성당 로비");
 const CHURCH_OUTSIDE = install("munmak-church-outside", "성당 바깥 벤치 너머 아치 창 안으로 보이는 작품들");
 const CHURCH_RIGHT = install("munmak-church-right", "햇살 드는 오른쪽 창턱의 〈별을 보다〉와 〈토토리〉, 두 작가의 안내판");
-const CHURCH_LEFT = install("munmak-church-left", "왼쪽 창턱의 〈SOUL Ⅰ〉과 〈SOUL Ⅱ〉, 두 작가의 안내판");
-const CHURCH_INSTALL_RIGHT = [CHURCH_RIGHT, CHURCH_WIDE, CHURCH_OUTSIDE];
-const CHURCH_INSTALL_LEFT = [CHURCH_LEFT, CHURCH_WIDE, CHURCH_OUTSIDE];
+const CHURCH_LEFT = install("munmak-church-left", "햇살 드는 왼쪽 창턱의 〈SOUL Ⅰ〉과 〈SOUL Ⅱ〉, 두 작가의 안내판");
+const CHURCH_INSTALL_RIGHT = [CHURCH_RIGHT, CHURCH_LOBBY_1, CHURCH_OUTSIDE];
+const CHURCH_INSTALL_LEFT = [CHURCH_LEFT, CHURCH_LOBBY_2, CHURCH_OUTSIDE];
 
 const TTEUL_INSTALL = [
   install("tteul-2", "정면에서 본 선반 위 세 작품과 카페 자리"),
