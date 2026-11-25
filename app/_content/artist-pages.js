@@ -229,7 +229,6 @@ const details = {
       installPhotos: [
         // 처음 올렸던 세로 사진(양옆은 같은 사진을 흐리게 깐 것)
         install("lee-saerom-7", "카페 아이하다 창가 테이블 위 〈울림의 틈〉과 작품 안내판"),
-        install("lee-saerom-1", "카페 아이하다 나무 선반 위의 〈울림의 틈〉과 작품 안내판"),
         install("lee-saerom-2", "빵 진열장 옆 〈울림의 틈〉과 안내판, 그 뒤의 카페 내부"),
         install("lee-saerom-3", "햇살 드는 소파에서 울림통-변주 리플릿을 함께 보는 관람객"),
         install("lee-saerom-8", "작품 안내판 곁에서 가까이 본 〈울림의 틈〉"),
