@@ -49,6 +49,14 @@ function installVideo(name, alt) {
   return { ...install(name, alt), video: `/artist-install/${name}.mp4` };
 }
 // 브런치카페 뜰 — 박소연 페이지의 전시 전경(정면 컷이 먼저). 박진희는 근접 컷 + 본인 사진, 이안은 따로 고른 사진.
+// 문막성당 로비 4인 — 개인 컷 없이 공용 3장(왼쪽 창: 허양·이재홍, 오른쪽 창: 신정숙·임계화)
+const CHURCH_WIDE = install("munmak-church-wide", "문막성당 로비, 나무 기둥 사이 두 창턱에 나뉘어 놓인 네 작품");
+const CHURCH_OUTSIDE = install("munmak-church-outside", "성당 바깥 벤치 너머 아치 창 안으로 보이는 작품들");
+const CHURCH_RIGHT = install("munmak-church-right", "햇살 드는 오른쪽 창턱의 〈별을 보다〉와 〈토토리〉, 두 작가의 안내판");
+const CHURCH_LEFT = install("munmak-church-left", "왼쪽 창턱의 〈SOUL Ⅰ〉과 〈SOUL Ⅱ〉, 두 작가의 안내판");
+const CHURCH_INSTALL_RIGHT = [CHURCH_RIGHT, CHURCH_WIDE, CHURCH_OUTSIDE];
+const CHURCH_INSTALL_LEFT = [CHURCH_LEFT, CHURCH_WIDE, CHURCH_OUTSIDE];
+
 const TTEUL_INSTALL = [
   install("tteul-2", "정면에서 본 선반 위 세 작품과 카페 자리"),
   install("tteul-1", "브런치카페 뜰 선반 위에 나란히 놓인 가족의 세 작품"),
@@ -210,6 +218,7 @@ const details = {
       monument: "/artist-media/shin-jeongsuk-monument.webp",
       photos: photos("shin-jeongsuk", ["네모 팀과 함께한 신정숙", "완성한 Co-Ark 곁의 신정숙", "Co-Ark의 지붕을 다듬는 신정숙"]),
       venue: MUNMAK_CHURCH,
+      installPhotos: CHURCH_INSTALL_RIGHT,
       // 별을 보는 마음 → 현악 변주(성당 로비 전시)
       playlist: [variation("strings", "현악")],
     },
@@ -293,6 +302,7 @@ const details = {
       monument: "/artist-media/lee-jaehong-monument.webp",
       photos: photos("lee-jaehong", ["Co-Ark의 표면을 다듬는 이재홍", "완성한 Co-Ark 곁의 이재홍", "Co-Ark에 마감재를 뿌리는 이재홍"]),
       venue: MUNMAK_CHURCH,
+      installPhotos: CHURCH_INSTALL_LEFT,
       // 작가의 아베마리아 두 곡, 그리고 〈SOUL Ⅰ〉의 허양과 짝을 이루는 바흐 칸타타 변주
       playlist: [
         { src: "/artist-music/lee-jaehong-gounod-ave-maria.mp3", title: "구노의 아베마리아", note: "" },
@@ -359,6 +369,7 @@ const details = {
       monument: "/artist-media/im-gyehwa-monument.webp",
       photos: photos("im-gyehwa", ["흙 그릇을 빚는 임계화", "완성한 Co-Ark 곁의 임계화", "Co-Ark의 표면을 그을리는 임계화"]),
       venue: MUNMAK_CHURCH,
+      installPhotos: CHURCH_INSTALL_RIGHT,
       // 귀여운 도토리 → 통통 튀는 마림바·셰이커
       playlist: [variation("malimbashaker02", "마림바·셰이커")],
     },
@@ -378,11 +389,11 @@ const details = {
       // 사진·영상은 레벨·색을 살짝 보정. 쇼윈도 컷(2)만 흰색·회색 기준으로 색을 맞췄고, 벤치 컷은 밝기를 올렸다. 안쪽 컷(inside)은 보정 없이 원본. 피규어 컷(cho-youngbeom-3)은 작가가 찍은 영상에서 뽑은 장면,
       // 영상은 H.264 960px·소리 없이 압축(원본 KakaoTalk_20261122_185218636.mp4).
       installPhotos: [
-        install("cho-youngbeom-2", "해피스토리 쇼윈도 너머 벤치 위의 〈자유를 짓다〉"),
         install("cho-youngbeom-bench", "쇼윈도 안 철제 벤치 위의 고래와 작품 안내판"),
-        install("cho-youngbeom-inside", "가게 안쪽에서 본 고래와 등 위·발치의 두 피규어"),
-        install("cho-youngbeom-3", "고래 등 위 숨구멍 곁에 선 피규어"),
         installVideo("cho-youngbeom-video", "벤치 위 고래와 피규어를 둘러보는 영상"),
+        install("cho-youngbeom-3", "고래 등 위 숨구멍 곁에 선 피규어"),
+        install("cho-youngbeom-inside", "가게 안쪽에서 본 고래와 등 위·발치의 두 피규어"),
+        install("cho-youngbeom-2", "해피스토리 쇼윈도 너머 벤치 위의 〈자유를 짓다〉"),
       ],
       // 작가의 곡 TRIP과, 고래가 헤엄치는 듯한 시네마틱 변주
       playlist: [
@@ -436,6 +447,7 @@ const details = {
         period: "2026.11.21. ~ 12.13.",
         hours: "",
       },
+      installPhotos: CHURCH_INSTALL_LEFT,
       // 작가가 NFC에 연결하려던 카치니의 아베마리아를 첫 곡으로, 성당 로비 전시에 맞춰 바흐 칸타타 변주를 함께
       playlist: [
         { src: "/artist-music/heoyang-caccini-ave-maria.mp3", title: "카치니의 아베마리아", note: "" },
