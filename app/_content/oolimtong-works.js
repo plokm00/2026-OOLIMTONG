@@ -47,7 +47,6 @@ export const largeWorks = [
     alt: "뾰족한 지붕을 인 네모난 방주 모양의 대형 울림통 Co-Ark",
     photos: [
       { src: "/artist-media/big/coark-1.webp", alt: "작업실에 세운 Co-Ark" },
-      { src: "/artist-media/big/coark-2.webp", alt: "비스듬히 본 Co-Ark의 입구와 작은 창" },
       { src: "/artist-media/big/coark-3.webp", alt: "코아와 나란히 선 Co-Ark" },
       { src: "/artist-media/big/coark-4.webp", alt: "Co-Ark 안에서 올려다본 지붕의 빛 구멍" },
       { src: "/artist-media/big/coark-5.webp", alt: "Co-Ark 안쪽 벽과 작은 창" },
