@@ -9,7 +9,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function BigWorkPhotos({ work }) {
   // profileLast: 현장 사진을 먼저 보이고 작품 프로필은 맨 끝에(나리움).
-  const profile = { src: work.image, alt: work.alt, profile: true };
+  // 사진 창에서는 프로필을 양옆 흰 여백을 둔 가로 사진(*-wide)으로 보인다. 카드는 원래 사진 그대로.
+  const profile = { src: work.image.replace(/\.webp$/, "-wide.webp"), alt: work.alt, profile: true };
   const photos = !work.photos?.length ? [] : work.profileLast ? [...work.photos, profile] : [profile, ...work.photos];
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
