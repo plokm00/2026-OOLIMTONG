@@ -326,7 +326,7 @@ const details = {
       venue: PRIVATE_SPACE,
       // 1번은 지정한 1차 보정본을 원본 작품 색상에 맞추고 강한 하이라이트만 완화. 2번 유지. 4는 양옆을 흐리게 채움.
       installPhotos: [
-        install("lee-chaemyeong-1-original-color", "불빛이 든 〈라트나〉와 작품 안내판"),
+        install("lee-chaemyeong-1", "테이블 위 불빛이 든 〈라트나〉와 작품 안내판, 곁의 〈마루〉"),
         install("lee-chaemyeong-2", "창가 테이블의 두 작품과 이채명·박수연"),
         install("lee-chaemyeong-4", "흰 아치 벽감 안에 나란히 놓인 〈라트나〉와 〈마루〉"),
       ],
