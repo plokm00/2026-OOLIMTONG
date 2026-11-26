@@ -349,8 +349,7 @@ const details = {
       installPhotos: [
         install("in-donguk-1", "마을회관 테이블 위의 〈갈무리〉와 안내판, 문 너머로 지켜보는 마을 어르신들"),
         install("in-donguk-2", "긴 테이블 끝에 놓인 〈갈무리〉와 작품 안내판"),
-        install("in-donguk-3", "〈갈무리〉의 구멍 너머로 보이는 사람"),
-        install("in-donguk-4", "가까이에서 들여다본 〈갈무리〉의 구멍"),
+        install("in-donguk-4", "가까이에서 들여다본 〈갈무리〉의 구멍, 그 너머로 보이는 사람"),
       ],
       venue: { name: "취병2리 마을회관", address: "원주시 취병로 644", period: "2026.11.21. ~ 12.13.", hours: "" },
       // 작가의 곡 Catch the Rainbow와 어울리는 록 변주
