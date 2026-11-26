@@ -175,10 +175,10 @@ const details = {
       monument: "/artist-media/park-suyeon-monument.webp",
       photos: photos("park-suyeon", ["코아 앞에서 웃는 박수연", "〈마루〉를 빚는 박수연", "야외에서 〈마루〉를 마감하는 박수연"]),
       venue: PRIVATE_SPACE,
-      // 1번은 원본에서 약하게 하이라이트 완화(첫 보정의 절반), 2번은 승인된 이채명 2번 기준 색감. 4는 양옆을 흐리게 채움.
+      // 1·2번은 사용자가 지정한 보정 이미지. 4는 세로 사진이라 양옆을 흐리게 채움.
       installPhotos: [
-        install("park-suyeon-1-balanced-light", "조명 아래 창가 테이블에 놓인 〈라트나〉와 〈마루〉"),
-        install("park-suyeon-2-color-matched", "〈마루〉 뒤에 앉은 박수연과 이채명"),
+        install("park-suyeon-1-selected", "조명 아래 창가 테이블에 놓인 〈라트나〉와 〈마루〉"),
+        install("park-suyeon-2-selected", "〈마루〉 뒤에 앉은 박수연과 이채명"),
         install("park-suyeon-4", "화분 놓인 흰 장식장 아래 벽감 속 두 작품"),
       ],
       // 잠시 쉬어 가는 마음 → 느린 슬로코어
