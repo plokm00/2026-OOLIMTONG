@@ -22,7 +22,6 @@ export const largeWorks = [
     image: "/artist-media/work-coa.webp",
     alt: "얼굴이 달린 둥근 토굴 모양의 대형 울림통 코아",
     photos: [
-      { src: "/artist-media/big/coa-1.webp", alt: "작업실에 놓인 코아와 그 둘레" },
       { src: "/artist-media/big/coa-2.webp", alt: "비스듬히 본 코아의 몸통과 입구" },
       { src: "/artist-media/big/coa-3.webp", alt: "코아의 얼굴을 가까이에서" },
       { src: "/artist-media/big/coa-4.webp", alt: "코아의 입과 코 부분 근접" },
