@@ -33,7 +33,7 @@ export default function VisitGuide({ show }) {
   return (
     <>
       <div className="xi-btns">
-        <a className="xi-leaflet" href="/oolimtong_2026_wcf_leaflet">리플렛 온라인 보기 →</a>
+        <a className="xi-leaflet" href="/oolimtong_2026_wcf_leaflet" target="_blank" rel="noopener">리플렛 온라인 보기 →</a>
         <button
           type="button"
           className={open ? "xi-leaflet is-on" : "xi-leaflet"}

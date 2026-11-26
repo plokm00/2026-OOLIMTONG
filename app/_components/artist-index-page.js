@@ -302,7 +302,7 @@ export default function ArtistIndexPage({ artists }) {
 
       <footer className="xi-foot">
         <div className="xi-foot-links">
-          <a href="/oolimtong_2026_wcf_leaflet">리플렛 온라인 보기 →</a>
+          <a href="/oolimtong_2026_wcf_leaflet" target="_blank" rel="noopener">리플렛 온라인 보기 →</a>
           <a href="/oolimtong_2026_wcf_record">팀별 작업 기록 →</a>
           <a href="/oolimtong_2026_wcf">프로젝트 메인 페이지 →</a>
         </div>
