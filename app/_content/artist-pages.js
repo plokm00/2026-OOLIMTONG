@@ -175,10 +175,10 @@ const details = {
       monument: "/artist-media/park-suyeon-monument.webp",
       photos: photos("park-suyeon", ["코아 앞에서 웃는 박수연", "〈마루〉를 빚는 박수연", "야외에서 〈마루〉를 마감하는 박수연"]),
       venue: PRIVATE_SPACE,
-      // 이채명과 한 공간에 전시 — 근접·함께·벽감 컷을 나눠 썼다. 레벨만 살짝(색은 원본). 4는 세로 사진이라 양옆을 흐리게 채움.
+      // 1번은 원본에서 약하게 하이라이트 완화(첫 보정의 절반), 2번은 승인된 이채명 2번 기준 색감. 4는 양옆을 흐리게 채움.
       installPhotos: [
-        install("park-suyeon-1", "조명 아래 창가 테이블에 놓인 〈라트나〉와 〈마루〉"),
-        install("park-suyeon-2", "〈마루〉 뒤에 앉은 박수연과 이채명"),
+        install("park-suyeon-1-balanced-light", "조명 아래 창가 테이블에 놓인 〈라트나〉와 〈마루〉"),
+        install("park-suyeon-2-color-matched", "〈마루〉 뒤에 앉은 박수연과 이채명"),
         install("park-suyeon-4", "화분 놓인 흰 장식장 아래 벽감 속 두 작품"),
       ],
       // 잠시 쉬어 가는 마음 → 느린 슬로코어
@@ -324,9 +324,9 @@ const details = {
       monument: "/artist-media/lee-chaemyeong-monument.webp",
       photos: photos("lee-chaemyeong", ["〈라트나〉를 다듬는 이채명", "물레 위의 작품을 다듬는 이채명", "코아의 안쪽을 다듬는 이채명"]),
       venue: PRIVATE_SPACE,
-      // 박수연과 한 공간에 전시 — 근접·함께·벽감 컷을 나눠 썼다. 레벨만 살짝(색은 원본). 4는 세로 사진이라 양옆을 흐리게 채움.
+      // 1번은 원본에서 약하게 하이라이트 완화(첫 보정의 절반). 2번 색감 유지. 4는 양옆을 흐리게 채움.
       installPhotos: [
-        install("lee-chaemyeong-1", "불빛이 든 〈라트나〉와 작품 안내판"),
+        install("lee-chaemyeong-1-balanced-light", "불빛이 든 〈라트나〉와 작품 안내판"),
         install("lee-chaemyeong-2", "창가 테이블의 두 작품과 이채명·박수연"),
         install("lee-chaemyeong-4", "흰 아치 벽감 안에 나란히 놓인 〈라트나〉와 〈마루〉"),
       ],
