@@ -324,9 +324,9 @@ const details = {
       monument: "/artist-media/lee-chaemyeong-monument.webp",
       photos: photos("lee-chaemyeong", ["〈라트나〉를 다듬는 이채명", "물레 위의 작품을 다듬는 이채명", "코아의 안쪽을 다듬는 이채명"]),
       venue: PRIVATE_SPACE,
-      // 1번은 지정한 1차 보정본에서 하이라이트와 어두운 면의 대비를 살림. 2번 색감 유지. 4는 양옆을 흐리게 채움.
+      // 1번은 지정한 1차 보정본을 원본 작품 색상에 맞추고 강한 하이라이트만 완화. 2번 유지. 4는 양옆을 흐리게 채움.
       installPhotos: [
-        install("lee-chaemyeong-1-selected-contrast", "불빛이 든 〈라트나〉와 작품 안내판"),
+        install("lee-chaemyeong-1-original-color", "불빛이 든 〈라트나〉와 작품 안내판"),
         install("lee-chaemyeong-2", "창가 테이블의 두 작품과 이채명·박수연"),
         install("lee-chaemyeong-4", "흰 아치 벽감 안에 나란히 놓인 〈라트나〉와 〈마루〉"),
       ],
