@@ -6,6 +6,8 @@ export const VENUE_MAP_CSS = `
   .xp-map-box { position:relative; z-index:0; height:300px; background:var(--xp-soft); }
   .xp-map .leaflet-container { font-family:'Noto Sans KR', sans-serif; }
   .xp-map .leaflet-control-attribution { font-size:9.5px; }
+  /* 점·지도를 누르면 브라우저가 그리는 포커스 네모를 없앤다 */
+  .xp-map .leaflet-container:focus, .xp-map .leaflet-interactive:focus { outline:none; }
   .xp-map .leaflet-tile-pane { filter:grayscale(1) brightness(1.06) contrast(.88); opacity:.85; }
   .vm-tip { padding:2px 7px; border:0; border-radius:2px; box-shadow:0 1px 3px rgba(23,20,90,.18); color:var(--xp-navy); font-size:12px; font-weight:700; }
   .vm-tip.is-here { background:var(--xp-blue); color:#fff; }
