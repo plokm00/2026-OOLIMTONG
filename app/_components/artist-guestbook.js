@@ -67,6 +67,7 @@ export default function ArtistGuestbook({ artistId, artistName }) {
   const [askDelete, setAskDelete] = useState("");
   const [editing, setEditing] = useState("");
   const [draft, setDraft] = useState("");
+  const [draftName, setDraftName] = useState("");
   const [saving, setSaving] = useState(false);
 
   useEffect(() => { setMine(readMine()); }, []);
@@ -151,9 +152,10 @@ export default function ArtistGuestbook({ artistId, artistName }) {
     setNotice("");
     setEditing(entry.id);
     setDraft(entry.text);
+    setDraftName(entry.name || "");
   }
 
-  // 자기 글 고치기 — 남길 때 받은 열쇠로 확인한다. 글만 바뀌고 이름·날짜는 그대로다.
+  // 자기 글 고치기 — 남길 때 받은 열쇠로 확인한다. 이름과 글을 고칠 수 있고 날짜는 그대로다.
   async function saveEdit(event, id) {
     event.preventDefault();
     if (saving) return;
@@ -167,11 +169,11 @@ export default function ArtistGuestbook({ artistId, artistName }) {
       const res = await fetch(`/api/guestbook/${artistId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, token, text: body }),
+        body: JSON.stringify({ id, token, text: body, name: draftName }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.entry) { setNotice(MESSAGES[data.error] ?? MESSAGES.edit_failed); return; }
-      setEntries((list) => (list ?? []).map((entry) => (entry.id === id ? { ...entry, text: data.entry.text, edited: data.entry.edited } : entry)));
+      setEntries((list) => (list ?? []).map((entry) => (entry.id === id ? { ...entry, name: data.entry.name ?? entry.name, text: data.entry.text, edited: data.entry.edited } : entry)));
       setEditing("");
     } catch {
       setNotice(MESSAGES.edit_failed);
@@ -222,6 +224,15 @@ export default function ArtistGuestbook({ artistId, artistName }) {
               >
                 {editing === entry.id ? (
                   <form className="og-edit" onSubmit={(event) => saveEdit(event, entry.id)}>
+                    <input
+                      className="og-edit-name"
+                      value={draftName}
+                      onChange={(e) => setDraftName(e.target.value.slice(0, NAME_MAX))}
+                      placeholder="이름"
+                      aria-label="고칠 이름(선택)"
+                      maxLength={NAME_MAX}
+                      autoComplete="off"
+                    />
                     <input
                       value={draft}
                       onChange={(e) => setDraft(e.target.value.slice(0, TEXT_MAX))}

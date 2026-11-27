@@ -90,12 +90,19 @@ export async function deleteGuestbook(artistId, id, token) {
   if (owned) await owned.ref.delete();
 }
 
-// 자기 글 고치기 — 글만 바꾼다(이름·날짜는 그대로). 고친 글에는 '수정됨' 표시가 붙는다.
-export async function editGuestbook(artistId, id, token, text) {
+// 자기 글 고치기 — 이름과 글을 바꾼다(날짜는 그대로). 글이 바뀌면 '수정됨' 표시가 붙는다.
+// 이름만 바로잡은 경우에는 '수정됨'을 붙이지 않는다. name을 보내지 않으면 이름은 그대로 둔다.
+export async function editGuestbook(artistId, id, token, text, name) {
   const body = clean(text, TEXT_MAX);
   if (!body) throw new GuestbookError("empty");
   const owned = await ownedEntry(artistId, id, token);
   if (!owned) throw new GuestbookError("gone");
-  if (owned.data.text !== body) await owned.ref.update({ text: body, editedAt: FieldValue.serverTimestamp() });
-  return { id, text: body, edited: owned.data.text !== body || Boolean(owned.data.editedAt) };
+  const who = name === undefined ? owned.data.name || "" : clean(name, NAME_MAX);
+  const textChanged = owned.data.text !== body;
+  const nameChanged = (owned.data.name || "") !== who;
+  const patch = {};
+  if (textChanged) Object.assign(patch, { text: body, editedAt: FieldValue.serverTimestamp() });
+  if (nameChanged) patch.name = who;
+  if (textChanged || nameChanged) await owned.ref.update(patch);
+  return { id, name: who, text: body, edited: textChanged || Boolean(owned.data.editedAt) };
 }

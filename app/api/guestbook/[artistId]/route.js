@@ -74,7 +74,7 @@ export async function PATCH(request, context) {
     return Response.json({ error: "bad_request" }, { status: 400, headers: noStore });
   }
   try {
-    const entry = await editGuestbook(artistId, input?.id, input?.token, input?.text);
+    const entry = await editGuestbook(artistId, input?.id, input?.token, input?.text, input?.name);
     return Response.json({ entry }, { headers: noStore });
   } catch (error) {
     if (error instanceof GuestbookError) {

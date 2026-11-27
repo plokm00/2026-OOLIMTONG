@@ -132,6 +132,7 @@ const CSS = `
   .og-del button.og-fix { margin-left:0; }
   .og-edit { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
   .og-edit input { flex:1 1 180px; min-width:0; padding:6px 9px; border:1px solid #b9d6ec; border-radius:6px; background:#fff; color:var(--xp-navy); font:inherit; font-size:15px; }
+  .og-edit input.og-edit-name { flex:0 0 84px; width:84px; }
   .og-edit button { padding:5px 10px; border:0; border-radius:6px; background:var(--xp-blue); color:#fff; font:inherit; font-size:12.5px; font-weight:700; cursor:pointer; }
   .og-edit button[type="button"] { background:none; color:var(--xp-dim); padding:5px 4px; }
   .og-edit button:disabled { opacity:.5; cursor:default; }
