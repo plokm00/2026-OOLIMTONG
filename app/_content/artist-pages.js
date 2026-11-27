@@ -143,7 +143,6 @@ const details = {
       photos: photos("min-jihyeon", ["둥근 벽에 타래를 붙이는 민지현", "작업대에서 형태를 만드는 민지현", "아이와 함께 흙을 빚는 민지현"]),
       venue: PRIVATE_SPACE,
       installPhotos: [
-        install("min-jihyeon-1", "햇살 드는 거실 창가, 〈명상〉 곁에 앉은 민지현"),
         install("min-jihyeon-2", "산이 보이는 거실 창가 바닥에 놓인 〈명상〉"),
         install("min-jihyeon-3", "창살 그림자가 드리운 〈명상〉과 작품 안내판"),
         install("min-jihyeon-4", "창 너머 산을 등지고 놓인 〈명상〉과 작품 안내판"),
