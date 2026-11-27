@@ -37,11 +37,11 @@ import { artists } from "./artist-notes";
 // 프로필에서 자주 쓰는 전시장소·음원·사진 묶음
 const MUNMAK_CHURCH = { name: "문막성당 로비", address: "원주시 건등로 10-18", phone: "033-734-5240", period: "2026.11.21. ~ 12.13.", hours: "" };
 const TTEUL = { name: "브런치카페 뜰", address: "원주시 봉대길 41-1", phone: "0507-1315-7474", period: "2026.11.24.(화) ~ 11.29.(일)", hours: "" };
-const MIPPEUDA = { name: "미쁘다 갤러리카페", address: "원주시 미래로 3, 107호", phone: "0507-1309-0061", period: "2026.11.21.(토) ~ 11.28.(토)", hours: "11:00 – 17:00 · 일요일 휴무" };
+const MIPPEUDA = { name: "미쁘다 갤러리카페", address: "원주시 미래로 3, 107호", phone: "0507-1309-0061", period: "2026.11.21.(토) ~ 11.28.(토)", hours: "일요일 휴무" };
 const PRIVATE_SPACE = { name: "작가 개인 공간", address: "", period: "상설전시", hours: "초대 관람만 가능" };
-// 개인 집은 상세 주소를 적지 않고 동 이름만 붙인다. 지도 점도 동네 수준(venue-points.js)으로만 찍는다.
-const PRIVATE_BANGOK = { ...PRIVATE_SPACE, name: "작가 개인 공간 · 반곡동" };
-const PRIVATE_MUSIL = { ...PRIVATE_SPACE, name: "작가 개인 공간 · 무실동" };
+// 개인 집은 화면에 "작가 개인 공간"으로만 쓴다. mapKey(동 이름)는 지도 점을 동네 수준(venue-points.js)으로 찍고 장소를 나누는 데만 쓴다.
+const PRIVATE_BANGOK = { ...PRIVATE_SPACE, mapKey: "작가 개인 공간 · 반곡동" };
+const PRIVATE_MUSIL = { ...PRIVATE_SPACE, mapKey: "작가 개인 공간 · 무실동" };
 
 // 전시 전경 사진(public/artist-install/) — 큰 사진 1800×840, 썸네일 360×168
 // 세로 사진·영상은 가운데 두고 양옆을 흐린 배경으로 채워 같은 가로 비율로 만든다.
@@ -363,7 +363,7 @@ const details = {
         install("in-donguk-2", "긴 테이블 끝에 놓인 〈갈무리〉와 작품 안내판"),
         install("in-donguk-4", "가까이에서 들여다본 〈갈무리〉의 구멍, 그 너머로 보이는 사람"),
       ],
-      venue: { name: "취병2리 마을회관", address: "원주시 취병로 644", period: "2026.11.21. ~ 12.13.", hours: "" },
+      venue: { name: "취병2리 마을회관", address: "원주시 취병로 644", phone: "033-731-4374", period: "2026.11.21. ~ 12.13.", hours: "" },
       // 작가의 곡 Catch the Rainbow와 어울리는 록 변주
       playlist: [
         { src: "/artist-music/in-donguk-catch-the-rainbow.mp3", title: "Catch the Rainbow", note: "" },

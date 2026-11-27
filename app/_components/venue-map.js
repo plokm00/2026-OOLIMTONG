@@ -3,7 +3,7 @@
 // 울림통-변주 전시장소 지도 — 실제 지도(OpenStreetMap 타일, Leaflet) 위에
 // 문막의 본 전시에서 원주 곳곳의 모뉴먼트 전시장소로 점선이 뻗어 나간다.
 // 점을 누르면 그 장소의 전시 정보(작가·작품·기간·주소)와 네이버·카카오·구글 지도 링크(장소 기호 붙임, 한 줄)가 팝업으로 뜬다.
-// current: 지금 작가의 전시장소 이름 — 그 점만 파랗게 키운다. who: 범례의 "○○ 전시"에 쓸 이름.
+// current: 지금 작가의 전시장소 이름(개인 공간은 mapKey) — 그 점만 파랗게 키운다. who: 범례의 "○○ 전시"에 쓸 이름.
 // 지도 라이브러리는 브라우저에서만 불러오고, 그 전(과 자바스크립트가 꺼진 경우)에는 빈 바탕만 보인다.
 
 import { useEffect, useRef } from "react";
@@ -32,7 +32,8 @@ function popupHtml(place) {
     .map((a) => `<li><a href="/artist/${encodeURIComponent(a.name)}">${esc(a.name)}</a> <span>〈${esc(a.work)}〉</span></li>`)
     .join("");
   const when = [place.period, place.hours].filter(Boolean).join(" · ");
-  return `<div class="vm-pop">${head}<p class="vm-name">${esc(place.name)}</p>${artists ? `<ul class="vm-artists">${artists}</ul>` : ""}${when ? `<p class="vm-when">${esc(when)}</p>` : ""}${place.address ? `<p class="vm-addr">${esc(place.address)}</p>` : ""}${place.phone ? `<p class="vm-tel"><a href="tel:${place.phone.replace(/[^0-9]/g, "")}">☎ ${place.main ? "김아영 작가에게 전화하기" : esc(place.phone)}</a></p>` : ""}${mapLinks(place)}</div>`;
+  return `<div class="vm-pop">${head}<p class="vm-name">${esc(place.name)}</p>${artists ? `<ul class="vm-artists">${artists}</ul>` : ""}${when ? `<p class="vm-when">${esc(when)}</p>` : ""}${place.address ? `<p class="vm-addr">${esc(place.address)}</p>` : ""}${place.phone ? `<p class="vm-tel"><a href="tel:${place.phone.replace(/[^0-9]/g, "")}">☎ ${place.main ? "김아영 작가에게 전화하기" : esc(place.phone)}</a></p>` : ""}${place.address ? mapLinks(place) : ""}</div>`;
+  // 주소 없는 곳(작가 개인 공간)은 동네 수준 점이라 길찾기 링크를 달지 않는다.
 }
 
 // note: 지도 아래 "방문 전 연락" 안내를 붙일지(17인 목록 페이지에서만 켠다)
@@ -76,14 +77,14 @@ export default function VenueMap({ places, current, who, note = false }) {
       if (hub) {
         for (const place of places) {
           if (place.main) continue;
-          const here = place.name === current;
+          const here = (place.key ?? place.name) === current;
           L.polyline([hub, place.point], {
             color: COLORS.blue, weight: here ? 2.4 : 1.2, opacity: here ? 0.9 : 0.5, dashArray: here ? null : "3 5", interactive: false,
           }).addTo(map);
         }
       }
       const markers = places.map((place) => {
-        const here = place.name === current;
+        const here = (place.key ?? place.name) === current;
         const marker = L.circleMarker(place.point, {
           radius: place.main || here ? 9 : 6.5,
           color: "#fff",
@@ -100,7 +101,7 @@ export default function VenueMap({ places, current, who, note = false }) {
         }
         return marker;
       });
-      markers.forEach((m, i) => { if (places[i].name === current) m.bringToFront(); });
+      markers.forEach((m, i) => { if ((places[i].key ?? places[i].name) === current) m.bringToFront(); });
       // 팝업이 잘리지 않게 지도가 저절로 움직이므로(autoPan), 팝업을 닫으면 모든 장소가 보이는 처음 화면으로 돌아온다.
       // 다른 점을 바로 누르면 닫힘 직후 새 팝업이 열리므로, 잠깐 기다렸다가 열린 팝업이 없을 때만 되돌린다.
       let back;
@@ -119,7 +120,7 @@ export default function VenueMap({ places, current, who, note = false }) {
     };
   }, [places, current]);
 
-  const hasHere = places.some((p) => p.name === current);
+  const hasHere = places.some((p) => (p.key ?? p.name) === current);
   return (
     <figure className="xp-map">
       <div ref={box} className="xp-map-box" role="region" aria-label="울림통-변주 전시장소 지도. 점을 누르면 그 장소의 전시 정보가 뜹니다." />

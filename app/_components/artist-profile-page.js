@@ -248,7 +248,7 @@ export default function ArtistProfilePage({ artist, note }) {
           </div>
         </div>
         </div>
-        <VenueMap places={MAP_PLACES} current={p.venue?.name} who={p.venue?.label ?? artist.name} />
+        <VenueMap places={MAP_PLACES} current={p.venue?.mapKey ?? p.venue?.name} who={p.venue?.label ?? artist.name} />
         </div>
       </section>
 

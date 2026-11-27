@@ -23,11 +23,13 @@ export const MAP_PLACES = (() => {
   const byName = new Map();
   for (const artist of artistPages) {
     const venue = artist.profile?.venue;
-    if (!venue?.name || !VENUE_POINTS[venue.name]) continue;
-    if (!byName.has(venue.name)) {
-      byName.set(venue.name, { name: venue.name, address: venue.address, phone: venue.phone, period: venue.period, hours: venue.hours, point: VENUE_POINTS[venue.name], artists: [] });
+    // key: 지도 점을 찾고 같은 장소를 묶는 이름 — 개인 공간은 화면 이름이 같아도 동네(mapKey)로 나눈다.
+    const key = venue?.mapKey ?? venue?.name;
+    if (!key || !VENUE_POINTS[key]) continue;
+    if (!byName.has(key)) {
+      byName.set(key, { key, name: venue.name, address: venue.address, phone: venue.phone, period: venue.period, hours: venue.hours, point: VENUE_POINTS[key], artists: [] });
     }
-    byName.get(venue.name).artists.push({ name: artist.name, work: artist.profile.workTitle });
+    byName.get(key).artists.push({ name: artist.name, work: artist.profile.workTitle });
   }
   return [...main, ...byName.values()];
 })();
