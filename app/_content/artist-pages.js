@@ -147,6 +147,7 @@ const details = {
         install("min-jihyeon-4", "햇살 드는 마룻바닥 위 〈명상〉과 작품 안내판"),
         install("min-jihyeon-3", "창살 그림자가 드리운 〈명상〉과 작품 안내판"),
         install("min-jihyeon-5", "가까이에서 본 〈명상〉의 머리 위 분홍빛 귀"),
+        install("min-jihyeon-7", "창살 너머 치악산이 보이는 창가의 〈명상〉과 작품 안내판"),
         installVideo("min-jihyeon-video", "〈명상〉에 머리를 넣고 누워 쉬는 민지현"),
       ],
       // 머리를 넣고 쉬는 자리 → 느긋한 앰비언트 로파이
