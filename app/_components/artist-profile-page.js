@@ -89,22 +89,15 @@ const CSS = `
   .xp-install { aspect-ratio:2/1; background:var(--xp-soft); }
   .xp-install-gallery .xp-install { aspect-ratio:15/7; overflow:hidden; }
   .xp-install img, .xp-install video { display:block; width:100%; height:100%; object-fit:cover; background:#000; }
-  /* 세로 사진·영상은 자르지 않는다 — 칸 크기는 그대로 두고 그 안에 작게 통째로, 양옆은 검게 */
-  .xp-install-gallery.is-portrait .xp-install { background:#000; }
-  .xp-install-gallery.is-portrait .xp-install img, .xp-install-gallery.is-portrait .xp-install video { object-fit:contain; }
-  /* 썸네일은 큰 사진 안 오른쪽 아래에 작게 얹는다. 개수가 많으면 폭에 맞춰 줄어든다. */
-  .xp-install-gallery { position:relative; }
-  .xp-install-thumbs { position:absolute; left:8px; right:8px; bottom:8px; display:flex; justify-content:flex-end; gap:5px; pointer-events:none; }
-  /* 영상일 때는 재생 막대와 겹치지 않게 위로 올린다 */
-  .xp-install-gallery.is-video .xp-install-thumbs { bottom:auto; top:8px; }
-  .xp-install-thumbs button { position:relative; flex:0 1 52px; min-width:0; padding:0; border:0; background:var(--xp-soft); cursor:pointer; opacity:.7; transition:opacity .15s; pointer-events:auto;
-    box-shadow:0 0 0 1.5px rgba(255,255,255,.85), 0 2px 6px rgba(0,0,0,.25); }
+  /* 썸네일은 큰 사진을 가리지 않게 프레임 밖, 바로 아래에 한 줄로 둔다. 개수가 많으면 폭에 맞춰 줄어든다. */
+  .xp-install-thumbs { display:flex; gap:5px; margin-top:6px; }
+  .xp-install-thumbs button { position:relative; flex:0 1 52px; min-width:0; padding:0; border:0; background:var(--xp-soft); cursor:pointer; opacity:.55; transition:opacity .15s; }
   .xp-install-thumbs button.is-video::after { content:""; position:absolute; left:50%; top:50%; transform:translate(-35%,-50%);
     border-style:solid; border-width:6px 0 6px 10px; border-color:transparent transparent transparent #fff; filter:drop-shadow(0 0 2px rgba(0,0,0,.6)); }
   .xp-install-thumbs button.is-on, .xp-install-thumbs button:hover { opacity:1; }
   .xp-install-thumbs button.is-on { box-shadow:0 0 0 2px #fff, 0 0 0 3.5px var(--xp-blue); }
   .xp-install-thumbs button:focus-visible { outline:2px solid var(--xp-blue); outline-offset:3px; }
-  @media (min-width:760px) { .xp-install-thumbs { left:14px; right:14px; bottom:14px; gap:8px; } .xp-install-gallery.is-video .xp-install-thumbs { top:14px; } .xp-install-thumbs button { flex-basis:84px; } }
+  @media (min-width:760px) { .xp-install-thumbs { gap:8px; margin-top:8px; } .xp-install-thumbs button { flex-basis:84px; } }
   .xp-install-thumbs img { display:block; width:100%; height:auto; aspect-ratio:15/7; object-fit:cover; }
 
   .xp-h2 { margin:0 0 18px; font-size:28px; color:var(--xp-navy); }
