@@ -89,6 +89,9 @@ const CSS = `
   .xp-install { aspect-ratio:2/1; background:var(--xp-soft); }
   .xp-install-gallery .xp-install { aspect-ratio:15/7; overflow:hidden; }
   .xp-install img, .xp-install video { display:block; width:100%; height:100%; object-fit:cover; background:#000; }
+  /* 세로 영상은 자르지 않는다 — 칸을 화면 높이에 맞춰 키우고 영상 양옆은 검게 둔다 */
+  .xp-install-gallery.is-portrait .xp-install { aspect-ratio:auto; height:min(80vh, 760px); background:#000; }
+  .xp-install-gallery.is-portrait .xp-install video { object-fit:contain; }
   /* 썸네일은 큰 사진 안 오른쪽 아래에 작게 얹는다. 개수가 많으면 폭에 맞춰 줄어든다. */
   .xp-install-gallery { position:relative; }
   .xp-install-thumbs { position:absolute; left:8px; right:8px; bottom:8px; display:flex; justify-content:flex-end; gap:5px; pointer-events:none; }

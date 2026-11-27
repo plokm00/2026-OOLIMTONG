@@ -7,6 +7,7 @@ import { MEDIA_PLAY, MEDIA_STOP } from "./artist-bgm-player";
 // 전시 전경 — 큰 사진 한 장과 그 아래 썸네일. 썸네일을 누르면 큰 사진이 바뀐다.
 // 큰 사진은 지금 보이는 한 장만 불러오고, 나머지는 누를 때 불러온다.
 // 항목에 video가 있으면 영상으로 보여 준다(src는 포스터). 영상은 재생을 누르기 전까지 받지 않는다.
+// 세로 영상(portrait)은 자르지 않고 세로 그대로 보인다 — 그때만 칸이 화면 높이에 맞춰 커진다.
 // 영상은 현장 소리와 함께 재생하고, 재생하는 동안 배경음악은 잠시 멈춘다(MEDIA_PLAY/STOP 이벤트).
 export default function ArtistInstallGallery({ photos }) {
   const [index, setIndex] = useState(0);
@@ -21,7 +22,7 @@ export default function ArtistInstallGallery({ photos }) {
   }, [isVideo, current.video]);
 
   return (
-    <div className={isVideo ? "xp-install-gallery is-video" : "xp-install-gallery"}>
+    <div className={["xp-install-gallery", isVideo ? "is-video" : "", isVideo && current.portrait ? "is-portrait" : ""].filter(Boolean).join(" ")}>
       <div className="xp-install">
         {isVideo ? (
           <video
@@ -29,8 +30,8 @@ export default function ArtistInstallGallery({ photos }) {
             src={current.video}
             poster={current.src}
             aria-label={current.alt}
-            width="1800"
-            height="840"
+            width={current.portrait ? 720 : 1800}
+            height={current.portrait ? 1546 : 840}
             controls
             playsInline
             preload="none"
