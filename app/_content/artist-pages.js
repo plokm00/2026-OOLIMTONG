@@ -142,6 +142,15 @@ const details = {
       monument: "/artist-media/min-jihyeon-monument.webp",
       photos: photos("min-jihyeon", ["둥근 벽에 타래를 붙이는 민지현", "작업대에서 형태를 만드는 민지현", "아이와 함께 흙을 빚는 민지현"]),
       venue: PRIVATE_SPACE,
+      installPhotos: [
+        install("min-jihyeon-1", "햇살 드는 거실 창가, 〈명상〉 곁에 앉은 민지현"),
+        install("min-jihyeon-2", "산이 보이는 거실 창가 바닥에 놓인 〈명상〉"),
+        install("min-jihyeon-3", "창살 그림자가 드리운 〈명상〉과 작품 안내판"),
+        install("min-jihyeon-4", "창 너머 산을 등지고 놓인 〈명상〉과 작품 안내판"),
+        install("min-jihyeon-5", "가까이에서 본 〈명상〉의 머리 위 분홍빛 귀"),
+        install("min-jihyeon-6", "〈명상〉 안에서 작은 구멍 너머로 본 창밖의 산"),
+        installVideo("min-jihyeon-video", "〈명상〉에 머리를 넣고 누워 쉬는 민지현"),
+      ],
       // 머리를 넣고 쉬는 자리 → 느긋한 앰비언트 로파이
       playlist: [variation("ambientlofi", "앰비언트 로파이")],
     },
