@@ -41,13 +41,14 @@ const MIPPEUDA = { name: "미쁘다 갤러리카페", address: "원주시 미래
 const PRIVATE_SPACE = { name: "작가 개인 공간", address: "", period: "상설전시", hours: "초대 관람만 가능" };
 
 // 전시 전경 사진(public/artist-install/) — 큰 사진 1800×840, 썸네일 360×168
-function install(name, alt) {
-  return { src: `/artist-install/${name}.webp`, thumb: `/artist-install/${name}_thumb.webp`, alt };
+// portrait: 세로 사진·영상 — 자르지 않고 칸 안에 작게 통째로 보인다(칸 크기는 그대로, 양옆은 검게).
+// 세로 사진은 840×1800, 썸네일은 다른 것과 같은 360×168.
+function install(name, alt, { portrait = false } = {}) {
+  return { src: `/artist-install/${name}.webp`, thumb: `/artist-install/${name}_thumb.webp`, alt, ...(portrait ? { portrait } : {}) };
 }
 // 전시 전경 영상 — {name}.mp4(H.264), 포스터·썸네일은 {name}.webp / {name}_thumb.webp
-// portrait: 세로 영상 — 자르지 않고 세로 그대로 보인다(칸 높이를 화면에 맞춰 키움)
-function installVideo(name, alt, { portrait = false } = {}) {
-  return { ...install(name, alt), video: `/artist-install/${name}.mp4`, ...(portrait ? { portrait } : {}) };
+function installVideo(name, alt, options) {
+  return { ...install(name, alt, options), video: `/artist-install/${name}.mp4` };
 }
 // 브런치카페 뜰 — 박소연 페이지의 전시 전경(정면 컷이 먼저). 박진희는 근접 컷 + 본인 사진, 이안은 따로 고른 사진.
 // 문막성당 로비 4인 — 개인 컷 없이 공용 3장(왼쪽 창: 허양·이재홍, 오른쪽 창: 신정숙·임계화)
@@ -145,9 +146,10 @@ const details = {
       venue: PRIVATE_SPACE,
       installPhotos: [
         install("min-jihyeon-2", "산이 보이는 거실 창가 바닥에 놓인 〈명상〉"),
-        install("min-jihyeon-4", "창 너머 산을 등지고 놓인 〈명상〉과 작품 안내판"),
         install("min-jihyeon-3", "햇살 드는 마룻바닥 위 〈명상〉과 작품 안내판"),
+        install("min-jihyeon-4", "창 너머 산을 등지고 놓인 〈명상〉과 작품 안내판"),
         install("min-jihyeon-5", "가까이에서 본 〈명상〉의 머리 위 분홍빛 귀"),
+        install("min-jihyeon-8", "하늘과 치악산이 보이는 창가의 〈명상〉과 작품 안내판", { portrait: true }),
         install("min-jihyeon-7", "창살 너머 치악산이 보이는 창가의 〈명상〉과 작품 안내판"),
         installVideo("min-jihyeon-video", "〈명상〉에 머리를 넣고 누워 쉬는 민지현", { portrait: true }),
       ],
