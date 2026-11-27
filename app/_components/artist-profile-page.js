@@ -95,7 +95,6 @@ const CSS = `
   .xp-install-thumbs button.is-video::after { content:""; position:absolute; left:50%; top:50%; transform:translate(-35%,-50%);
     border-style:solid; border-width:6px 0 6px 10px; border-color:transparent transparent transparent #fff; filter:drop-shadow(0 0 2px rgba(0,0,0,.6)); }
   .xp-install-thumbs button.is-on, .xp-install-thumbs button:hover { opacity:1; }
-  .xp-install-thumbs button.is-on { box-shadow:0 0 0 2px #fff, 0 0 0 3.5px var(--xp-blue); }
   .xp-install-thumbs button:focus-visible { outline:2px solid var(--xp-blue); outline-offset:3px; }
   @media (min-width:760px) { .xp-install-thumbs { gap:8px; margin-top:8px; } .xp-install-thumbs button { flex-basis:84px; } }
   .xp-install-thumbs img { display:block; width:100%; height:auto; aspect-ratio:15/7; object-fit:cover; }
