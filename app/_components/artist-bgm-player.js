@@ -11,6 +11,11 @@ import { trackSeconds } from "../_content/artist-music-lengths";
 
 const VOLUME_KEY = "artist-bgm-volume";
 
+// 페이지 안의 다른 소리(전시 전경 영상)가 재생·정지될 때 보내는 이벤트. 재생되는 동안 배경음악을 잠시 멈추고,
+// 끝나면 멈췄던 배경음악만 다시 이어 튼다(사용자가 직접 끈 음악은 켜지 않는다).
+export const MEDIA_PLAY = "artist-media-play";
+export const MEDIA_STOP = "artist-media-stop";
+
 // 곡 길이를 3:05처럼 분:초로 쓴다.
 function length(src) {
   const sec = trackSeconds[src];
@@ -33,6 +38,8 @@ export default function ArtistBgmPlayer({ tracks }) {
   const rootRef = useRef(null);
   const userStoppedRef = useRef(false);
   const playOnChangeRef = useRef(false);
+  const mediaOnRef = useRef(false);
+  const pausedForMediaRef = useRef(false);
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(0.6);
@@ -76,6 +83,11 @@ export default function ArtistBgmPlayer({ tracks }) {
       if (event.type === "keydown" && event.key === "Escape") return;
       if (event.target instanceof Node && rootRef.current?.contains(event.target)) return cleanup();
       if (userStoppedRef.current) return cleanup();
+      // 전시 전경 영상을 트는 입력이면 음악은 켜지 않고, 영상이 끝난 뒤 이어 틀도록 표시만 해 둔다.
+      if (mediaOnRef.current) {
+        pausedForMediaRef.current = true;
+        return cleanup();
+      }
       const audio = audioRef.current;
       if (!audio || !audio.paused) return cleanup();
       trying = true;
@@ -92,6 +104,30 @@ export default function ArtistBgmPlayer({ tracks }) {
     events.forEach((name) => window.addEventListener(name, start, { capture: true, passive: true }));
     return cleanup;
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // 전시 전경 영상이 재생되는 동안 배경음악을 잠시 멈췄다가, 영상이 멈추거나 끝나면 다시 튼다.
+  useEffect(() => {
+    function onMediaPlay() {
+      mediaOnRef.current = true;
+      const audio = audioRef.current;
+      if (audio && !audio.paused) {
+        pausedForMediaRef.current = true;
+        audio.pause();
+      }
+    }
+    function onMediaStop() {
+      mediaOnRef.current = false;
+      if (!pausedForMediaRef.current) return;
+      pausedForMediaRef.current = false;
+      if (!userStoppedRef.current) audioRef.current?.play().catch(() => {});
+    }
+    window.addEventListener(MEDIA_PLAY, onMediaPlay);
+    window.addEventListener(MEDIA_STOP, onMediaStop);
+    return () => {
+      window.removeEventListener(MEDIA_PLAY, onMediaPlay);
+      window.removeEventListener(MEDIA_STOP, onMediaStop);
+    };
   }, []);
 
   // PC에서 Esc를 누르면 배경음악을 멈춘다(플레이어의 일시정지와 같아서, 그 뒤 스크롤해도 다시 켜지지 않는다).
