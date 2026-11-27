@@ -15,7 +15,7 @@ export const MAIN_SHOW = {
 };
 
 // 지도에 찍을 장소 — 본 전시 두 곳과, 17인의 모뉴먼트 전시장소(같은 장소의 작가는 한 점에 모은다).
-// 좌표가 없는 장소(작가 개인 공간)는 지도에 넣지 않는다.
+// 좌표가 없는 장소는 지도에 넣지 않는다. 작가 개인 공간은 동네 수준 좌표로만 넣는다.
 export const MAP_PLACES = (() => {
   const main = MAIN_SHOW.places
     .filter((place) => VENUE_POINTS[place.name])

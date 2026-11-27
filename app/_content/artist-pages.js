@@ -39,6 +39,9 @@ const MUNMAK_CHURCH = { name: "문막성당 로비", address: "원주시 건등�
 const TTEUL = { name: "브런치카페 뜰", address: "원주시 봉대길 41-1", phone: "0507-1315-7474", period: "2026.11.24.(화) ~ 11.29.(일)", hours: "" };
 const MIPPEUDA = { name: "미쁘다 갤러리카페", address: "원주시 미래로 3, 107호", phone: "0507-1309-0061", period: "2026.11.21.(토) ~ 11.28.(토)", hours: "11:00 – 17:00 · 일요일 휴무" };
 const PRIVATE_SPACE = { name: "작가 개인 공간", address: "", period: "상설전시", hours: "초대 관람만 가능" };
+// 개인 집은 상세 주소를 적지 않고 동 이름만 붙인다. 지도 점도 동네 수준(venue-points.js)으로만 찍는다.
+const PRIVATE_BANGOK = { ...PRIVATE_SPACE, name: "작가 개인 공간 · 반곡동" };
+const PRIVATE_MUSIL = { ...PRIVATE_SPACE, name: "작가 개인 공간 · 무실동" };
 
 // 전시 전경 사진(public/artist-install/) — 큰 사진 1800×840, 썸네일 360×168
 // 세로 사진·영상은 가운데 두고 양옆을 흐린 배경으로 채워 같은 가로 비율로 만든다.
@@ -142,7 +145,7 @@ const details = {
       workImage: "/artist-media/min-jihyeon-work.webp",
       monument: "/artist-media/min-jihyeon-monument.webp",
       photos: photos("min-jihyeon", ["둥근 벽에 타래를 붙이는 민지현", "작업대에서 형태를 만드는 민지현", "아이와 함께 흙을 빚는 민지현"]),
-      venue: PRIVATE_SPACE,
+      venue: PRIVATE_BANGOK,
       installPhotos: [
         install("min-jihyeon-2", "산이 보이는 거실 창가 바닥에 놓인 〈명상〉"),
         install("min-jihyeon-3", "햇살 드는 마룻바닥 위 〈명상〉과 작품 안내판"),
@@ -183,7 +186,7 @@ const details = {
       workImage: "/artist-media/park-suyeon-work.webp",
       monument: "/artist-media/park-suyeon-monument.webp",
       photos: photos("park-suyeon", ["코아 앞에서 웃는 박수연", "〈마루〉를 빚는 박수연", "야외에서 〈마루〉를 마감하는 박수연"]),
-      venue: PRIVATE_SPACE,
+      venue: PRIVATE_MUSIL,
       // 1·2번은 사용자가 지정한 보정 이미지. 4는 세로 사진이라 양옆을 흐리게 채움.
       installPhotos: [
         install("park-suyeon-1-selected", "조명 아래 창가 테이블에 놓인 〈라트나〉와 〈마루〉"),
@@ -332,7 +335,7 @@ const details = {
       workImage: "/artist-media/lee-chaemyeong-work.webp",
       monument: "/artist-media/lee-chaemyeong-monument.webp",
       photos: photos("lee-chaemyeong", ["〈라트나〉를 다듬는 이채명", "물레 위의 작품을 다듬는 이채명", "코아의 안쪽을 다듬는 이채명"]),
-      venue: PRIVATE_SPACE,
+      venue: PRIVATE_MUSIL,
       // 1번은 지정한 1차 보정본을 원본 작품 색상에 맞추고 강한 하이라이트만 완화. 2번 유지. 4는 양옆을 흐리게 채움.
       installPhotos: [
         install("lee-chaemyeong-1", "테이블 위 불빛이 든 〈라트나〉와 작품 안내판, 곁의 〈마루〉"),

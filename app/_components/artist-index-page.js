@@ -191,7 +191,7 @@ const CSS = `
 const MAIN_START = "11.21";
 const MAIN_END = "12.13";
 function venueNote(venue) {
-  if (venue.name === "작가 개인 공간") return "초대 관람";
+  if (venue.name?.startsWith("작가 개인 공간")) return "초대 관람";
   const days = (venue.period || "").match(/(?<!\d)\d{1,2}\.\d{1,2}(?=\.)/g);
   if (!days || days.length < 2) return "";
   const [start, end] = [days[days.length - 2], days[days.length - 1]];
