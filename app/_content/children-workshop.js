@@ -361,7 +361,7 @@ pageData.styles.push(`
   .participant-day {
     font-size: 10.5px;
     font-weight: 700;
-    color: var(--coral);
+    color: var(--text-dim);
     margin-right: -6px;
   }
   .participant-break { flex-basis: 100%; height: 0; }
