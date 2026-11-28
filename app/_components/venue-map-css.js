@@ -9,6 +9,8 @@ export const VENUE_MAP_CSS = `
   /* 점·지도를 누르면 브라우저가 그리는 포커스 네모를 없앤다 */
   .xp-map .leaflet-container:focus, .xp-map .leaflet-interactive:focus { outline:none; }
   .xp-map .leaflet-tile-pane { filter:grayscale(1) brightness(1.06) contrast(.88); opacity:.85; }
+  /* 화면 배율이 2.5배처럼 정수가 아닌 휴대폰에서 타일 경계에 밝은 가로선이 생기던 것 — 투명 외곽선을 두면 경계가 다시 맞물린다 */
+  .xp-map .leaflet-tile { outline:1px solid transparent; }
   .vm-tip { padding:2px 7px; border:0; border-radius:2px; box-shadow:0 1px 3px rgba(23,20,90,.18); color:var(--xp-navy); font-size:12px; font-weight:700; }
   .vm-tip.is-here { background:var(--xp-blue); color:#fff; }
   .vm-tip.is-here::before { border-top-color:var(--xp-blue); }
